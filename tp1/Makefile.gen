@@ -1,0 +1,42 @@
+USES= gmake
+CC=g++
+CFLAGS=-c -Wall -pedantic
+CFLAGSDEBUG=$(CFLAGS) -ggdb -DDEBUG
+CFLAGSTIME=$(CFLAGS) -DTIME -O2
+OBJSDIR=OBJS
+OBJS := $(addprefix ${OBJSDIR}/,${OBJS})
+OBJSDEBUG := $(addsuffix .debug,${OBJS})
+OBJSTIME := $(addsuffix .time,${OBJS})
+
+.PHONY: clean debug $(OBJSDIRECTORIE)
+
+all: $(EXE) $(EXE).debug $(EXE).time $(CUSTOM)
+
+$(OBJSDIR): $(OBSDIR)
+	mkdir -p $(OBJSDIR)
+
+$(EXE): $(OBJSDIR) $(OBJS)
+	$(CC) $(OBJS) -o $@
+
+$(EXE).debug: $(OBJSDIR) $(OBJSDEBUG)
+	$(CC) $(OBJSDEBUG) -o $@
+
+$(EXE).time: $(OBJSDIR) $(OBJSTIME)
+	$(CC) -lrt $(OBJSTIME) -o $@ -lrt
+
+$(OBJSDIR)/%.o: %.cpp %.h
+	$(CC) $(CFLAGS) $< -o $@
+
+$(OBJSDIR)/%.o.debug: %.cpp %.h
+	$(CC) $(CFLAGSDEBUG) $< -o $@
+
+$(OBJSDIR)/%.o.time: %.cpp %.h
+	$(CC) $(CFLAGSTIME) $< -o $@
+
+clean:
+	@rm -rf $(OBJSDIR)
+	@rm -f $(EXE) $(OBJS) *.o *.debug *.time $(CUSTOM)
+
+debug:
+	@$(CC) $(CFLAGS) $+ -o $@ 
+	#make $(EXE) DEBUG=1

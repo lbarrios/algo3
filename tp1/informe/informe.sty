@@ -1,0 +1,116 @@
+% -- colors definition --
+\definecolor{lightskyblue4}{rgb}{0.38,0.48,0.55}
+\definecolor{red3}{rgb}{0.8,0,0}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+% -- commands --
+% notes
+%~ \newcommand{\com}[1]{\hspace{0.5em}\textcolor{lightskyblue4}{\texttt{/* #1 */}}}
+\newcommand{\nota}[1]{\hspace{0.5em} \textcolor{dkgreen}{\textbf{[#1]}}}
+\newcommand{\fixme}{\hspace{0.5em}\textcolor{red3}{\texttt{[FIXME]}}}
+
+% notation
+\newcommand{\nat}{\ensuremath{\mathbb{N}}}
+\newcommand{\real}{\ensuremath{\mathbb{R}}}
+\newcommand{\grad}{\hspace{-2mm}$\phantom{a}^{\circ}$}
+\newcommand{\bigO}[1]{\ensuremath{\mathop{}\mathopen{}\mathcal{O}\mathopen{}\left(#1\right)}}
+\newcommand{\bigT}[1]{\ensuremath{\mathop{}\mathopen{}\mathcal{T}\mathopen{}\left(#1\right)}}
+\newcommand{\then}{\ensuremath{\Rightarrow}}
+
+
+% misc
+%~ \newcommand{\lyxdot}{.} % for inputs or includes where filenames has some dots
+
+% specialize \ref command
+\newcommand{\eq}[1]{\textit{Ecuación \eqref{#1}}}
+\newcommand{\alg}[1]{\textit{Algoritmo \ref{#1}}}
+\newcommand{\algline}[2]{\textit{Algoritmo \ref{#1}, línea \ref{#2}}}
+\newcommand{\fig}[1]{\textit{Figura \ref{#1}}}
+\newcommand{\bib}[1]{\cite{#1}}
+\newcommand{\bibext}[2]{\cite[#1]{#2}}
+
+% -- condifigure code styles
+\lstset{ %
+  language=C++,                  % the language of the code
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  tabsize=2,
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{blue!80!black},
+  commentstyle=\itshape\color{green!70!black},
+  identifierstyle=\color{blue!20!black},
+  stringstyle=\color{orange},
+}
+
+% -- package y config for header & footer --
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{} % clear all header fields
+\fancyhead[LE,RO]{} % Left-Even, Right-Odd
+\fancyhead[RE,LO]{} % Right-Even, Left-Odd
+\fancyhead[CE,CO]{\textsf{\textsc{TP1: Técnicas Algoritmicas}}} % Center-Even, Center-Odd
+\fancyfoot{} % clear all footer fields
+\fancyfoot[LE,RO]{\textbf{\thepage}} % Left-Even, Right-Odd
+\fancyfoot[RE,LO]{} % Right-Even, Left-Odd
+\fancyfoot[CE,CO]{} % Center-Even, Center-Odd
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% -- algorithmicx package configuration --
+\floatname{algorithm}{Algoritmo}
+\algrenewcommand{\algorithmiccomment}[1]{\hfill$\triangleright$ \textit{#1}}
+\algrenewcommand{\algorithmicrequire}{\textbf{Entrada:}}
+\algrenewcommand{\algorithmicensure}{\textbf{Salida:}}
+\algrenewcommand{\algorithmicreturn}{\textbf{retornar}}
+\algrenewcommand{\algorithmicfunction}{\textbf{función}}
+\algrenewcommand{\algorithmicprocedure}{\textbf{procedimiento}}
+\algrenewcommand\algorithmicend{\textbf{fin}}
+\algrenewcommand\algorithmicif{\textbf{si}}
+\algrenewcommand\algorithmicthen{\textbf{entonces}}
+\algrenewcommand\algorithmicelse{\textbf{sino}}
+\algrenewcommand\algorithmicfor{\textbf{para}}
+\algrenewcommand\algorithmicforall{\textbf{para cada}}
+\algrenewcommand\algorithmicdo{\textbf{hacer}}
+\algrenewcommand\algorithmicwhile{\textbf{mientras}}
+\algrenewcommand\algorithmicloop{\textbf{ciclo}}
+\algrenewcommand\algorithmicrepeat{\textbf{repetir}}
+\algrenewcommand\algorithmicuntil{\textbf{hasta que}}
+\algrenewcommand\algorithmicreturn{\textbf{retornar}}
+
+\algnewcommand\algorithmicis{\textbf{es}}\algnewcommand{\Is}{\algorithmicis\ }
+\algnewcommand\algorithmicfrom{\textbf{desde}}
+\algnewcommand\algorithmicto{\textbf{hasta}}
+\algdef{SE}[FORTO]{ForTo}{EndFor}
+  [3]{\algorithmicfor\ #1 \algorithmicfrom\ #2 \algorithmicto\ #3 \algorithmicdo}{\algorithmicend \ \algorithmicfor}%
+
+% config amsthm for theorems
+\theoremstyle{plain}
+\newtheorem{prop}{Proposición}[subsubsection]
+\newtheorem{teor}[prop]{Teorema}
+\newtheorem{demostracion}[prop]{Demostracion}
+\newtheorem{corol}[prop]{Corolario}
+\newtheorem{lema}[prop]{Lema}
+\theoremstyle{definition}
+\newtheorem{definicion}{Definición}[subsubsection]
+\newtheorem{ejem}{Ejemplo}
+\newtheorem{ejer}{Ejercicio}
+\theoremstyle{remark}
+\newtheorem*{aclaracion}{Nota}
+\newtheorem*{notac}{Notación}
+
+% -------------------------------------------------------------------------------------------
+\newenvironment{TP1}{%
+\renewcommand{\documentclass}[2][]{}%
+\renewcommand{\usepackage}[2][]{}%
+\renewenvironment{document}{\begingroup}{\endgroup}
+}{
+}
+\renewcommand{\tablename}{Tabla}
+\usetikzlibrary{matrix}

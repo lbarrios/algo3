@@ -1,0 +1,17 @@
+Para compilar:
+	
+	- Usar GNU/make por cuestiones de sintaxis. O sea, que para 
+		S.O.!=LINUX, hay que usar gmake.
+
+	- Haciendo "make all" en raíz del directorio tp1, debería compilar 
+		recursivamente cada ejercicio, junto con el informe.
+
+	- Haciendo "make clean" en raíz del directorio tp1, debería dejar todo 
+		"limpio" (sin borrar nada importante*).
+		*... por las dudas, si se agregan archivos manuales, revisar el Makefile
+	
+	- Se generan 3 targets, el ejercicio, una versión de debug (flag DEBUG implícito 
+		en compilación) y una de medición de tiempo (flag TIME implícito)
+
+
+
