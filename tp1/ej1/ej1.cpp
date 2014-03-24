@@ -5,13 +5,11 @@ int main( int argc, char** argv ){
     Parseo los parámetros con que fue llamado
     el ejecutable
   */
-/*
   ParserDeParametros parser( argc, argv );
   if( ! parser . parametrosSonValidos() ) {
     parser . imprimirAyuda();
     return -1;
   }
-*/
 
   /*
     Creo una instancia nula del ejercicio y luego

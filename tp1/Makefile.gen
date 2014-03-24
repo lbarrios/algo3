@@ -6,6 +6,7 @@ OBJSDIR=OBJS
 OBJS := $(addprefix ${OBJSDIR}/,${OBJS})
 OBJSDEBUG := $(addsuffix .debug,${OBJS})
 OBJSTIME := $(addsuffix .time,${OBJS})
+COMMON_OBJS=../common/ParserDeParametros.o
 
 .PHONY: all debug time clean $(OBJSDIR)
 
@@ -17,14 +18,14 @@ $(OBJSDIR):
 	@mkdir -p $(OBJSDIR)
 
 ##  Targets
-$(EXE): $(OBJSDIR) $(OBJS)
-	$(CC) $(OBJS) -o $@
+$(EXE): $(OBJS) $(COMMON_OBJS)
+	$(CC) $(OBJS) $(COMMON_OBJS) -o $@
 
-$(EXE).debug: $(OBJSDIR) $(OBJSDEBUG)
-	$(CC) $(OBJSDEBUG) -o $@
+$(EXE).debug: $(OBJSDEBUG) $(COMMON_OBJS)
+	$(CC) $(OBJSDEBUG) $(COMMON_OBJS) -o $@
 
-$(EXE).time: $(OBJSDIR) $(OBJSTIME)
-	$(CC) -lrt $(OBJSTIME) -o $@ -lrt
+$(EXE).time: $(OBJSTIME) $(COMMON_OBJS)
+	$(CC) -lrt $(OBJSTIME) $(COMMON_OBJS) -o $@ -lrt
 
 ## Objetos
 $(OBJSDIR)/%.o: %.cpp %.h | $(OBJSDIR)

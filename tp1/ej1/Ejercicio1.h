@@ -1,6 +1,6 @@
 #ifndef EJERCICIO1_H
 #define EJERCICIO1_H
-#include "../headers.h"
+#include "../common/headers.h"
 #define TESTCASE_NULL 0
 
 class Ejercicio1
