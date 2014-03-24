@@ -13,30 +13,33 @@ OBJSTIME := $(addsuffix .time,${OBJS})
 all: $(EXE) $(EXE).debug $(EXE).time $(CUSTOM)
 
 $(OBJSDIR): $(OBSDIR)
-	mkdir -p $(OBJSDIR)
+  mkdir -p $(OBJSDIR)
 
 $(EXE): $(OBJSDIR) $(OBJS)
-	$(CC) $(OBJS) -o $@
+  $(CC) $(OBJS) -o $@
 
 $(EXE).debug: $(OBJSDIR) $(OBJSDEBUG)
-	$(CC) $(OBJSDEBUG) -o $@
+  $(CC) $(OBJSDEBUG) -o $@
 
 $(EXE).time: $(OBJSDIR) $(OBJSTIME)
-	$(CC) -lrt $(OBJSTIME) -o $@ -lrt
+  $(CC) -lrt $(OBJSTIME) -o $@ -lrt
 
 $(OBJSDIR)/%.o: %.cpp %.h
-	$(CC) $(CFLAGS) $< -o $@
+  $(CC) $(CFLAGS) $< -o $@
 
 $(OBJSDIR)/%.o.debug: %.cpp %.h
-	$(CC) $(CFLAGSDEBUG) $< -o $@
+  $(CC) $(CFLAGSDEBUG) $< -o $@
 
 $(OBJSDIR)/%.o.time: %.cpp %.h
-	$(CC) $(CFLAGSTIME) $< -o $@
+  $(CC) $(CFLAGSTIME) $< -o $@
 
 clean:
-	@rm -rf $(OBJSDIR)
-	@rm -f $(EXE) $(OBJS) *.o *.debug *.time $(CUSTOM)
+  @rm -rf $(OBJSDIR)
+  @rm -f $(EXE) $(OBJS) *.o *.debug *.time $(CUSTOM)
 
-debug:
-	@$(CC) $(CFLAGS) $+ -o $@ 
-	#make $(EXE) DEBUG=1
+debug: $(EXE).debug
+time: $(EXE).time
+
+#debug:
+#  @$(CC) $(CFLAGS) $+ -o $@ 
+#  #make $(EXE) DEBUG=1
