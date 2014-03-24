@@ -18,8 +18,6 @@
 #include <unistd.h>
 using namespace std;
 
-#define iteraSobre(x) for(uint i=0; i<x; i++)
-
 #define uint unsigned int
 
 
@@ -43,7 +41,7 @@ public:
 #endif
 
 #ifdef TIME
-        #include <sys/timeb.h>
+        //#include <sys/timeb.h>
         #define IFTIME(x) x
 #else
         #define IFTIME(x)

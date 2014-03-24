@@ -1,4 +1,3 @@
-USES= gmake
 CC=g++
 CFLAGS=-c -Wall -pedantic
 CFLAGSDEBUG=$(CFLAGS) -ggdb -DDEBUG
@@ -8,38 +7,37 @@ OBJS := $(addprefix ${OBJSDIR}/,${OBJS})
 OBJSDEBUG := $(addsuffix .debug,${OBJS})
 OBJSTIME := $(addsuffix .time,${OBJS})
 
-.PHONY: clean debug $(OBJSDIRECTORIE)
+.PHONY: all debug time clean $(OBJSDIR)
 
-all: $(EXE) $(EXE).debug $(EXE).time $(CUSTOM)
-
-$(OBJSDIR): $(OBSDIR)
-  mkdir -p $(OBJSDIR)
-
-$(EXE): $(OBJSDIR) $(OBJS)
-  $(CC) $(OBJS) -o $@
-
-$(EXE).debug: $(OBJSDIR) $(OBJSDEBUG)
-  $(CC) $(OBJSDEBUG) -o $@
-
-$(EXE).time: $(OBJSDIR) $(OBJSTIME)
-  $(CC) -lrt $(OBJSTIME) -o $@ -lrt
-
-$(OBJSDIR)/%.o: %.cpp %.h
-  $(CC) $(CFLAGS) $< -o $@
-
-$(OBJSDIR)/%.o.debug: %.cpp %.h
-  $(CC) $(CFLAGSDEBUG) $< -o $@
-
-$(OBJSDIR)/%.o.time: %.cpp %.h
-  $(CC) $(CFLAGSTIME) $< -o $@
-
-clean:
-  @rm -rf $(OBJSDIR)
-  @rm -f $(EXE) $(OBJS) *.o *.debug *.time $(CUSTOM)
-
+## Targets virtuales
+all: $(EXE) $(EXE).debug $(EXE).time
 debug: $(EXE).debug
 time: $(EXE).time
+$(OBJSDIR):
+	@mkdir -p $(OBJSDIR)
 
-#debug:
-#  @$(CC) $(CFLAGS) $+ -o $@ 
-#  #make $(EXE) DEBUG=1
+##  Targets
+$(EXE): $(OBJSDIR) $(OBJS)
+	$(CC) $(OBJS) -o $@
+
+$(EXE).debug: $(OBJSDIR) $(OBJSDEBUG)
+	$(CC) $(OBJSDEBUG) -o $@
+
+$(EXE).time: $(OBJSDIR) $(OBJSTIME)
+	$(CC) -lrt $(OBJSTIME) -o $@ -lrt
+
+## Objetos
+$(OBJSDIR)/%.o: %.cpp %.h | $(OBJSDIR)
+	$(CC) $(CFLAGS) $< -o $@
+
+$(OBJSDIR)/%.o.debug: %.cpp %.h | $(OBJSDIR)
+	$(CC) $(CFLAGSDEBUG) $< -o $@
+
+$(OBJSDIR)/%.o.time: %.cpp %.h | $(OBJSDIR)
+	$(CC) $(CFLAGSTIME) $< -o $@
+
+$(OBJS): | $(OBJSDIR)
+
+clean:
+	@rm -rf $(OBJSDIR)
+	@rm -f $(EXE) $(OBJS) *.o *.debug *.time
