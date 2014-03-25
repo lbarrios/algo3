@@ -1,0 +1,699 @@
+\documentclass[12pt, a4paper,english,spanish]{article}
+\usepackage{babel}
+%\parindent = 10 pt
+%\parskip = 11 pt
+\usepackage[width=15.5cm, left=3cm, top=2.5cm, height= 24.5cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{verbatim}
+\usepackage[latin1]{inputenc}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\begin{document}
+\renewcommand{\refname}{} 
+
+\begin{center}
+\large{\textbf{Algoritmos y Estructuras de Datos III}}
+
+\normalsize{Segundo Cuatrimestre de 2012}
+
+\vspace{2mm}
+
+Departamento de Computaci\'on\\
+Facultad de Ciencias Exactas y Naturales\\
+Universidad de Buenos Aires\\
+
+\vspace{10mm}
+
+\LARGE{\textsc{\textbf{Trabajo Pr\'actico 1}}} \\
+
+\LARGE{Grupo 5}
+
+\vspace{10mm}
+
+\normalsize
+
+\begin{tabular}{c|c|c}
+\hline
+\textbf{Autor} & \textbf{Correo electr\'onico} & \textbf{LU}\\
+\hline
+Emilio Ferro & reclarinette2002@yahoo.com.ar& 441$/$00\\    
+Marina A. Niikado & mariniik@yahoo.com.ar & 711$/$07\\
+Franco Pistasoli & fpistasoli@gmail.com & 194$/$08\\
+Ezequiel Schwab & ezequiel.schwab@gmail.com & 132$/$09\\
+\hline
+\end{tabular}
+
+\end{center}
+
+\vskip 12pt
+\rule{\textwidth}{1.2pt}
+\vskip 5pt
+
+
+\newpage
+
+\tableofcontents
+
+
+
+\newpage
+
+
+\section{Desarrollo}  
+
+
+\subsection*{Problema 1}
+\subsubsection*{Introducci\'on}
+En este problema se ped\'ia devolver cual era la mayor ganancia posible dada una serie de precios de un producto para distintos dias. Es decir, si lo quisieramos formalizar matematicamente, dada una secuencia de n precios $p_{1}, ... , p_{n}$, se desea obtener $j^{\prime}$, $i^{\prime}$ con $j^{\prime} >  i^{\prime}$ tal que $p_{j^{\prime}} - p_{i^{\prime}} \geq p_{j} - p_{i}$  $\forall$  $1 \le i < j \le n$. Notar que si la resta diera un numero negativo para todos los casos (una secuencia de precios estrictamente decreciente), el resultado que se querria devolver es 0 (no haber comprado, y por lo tanto vendido, ningun dia). Para incluir este caso en la expresion matematica anterior, basta con decir ademas que $ j^{\prime}$ puede ser igual a $i^{\prime}$ (como si pudieramos comprar y vender en el mismo dia, y por lo tanto la ganancia maxima va a ser siempre al menos 0).
+\subsubsection*{Algoritmo propuesto}
+ 
+El algoritmo propuesto es el siguiente:
+\begin{itemize}
+\item Creamos 2 variables locales, ganancia, inicializada en 0, y precioDeCompra, inicializada en $\infty$
+\item Recorremos el arreglo de precios:
+\begin{itemize}
+\item Si el precio que estamos mirando en cada iteracion es menor al precio que teniamos guardado en precioDeCompra, entonces reemplazamos el valor de precioDeCompra con ese nuevo valor.
+\item En cambio, si es mayor (o igual aunque este ultimo caso no nos interesa) nos fijamos cual es la ganancia obtenida vendiendo ese dia, y habiendo comprado al precio que teniamos guardado en precioDeCompra. Si la ganancia es mayor a la que teniamos guardada, se modifica la variable ganancia.
+\end{itemize}
+\item Una vez recorrido toda la secuencia de precios, en la variable ganancia vamos a tener el resultado que buscabamos.
+\end{itemize}
+\subsubsection*{Complejidad}
+La complejidad del algoritmo es claramente $\theta$(n), donde n es la cantidad de precios (tamano de la secuencia de precios). Esto se puede ver facil en el pseudocodigo mostrado en el desarrollo del algoritmo: Se recorre toda la secuencia de precios siempre ( $\theta$(n) ), y en cada iteracion lo unico que se hace es una cantidad constante de operaciones basicas (comparaciones y asignaciones) por lo que la complejidad final no cambia. 
+
+
+\newpage
+
+
+\subsection*{Problema 2}
+\subsubsection*{Introducci\'on}
+En este problema se presenta una red de amistades entre investigadores, que generan nuevas ideas y transmiten su entusiasmo a los dem\'as. Al ocurr\'irsele una idea a un investigador, un 50\% de su entusiasmo se transfiere a su amistad m\'as directa. De esta manera, un 50\% del entusiasmo recibido por \'esta se transmite a su amistad m\'as directa, y as\'i sucesivamente.
+
+El problema en particular consiste en, dados dos investigadores $p$ y $q$, determinar cu\'antas veces el entusiasmo de $p$ se fraccionar\'a a la mitad hasta llegar a $q$. 
+
+\subsubsection*{Algoritmo propuesto}
+El problema descripto anteriormente puede traducirse as\'i: dados dos nodos $p$ y $q$ de un grafo, hallar la longitud del camino m\'inimo entre ellos. Si $l$ es esta longitud, entonces significa que el investigador $q$ recibir\'a $\frac{1}{2^l}$ del entusiasmo generado por $p$.
+\\
+
+Contamos con una estructura del tipo diccionario $investigadores$, en la cual tenemos como clave a cada uno de los investigadores y como significado, sus respectivos amigos directos. 
+El grafo est\'a implementado con una lista de adyacencias, la cual relaciona a cada nodo ( el cual representa a un investigador) con los nodos adyacentes a \'el (amigos del investigador). 
+Adem\'as, tenemos otra estructura del tipo diccionario $pasosMinimos$, en la cual guardamos la cantidad m\'inima de pasos del investigador $p$ hacia los dem\'as investigadores. 
+\\
+\begin{itemize}
+\item $investigadores$:Dicc$($nodo $r$, Lista$($nodos ady a r$))$
+\item Claves$(investigadores)$: nodos del grafo 
+\item $pasosMinimos$:Dicc$($nodo $r$, cant m\'in aristas desde p a r$)$
+\item Claves$(pasosMinimos)$: nodos del grafo 
+\end{itemize}
+La t\'ecnica elegida para la resoluci\'on del problema fue $backtracking$. \\ 
+La idea consiste en ir recorriendo todos los caminos posibles del \'arbol, pero ignorando los que superen cierta cantidad de pasos. \\
+Se tiene como ra\'iz a $p$ y las ramas corresponden a cada uno de los amigos de este investigador. \\
+El criterio de poda del \'arbol est\'a dado seg\'un si al pasar por un nodo $r$, y al obtener la cantidad de pasos m\'inimos de este nodo en el diccionario $pasosMinimos$, se supera ese valor (o es igual). Si esto ocurre, no se contin\'ua por ese camino. Este diccionario se actualiza en el momento en que para el caso de un nodo $r$, encontramos un camino en el que la cantidad de pasos tomados desde $p$ hasta $r$ es menor al valor obtenido hasta el momento. 
+\\
+% pseudocodigo???
+%{ObtenerEntusiasmoAux(p,q: string, cantPasosRealizados: int)} $\gets res: int $
+%\begin{algorithm}{}
+%\begin{algorithmic}[1]
+%\end{algorithmic}
+%\end{algorithm}
+
+El algoritmo propuesto termina en el momento en que todas las posibles ramas del \'arbol fueron recorridas. 
+Como tenemos los valores de los pasos m\'inimos correspondientes a todos los investigadores, evitamos de esta manera, caer en ciclos infinitos. 
+En cada iteraci\'on se hace un llamado recursivo, y en el caso de que la cantidad de pasos se supere o sea igual con respecto a caminos anteriores, no se contin\'ua por ese camino y se sigue por otro. Por lo que nos aseguramos siempre estar recorriendo el camino m\'as \'optimo. Finalmente, en el diccionario $pasosMinimos$ tendremos la cantidad m\'inima de pasos que toma llegar del nodo $p$ a $q$. Este dato es la soluci\'on buscada para saber la cantidad de veces que el entusiasmo original fue fraccionado. 
+\\
+
+Para llegar a la soluci\'on final que presentamos en esta secci\'on, hemos pasado por algunos caminos alternativos.
+Uno de ellos fue considerar un algoritmo similar al propuesto anteriormente, en lo que se refiere a estructuras utilizadas para la implementaci\'on del grafo, pero algo diferente al momento de recorrer el \'arbol para llegar a la soluci\'on. \\
+En este caso, se cuenta con una variable $res$ en la que se va guardando la cantidad m\'inima de pasos hasta llegar al nodo $q$ desde $p$. Adem\'as, en lugar de un diccionario con los pasos m\'inimos de todos los nodos del grafo, s\'olo tenemos la informaci\'on de si ese nodo fue recorrido o no durante el camino realizado por una de las ramas del \'arbol $($ con ra\'iz $p$ $)$. La cantidad de ramas equivale a la cantidad de nodos adyacentes a $p$. \\
+\begin{itemize}
+\item $investigadores$: Dicc$($nodo $r$, Lista$($nodos ady a r$))$
+\item Claves$(investigadores)$: nodos del grafo
+\item $siRecorrio$: Dicc$($nodo $r$, bool$)$
+\item Claves$(siRecorrio)$: nodos del grafo
+\item $res:$ m\'in cant pasos desde $p$ a $q$ \\
+\end{itemize}
+La t\'ecnica utilizada tambi\'en fue $backtracking$ pero al momento de descartar caminos, s\'olo ocurr\'ia esto si se superaba la cantidad de pasos almacenados en la variable $res$ o si el siguiente nodo a recorrer, ya hab\'ia aparecido en la rama actual. Esto \'ultimo evitaba que se produjeran ciclos infinitos en el \'arbol. \\
+Luego de terminar de recorrer todas las ramas del \'arbol se llegaba a la soluci\'on buscada. Sin embargo, en muchos de los casos, no se pod\'ian descartar caminos que con el anterior algoritmo s\'i era posible. La clave estaba en que en el primer algoritmo, se ten\'ia la cantidad de pasos m\'inimos de todos los nodos, no s\'olo de $q$. De esta forma, una vez llegado a un nodo $r$ que no fuera $q$ y todav\'ia no habiendo superado el valor de $res$, pero s\'i la cantidad de pasos m\'inima de $p$ a $r$ hasta el momento era menor, ya no se continuaba por ese camino (cuando en este algoritmo se hubiera seguido igual por ese camino). En el primer algoritmo se recorren de manera \'optima todas las ramas y subramas del \'arbol, no siendo as\'i en esta forma alternativa.  \\
+
+
+\subsubsection*{Complejidad}
+En esta secci\'on hablaremos de la complejidad temporal del algoritmo \texttt{obtenerEntusiasmo}. Hallaremos una cota y justificaremos por qu\'e la alcanza.
+
+Si nos referimos al c\'odigo Java de \texttt{obtenerEntusiasmo}, veremos que su complejidad depende b\'asicamente de las complejidades de tres m\'etodos auxiliares: \texttt{toAmistades}, \texttt{generarAmistades} y \texttt{obtenerEntusiasmoAux}. Todas las dem\'as operaciones que se realizan, con excepci\'on de las llamadas a estos tres m\'etodos, consisten en asignaciones y dos estructuras de decisi\'on. Las asignaciones se hacen en tiempo constante. El primer \texttt{if} invoca al m\'etodo \texttt{containsKey} de la clase \textsc{HashMap}, la cual es lineal en la cantidad de investigadores\cite{java}, mientras que el segundo \texttt{if} toma tiempo constante.   
+
+Sean $T_{tA}$, $T_{gA}$ y $T_{oEA}$ a los tiempos en peor caso de estos tres algoritmos respectivamente $(tA=toAmistades, gA=generarAmistades, oEA=obtenerEntusiasmoAux)$. Sea $T_{oE}$ el tiempo en peor caso del algoritmo \texttt{obtenerEntusiasmo}. Entonces, $$T_{oE}(a) = |investigadores| + T_{tA}(a) + T_{gA}\left(\frac{a}{2}\right) + T_{oEA}(a)$$ siendo $a = 2*|amistades|$, o sea el doble de la cantidad de amistades en la comunidad de investigadores. A continuaci\'on desarrollamos cada uno de los tiempos. 
+
+\begin{itemize}
+\item $T_{tA}$
+El m\'etodo \texttt{toAmistades} consiste de una inicializaci\'on de un arreglo redimensionable (estructura de datos \textsc{ArrayList}), la cual es $\mathcal{O}(1)$, y un ciclo con operaciones de tiempo constante (asignaciones, m\'etodos \texttt{get} y \texttt{add} de \textsc{ArrayList}\cite{java}, y la creaci\'on de un objeto \textsc{Amistad}, el cual se hace en tiempo constante). Este ciclo se ejecuta $\frac{a}{2}$ veces, que equivale a $|amistades|$ veces. Luego, $T_{tA}(a)$ es $\mathcal{O}(\frac{a}{2})$.
+
+\item $T_{gA}$
+El m\'etodo \texttt{generarAmistades} consiste de un ciclo que recorre un arreglo redimensionable de objetos \textsc{Amistad}. Dentro del ciclo, se ejecutan primero dos asignaciones y llamadas a los m\'etodos \texttt{dameAmigo} (de la clase \textsc{Entusiasmo}) y \texttt{GetPrimero} y \texttt{GetSegundo} (de la clase \textsc{Amistad}). Los dos \'ultimos m\'etodos se ejecutan en tiempo constante. 
+
+En \texttt{dameAmigo} se invoca a los m\'etodos \texttt{containsKey} y \texttt{put}, ambos de la clase \textsc{HashMap}. \texttt{containsKey} debe recorrer todas las claves del \textsc{HashMap}, luego toma tiempo lineal en la cantidad de claves\cite{java}, que equivale a la cantidad de investigadores, que llamamos $|investigadores|$. Por otro lado, \texttt{put} toma tiempo constante, asumiendo que la funci\'on de hash usada distribuye los elementos apropiadamente a lo largo de la tabla\cite{java}. Luego, \texttt{dameAmigo} es $\mathcal{O}(|investigadores|)$.
+
+En las dos \'ultimas l\'ineas se llama dos veces al m\'etodo \texttt{add}, de la clase \textsc{ArrayList}, que toma tiempo constante (amortizado)\cite{java}. 
+
+Por lo tanto, cada iteraci\'on del ciclo en \texttt{generarAmistades} toma tiempo \\ $\mathcal{O}(|investigadores|)$. Como el ciclo se ejecuta $|amistades|$ veces, entonces $T_{gA}$ es $\mathcal{O}(|investigadores| * |amistades|)$.
+
+\item $T_{oEA}$
+El c\'odigo Java del m\'etodo \texttt{obtenerEntusiasmoAux} es el siguiente:
+
+\begin{small}
+\texttt{private int obtenerEntusiasmoAux(String p, String q, int cantPasosRealizados)}
+\begin{algorithmic}[1]
+\State $ArrayList<String> amigos = investigadores.get(p).GetAmigos();$
+\If{$(cantPasosRealizados == 1$)} \Comment{$\mathcal{O}(|investigadores|)$}
+	\State $pasosMinimos = new HashMap<String, Integer>();$ \Comment{$\mathcal{O}(1)$}
+	\For{$(String \; investigador : investigadores.keySet())$} \Comment{$\mathcal{O}(|investigadores|)$}
+		\State $pasosMinimos.put(investigador, Integer.MAX\_VALUE);$ \Comment{$\mathcal{O}(1)$}
+	\EndFor
+	\State $pasosMinimos.put(p, 0);$ \Comment{$\mathcal{O}(1)$}
+\EndIf
+\For{$(String \; amigo : amigos)$} \Comment{Ver m\'as adelante}
+	\If{$(amigo.equals(q))$} \Comment{guarda $\mathcal{O}(1)$}
+		\State $cantPasosMin = cantPasosRealizados;$ \Comment{$\mathcal{O}(1)$}
+		\State $break;$ \Comment{$\mathcal{O}(1)$}
+	\Else
+		\If{$(cantPasosMin > cantPasosRealizados + 1)$} \Comment{guarda $\mathcal{O}(1)$}
+			\If{$(pasosMinimos.get(amigo) > cantPasosRealizados)$} \Comment{guarda $\mathcal{O}(1)$}
+				\State $pasosMinimos.put(amigo, cantPasosRealizados);$ \Comment{$\mathcal{O}(1)$}
+				\State $cantPasosMin = obtenerEntusiasmoAux(amigo,q,cantPasosRealizados+1);$ \Comment{Ver m\'as adelante}	
+			\EndIf
+		\Else
+			\State $break;$ \Comment{$\mathcal{O}(1)$}
+		\EndIf	
+	\EndIf
+\EndFor
+\State $return \; cantPasosMin;$ 
+\end{algorithmic}
+\bigskip
+\end{small}
+
+Este c\'odigo consiste b\'asicamente de un \texttt{if} y un \texttt{for}. El \texttt{if} (l\'ineas 2 a 8) toma tiempo $\mathcal{O}(|investigadores|)$, ya que se llama al m\'etodo \texttt{containsKey} y se ejecuta un ciclo que recorre las claves de $investigadores$, una tabla de hash que contiene a los investigadores como claves. Las operaciones que se usan de \textsc{HashMap} (\texttt{put} y constructor)\cite{java} son de tiempo constante.
+
+En las l\'ineas 9 a 23 se ejecuta un ciclo tantas veces como amigos tiene el investigador $p$. En principio se puede decir que esta cantidad est\'a acotada superiormente por $|investigadores|-1$, ya que un investigador puede tener como amigos a todos menos \'el. En peor caso se entra a la rama \texttt{else} del \texttt{if} (l\'ineas 13 a 22), dentro del ciclo. All\'i se llama a los m\'etodos \texttt{get} y \texttt{put} de \textsc{HashMap}, que ya vimos que toman tiempo constante, y en la l\'inea 17 se hace la llamada recursiva a \texttt{obtenerEntusiasmoAux}. 
+
+Para armar la ecuaci\'on de recurrencia para este algoritmo, necesitamos que el tama\~no de alguno de los par\'ametros de entrada de la funci\'on vaya disminuyendo en cada iteraci\'on. En este caso, podr\'iamos decir que se hace recursi\'on sobre la profundidad actual del sub\'arbol en el \'arbol de backtracking. Este tama\~no no siempre disminuye en iteraciones consecutivas (aunque sabemos que tiende a 0, que es cuando finaliza la ejecuci\'on del algoritmo). Entonces, si $pr$ es la profundidad en el \'arbol de backtracking en la iteraci\'on $i$, entonces llamemos $pr'$ a la profundidad en el \'arbol en la iteraci\'on $i+1$. Luego, $$T_{oEA}(pr) = |investigadores| + |amigos| * T_{oEA}(pr') \leq$$ $$ |investigadores| + |investigadores| * T_{oEA}(pr')$$ ya que $|amigos| \leq |investigadores|-1$, por lo comentado anteriormente. 
+
+Abstray\'endonos de esta ecuaci\'on, pensemos el peor caso para este algoritmo. Por un lado, sabemos que el algoritmo encuentra soluci\'on (es decir, devuelve un valor mayor o igual a 1) o no encuentra una soluci\'on (devuelve 0). Analizaremos entonces la complejidad de este algoritmo seg\'un cada caso. \\    
+
+\textbf{Caso en que se encuentra una soluci\'on}
+
+En este caso, sabemos que existe un camino de $p$ a $q$ en el grafo que relaciona a los investigadores del problema. Supongamos entonces que tenemos la mayor cantidad posible de amistades entre los investigadores (para tener muchas formas de ir de $p$ a $q$ en el grafo). Adem\'as, el orden en que vienen los investigadores del par\'ametro \texttt{amistadesLista} de \texttt{obtenerAmistades} es tal que $q$ aparece siempre \'ultimo en la lista de amigos de cada investigador (campo \texttt{amigos} de la clase \textsc{Investigador}). Si tenemos $i$ investigadores, entonces la mayor cantidad de amistades entre ellos es $\binom{i}{2}$, ya que corresponde a la cantidad de maneras de agrupar a los investigadores de a pares. Dadas estas hip\'otesis, que se cumplen para el peor caso que puede darse en este algoritmo, entonces comenzamos nuestro razonamiento acerca de su complejidad. 
+
+Empecemos por ver cu\'antos movimientos hay que hacer en el \'arbol de backtracking (o simplemente, cu\'antos pasos toma el algoritmo \texttt{obtenerEntusiasmoAux}) para una cantidad $i$ de investigadores, donde se tiene $\binom{i}{2}$ amistades (la mayor cantidad posible). Se quiere ir de $p$ a $q$, y $q$ aparece siempre al final de la lista de amigos de cada investigador. Por simplicidad, denotaremos a los $i$ investigadores con las primeras $i$ letras del abecedario, y $p$ y $q$ son, respectivamente, la primera e $i$-\'esima letra del abecedario. Luego, separemos en casos:
+
+\begin{itemize}
+\item $i=2, p=A, q=B$; investigadores: A, B; amistades: (A,B)
+\item $i=3, p=A, q=C$; investigadores: A, B, C; amistades: (A,B); (A,C); (B,C)
+\item $i=4, p=A, q=D$; investigadores: A, B, C, D; amistades: (A,B); (A,C); (A,D); (B,C); (B,D); (C,D)
+\item $i=5, p=A, q=E$; investigadores: A, B, C, D, E; amistades: (A,B); (A,C); (A,D); (A,E); (B,C); (B,D); (B,E); (C,D); (C,E); (D,E)
+\item $i=6, p=A, q=F$; investigadores: A, B, C, D, E, F; amistades: (A,B); (A,C); (A,D); (A,E); (A,F); (B,C); (B,D); (B,E); (B,F); (C,D); (C,E); (C,F); (D,E); (D,F); (E,F)
+\end{itemize}   
+
+
+%----------------------------------
+%----------------------------------
+%falta poner imagenes con cada caso
+%----------------------------------
+%----------------------------------
+
+Podemos ver que para $i=2$ se requieren 2 pasos para salir del algoritmo de backtracking; para $i=3$, se requieren 8 pasos; para $i=4$, 18 pasos; para $i=5$, 32 pasos; y para $i=6$, 50 pasos. En general, para $i$ investigadores y $\binom{i}{2}$ amistades, tenemos un \'arbol de backtracking con $i$ niveles, donde en cada nivel $i \geq 2$, hay $i-1$ nodos. Adem\'as, notamos que de un caso donde hay $j$ investigadores a otro donde hay $j+1$, se agregan $(j-1)+j$ nodos. Debido a que los nodos que se agregan en el caso $i=j+1$ son hojas, sumado a que el algoritmo de backtracking retrocede en el \'arbol cuando llega en particular a una hoja, entonces por cada hoja que se agrega se realizan 2 pasos. Por lo tanto, si para el caso $j$ se tard\'o $k$ pasos, entonces en el caso $j+1$ se tardar\'an $k+2((j-1)+j)$ pasos. 
+
+Para confirmar esto, veamos por ejemplo los casos $i=2$ e $i=3$. Para el primer caso se tardan 2 pasos. Para el caso de 3 investigadores, se tarda $2+2((2-1)+2) = 8$ pasos. Para $i=4$ se tarda entonces $8+2((3-1)+3) = 18$ pasos. Siguiendo as\'i, conseguimos una f\'ormula recursiva $p_i$ que nos dice la cantidad de pasos que toma el algoritmo de backtracking para $i$ investigadores e $\binom{i}{2}$ amistades (el peor caso). \'Esta es: $$p_1 = 0; \; p_i = 2(i-2+i-1) + p_{i-1} = 4i-6+p_{i-1} \; \forall i \geq 2 $$
+
+Para encontrar una f\'ormula cerrada a esta sucesi\'on, la expandimos: $$p_i = 4i-6 + 4(i-1)-6 + 4(i-2)-6 + \ldots + 4(i-k)-6 + \ldots + 0 =$$ $$4 \sum_{j=1}^{i-1} (i-j+1) - 6(i-1) = 4 \left((i-1)i + (i-1) - \frac{(i-1)i}{2}\right) - 6i + 6 =$$ $$4\left(\frac{(i-1)i}{2}+(i-1)\right) - 6i + 6 = 2i^2-4i+2$$
+
+Luego, $p_i = 2i^2-4i+2$. Pero veamos que esto se puede mejorar todav\'ia si descomponemos $p_i$ como producto de dos factores: $$p_i = 2i^2-4i+2 = 2(i-1)(i-1) = \frac{i(i-1)}{2} \frac{4(i-1)}{i} $$ Resolviendo esto, nos queda: $$p_i = \frac{i(i-1)}{2} \frac{4(i-1)}{i} = \frac{i(i-1)(i-2)!}{2(i-2)!} \frac{4(i-1)}{i} = \frac{i!}{2! (i-2)!} \frac{4(i-1)}{i} =$$ $$ \binom{i}{2} \frac{4(i-1)}{i} \leq \binom{i}{2} i$$ ya que $\frac{4(i-1)}{i} \leq i$ para todo $i \geq 0$.
+
+Por lo tanto, como $p_i$ era la cantidad de pasos del algoritmo de backtracking (\texttt{obtenerEntusiasmoAux}), y probamos que $p_i \leq \binom{i}{2} i = |amistades| |investigadores| \in \mathcal{O}(|amistades| * |investigadores|)$, entonces la complejidad de \texttt{obtenerEntusiasmoAux} es $\mathcal{O}(|amistades| * |investigadores|) + \mathcal{O}(|investigadores|) = \mathcal{O}(|amistades| * |investigadores|)$ (el segundo sumando se debe a la complejidad del primer \texttt{if}, que s\'olo se ejecuta una vez en todo el algoritmo).
+
+Juntando todo, se tiene que $T_{oE}(a) = |investigadores| + |amistades| + |investigadores| * |amistades| + |investigadores| * |amistades|$
+
+Entonces \texttt{obtenerEntusiasmo} es $\mathcal{O}(|investigadores| * |amistades|)$.   \\
+
+
+\textbf{Caso en que no se encuentra una soluci\'on} 
+
+Si el algoritmo no encuentra un camino de $p$ a $q$ en el grafo, significa que, o bien $q$ no es amigo (directo o indirecto) de $p$ pero s\'i de alg\'un otro investigador, o $q$ no es amigo de nadie. Si ocurre lo primero, naturalmente la complejidad ser\'a mejor que en el segundo caso, ya que para una cantidad $x$ de investigadores (suponiendo que queremos tener la mayor cantidad posible de amistades entre los investigadores), en el primer caso $p$ tendr\'a menos amigos (directos o indirectos) que en el segundo, donde en este \'ultimo hay $\binom{i-1}{2}$ amistades (siempre pensando en el peor caso del algoritmo de backtracking). Hecho este razonamiento, analizamos entonces el segundo caso, es decir, cuando $q$ est\'a ``aislado'' (no es amigo de nadie).
+
+Nuevamente, supongamos entonces que tenemos la mayor cantidad posible de amistades entre todos los investigadores salvo $q$. Si tenemos $i$ investigadores, entonces esta cantidad es $\binom{i-1}{2}$, ya que corresponde a la cantidad de maneras de agrupar a los $i-1$ investigadores salvo $q$ de a pares. 
+
+Como hicimos en el caso en que el algoritmo encuentra una soluci\'on, empecemos por ver cu\'antos movimientos hay que hacer en el \'arbol de backtracking para una cantidad $i$ de investigadores, donde se tiene $\binom{i-1}{2}$ amistades. Se quiere ir de $p$ a $q$ (que no va a ser posible). Por simplicidad, denotaremos a los $i$ investigadores con las primeras $i$ letras del abecedario, y $p$ y $q$ son, respectivamente, la primera e $i$-\'esima letra del abecedario. Separamos de nuevo en casos:
+
+\begin{itemize}
+\item $i=3, p=A, q=C$; investigadores: A, B, C; amistades: (A,B)
+\item $i=4, p=A, q=D$; investigadores: A, B, C, D; amistades: (A,B); (A,C); (B,C)
+\item $i=5, p=A, q=E$; investigadores: A, B, C, D, E; amistades: (A,B); (A,C); (A,D); (B,C); (B,D); (C,D)
+\item $i=6, p=A, q=F$; investigadores: A, B, C, D, E, F; amistades: (A,B); (A,C); (A,D); (A,E); (B,C); (B,D); (B,E); (C,D); (C,E); (D,E)
+\end{itemize}   
+
+
+%----------------------------------
+%----------------------------------
+%falta poner imagenes con cada caso
+%----------------------------------
+%----------------------------------
+
+Notemos que el caso $i=2$ no lo contemplamos, ya que la lista de amistades ser\'ia vac\'ia (y ni siquiera llega a ejecutarse este algoritmo). Para $i=3$, se requieren 2 pasos; para $i=4$, 12 pasos; para $i=5$, 24 pasos; y para $i=6$, 40 pasos. En general, para $i$ investigadores y $\binom{i-1}{2}$ amistades, vemos que de un caso donde hay $j \geq 4$ investigadores a otro donde hay $j+1$, se agregan $(j-1)+(j-1)$ nodos. Adem\'as, por cada nodo que se agrega se realizan 2 pasos. Por lo tanto, si para el caso $j$ se tard\'o $k$ pasos, entonces en el caso $j+1$ se tardar\'an $k+2((j-1)+(j-1))$ pasos. 
+
+La f\'ormula recursiva $p_i$ que nos dice la cantidad de pasos que toma el algoritmo de backtracking para $i$ investigadores e $\binom{i-1}{2}$ amistades (el peor caso) es: $$p_3 = 2; p_4 = 12 \; p_i = 2(i-2+i-2) + p_{i-1} = 4i-8+p_{i-1} \; \forall i \geq 5 $$
+
+Para encontrar una f\'ormula cerrada a esta sucesi\'on, la expandimos: $$p_i = 4i-8 + 4(i-1)-8 + 4(i-2)-8 + \ldots + 4(i-k)-8 + \ldots =$$ $$4 \sum_{j=1}^{i-1} (i-j+1) - 8(i-1) = 4 \left((i-1)i + (i-1) - \frac{(i-1)i}{2}\right) - 8i + 8 =$$ $$4\left(\frac{(i-1)i}{2}+(i-1)\right) - 8i + 8 = 2i^2-6i+4$$
+
+Luego, $p_i = 2i^2-6i+4$. Descomponemos $p_i$ como producto de dos factores: $$p_i = 2(i-1)(i-2) = 4 \frac{(i-1)(i-2)}{2} = 4 \frac{(i-1)(i-2)(i-3)!}{2!(i-3)!} = 4 \frac{(i-1)!}{2! (i-3)!} =$$ $$4 \binom{i-1}{2} \in \mathcal{O}\left(\binom{i-1}{2}\right) = \mathcal{O}\left(|amistades|\right) $$
+
+Entonces, sabemos que el algoritmo \texttt{obtenerEntusiasmoAux} toma tiempo $\\ \mathcal{O}(|amistades|) + \mathcal{O}(|investigadores|)$, siendo el segundo sumando la complejidad del primer \texttt{if} que s\'olo se ejecuta una vez en todo el algoritmo. Y adem\'as sabemos que la cantidad de pasos, en peor caso, que se hace en el \'arbol de backtracking es exactamente el cu\'adruple de la cantidad de amistades m\'axima entre todos los investigadores excepto $q$. O sea es lineal en la cantidad de amistades.
+
+Por lo tanto, se tiene que $T_{oE}(a) = |investigadores| + |amistades| + |investigadores| * |amistades| + |amistades|$
+
+Entonces \texttt{obtenerEntusiasmo} es $\mathcal{O}(|investigadores| * |amistades|)$.   \\
+
+\end{itemize}
+
+Concluimos, luego de haber analizado los 2 casos para el \texttt{obtenerEntusiasmoAux} que la complejidad del m\'etodo principal \texttt{obtenerEntusiasmo} es $\mathcal{O}(|investigadores| * |amistades|)$
+
+
+\newpage
+
+
+\subsection*{Problema 3}
+\subsubsection*{Introducci\'on}
+En este problema se pretende, dado un list\'on de una determinada longitud y una serie de cortes a realizar a lo largo de \'este, minimizar el costo final del trabajo, sabiendo que el costo de cada corte es proporcional al largo del list\'on a cortar en cada momento. El algoritmo que resuelva este problema debe devolver la secuencia \'optima, es decir, el orden en el cual deben hacerse los cortes para lograr lo pedido. 
+
+\subsubsection*{Algoritmo propuesto}
+
+Para el algoritmo del ejercicio 3 tuvimos varios inconvenientes hasta que llegamos a la solucion deseada. Las clases de ``soporte' para este ejercicio fueron:
+
+\begin{itemize}
+\item\texttt{Cortes}: La cual representa una secuencia de cortes y el costo asociado a esa secuencia de cortes.
+\item\texttt{Liston}: La cual representa un liston con sus cortes realizados. Para representar los cortes realizados, tenemos una lista de enteros donde cada entero (salvo el ultimo que es la longitud) representa un corte realizado al liston. Las funciones que presenta son las siguientes:
+\begin{itemize}
+\item \texttt{CortarListon}: Dada una posicion para cortar, se realiza el corte correspondiente en el liston, y se devuelve cual fue el costo.
+\item \texttt{deshacerCorte}: Dada una posicion, se deshace el corte que se habia realizado en el liston (la funcion requiere que la posicion de corte haya sido un corte realizado anteriormente).
+\end{itemize}
+\end{itemize}
+
+
+
+Primero, cumpliendo con la frase``Make it work. Make it right. Make it fast.''  empezamos creando un algoritmo similar al del ejercicio 2, realizando backtracking (este se encuentra en el paquete versionInicial). Una vez que lo hicimos y vimos que funcionaba, quisimos ``podar'' ese backtracking haciendo que si se paso del minimo que teniamos hasta el momento, que no siga recorriendo la rama. Al querer agregar esto, nos dimos cuenta que, de la forma que lo habiamos implementado, no podiamos ``cortar'' el backtracking (o no se nos ocurrio como), por lo que lo tuvimos que re-pensar de nuevo para s\'i esta vez poder cortar si ya se habia superado el minimo encontrado hasta el momento. En la version inicial, el pseudocodigo seria lo siguiente:
+
+\vspace{0.5cm}
+
+\begin{itemize}
+\item Creamos variable local ``costoMinimo'' inicializada en $\infty$
+\item Para cada corte a realizar
+\begin{itemize}
+\item Nos guardamos el costo
+\item Llamamos recursivamente para obtener el minimo costo, pero ahora con ese corte menos en la secuencia de cortes a realizar
+\item Sumamos el costo de la llamada recursiva anterior para ver cuanto nos dio el costo total.
+\item Si el costo que nos dio era menor al costo que teniamos guardado en costoMinimo, entonces lo reemplazamos con el nuevo valor.
+\end{itemize}
+\end{itemize}
+
+\vspace{0.5cm}
+
+De esta forma, al ser costoMinimo una variable local de la funcion, nunca podabamos el arbol porque las llamadas recursivas no sabian si ya se habia alcanzado el minimo o no. Si poniamos al minimo en una variable global, en cada llamada recursiva se iba a estar pisando el valor ya que siempre el costo de un solo corte x ejemplo va a ser menor (o igual) al de toda la secuencia de corte. De esta forma, pensamos como solucionar este problema, llegando a la solucion siguiente para el ej3 con backtracking: Agregamos 2 parametros mas a la funcion, uno con los cortes realizados para llevar cuenta de ellos, y el otro con el costo parcial hasta el momento, asi cada vez que se hace una llamada recursiva, se sabe cuanto costo se venia llevando hasta el momento, y si es necesario parar o no porque se supero el minimo. A continuacion, una explicacion breve del pseudocodigo:
+
+\vspace{0.5cm}
+
+\begin{itemize}
+\item Creamos variable local ``costoMinimo'' inicializada en $\infty$
+\item Para cada corte a realizar
+\begin{itemize}
+\item Realizo el corte, y le sumo el costo parcial que tenia como parametro. Ademas agrego el corte a los cortes reliazados que tenia como parametro de la funcion y saco del vector de cortes a realizar el corte en cuestion.
+\item Si el costo resultante es mayor que costoMinimo, paro.
+\item Sino, si ya no quedan cortes a realizar, me guardo el nuevo costoMinimo con su repectivo cortes realizados
+\item Si en vez de eso, todavia quedan cortes a realizar, llamo recursivamente a la funcion.
+\end{itemize}
+\end{itemize}
+
+Ademas del algoritmo, implementamos (a pedido de un ayudante) validaciones sobre la entrada y tests a cada una de las funciones que habiamos hecho, lo cual nos llevo bastante tiempo (ademas que ninguno del grupo era programador de Java) y nos desenfocamos del problema principal.
+
+\vspace{0.5cm}
+
+Este algoritmo igualmente seguia siendo muy lento ya que, a pesar de que ahora si estabamos podando, igualmente repetiamos calculos. Es decir, si teniamos la secuencia de cortes [2,4,7] y un liston de longitud 10, si realizabamos el corte en 4, era lo mismo si haciamos despues el corte en 2 o 7, pero en nuestro algoritmo lo calculabamos 2 veces. Una vez que vimos programacion dinamica en clase, intentamos realizar una version del algoritmo con programacion dinamica sin exito, hasta que llegamos a la clase practica de programacion dinamica en la ultima semana justo antes de entregar el tp. En ese momento (y a las corridas porque todavia nos faltaba gran parte del informe y tests pensando que todavia teniamos una semana) llegamos a la solucion de programacion dinamica. La idea del algoritmo es la siguiente:
+
+\vspace{0.5cm}
+
+Primero agregamos a la secuencia de cortes a realizar (llamemosla ``cortes") el 0 al comienzo, y la longitud al final. Tenemos una matriz de n x n (donde n es la longitud de ``cortes'') llamada``costos'', donde la semantica de costos[i][j] = ``costo minimo entre los cortes consecutivos que estan entre los indices i y j de la secuencia de cortes a realizar''. Matematicamente, $costos[i][j] = cortes(j) - cortes(i) + min_{ i < k < j} \{costos[i][k] + costos[k][j]\}$  donde cortes es la secuencia de cortes a realizar. De esta forma, el resultado que queremos lo vamos a tener en costos[0][n-1]. Ademas, inicializamos a costos[i][j] = 0 $\forall i < j /  i+1 = j$
+
+\vspace{0.5cm}
+
+Mostremos, para un mayor entendimiento, como funciona el algoritmo con un ejemplo: cortes = {0,4,7,20,48} (longitud seria 48 en este caso)
+
+\vspace{0.5cm}
+
+El algoritmo empieza agarrando secuencias de corte de tama\~o 3:
+
+\vspace{0.5cm}
+
+costos[0][2] = cortes(2) - cortes(0) + 0 = 7 (el minimo, que es costos[0][1] + costos[1][2], da 0 porque los habiamos asignado asi anteriormente..los siguientes 2 pasos son analogos)
+
+\vspace{0.02cm}
+
+costos[1][3] = cortes(3) - cortes(1) + 0 = 16
+
+\vspace{0.02cm}
+
+costos[2][4] = cortes(4) - cortes(2) + 0 = 41
+
+\vspace{0.5cm}
+
+Ahora, seguimos con las secuencias de corte de tama\~no 4:
+
+\vspace{0.5cm}
+
+costos[0][3] = cortes(3) - cortes(0) + $ min_{0 < k < 3}$  \{costos[ 0 ][ k ] + costos[ k ][ 3 ]\} = 20 + $ min_{0 < k < 3} \{ costos[ 0 ][ k ] + costos[ k ][ 3 ]\} $
+
+\vspace{0.5cm}
+
+Miremos ahora que nos da el minimo:
+
+\vspace{0.5cm}
+
+costos[0][1] + costos[1][3] = 0 + 16 (ambos ya calculados anteriormente..la magia de la programacion dinamica!)
+
+\vspace{0.02cm}
+
+costos[0][2] + costos[2][3] = 7 + 0 (ambos ya calculados anteriormente de nuevo)
+
+\vspace{0.5cm}
+
+Mirando cual es el minimo nos da que es 7, por lo tanto costos[0][3] = 20 + 7 = 27
+
+\vspace{0.5cm}
+
+costos[1][4] = cortes(4) - cortes(1) + $min_{1 < k < 4}\{ costos[ 1 ][ k ] + costos[ k ][ 4 ] \}$ = 44 + $min_{1 < k < 4}\{ costos[ 1 ][ k ] + costos[ k ][ 4 ] \}$
+
+\vspace{0.5cm}
+
+Haciendo de la misma forma que antes, hallamos que el minimo nos da 16, por lo tanto costos[1][4] = 60
+
+\vspace{0.5cm}
+
+Por ultimo, llegamos a la ultima longitud, de tama\~no 5, que es la solucion que queriamos:
+
+\vspace{0.5cm}
+
+costos[0][4] = cortes(4) - cortes(0) + $min_{0 < k < 4}\{ costos[ 0 ][ K ] + costos[ k ][ 4 ] \}$ = 48 + $min_{0 < k < 4}\{ costos[ 0 ][ K ] + costos[ k ][ 4 ] \}$
+
+\vspace{0.5cm}
+
+Miremos que nos da el minimo:
+
+\vspace{0.5cm}
+
+costos[0][1] + costos[1][4] = 0 + 60 = 60
+
+\vspace{0.02cm}
+
+costos[0][2] + costos[2][4] = 7 + 41 = 48
+
+\vspace{0.02cm}
+
+costos[0][3] + costos[3][4] = 27 + 0 = 27
+
+\vspace{0.5cm}
+
+Miramos cual es el minimo, el minimo de los 3 es 27, por lo tanto nos queda que costos[0][4] = 48 + 27 = 75, que es efectivamente el costo minimo posible del problema.
+
+\vspace{0.7cm}
+
+Para cumplir con lo pedido en realidad, como no nos pedian el costo minimo sino que la secuencia que lograba ese costo minimo, en la matriz nos vamos guardando no solo el costo minimo, sino que la secuencia de cortes que efectivamente lo logra.
+
+\vspace{0.5cm}
+
+Por ultimo, para asegurarnos que los resultados obtenidos con este algoritmo eran los deseados, creamos el test \texttt{testPDContraBacktrack}, que generaba numeros al azar, y chequeaba que los costos minimos obtenidos con este algoritmo de programacion dinamica eran los mismos que los de backtracking.
+
+
+
+
+\subsubsection*{Complejidad}
+En esta secci\'on hablaremos de la complejidad temporal del algoritmo \texttt{hallarCortesMin}. Hallaremos una cota y justificaremos por qu\'e la alcanza.
+
+Si nos referimos al c\'odigo Java de \texttt{hallarCortesMin}, observamos que en la primera l\'inea se crea un vector de enteros (operaci\'on de tiempo constante) y luego se llama a otro m\'etodo \texttt{hallarCortesMin} que devuelve un objeto de tipo \textsc{Cortes}, del cual se obtiene el orden en que hay que hacer los cortes para asegurar que el costo sea m\'inimo. 
+
+Es esta \'ultima funci\'on la que hace backtracking en un \'arbol, cuyas ramas son todas las formas de ordenar la secuencia de cortes pasada como par\'ametro (\texttt{cortes\_a\_realizar}) al m\'etodo principal \texttt{hallarCortesMin} (el que devuelve el vector correspondiente a la secuencia \'optima). Si probamos con distintas secuencias de cortes, veremos que el peor caso (aquel que hace menos cantidad de podas) es cuando los cortes se distribuyen proporcionalmente en el list\'on. Por ejemplo, si tomamos un list\'on de longitud 10, entonces el peor caso para $n=4$ ser\'a $[2,4,6,8]$, o para $n=5$ ser\'a $[1,3,5,7,9]$, etc. Podr\'iamos afirmar que \'este es el peor caso, ya que cuando tenemos cortes desproporcionados (por ejemplo una secuencia $[1,2,3]$ para un list\'on de longitud 10), se logra podar varias ramas (en general hojas) del \'arbol de backtracking. Esto sucede ya que, con una configuraci\'on de cortes desproporcionados, se llega varias veces a nodos cuyo costo acumulado ya supera el costo m\'inimo, y por lo tanto ya no se debe continuar por esa rama. Un ejemplo de esto ser\'ia un list\'on tambi\'en de longitud 10 y cortes $[4,5,7,8]$, donde vemos que los intervalos que forman ($[0,4]; [4,5]; [5,7]; [7,8]; [8,10]$) son de longitudes distintas (cosa que no ocurre cuando los cortes son proporcionales), y llega a haber 6 podas en total (a diferencia de un caso donde los cortes son $[2,4,6,8]$, proporcionales, y llega a haber 4 podas solamente).   
+
+Vemos, a partir del c\'odigo Java, que la complejidad total del m\'etodo \texttt{hallarCortesMin} depende de la complejidad de tres m\'etodos (ya que el resto son operaciones de tiempo constante). Estos tres m\'etodos son \texttt{cortarListon}, \texttt{deshacerCorte} y \texttt{remove} (operaci\'on de \textsc{Vector}), las cuales son todas de tiempo lineal en la cantidad de cortes $(n)$. Adem\'as, haciendo los \'arboles de backtracking para cada cantidad de cortes, se observa la siguiente cantidad de pasos para cada valor de $n$ (y para el peor caso, es decir tomando cortes proporcionales\footnote{En este ejemplo tomamos un list\'on de longitud 10, y vamos dividiendo el list\'on en partes iguales para determinar cu\'ales ser\'an los cortes}):
+\begin{itemize}
+\item $n=2$, 8 pasos 
+\item $n=3$, 30 pasos 
+\item $n=4$, 120 pasos
+\item $n=5$, 544 pasos
+\item $n=6$, 3320 pasos
+
+$\ldots$
+\end{itemize}
+
+Pero a esto habr\'a que sumarle la complejidad de las tres operaciones que comentamos reci\'en. Entonces, la complejidad total en peor caso de \texttt{hallarCortesMin} ser\'a:
+
+\begin{itemize}
+\item $n=2$, 8*2*3 pasos 
+\item $n=3$, 30*3*3 pasos 
+\item $n=4$, 120*4*3 pasos
+\item $n=5$, 544*5*3 pasos
+\item $n=6$, 3320*6*3 pasos
+
+$\ldots$
+\end{itemize}
+
+O sea que la complejidad de \texttt{hallarCortesMin} es claramente exponencial.
+
+\vspace{0.8cm}
+
+ Veamos ahora la complejidad de la version con  \texttt{Programacion Dinamica}. La podemos obtener razonando de la descripcion del algoritmo:
+
+\begin{itemize}
+\item Primero tenemos un ciclo en donde vamos aumentando en 1 la longitud de los cortes consecutivos que vamos agarrando (comenzando desde 2, y hasta n-1).
+\begin{itemize}
+\item Una vez seleccionada la longitud de la secuencia de cortes, miramos cada una de las secuencias de cortes que podemos agarrar.
+\begin{itemize}
+\item Por cada secuencia de cortes, tenemos que analizar buscar el minimo en nuestra matriz ``costos''. Mientras mas grande sea la longitud de cortes, mas grande es la cantidad de datos sobre la cual tenemos que buscar el minimo.
+\end{itemize}
+\end{itemize}
+\end{itemize}
+
+A simple vista tenemos 3 for's anidados, lo que nos da una idea de un orden cubico. Pero miremos un poco mas en detalle:
+
+\vspace{0.5cm}
+
+En el ejemplo mostrado en el desarrollo, vamos haciendo la siguiente cantidad de operaciones en cada ciclo:
+
+\vspace{0.5cm}
+
+Por cada longitud: costosARellenar * iteracionesParaEncontrarMinimo
+
+\vspace{0.5cm}
+
+Cuando la longitud era 3: (5-2) * 1 = 3 * 1 (correspondientes a: costos[0][2], costos[1][3], costos[2][4]..y por cada uno teniamos un solo minimo para iterar)
+
+\vspace{0.02cm}
+
+Cuando la longitud era 4: (5-3) * 2 = 2 * 2
+
+\vspace{0.02cm}
+
+Cuando la longitud era 5: (5-4) * 3 = 1 * 3
+
+\vspace{0.5cm}
+
+Viendo el ejemplo, es facil de ver que la cantidad de operaciones es del orden de: $\displaystyle\sum_{i=2}^{n-1} (n-i)(i-1)$. Simplifiquemos un poco la ecuacion:
+
+\vspace{0.5cm}
+
+$\displaystyle\sum_{i=2}^{n-1} (n-i)(i-1) = \displaystyle\sum_{i=1}^{n}( (n-i)(i-1) ) - n = \displaystyle\sum_{i=1}^{n}(ni-i^{2} + i - n) - n = \displaystyle\sum_{i=1}^{n} ni - \displaystyle\sum_{i=1}^{n} i^{2} + \displaystyle\sum_{i=1}^{n} i - \displaystyle\sum_{i=1}^{n} n -  n=  n \frac{n(n+1)}{2}  - \frac{n(n+1)(2n+1)}{6}  + \frac{n(n+1)}{2}  - n^{2} - n = \frac{n(n+1)(n+1)}{6}+ \frac{n(n+1)}{2}  - n^{2} - n = \frac{n(n+1)(n+1)}{6} + \frac{3(n-n^{2})}{6} - n = \frac{n^{3} - n^{2} + 4n}{6} - n = \frac{n^{3} - n^{2} - 2n}{6} = \mathcal{O}(n^{3})$
+ 
+
+
+
+
+\newpage
+
+
+
+\section{Resultados}
+% graficos 
+% comparacion tiempo estimado segun complejidad temporal y tiempo medido de corrida para los tests 
+
+\subsection*{Problema 1}
+
+\begin{figure}[here]
+\begin{tikzpicture}
+\pgfplotsset{every axis legend/.append style={
+at={(1.02,1)},
+anchor=north west}}
+    \begin{axis}[
+	axis x line=middle,
+	xlabel=$Dias$,ylabel=$Operaciones$
+	]
+
+\addplot[blue,domain=1:50] {4*x};
+\addplot table {ascendente_out.txt};
+\addplot table {random_out.txt};
+\addplot table {descendente_out.txt};
+\addplot[green,domain=1:50] {2*x};
+
+\legend{4*x, precios en orden ascendente, precios random, precios en orden descendente, 2*x }
+\end{axis}
+\end{tikzpicture}
+\caption{Variacion de la cantidad de operaciones variando la cantidad de dias.}
+\label{Variacion de la cantidad de operaciones variando la cantidad de dias.}
+\end{figure}
+
+ Para los tests de velocidad tomamos en cuenta lo siguiente: La minima cantidad de operaciones se realiza cuando la sucesion de precios esta ordenada en forma descendente. Esto es ya que al estar ordenado en forma descendente, el algoritmo solo asigna el nuevo valor en cada iteracion a la variable "precioDeCompra". Por el otro lado, la maxima cantidad de operaciones se realiza cuando la sucesion de precios esta ordenada en forma creciente. Esto sucede porque el algoritmo va a realizar algunas operaciones m\'as que en el caso anterior, ya que ademas va a tener que preguntar si la ganancia obtenida es mayor, y hacer la asignacion correspondiente al efectivamente ser mayor. Por otro lado, cualquier sucesion de precios no ordenada va a caer entre medio de estas 2 sucesiones de puntos. De esta forma, podemos concluir como vemos en la figura, que podemos acotar con una funcion lineal tanto por debajo como por arriba a nuestros resultados, lo cual se corresponde con la complejidad vista en el punto anterior (  $\theta$(n) ). 
+
+
+\subsection*{Problema 2}
+
+Como se mencion\'o anteriormente, puede existir o no una soluci\'on para el problema que intenta resolver el algoritmo propuesto. Los test elegidos para evaluar la funci\'on principal $obtenerEntusiasmo$, representan ambos casos. Si hay soluci\'on, entonces lo que se eval\'ua es poder llegar de $q$ a $p$ de la manera \'optima, y si no la hay, se devolver\'a un $0$. \\
+
+En cuento a los tiempos de corrida del algoritmo, en los siguientes gr\'aficos se comparan con la complejidad calculada en la secci\'on anterior.  \\
+
+\newpage
+
+\begin{figure}[here]
+\begin{tikzpicture}
+\pgfplotsset{every axis legend/.append style={
+at={(1.02,1)},
+anchor=north west}}
+    \begin{axis}[
+	axis x line=middle,
+	xlabel=$investigadores$,ylabel=$Tiempo$
+	]
+
+\addplot table {extremo_opuesto.txt};
+\addplot table {complejidad_200.txt};
+
+\legend{p y q en extremos opuestos, complejidad}
+\end{axis}
+\end{tikzpicture}
+\caption{$q$ en extremo opuesto a $p$}
+\label{Cant de investigadores vs Tiempo}
+\end{figure}
+
+
+
+\begin{figure}[here]
+\begin{tikzpicture}
+\pgfplotsset{every axis legend/.append style={
+at={(1.02,1)},
+anchor=north west}}
+    \begin{axis}[
+	axis x line=middle,
+	xlabel=$investigadores$,ylabel=$Tiempo$
+	]
+
+\addplot table {no_esta_q.txt};
+\addplot table {complejidad_10.txt};
+\addplot table {azar_pq.txt};
+
+\legend{no existe q, complejidad, p y q elegidos al azar}
+\end{axis}
+\end{tikzpicture}
+\caption{no existe $q$ entre los investigadores}
+\label{Cantidad investigadores vs tiempo}
+\end{figure}
+
+
+Los tiempos medidos fueron el promedio tomado de sucesivas ejecuciones del algoritmo. \'Estos fueron tomados a medida que se fue incrementando la cantidad de investigadores.   
+La primer figura corresponde al caso en que se tienen al investigador $p$ y $q$ en extremos opuestos. Se lo considera como un peor caso porque para llegar a la soluci\'on se tienen que recorrer todos los nodos del \'arbol, que a los sumo son la cantidad total de investigadores. Se puede observar que la complejidad medida est\'a siempre por encima de la curva del tiempo medido de corrida. 
+En la segunda figura se comparan con la complejidad calculada, un caso al azar y un peor caso. 
+Para calcular el tiempo de ejecuci\'on nuevamente se vuelve a incrementar la cantidad de investigadores, pero esta vez, tambi\'en se aumenta la cantidad de amistades. Es decir que no tenemos como en la figura anterior, una s\'ola rama para recorrer, si no que por cada investigador, existen $|investigadores|-1$ posibles ramas. 
+El peor caso ocurre cuando no existe $q$ porque se van a estar recorriendo la mayor cantidad de nodos posibles. Como no se va a encontrar $q$ el algoritmo termina cuando no existen m\'as caminos por tomar. 
+Para el caso al azar, se tomaron los nodos $p$ y $q$ de manera aleatoria. Tendr\'amos los tres casos:
+\begin{itemize}
+\item $p$ no existe, entonces la ejecuci\'on es r\'apida porque no existen amigos de $p$ que recorrer.
+\item $q$ no existe, corresponde a peor caso.
+\item $p$ y $q$ existen. 
+\end{itemize}
+Se puede ver en el gr\'afico que hasta un cierto punto, la complejidad calculada se mantiene por encima de los tiempos medidos tal como ocurr\'ia en el caso anterior.
+Al aumentar la cantidad de investigadores y amistades entre ellos (se incrementan la cantidad de ramas del \'arbol), la complejidad queda por debajo de los tiempos calculados pero con valores muy cercanos entre si, por lo que intuimos que si lo multiplicamos por una constante a la complejidad efectivamente nos quedaria por arriba de los resultados, como desarrollamos en la seccion de complejidad.
+
+
+\subsection*{Problema 3}
+
+\begin{figure}[here]
+\begin{tikzpicture}
+\pgfplotsset{every axis legend/.append style={
+at={(1.02,1)},
+anchor=north west}}
+    \begin{axis}[
+	axis x line=middle,
+	xlabel=Cantidad de Cortes,ylabel=tiempo en ms
+	]
+
+
+\addplot table {outPD.txt};
+\addplot[red,domain=1:500] {x^3/50000};
+
+\legend{Algoritmo Prog Dinamica, $x^{3}/50000$}
+\end{axis}
+\end{tikzpicture}
+\caption{Crecimiento del tiempo con respecto al tama\~no de la entrada (cantidad de cortes a realizar) para la vesion con Programacion Dinamica}
+\label{Variacion de la cantidad de operaciones variando la cantidad de dias.}
+\end{figure}
+
+\begin{figure}[here]
+\begin{tikzpicture}
+\pgfplotsset{every axis legend/.append style={
+at={(1.02,1)},
+anchor=north west}}
+    \begin{axis}[
+	axis x line=middle,
+	xlabel=Cantidad de Cortes,ylabel=tiempo en ms
+	]
+
+
+\addplot table {outEj3.txt};
+\addplot[green,domain=1:13]{3^x};
+
+
+\legend{Algoritmo Backtracking ,$3^{x}$}
+\end{axis}
+\end{tikzpicture}
+\caption{Crecimiento del tiempo con respecto al tama\~no de la entrada (cantidad de cortes a realizar) para la version con Backtracking}
+\label{Variacion de la cantidad de operaciones variando la cantidad de dias.}
+\end{figure}
+
+Los graficos confirman nuestra sospecha en el analisis de complejidad de que la version de backtracking era del orden exponencial (graficamente, pareceria ser $\mathcal{O}(3^{n})$ ) y confirman que nuestra cota hallada para el caso de programacion dinamica puede ser correcta ( $\mathcal{O}(n^{3})$ )
+
+\newpage
+
+\section{Conclusiones}
+
+\subsection*{Problema 1}
+
+La solucion de este problema resutlo ser mucho mas elegante de lo que pensabamos en un principio. Ademas, destacamos que con este problema, pudimos hacer un analisis de la complejidad contando la cantidad de operaciones en vez de contando el tiempo, lo cual resulta mucho mas preciso.
+
+\subsection*{Problema 2}
+
+Este ejercicio nos ayudo a ver como podemos modelar un grafo y realizar backtracking sobre el. Ademas, realizando una modificacion y ayudandonos de una estructura de soporte, vimos como pudimos reducir la complejidad de backtracking de exponencial a polinomial.
+
+\subsection*{Problema 3}
+
+Este problema nos sirvio, mas que nada, para poder razonar como realizar una implementacion de programacion dinamica, partiendo de un problema que a priori, no veiamos que se repetian muchos calculos. Una vez que testeamos el algoritmo de backtracking y vimos que con una secuencia de cortes de mas de 10 se volvia muy lento, intentamos hacerlo mas eficiente encontrando una solucion en la programacion dinamica. Y que solucion! Pasamos de una complejidad exponencial, a una complejidad polinomial (y los tests nos ayudaron a ver algo que se nos dijo siempre en clase pero que nunca lo habiamos comparado nosotros mismos en una pc...el porque se dice que un problema esta bien resuelto si es polinomial, y no lo esta si es exponencial). Y no solo eso, sino que hasta el codigo quedo mucho mas conciso y ``lindo'' a la vista. Concluimos entonces que con este problema, logramos ver las grandes virtudes de la programacion dinamica. 
+
+\newpage
+
+
+
+\section{Referencias}
+
+A lo largo de la confecci\'on del trabajo pr\'actico, se consult\'o la siguiente bibliograf\'ia:
+
+\begin{thebibliography}{99} 
+\bibitem{java} JavaTM 2 Platform, Standard Edition, v 1.4.2 API Specification (http://docs.oracle.com/javase/1.4.2/docs/api/)
+
+
+\end{thebibliography}
+
+\end{document}
+
