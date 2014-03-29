@@ -1,4 +1,5 @@
 #include "ej1.h"
+#include "TestCaseEj1.h"
 
 int main( int argc, char** argv ){
   /*
@@ -6,6 +7,8 @@ int main( int argc, char** argv ){
     el ejecutable
   */
   ParserDeParametros parser( argc, argv );
+
+  TestCaseEj1 testcase;
   /*
   if( ! parser . parametrosSonValidos() ) {
     return -1;

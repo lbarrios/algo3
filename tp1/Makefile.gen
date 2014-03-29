@@ -6,7 +6,7 @@ OBJSDIR=OBJS
 OBJS := $(addprefix ${OBJSDIR}/,${OBJS})
 OBJSDEBUG := $(addsuffix .debug,${OBJS})
 OBJSTIME := $(addsuffix .time,${OBJS})
-COMMON_OBJS=../common/ParserDeParametros.o
+COMMON_OBJS=../common/ParserDeParametros.o ../common/TestCase.o
 
 .PHONY: all debug time clean $(OBJSDIR)
 
