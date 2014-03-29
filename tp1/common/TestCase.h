@@ -1,4 +1,4 @@
-virtual class TestCase {
+class TestCase {
 	public:
 		TestCase();
 		~TestCase();

@@ -6,3 +6,4 @@ class TestCaseEj1 : public TestCase {
 	~TestCaseEj1();
 	private:
 };
+
