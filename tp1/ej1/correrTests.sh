@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 EXE=${PWD##*/}
-
+INPUT_FOLDER=input
+OUTPUT_FOLDER=output
+VERBOSE=false
 platform='unknown'
 MAKE=make
 unamestr=`uname`
@@ -23,10 +25,22 @@ elif [[ "$unamestr" == 'FreeBSD' ]]; then
   MAKE=gmake
 fi
 
-clear
-
-INPUT_FOLDER=input
-OUTPUT_FOLDER=output
+for i in "$@"
+do
+case $i in
+  -v|--verbose)
+  VERBOSE=true
+  shift
+  ;;
+  #-b=*|--blabla=*)
+  #BLABLA="${i#*=}"
+  #shift
+  #;;
+  *)
+    # unknown option
+  ;;
+esac
+done
 
 clear
 $MAKE $EXE
@@ -45,8 +59,10 @@ Los resultados serán volcados a la carpeta '$OUTPUT_FOLDER'
         ./$EXE -i $INPUT -o $OUTPUT
         if [ $? != 0 ]; then
              echo "HUBO UN ERROR AL CORRER EL INPUT ${INPUT##*/}!!!"
-        #else
-        #    cat output/$OUTPUT
+        else
+          if [ $VERBOSE == true ]; then
+            cat $OUTPUT
+          fi
         fi
     done
     echo ""

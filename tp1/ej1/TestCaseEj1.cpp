@@ -37,27 +37,6 @@ bool TestCaseEj1::tomarDatos()
   return true;
 }
 /**
- * Devuelve la cantidad de días que trabaja el inspector
- */
-uint32_t TestCaseEj1::dameIntervaloInspector()
-{
-  return this->_intervaloInspector;
-}
-/**
- * Devuelve un puntero a un vector con las fechas de los camiones
- */
-uint32_t *TestCaseEj1::dameFechasCamiones()
-{
-  return this->_fechasCamiones;
-}
-/**
- * Devuelve la cantidad de camiones
- */
-uint32_t TestCaseEj1::dameCantidadDeCamiones()
-{
-  return this->_cantidadDeCamiones;
-}
-/**
  * Destructor
  */
 TestCaseEj1::~TestCaseEj1(void)

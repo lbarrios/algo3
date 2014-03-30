@@ -23,7 +23,7 @@ int main( int argc, char** argv ){
     // Obtengo los parámetros del testcase.
     uint32_t intervaloInspector = testcase.dameIntervaloInspector();
     uint32_t cantidadDeCamiones = testcase.dameCantidadDeCamiones();
-    uint32_t *fechasCamiones = testcase.dameFechasCamiones();
+    uint32_t* fechasCamiones = testcase.dameFechasCamiones();
 
     // Ordeno el listado de fechas de los camiones
     sort( fechasCamiones, fechasCamiones+cantidadDeCamiones );
@@ -35,8 +35,8 @@ int main( int argc, char** argv ){
         Avanzo p_fin hasta la posición en que la distancia de fechas
         con p_inicio sea mayor al intervalo del inspector
       */
-      while( fechasCamiones[p_fin]-fechasCamiones[p_inicio]<intervaloInspector
-      && p_fin<cantidadDeCamiones ){
+      while( p_fin<cantidadDeCamiones && 
+      fechasCamiones[p_fin]-fechasCamiones[p_inicio]<intervaloInspector){
         p_fin++;
       }
       // Si la solución es mejor que la anterior, piso los valores
@@ -49,8 +49,8 @@ int main( int argc, char** argv ){
         al que estaba, siempre que no me pase del total.
       */
       uint32_t diaInicioAnterior = fechasCamiones[p_inicio];
-      while( diaInicioAnterior == fechasCamiones[p_inicio] 
-      && p_inicio<cantidadDeCamiones ){
+      while( p_inicio<cantidadDeCamiones
+      && diaInicioAnterior == fechasCamiones[p_inicio] ){
         p_inicio++;
       }
     }
