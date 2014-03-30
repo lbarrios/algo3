@@ -1,17 +1,17 @@
 #include "../common/TestCase.h"
 
 class TestCaseEj1 : TestCase { //: public TestCase {
-	public:
+public:
 	TestCaseEj1( std::istream & );
 	~TestCaseEj1();
-	void imprimir(){
-        if(_input!=NULL){
-            cout << "El input era: ";
-            int in;
-            _input >> in;
-            cout << in << endl;
-    bool tomarDatos ();
-        }
-	}
+	bool tomarDatos();
+	// Getters
+	int dameIntervaloInspector(void);
+	int* dameFechasCamiones(void);
+	int dameCantidadCamiones(void);
+private:
+	int _intervaloInspector;
+	int _cantidadCamiones;
+	int* _fechasCamiones;
 };
 
