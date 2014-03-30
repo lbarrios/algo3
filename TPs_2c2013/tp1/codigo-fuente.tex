@@ -1,0 +1,421 @@
+% ------ headers globales y begin -----
+\documentclass[11pt, a4paper, twoside]{article}
+\usepackage{header_tp1}
+\begin{document}{}
+% -------------------------------------
+
+
+% --- Problema 1
+\subsubsection{Problema 1: Pascual y el correo}
+
+\lstset{caption={ej1.cpp},label=ej1}
+\begin{lstlisting}
+#include "ej1.h"
+int main( int argc, char** argv ){
+	ParserDeParametros parser( argc, argv );
+	if( ! parser.parametrosSonValidos() ) {
+		parser.imprimirAyuda();
+		return -1;
+	}
+	Ejercicio1 ejercicio = Ejercicio1();
+	while( ejercicio.obtenerInput( parser.input() ) ){
+		ejercicio.resolver();
+		ejercicio.imprimirOutput( parser.output() );
+	}
+	return 0;
+}
+\end{lstlisting}
+
+\lstset{caption={Ejercicio1.cpp},label=ejercicio1}
+\begin{lstlisting}
+void Ejercicio1::obtenerInput(istream &input){
+	char testcase[16];
+	input >> testcase;														// Parametro L
+	if(testcase[0] != TESTCASE_NULL){
+		_cargaMaxima = max(atoi(testcase),0);
+		input >> _cantidadTotalDePaquetes;					// Parametro n
+		_inicializarEstructurasInternas();					// Reserva espacio
+		for(int i=0;i<_cantidadTotalDePaquetes;i++)
+			input >> _listaDePesosDePaquetes[i];			// Parametros p1..pn
+	} else _cargaMaxima = 0;
+	_cantidadDeCamionesOcupados = 0;
+}
+
+bool Ejercicio1::inputNoEsNulo( void ){
+	return _cargaMaxima > 0;
+}
+
+void Ejercicio1::resolver( void ){
+	for(int i=0; i<_cantidadTotalDePaquetes; i++){
+		int pesoPaquete = _listaDePesosDePaquetes[i];
+		if( !_hayLugarParaCargar( pesoPaquete ) )
+			_nuevoCamion ( pesoPaquete );
+		else
+			_agregaCarga ( pesoPaquete );
+	}
+}
+
+void Ejercicio1::imprimirOutput( ostream &output ){
+	output << _cantidadDeCamionesOcupados;
+	for(int i=0; i<_cantidadDeCamionesOcupados; i++)
+		output << " " << _listaDeCamiones[i].carga;
+	output << endl;
+}
+\end{lstlisting}
+
+\clearpage
+\subsubsection{Problema 2: Profesores visitantes}
+
+\lstset{caption={ej2.cpp},label=ej2}
+\begin{lstlisting}
+#include "ej2.h"
+int main( int argc, char** argv ){
+  ParserDeParametros parser( argc, argv );
+  if( ! parser.parametrosSonValidos() ) {
+    parser.imprimirAyuda();
+    return -1;
+  }
+  Ejercicio2 ejercicio = Ejercicio2();
+  while( ejercicio.obtenerInput( parser.input() ) ){
+    ejercicio.resolver();
+    ejercicio.imprimirOutput( parser.output() );
+  }
+  return 0;
+}
+\end{lstlisting}
+
+\lstset{caption={Ejercicio2.cpp},label=ejercicio2}
+\begin{lstlisting}
+/* Inicializo con una instancia 'vacia' del ejercicio */
+Ejercicio2::Ejercicio2(){ _cantidadTotalDeCursos = 0; }
+
+bool Ejercicio2::obtenerInput(istream &input){
+  char testcase[BASE10_INT_MAXSIZE];
+  input >> testcase; 																// Parametro n
+  if(testcase[0] != TESTCASE_NULL){
+    _cantidadTotalDeCursos = max(atoi(testcase),0); // int n > 0 o invalido
+    _inicializarEstructurasInternas(); 							// Reserva espacio
+    for(uint i=0;i<_cantidadTotalDeCursos;i++){
+    	uint inicio, fin;
+      input >> inicio >> fin;												// Parametros ik fk
+      _listaDeCursos[i]=Curso(inicio, fin, i+1);
+    }
+  } else return false; // Testcase == TESTCASE_NULL
+	return true;
+}
+
+void Ejercicio2::resolver( void ){
+  for(uint i=0; i<_cantidadTotalDeCursos; i++){
+  	_listaOrdenadaDeCursos.insert( _listaDeCursos[i] );
+  }
+	set<Curso>::iterator it = _listaOrdenadaDeCursos.begin();
+  uint fin = it->fechaDeFin, numeroDeCurso = it->numeroDeCurso;
+	_cantidadDeCursosQueSeDictaran = 1;
+  while( it != _listaOrdenadaDeCursos.end() ){
+    if(it->fechaDeInicio > fin && it->fechaDeFin > fin){
+      _listaDeCursosQueSeDictaran[_cantidadDeCursosQueSeDictaran-1] = numeroDeCurso;
+      fin = it->fechaDeFin;
+      numeroDeCurso = it->numeroDeCurso;
+			_cantidadDeCursosQueSeDictaran++;
+    }
+    it++;
+  }
+  _listaDeCursosQueSeDictaran[_cantidadDeCursosQueSeDictaran-1] = numeroDeCurso;
+}
+
+void Ejercicio2::imprimirOutput( ostream &output ){
+	int i=0;
+	for( ;i<(int)_cantidadDeCursosQueSeDictaran-1; i++)
+    cout << _listaDeCursosQueSeDictaran[i] << " ";
+  cout << _listaDeCursosQueSeDictaran[i] << endl;
+}
+\end{lstlisting}
+\clearpage
+
+% --- Problema 3
+\subsubsection{Problema 3: Una noche en el museo}
+
+\lstset{caption={ej3.cpp : main},label=ej3-main}
+\begin{lstlisting}
+#include "ej3.h"
+int main(int argc, char **argv)
+{
+	int filas, columnas;
+	LCoord celdas_a_procesar;
+	LSensor sensores_solucion;
+	LSensor sensores_solucion_parcial;
+	Solucion solucion(sensores_solucion, 0);
+	Solucion solucion_parcial(sensores_solucion_parcial, 0);
+	VectorMascaras mascaras_filas(16, 0);
+	VectorMascaras mascaras_columnas(16, 0);
+
+	// Paser de Input & Init
+	cin >> filas;
+	cin >> columnas;
+	Grilla grilla(filas, Vec(columnas, 0));
+	VectorOpciones opciones_filas(filas, MASK_OPCIONES_INICIALES);
+	VectorOpciones opciones_columnas(columnas, MASK_OPCIONES_INICIALES);  
+	cargar(grilla);
+
+	if( analizar(grilla, celdas_a_procesar,
+							 opciones_filas, opciones_columnas)
+		){
+		resolver(grilla, celdas_a_procesar, solucion_parcial,
+						 opciones_filas, opciones_columnas, mascaras_filas,
+						 mascaras_columnas, solucion);
+	}
+
+	// Imprimir resultado
+	if( solucion.second == 0 ) cout << "-1" << endl;
+	else {
+	 cout << solucion.first.size() << " " << solucion.second << endl;
+	 for( int j = 0; j < solucion.first.size();j++) {
+		cout << solucion.first[j].second << " ";
+		cout << solucion.first[j].first.first+1 << " ";
+		cout << solucion.first[j].first.second+1 << endl;
+	 }
+	}
+ return 0; 
+}
+\end{lstlisting}
+
+\lstset{caption={ej3.cpp : analizar},label=ej3-analizar}
+\begin{lstlisting}
+bool analizar(Grilla &grilla,
+							LCoord &celdas_a_procesar,
+							VectorOpciones &opciones_filas,
+							VectorOpciones &opciones_columnas)
+{
+  int filas = grilla.size();
+  int columnas = grilla[0].size(); 
+  vector<uint8_t> columna_valida(columnas, 0); 
+  vector<uint8_t> fila_valida(filas, 0); 
+  VCoord pared_previa_columna(columnas, celdas_a_procesar.end());
+  LCoord::iterator pared_previa_fila = celdas_a_procesar.end();
+  VCoord ultima_celda_libre_columna(columnas, celdas_a_procesar.end()); 
+  LCoord::iterator ultima_celda_libre_fila = celdas_a_procesar.end();
+  LCoord::iterator itr_celdas_a_procesar;
+  
+  // Se recorre grilla
+  for( int i = 0; i < filas ;i++){
+		for(int j = 0; j < columnas ; j++){
+			if( grilla[i][j] == CELDA_IMPORTANTE ){
+				grilla[i][j] = LASER_CRUZ;
+				columna_valida[j] = columna_valida[j] | TIENE_CELDAS_IMPORTANTES;
+				fila_valida[i] = fila_valida[i]  | TIENE_CELDAS_IMPORTANTES;
+						// Dado que en la fila y columna hay una celda
+						// de estado LaserC, tengo que modificar opciones.
+				marcarFilaComoImportante(grilla, celdas_a_procesar, i,
+																			 opciones_filas, pared_previa_fila);
+				marcarColumnaComoImportante(grilla, celdas_a_procesar, j,
+															opciones_columnas, pared_previa_columna[j]);
+				// Si la Reliquia esta rodeada por paredes,
+				// la grilla no tiene solucion. 
+				if(estaRodeadaPorParedes(grilla, i, j)){
+					return false;
+				}
+			
+			} else if( grilla[i][j] == CELDA_LIBRE  ){
+				grilla[i][j] = VACIA;
+				columna_valida[j] = columna_valida[j] | TIENE_CELDAS_VACIAS;
+				fila_valida[i] = fila_valida[i]  | TIENE_CELDAS_VACIAS;
+				celdas_a_procesar.push_back(Coord(i, j));
+				itr_celdas_a_procesar = celdas_a_procesar.end();
+				itr_celdas_a_procesar--;
+				ultima_celda_libre_fila  = itr_celdas_a_procesar;
+				ultima_celda_libre_columna[j] = itr_celdas_a_procesar;
+			
+			} else if( grilla[i][j] == PARED  ){
+				grilla[i][j] = grilla[i][j] | ( MASK_PARED << 4);
+				columna_valida[j] = columna_valida[j] | TIENE_PAREDES;
+				fila_valida[i] = fila_valida[i]  | TIENE_PAREDES;
+				celdas_a_procesar.push_back(Coord(i, j)); // Iterador al ultimo
+				itr_celdas_a_procesar = celdas_a_procesar.end();
+				itr_celdas_a_procesar--;
+				
+				//Analizo longitud de sub-fila y sub-columna y modifico opciones 
+				procesarFinDeSegmento(grilla, celdas_a_procesar,
+									ultima_celda_libre_fila, ultima_celda_libre_columna[j]);
+				analizarLargoSegmentoHorizontal(grilla, celdas_a_procesar, i, j,
+																			 opciones_filas, pared_previa_fila);
+				analizarLargoSegmentoVertical(grilla, celdas_a_procesar, i, j,
+															opciones_columnas, pared_previa_columna[j]); 
+				pared_previa_fila = itr_celdas_a_procesar;
+				pared_previa_columna[j] = itr_celdas_a_procesar;
+			}
+		}
+		
+		// Aplico Mascara MASK_ULTIMA_CELDA_LIBRE_FILA
+		// a la utlima celda libre de la fila
+		if( ultima_celda_libre_fila != celdas_a_procesar.end() ){
+			grilla[(*ultima_celda_libre_fila).first]
+						[(*ultima_celda_libre_fila).second]
+						= ( grilla[(*ultima_celda_libre_fila).first]
+											[(*ultima_celda_libre_fila).second] )
+							| ( MASK_ULTIMA_CELDA_LIBRE_FILA );
+			ultima_celda_libre_fila = celdas_a_procesar.end();
+		}
+		pared_previa_fila = celdas_a_procesar.end();
+  }
+  
+  // Aplico mascara MASK_ULTIMA_CELDA_LIBRE_COL
+  // a la ultima celda de cada columna
+  for( int j = 0; j<ultima_celda_libre_columna.size();j++){
+		if( ultima_celda_libre_columna[j] != celdas_a_procesar.end() ){
+			grilla[(*ultima_celda_libre_columna[j]).first]
+						[(*ultima_celda_libre_columna[j]).second]
+						= ( grilla[(*ultima_celda_libre_columna[j]).first]
+											[(*ultima_celda_libre_columna[j]).second] )
+							| ( MASK_ULTIMA_CELDA_LIBRE_COL );
+			ultima_celda_libre_columna[j] = celdas_a_procesar.end();
+		}
+	}
+	
+	// Analizamos mascaras de estados para ver si las filas son validas,
+	// es decir, si tienen solucion
+	for( int i = 0; i < filas;i++){
+		if( fila_valida[i] == 2 || fila_valida[i] == 3 ) return false;
+	}
+	// Analizamos mascaras de estados para ver si las columnas son validas,
+	// es decir, si tienen solucion
+	for( int i = 0; i < columnas;i++){
+		if( columna_valida[i] == 2 || columna_valida[i] == 3 ) return false;
+	}
+	
+	// Detectamos Sub-columnas de 1 Celda de longitud en la
+	// ultima fila de la grilla
+	if( filas > 1 ){
+		for( int i = 0;i < columnas;i++){
+			if( esVacia(grilla[filas-1][i]) == true
+					&& esPared(grilla[filas-2][i]) == true ){
+				grilla[filas-2][i]
+					= grilla[filas-2][i] & ( MASK_PARED_INICIO_COL_1_CELDA << 4 );
+			}
+		}
+	} else {
+		for( int i = 0; i < columnas; i++){
+			opciones_columnas[i]
+				= opciones_columnas[i] & ( MASK_PARED_INICIO_COL_1_CELDA >> 9 );
+			if( grilla[0][i] == LASER_CRUZ ) return false;
+		}
+	}
+	
+	// Detectamos Sub-filas de 1 Celda de longitud en la
+	// ultima columna de la grilla
+	if( columnas > 1 ){
+		for( int i = 0;i < filas;i++){
+			if( esVacia(grilla[i][columnas-1])
+					&& esPared(grilla[i][columnas-2]) == true ){
+				grilla[i][columnas-2]
+					= grilla[i][columnas-2] & (MASK_PARED_INICIO_FILA_1_CELDA << 4);
+			}
+		}
+	} else {
+		for( int i = 0; i < filas; i++){
+			opciones_filas[i]
+				= opciones_filas[i] & MASK_PARED_INICIO_FILA_1_CELDA;
+			if( grilla[i][0] == LASER_CRUZ ) return false;
+		}
+	}
+	
+	return true;
+}
+\end{lstlisting}
+
+\clearpage
+\lstset{caption={ej3.cpp : resolver},label=ej3-resolver}
+\begin{lstlisting}
+void resolver(Grilla &g,
+							LCoord &celdas_a_procesar,
+							Solucion &solucion_parcial,
+							VectorOpciones &opciones_filas,
+							VectorOpciones &opciones_columnas,
+							VectorMascaras &mascaras_filas,
+							VectorMascaras &mascaras_columnas,
+							Solucion &solucion)
+{
+	LCoord::iterator itr = celdas_a_procesar.begin();
+	uint32_t opciones_originales_fila; 
+	uint32_t opciones_originales_columna; 
+	int fila, columna;
+	int tipo = 0;
+	int valor_original;
+	
+	if( itr != celdas_a_procesar.end() ){
+		//Calculo Interseccion Opciones Sensores entre Fila y columna
+		Coord celda = (*itr);
+		fila = celda.first;
+		celdas_a_procesar.pop_front();
+		columna = celda.second;
+		//Guardo estados de opciones/requerimientos para fila/columna
+		opciones_originales_fila = opciones_filas[fila];
+		opciones_originales_columna = opciones_columnas[columna];
+		valor_original = g[fila][columna];
+		if( esPared(g[fila][columna]) ){
+			opciones_filas[fila] = ( g[fila][columna] >> 4 ) & 0x1FF;
+			opciones_columnas[columna] = ( g[fila][columna] >> 13 ) & 0x1FF;
+			resolver(g, celdas_a_procesar, solucion_parcial, opciones_filas,
+					opciones_columnas, mascaras_filas, mascaras_columnas, solucion);   
+			opciones_filas[fila] = opciones_originales_fila;
+			opciones_columnas[columna] = opciones_originales_columna;
+		} else {
+		// En el caso de que no sea una pared, seguro es una celda libre VACIA
+			uint32_t requerimiento_fila = opciones_filas[fila] >> 7;
+			uint32_t requerimiento_columna = opciones_columnas[columna] >> 7;
+			uint32_t opciones_celdas =
+				( opciones_originales_fila & opciones_originales_columna )
+				& puedeContenerLaser(g, g[fila][columna], requerimiento_fila,
+																									 requerimiento_columna);
+			uint32_t precio = 0;
+			for(int i = 1; i<= 6;i++){
+				if( ( opciones_celdas >> i ) & 1 ){
+					if( esSensor(i))
+						solucion_parcial.first.push_back(Sensor(celda, i));
+					g[fila][columna] = i;
+					opciones_filas[fila] =
+						( opciones_filas[fila] & mascaras_filas[i] & 0x7E )
+						| nuevoRequerimientoFila(i, requerimiento_fila);
+					opciones_columnas[columna] =
+						( opciones_columnas[columna] & mascaras_columnas[i] & 0x7E )
+						| nuevoRequerimientoCol(i, requerimiento_columna);
+					precio = obtenerPrecio(i);
+					if( solucion_parcial.second + precio < solucion.second
+							|| solucion.second == 0){
+						// Si solucion parcial sigue por debajo de la mejor
+						// solucion encontrada, sumo precio sensor a solucion_parcial
+						solucion_parcial.second += precio; 
+						
+						//lamo recursivamente
+						resolver
+						(g, celdas_a_procesar, solucion_parcial, opciones_filas,
+						opciones_columnas, mascaras_filas, mascaras_columnas,solucion);
+						//restauro precio
+						solucion_parcial.second -= precio;
+					}
+					//Restauro estado previo a la seleccion de la opcion
+					if( esSensor(i))
+						solucion_parcial.first.pop_back();
+					g[fila][columna] = valor_original;
+					opciones_filas[fila] = opciones_originales_fila;
+					opciones_columnas[columna] = opciones_originales_columna;
+				}
+			}
+		}
+		celdas_a_procesar.push_front(celda);
+	} else {
+	// Si ya no quedan celdas a procesar, tenemos una solucion
+		
+		// Si la nueva solucion es menos costosa que la actual, reemplazamos
+		if( solucion_parcial.second < solucion.second || solucion.second == 0){
+			solucion.second = solucion_parcial.second;
+			solucion.first.clear();
+			for( int j = 0; j < solucion_parcial.first.size();j++ )
+				solucion.first.push_back(solucion_parcial.first[j]);
+		}
+	}
+	return;
+}
+\end{lstlisting}
+
+% -----------------------------------------------
+\end{document}

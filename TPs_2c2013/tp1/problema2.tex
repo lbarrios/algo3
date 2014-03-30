@@ -1,0 +1,377 @@
+% ------ headers globales y begin ---------------
+\documentclass[11pt, a4paper, twoside]{article}
+\usepackage{header_tp1}
+\begin{document}{}
+% -----------------------------------------------
+
+\subsubsection{Descripción}
+
+En este problema debemos maximizar la cantidad de cursos a dar a través del programa de Profesores
+Visitantes que organiza el Departamento de Computación de la facultad.
+Se invitó a un grupo de prestigiosos profesores extranjeros a que dicten
+cursos en la facultad. Como es natural, cada profesor que puede concurrir
+tiene una agenda bastante cargada, con lo cual son ellos quienes establecen
+la disponibilidad. Esto tiene la desventaja de que seguramente existirán
+cursos que se solapen en el tiempo, produciendo que si algún alumno
+quisiera participar en todos ellos, no lo va a poder hacer. Debemos
+garantizar que se ofrecerán la mayor cantidad de cursos sin que se solapen.
+
+Los datos de los cursos vienen dados como pares $[inicio, fin]$ sin ningún tipo de orden.
+Una primera aproximación podría ser analizar el universos de soluciones y quedarse con
+la óptima. Este enfoque resultaría muy caro. Dado que el departamento
+solicita una cota menor que \bigO{n^2}, tendremos que mejorar el enfoque.
+
+Este tipo de problemas suelen tener buenas resoluciones mediantes técnicas
+de algoritmos golosos. Algunas de las posibles estrategias serían: menor fecha de inicio,
+menor fecha de fin, menor duración. Luego vamos a demostrar que tomar el curso
+con menor fecha de fin cada vez es la estrategia que maximiza la cantidad de cursos 
+a dictar con complejidad temporal en peor caso \bigO{n \log{n}}. Un ejemplo:
+
+\[
+[1,6] \quad [4,5] \quad [2,3] \quad [7,9] \quad [9,10] \quad [10,12]
+\]
+
+\begin{center}
+	\begin{tabular}{ l l|c }
+		\multicolumn{3}{ c }{Elección de cursos} \\
+		\hline
+		Menor fecha de inicio & $[1,6] \quad [7,9] \quad [10,12]$        & \textbf{\#3} \\
+		Menor fecha de fin    & $[2,3] \quad [4,5] \quad [7,9] \quad [10,12]$ & \textbf{\#4} \\
+		Menor duración        & $[2,3] \quad [4,5] \quad [9,10]$         & \textbf{\#3}
+	\end{tabular}
+\end{center}
+
+\subsubsection{Hipótesis de resolución}
+
+Para resolver el problema se plantea un algoritmo que a cada momento elije el curso
+cuya fecha de finalización es menor que todos los demás cursos aún no seleccionados.
+Si el curso no se solapa con el anterior (con lo cual tampoco se solapa con los anteriores
+al anterior) entonces es el curso que mejor encaja en ese momento y se lo agrega
+a los cursos ya seleccionados. Si se solapa, se lo descarta. El procedimiento se repite
+hasta que no quedan cursos para analizar. En caso de haber dos cursos que finalicen
+en la misma fecha, se elije aquel que comience antes~\footnote{al estar ordenados por fecha de fin,
+la elección desempate según fecha de inicio es indistinta.
+Si elijiendo por menor fecha de inicio en el desempate hubiese otro curso más que \enquote{entre},
+entonces éste debiera tener menor fecha de fin, pues sino se solaparía.
+El desempate por menor fecha de inicio se basa en el hecho de que sea un curso con mayor duración, cubriendo
+de esta manera, no sólo la mayor cantidad de cursos a dictar sino también la mayor cantidad
+de días ocupados.} (y obviamente no se solape) y
+en caso de persistir el empate, se elije aquel con menor \enquote{id}, o sea, menor
+en orden de entrada.
+
+Nuestro algoritmo procesa el \enquote{elegir en cada momento} ordenando los
+cursos por menor fecha de fin (desempatando como se describió) y luego se los recorre
+linealmente. Este cambio no modifica el comportamiento pero logra generar un
+mejor orden de complejidad temporal. Dados $n$ cursos se los puede ordenar en
+\bigO{\log n} utilizando \textit{heapsort}. Para ello utilizamos la estructura
+\texttt{set} de la \texttt{stl} de \texttt{C++} cuya complejidad cumple lo propuesto
+ya que internamente está implementado como un árbol binario de búsqueda~\bib{stl:set}.
+Se puede ver el comportamiento en el \alg{profes}.
+
+\begin{algorithm}
+\caption{Profesores Visitantes}\label{profes}
+\begin{algorithmic}[1]
+	\Require
+		\Statex $cant \gets$ \Call{Cantidad de Cursos Ofrecidos}{} \Comment{$integer$}
+		\Statex $listaFechas \gets$ \Call{Lista de Fechas Inicio y Fin}{} \Comment{$std::vector\langle integer \rangle$}
+	\Ensure
+		\Statex \Call{Lista de Números de Cursos}{} \Comment{$std::list\langle integer \rangle$}
+	\Statex
+	
+	\State $conjuntoCursos \gets$ \Call{Conjunto}{$cant$} \Comment{$std::set\langle Curso \rangle$}
+	\Statex
+	
+	\Function{Procesar Cursos}{$cant, listaFechas$}
+		\State \Call{Cargar Cursos}{$cant, listaFechas$} \Comment{\bigO{n\log{n}}}
+		\State \Return \Call{Selección de Cursos}{} \Comment{\bigO{n}}
+	\EndFunction \Comment{\texttt{final} \bigO{n\log{n}}}
+	\Statex
+	
+	\Procedure{Cargar Cursos}{$cant, listaFechas$}
+		\State $i \gets 0$
+		\While {$i < 2*cant$}
+			\State $num \gets i \div 2$
+			\State $inicio \gets listaFechas[i]$
+			\State $fin \gets listaFechas[i+1]$
+			\State $curso \gets$ \Call{Nuevo Curso}{$num, inicio, fin$} \Comment{\bigO{1}}
+			\State \Call{Insertar Ordenado}{$conjuntoCursos, curso$} \Comment{std::set::insert, \bigO{\log n}}
+			\State $i \gets i + 2$
+		\EndWhile \Comment{\texttt{ciclo} \bigO{n}}
+	\EndProcedure \Comment{\texttt{final} \bigO{n\log{n}}}
+	\Statex
+	
+	\Function{Selección de Cursos}{}
+		\State $listaNumeros \gets$ \Call{Nueva Lista}{}
+		\State $curso \gets$ \Call{Próximo Curso}{$conjuntoCursos$} \Comment{\bigO{1}}
+		\State $num \gets$ \Call{Numero}{$curso$}
+		\State $fin \gets$ \Call{Fecha de Fin}{$curso$}
+		\While {$proxCurso \gets$ \Call{Próximo Curso}{$conjuntoCursos$}}
+			\State $proxNum \gets$ \Call{Numero}{$proxCurso$} \Comment{\bigO{1}}
+			\State $proxInicio \gets$ \Call{Fecha de Inicio}{$proxCurso$} \Comment{\bigO{1}}
+			\State $proxFin \gets$ \Call{Fecha de Fin}{$proxCurso$} \Comment{\bigO{1}}
+			\If {$fin < proxInicio \wedge fin < proxFin$}
+				\State \Call{Insertar}{$listaNumeros, num$} \Comment{\bigO{1}}
+				\State $num \gets proxNum$
+				\State $fin \gets proxFin$
+			\EndIf
+		\EndWhile \Comment{\texttt{ciclo} \bigO{n-1}}
+		\State \Call{Insertar}{$listaNumeros, num$} \Comment{el último, \bigO{1}}
+		\State \Return $listaNumeros$
+	\EndFunction \Comment{\texttt{final} \bigO{n}}
+\end{algorithmic}
+\end{algorithm}
+
+\clearpage
+\subsubsection{Justificación formal de correctitud}
+
+\begin{notac}
+\emph{curso} = $\langle fechaInicio, fechaFin, ID \rangle$, tupla tal que $fechaInicio<fechaFin$ y $ID$ es único.
+\end{notac}
+\begin{definicion}
+Considerando a $C$ como \emph{el conjunto de todos los cursos provenientes de la entrada del problema}, notaremos como $F_p$ = $\rho(C)$ al conjunto de todas las posibles soluciones, y a $F_v\subset F_p$ el subconjunto tal que
+\[
+	F_v = \{f : f \in F_p \wedge f \; \text{representa a una solucion válida}\}.
+\]
+\end{definicion}
+\begin{definicion}
+$\forall \ f \in F_v$, caracterizamos a $s(f)$ secuencia conformada por 
+los cursos $c \in f$ de forma tal que se cumple que $\forall \ s_{i}(f), s_{i+1}(f)$
+\[
+	 fechaInicio(s_{i}(f)) < fechaFinal(s_{i}(f)) < fechaInicio(s_{i+1}(f)) < fechaFinal(s_{i+1}(f))
+\]
+Denotamos como $S(f)$ al conjunto de todas las posibles secuencias de la forma $s(f)$.
+\end{definicion}
+\begin{aclaracion}
+Como la consigna requiere que no existan cursos solapados, asumimos que para todo conjunto de cursos que pueda
+representar una \textbf{solución válida} existirá una y solo una secuencia ordenada según el criterio mencionado
+anteriormente, de forma tal que para cada curso que se encuentre en la posición $i+1$ de la secuencia, 
+la fecha de inicio es mayor a la fecha de fin del \textbf{curso} que se encuentre en la posición anterior 
+($i$). Demostrarlo resulta trivial ya que, dado que todos los \textbf{cursos} tienen su propia fecha de finalización
+posterior a su propia fecha de inicio, si asumiesemos que el criterio de orden estricto utilizado en la definición 
+anterior no fuese satisfacible para alguna \textbf{solución válida}, entonces mediante dicha solución podríamos 
+construir una secuencia en donde (al resultar imposible cumplir con el criterio de orden) debería 
+existir al menos un par de cursos para el cual la fecha de inicio del primero de ellos sería menor a la fecha 
+de finalización del otro, y en donde la fecha de inicio de este último seria menor a la fecha de finalización del
+primero, lo cual es absurdo porque los cursos no se pueden solapar.
+\end{aclaracion}
+\begin{definicion}
+Notamos $s(x) \in S(f)$ como la secuencia formada por los \textbf{cursos} de \textbf{nuestra solución}.
+\end{definicion}
+\begin{prop}
+$\forall \ i \in \nat$, $s(f) \in S(f)$,
+$\nexists s(f)[1 \dots i]$ subsecuencia de $s(f)$ formada por sus primeros $i$ elementos tal que
+\[
+	\nexists \ s(x)[1 \dots i] \lor fechaFinal(s_{i}(x)) > fechaFinal(s_{i}(f))
+\]
+\end{prop}
+\begin{demostracion}\ \newline
+\indent \textbf{Caso base} Suponemos que existe un $s_{1}(f)$ subsecuencia de $s(f)$ tal que
+\[
+	fechaFinal(s_{1}(f))<fechaFinal(s_{1}(x))
+\]
+Sabemos que el criterio de selección de 
+nuestra solución toma siempre desde el conjunto de cursos que todavía no han sido 
+elegidos o descartados el curso con menor fecha de finalización. Entonces, 
+llegamos a un absurdo, puesto que como el primer curso que está tomando nuestra 
+solución va a ser necesariamente alguno de los que menor fecha tenga con 
+respecto a todo el conjunto de cursos, es contradictorio plantear la existencia de
+otra solución cuyo primer curso tenga una fecha menor a esta. 
+
+Suponemos entonces que existe un $s_{1}(f)$ subsecuencia de $s(f)$ tal que
+$\nexists \ s(x)[1 \dots 1]$. Esto también es absurdo, porque si sabemos que existe 
+al menos \enquote{\textbf{un curso}} (de forma tal que permite la existencia de la subsecuencia $s_{1}(f)$) 
+en particular existe también \enquote{\textbf{un curso de menor fecha de finalización}}, y 
+por lo tanto existe $s(x)[1 \dots 1]$.
+
+
+\indent \textbf{Paso inductivo} $P(n) \then P(n+1)$
+
+Suponemos que existe una subsecuencia $z = s(f)[1 \dots n+1]$ de $s(f)$, de forma tal 
+que la misma contiene $n+1$ \textbf{cursos} de una \textbf{solucion válida}, y que
+además es \textbf{potencialmente} mejor que \textbf{nuestra solución}, es decir que se 
+cumple que $fechaFinal(z_{n+1}) < fechaFinal(s_{n+1}(x))$, 
+o bien que $\nexists \ s(x)[1..n+1]$. 
+
+En particular, podemos afirmar que al ser $z$ una subsecuencia de $s(f)$,
+la subsecuencia $g = z - z_{n+1}$ (puesto que es una subsecuencia de $z$) 
+va a seguir siendo también una subsecuencia de $s(f)$, y debido a que para
+formarla le estamos quitando el último elemento a $z = s(f)[1 \dots n+1]$, 
+va a tener la forma $g = s(f)[1 \dots n+1] - s_{n+1}(f) = s(f)[1 \dots n]$.
+
+Por la \textbf{hipótesis inductiva}, sabemos que vale $\exists \ s(x)[1 \dots n]$, y
+que además no existe subsecuencia $s(f)[1 \dots n]$ de $s(f)$ tal que se cumpla
+$fechaFinal(s_{n}(f))<fechaFinal(s_{n}(x))$. Esto es es equivalente a afirmar que
+\[
+	(\forall \ s(f)[1 \dots n]) fechaFinal(s_{n}(x)) \leq fechaFinal(s_{n}(f))
+\]
+{}
+(Esta última afirmación aplica también a $g$, ya que es subsecuencia de $s(f)$)
+
+
+Finalmente, podemos concluir: por un lado que no es posible que 
+se cumpla que dado $z \then \nexists \ s^{x}[1 \dots n+1]$, puesto que sabemos 
+que $\exists \ s^{x}[1 \dots n]$, que $\exists \ g = z - z_{n+1}$, 
+y que $fechaFinal(s_{n}(x)) \leq fechaFinal(g)$, nuestro algoritmo podría haber
+tomado el curso $z_{n+1}$, el cual no se solapa con $g$, y por 
+consiguiente no se solapa con $s_{n}(x)$. Por otro lado, tampoco es posible
+que se cumpla que dado $z \then \exists \ s(x)[1 \dots n+1] \wedge 
+fechaFinal(z_{n+1}) < fechaFinal(s_{n+1}(x))$, puesto que sabemos que
+$\exists \ s(x)[1..n]$, que $z = s_{n}(f) + z_{n+1}$, y que
+$ \ \forall s(f)[1..n], \; fechaFinal(s_{n}(x)) \leq fechaFinal(s_{n}(f))$,
+y como \textbf{nuestra solución} toma siempre el de menor fecha de finalización, 
+es absurdo plantear que $z_{n+1}$ pudiese terminar antes que $s_{n+1}(x)$, puesto
+que en ese caso, como la fecha de finalización de $s_{n}(x)$ es menor a la de $z_{n}$,
+debería haberlo elegido. \qed
+\end{demostracion}
+
+\begin{prop}
+$s(x) \in S(f)$ (\textbf{nuestra solucion}) es óptima.
+\end{prop}
+
+\begin{demostracion}
+Suponemos que existe una solución mejor a $s(x)$. En particular, esa solución 
+va a ser válida, por lo que va a pertenecer a $S(f)$. Para ser mejor que
+nuestra solución, esta debe como condición necesaria pero no suficiente,
+cumplir las mismas condiciones expuestas en la proposición anterior, es decir,
+volcándola en una secuencia bajo el mismo criterio de ordenamiento ya expuesto,
+debería existir un $i$ para el cual, o bien esta nueva solución tenga en su
+última posición una fecha de finalización menor a nuestra solución, o bien
+nuestra solución disponga tan solo de $i-1$ elementos en su secuencia.
+Aplicando el mismo tipo de razonamiento que para el procedimiento anterior, 
+se llega al absurdo, lo cual demuestra que no puede existir una solución 
+mejor que la planteada.
+\end{demostracion}
+
+\begin{comment}
+Sean $FechaInicio, FechaFinal, ID$ enteros positivos, sea el tipo Curso una Tupla
+
+\[
+\langle FechaInicio, FechaFinal, ID \rangle
+\]
+
+tal que para toda Tupla $t$, $FechaInicio(t) < FechaFinal(t)$.
+Sea un $c$ un conjunto de cursos. Se pide hallar una secuencia de $c$ sin repetidos tal que
+para todo curso $t$ que está en $s$, también está en $c$, y para todo curso $t'$
+que está en $s$, $FechaInicio(t) > FechaFinal(t')$ o $FechaFinal(t) < FechaInicio(t')$ o $t == t'$
+y no existe $s'$ otra secuencia de cursos tal que sea solución del problema y 
+$s'$ tenga mayor cantidad de cursos que $s$.
+
+Dado algoritmo goloso que resuelve el problema, queremos demostrar que en cada paso
+tomar el curso de menor $FechaFinal$ que no se superponga con el ninguno la secuencia ya formada
+(secuencia ordenada a partir de comparaciones sobre la fecha final),
+es el mejor candidato para agregar a nuestra secuencia solución.
+
+Debemos tomar un curso $m$ que pertenezca a $c$ tal que para todo curso $m'$ distinto a $m$
+que también esté en $c$ y para el curso $q$ el cual es el último que tomamos anteriormente,
+el curso $FechaFinal(m) \leq FecheFinal(m')$ y además no se solapa con $q$.
+
+Veamos el primer caso de una secuencia vacía. Por un lado veamos que $m$ es un buen candidato.
+Supongamos que $m$ no fuera el primer elemento de la secuencia solución $s$ y existiera una 
+secuencia $s'$ solución del problema donde $m$ no fuera el primer elemento de esa secuencia.
+Entonces existiria una $m'$ primer elemento de $s'$ tal que $FechaFinal(m') > FechaFinal(m)$.
+Si yo tomara la subsecuencia posterior a $m'$, ésta no se superpondría y le concatenara $m$, al
+principio, esta secuencia sería solución, y tendría la misma longitud que $s'$, por lo tanto
+es falso que pueda existir.
+
+Para la segunda parte de la hipótesis la secuencia que voy formando es vacía, por lo tanto
+no existe ningún Curso con el que $m$ se pueda superponer.
+
+Entonces para el primer paso $m$ es un buen candidato. Ahora veamos que en particular
+en cualquier instancia del problema $m$ es un buen candidato.
+Supongamos que en alguna instancia del problema, existe el curso $m'$ tal que
+$FechaFinal(m) < FechaFinal(m')$ y que $m'$ no pertenece a la solución $s$
+y existe $s'$ solución del problema tal que $m'$ pertenece a $s'$ y $long(s) < long(s')$.
+
+Como $s, s'$ son solución del problema, en particular existe una permutación de ellas tal que están
+ordenadas. Supongamos que yo tomos esas permutaciones. (por motivos didacticos la voy a seguir llamnando $s, s'$).
+Hay dos casos: $principio(s,m) < principio(s',m')$ o $final(s,m) < final(s',m')$.
+Final es la subsecuencia desde el elemento que contiene una secuencia hasta el final de la
+misma.
+
+Veamos el primero. Llamemos a la subsecuencia $p:principio(m',s')$.
+Si $FechaInicio(m') < FechaInicio(m)$, yo le puedo concatenar esta secuencia a $m$, por lo tanto
+la $long$ es igual, asi que no puede existir este $m'$.
+
+Si $FechaInicio(m') > FechaInicio(m)$, entonces existe un curso $p'$, tal que
+$p'$ no está en $principio(s, m)$ y $FechaFinal(p') < FechaInicial(m)$.
+Pero $FechaInicial(m) < FechaFinal(m)$ por definición de curso.
+Bueno esto no puede pasar porque $m$ es el menor de todos los $FechaFinal(t)$ tal que 
+$t$ pertenece a $c$ y $t$ no pertenece a $principio(s,m)$. Por lo tanto este curso no puede existir.
+
+Veamos el segundo. Supongamos que existe la subsecuencia 
+$f':final(s',m')$ tal que $long(f') > long(final(s,m))$ donde $FechaFinal(m) < FechaFinal(m')$.
+Si $FechaInicio(m') < FechaInicio(m)$, entonces yo puedo concatenar $m$ con $f'$ y la longitud
+quedaría igual, asi que no puede existir ese $m'$.
+Si $FechaInicio(m) < FechaInicio(m')$ entonces existe ubn curso $p'$ tal que $p'$
+pertenece a $f'$ y $p'$ no está en $final(s, m)$ y $FechaFinal(p') < FechaFinal(m)$.
+
+Si $FechaInicial(p') < FechaInicial(m)$ se podría concatenar al principio
+de $final(s, m)$ este elemento y la longitud quedaría igual.
+Si $FechaInicial(p') > FechaInicial(m)$ no puede pasar porque $m$ era el elemento con menor
+$FechaFinal$, de todos los elemento que no pertenecían a $Principio(s,m)$.
+Por lo tanto este elemento $m'$ no puede existir y $m$ es siempre un buen candidato para $s$.
+
+Descartar a todos los elementos que se superponen con $m$ a cada paso
+no influye en la solución. Se puede ver que tomar cualquier elemento de un conjunto de
+Curso que se superponen es lo mismo, ya que de todos ellos solo se
+puedo elegir uno y la $long$ de la solución es la misma.
+\end{comment}
+
+\subsubsection{Cota de complejidad temporal}
+
+El algoritmo ejecuta dos pasos. Primero recorre todos los cursos y los
+inserta con orden en el conjunto ordenado. La recorrida toma una tiempo
+linea \bigO{n} dado que se recorren todos los elementos en orden de entrada,
+mientras que la inserción se hace en tiempo logarítmico al tratarse de una
+estructura implementada en base a \textit{heapsort}. Este proceso tiene
+una complejidad de \bigO{n \log n}.
+
+En segunda instancia se hace la selección de cursos, en donde se recorren
+nuevamente todos cursos tomando una complejidad de \bigO{n}. La complejidad
+final es de \bigO{n \log n}.
+
+\subsubsection{Verificación mediante casos de prueba}
+
+Para verificar el correcto funcionamiento de nuestro programa tomamos
+una serie de instancias que consideramos representativas de casos extremos
+o sensibles y analizamos el comportamiento. Definimos los siguientes casos:
+
+\begin{verbatim}
+in1: 2 1 1 1 1                    | out1: 1
+in2: 5 1 2 2 3 3 4 4 5 5 6        | out2: 1 3 5
+in3: 4 1 2 3 4 5 6 7 8            | out3: 1 2 3 4
+in4: 4 1 10 2 3 4 5 6 7           | out4: 2 3 4
+in5: 6 1 6 4 5 2 3 7 9 9 10 10 12 | out5: 3 2 4 6
+\end{verbatim}
+
+La entrada 1 provee dos cursos con mismas fechas, con lo cual devuelve el primero
+(en este caso el desempate llega hasta menor \enquote{id}).
+En la entrada 2, cada curso se solapa con el siguiente, con lo cual
+toma uno sí y otro no. En la entrada 3 son todos cursos contigüos,
+entonces se seleccionan todos. La entrada 4 contiene cursos contigüos
+salvo el primero que se solapa con todos, entonces, a éste no lo tiene
+en cuenta y elije todos los demás. La entrada 6 es aquella que se usó como
+ejemplo en la descripción del problema. Se puede ver que la elección
+es consecuente con lo mostrado.
+
+\clearpage
+\subsubsection{Medición empírica de la performance}
+
+\begin{figure}[H]
+   \begin{center}
+   \includegraphics[width=1.4\textwidth,angle=90]{img/ejercicio2.png}
+   \caption{\textbf{Primer muestreo del Ejercicio 2}}
+   \label{fig:ej2}
+   \end{center}
+\end{figure}
+
+\begin{figure}[H]
+   \begin{center}
+   \includegraphics[width=1.4\textwidth,angle=90]{img/ejercicio2_final.png}
+   \caption{\textbf{Segundo muestreo del Ejercicio 2}}
+   \label{fig:ej2-final}
+   \end{center}
+\end{figure}
+
+% -----------------------------------------------
+\end{document}

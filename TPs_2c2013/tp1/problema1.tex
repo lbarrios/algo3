@@ -1,0 +1,402 @@
+% ------ headers globales y begin ---------------
+\documentclass[11pt, a4paper, twoside]{article}
+\usepackage{header_tp1}
+\begin{document}{}
+% -----------------------------------------------
+
+\subsubsection{Descripción}
+
+Pascual es el encargado de ordenar los paquetes en un servicio de correo. 
+Su tarea consiste en recolectar los paquetes desde una cola, es decir, 
+a medida que los mismos van llegando, y acomodarlos en los distintos 
+camiones que luego se encargarán de transportarlos. Sabemos que cada paquete 
+tendrá un peso determinado, el cual se nos presenta como un número entero 
+positivo, y que cada camión soporta una carga máxima, representada de la misma forma. 
+Además, se nos asegura que no puede existir ningún paquete de forma tal que este 
+supere la carga máxima que soportan los camiones, de lo cual se deduce que
+dado $m$ el peso máximo que soporta un camión, el peso de cualquier paquete
+de la cola estará contenido en el rango $[1...m]$.
+
+Se nos indica que Pascual cuenta con un criterio determinado de antemano, el cual
+utilizará para acomodar los paquetes en los camiones: dado un paquete, acomodará
+el mismo en uno de los camiones cargados, seleccionando específicamente de todos los que
+haya disponibles el que menos carga presente en ese momento, siempre que el peso del mismo 
+no supere la capacidad disponible del camión en cuestión; caso contrario, utilizará 
+un nuevo camión.\\
+
+Los jefes de Pascual desean averiguar de antemano la carga que contendrá cada camión
+luego de que todos los paquetes sean acomodados. Se nos plantea diseñar una solución
+a este problema, y que la misma esté acotada por una complejidad estrictamente menor 
+a \bigO{n^2}.
+
+Llamaremos \enquote{algoritmo pascual} al que, dada una cola de paquetes, pretende 
+(sin éxito) minimizar la cantidad de camiones a utilizar (potencialmente infinitos)
+eligiendo en cada paquete aquel camión en uso con menos carga. Si no lo consigue, 
+el método indica que debe pone en uso un nuevo camión. Los paquetes se cargan en 
+el orden en que vienen dados, y cada paquete tiene un peso mayor estricto que cero, 
+y menor o igual que la capacidad de un camión (todos tienen el mismo máximo de carga). 
+Los paquetes se cargan enteros, es decir, un mismo paquete no puede \enquote{ser dividido 
+en distintos camiones}. A efectos prácticos, aunque no lo sepamos, de aquí en
+adelante admitiremos que Pascual efectúa la elección del camión en forma lineal,
+para intentar mejorarlo.
+
+Por lo general, los algoritmos golosos se distinguen por contar con:\bibext{p. 188}{lib:brassard}\bib{wiki:greedy}:
+
+\begin{itemize}
+	\item Un conjunto de candidatos
+	\item Un método de selección
+	\item Un indicador de factibilidad
+	\item Una función objetivo
+	\item Una función de solución
+\end{itemize}
+
+Por ejemplo podría suceder lo siguiente: se disponen de infinitos camiones, de forma tal cada camión $c_{i}$
+soporta una carga máxima de $100kg$, y una lista de paquetes de peso $p_{j}$. Una carga posible podría ser
+$\langle 30, 50, 90, 5, 80, 12, 20 \rangle$ haciendo que se genere el siguiente proceso de carga:
+\begin{center}
+	\begin{tabular}{ | r | l | l | }
+		\hline
+		\multicolumn{3}{|c|}{\textbf{Carga de Camiones}} \\
+		\hline
+		$p_{1}$ & $c_1 \gets 30$ & $c_{1}=30$ \\
+		$p_{2}$ & $c_1 \gets 50$ & $c_{1}=80$ \\
+		$p_{3}$ & $c_2 \gets 90$ & $c_{1}=80$, $c_{2}=90$ \\
+		$p_{4}$ & $c_1 \gets 5$  & $c_{1}=85$, $c_{2}=90$ \\
+		$p_{5}$ & $c_3 \gets 80$ & $c_{1}=85$, $c_{2}=90$, $c_{3}=80$ \\
+		$p_{6}$ & $c_1 \gets 12$ & $c_{1}=97$, $c_{2}=90$, $c_{3}=80$ \\
+		$p_{7}$ & $c_3 \gets 20$ & $c_{1}=97$, $c_{2}=90$, $c_{3}=100$ \\
+		\hline
+	\end{tabular}
+\end{center}
+
+Como mejor caso podríamos recibir $\langle 10, 20, 8, 17, 12, 11, 2 \rangle$
+entrando todo en un solo camión:
+\begin{center}
+	\begin{tabular}{ | r | l | l | }
+		\hline
+		\multicolumn{3}{|c|}{\textbf{Carga de Camiones}} \\
+		\hline
+		$p_{1}$ & $c_1 \gets 10$ & $c_{1}=10$ \\
+		$p_{2}$ & $c_1 \gets 20$ & $c_{1}=30$ \\
+		$p_{3}$ & $c_1 \gets  8$ & $c_{1}=38$ \\
+		$p_{4}$ & $c_1 \gets 17$ & $c_{1}=55$ \\
+		$p_{5}$ & $c_1 \gets 12$ & $c_{1}=67$ \\
+		$p_{6}$ & $c_1 \gets 11$ & $c_{1}=78$ \\
+		$p_{7}$ & $c_1 \gets  2$ & $c_{1}=80$ \\
+		\hline
+	\end{tabular}
+\end{center}
+
+O nos podría llegar uno de los peores casos $\langle 50, 80, 60, 45, 75, 90, 15 \rangle$
+debiendo utilizar tantos camiones como paquetes:
+\begin{center}
+	\begin{tabular}{ | r | l | l | }
+		\hline
+		\multicolumn{3}{|c|}{\textbf{Carga de Camiones}} \\
+		\hline
+		$p_{1}$ & $c_1 \gets 10$ & $c_{1}=10$ \\
+		$p_{2}$ & $c_2 \gets 80$ & $c_{1}=10$, $c_{2}=80$ \\
+		$p_{3}$ & $c_3 \gets 60$ & $c_{1}=10$, $c_{2}=80$, $c_{3}=60$ \\
+		$p_{4}$ & $c_4 \gets 45$ & $c_{1}=10$, $c_{2}=80$, $c_{3}=60$, $c_{4}=45$ \\
+		$p_{5}$ & $c_5 \gets 75$ & $c_{1}=10$, $c_{2}=80$, $c_{3}=60$, $c_{4}=45$, $c_{5}=75$ \\
+		$p_{6}$ & $c_6 \gets 90$ & $c_{1}=10$, $c_{2}=80$, $c_{3}=60$, $c_{4}=45$, $c_{5}=75$, $c_{6}=90$ \\
+		$p_{7}$ & $c_7 \gets 15$ & $c_{1}=10$, $c_{2}=80$, $c_{3}=60$, $c_{4}=45$, $c_{5}=75$, $c_{6}=90$, $c_{7}=15$ \\
+		\hline
+	\end{tabular}
+\end{center}
+
+El último ejemplo además sirve para mostrar que Pascual no está minimizando la cantidad de camiones.
+Los paquetes $50$ y $45$ podrían haberse cargado juntos, al igual que los paquetes $80$ y $15$,
+utilizando dos camiones menos.
+
+\subsubsection{Hipótesis de resolución}
+
+El algoritmo que Pascual emplea para (su) minimización de camiones es goloso
+porque cumple con las características:
+
+\begin{itemize}
+	\item Un conjunto de candidatos: los camiones.
+	\item Un método de selección: elegir el de menor carga a cada momento.
+	\item Un indicador de factibilidad: cuando no entra en el menor, entonces no entra en ningún otro.
+	\item Una función objetivo: a cada paquete, los camiones usados son solución parcial.
+	\item Una función de solución: al no quedar paquetes tenemos los camiones.
+\end{itemize}
+
+de manera que se garantiza que se obtiene alguna solución al problema.
+Como este procedimiento no logra garantizar que los sub-problemas
+que quedan luego de una elección exhiban una subestructura óptima, no se
+puede garantizar que la solución brindada sea óptima\bibext{p.~381}{lib:cormen},
+tal como se mostró en el ejemplo de peor caso en la sección anterior.
+En este caso, el no existir solución sería contradictorio con
+la premisa de pesos de los paquetes. Al tener cada paquete un peso perteneciente al
+rango entre cero y la capacidad del camión, si existe por lo menos un paquete, seguro
+que entra en un camión.
+
+El problema a tratar no es obtener un algoritmo óptimo en la minimización
+de camiones, sino mejorar la complejidad del \enquote{algoritmo pascual},
+quien satisface el problema con una complejidad temporal \bigO{n^2}  para $n$ paquetes.
+Como los paquetes se recorren linealmente en orden (de llegada), esto implica
+que la elección del camión con menos carga se está haciendo también linealmente.
+El peor caso de camiones se da cuando cada paquete tiene un peso mayor estricto
+que la mitad de la capacidad de carga de los camiones o bien que para cualquier
+par de paquetes, la suma de sus pesos excede la capacidad máxima. También puede pasar,
+como en el ejemplo de la sección anterior, que un caso sea peor caso para Pascual
+pero no para la posible minimización de camiones. Entonces la cantidad
+de camiones a comparar, en el peor de los casos es $n$ (uno por cada paquete). 
+Los paquetes son finitos, los camiones si bien virtualmente infinitos, no
+van a ser mayor a la cantidad de paquetes.
+
+Dado que siempre nos interesa el camión con menor carga, la búsqueda
+secuencial sobre estructuras lineales pierde sentido en pos de otras más provechas, como ser
+una cola de prioridad. Entre las ventajas que tiene la cola de prioridad
+se pueden mencionar la obtención del mínimo elemento en tiempo constante,
+y agregar un elemento y modificar el mínimo en orden logarítmico.
+Modificar el mínimo implica quitar la raíz (generando una reestructuración de la cola)
+y volver a insertarlo modificado. Esto genera dos operaciones del orden de \bigO{\log n}.
+
+El \alg{logpascual} muestra el procedimiento llevado a cabo para ejecutar la tarea de Pascual
+con complejidad \bigO{n \log n}, dónde $n$ está representado por $cant$ (cantidad de paquetes
+que necesitan ser cargados). Si bien los paquetes llegan por la entrada estándar, a los fines
+del análisis podemos suponer que están representados en un arreglo, una lista o cualquier estructura
+que permita la iteración secuencial y que permita leer el dato en tiempo constante.
+
+Los camiones utilizan dos estructuras, una lista y una cola de prioridad.
+Se usan estructuras provistas por la \texttt{stl} de \texttt{C++} \bib{stl:stl}.
+Para la lista se utiliza \texttt{std::list} y para la cola \texttt{std::priority\_queue}.
+Quién asume la responsabilidad de la complejidad es la cola de prioridad,
+ya que es sobre ella que se genera la toma de decisiones.
+La inserción en la lista se puede se realiza \bigO{1} porque no se
+hace una inserción con prioridad, sino que se agrega al final.
+La lista guarda los camiones en el orden en que fueron utilizados por primera vez,
+lo cual es requisito de la devolución del problema.
+La cola de prioridad al realizar \Call{Insertar Con Prioridad}{} produce
+la remoción de la raiz, reacomodando y luego reinsertando con el valor actualizado.
+Como máximo se recorre la altura del árbol, o sea \bigO{\log n}.
+A los fines prácticos el empate de pesos en los paquetes
+se define por menor \enquote{id} (primero en usarse, más chico).
+En el peor de los casos van a existir $n$ camiones, uno por cada paquete.
+
+\begin{algorithm}
+\caption{Pascual Logarítmico}\label{logpascual}
+\begin{algorithmic}[1]
+	\Require
+		\Statex $limite \gets$ \Call{Carga Máxima}{} \Comment{$integer$}
+		\Statex $cant \gets$ \Call{Cantidad de Paquetes}{} \Comment{$integer$}
+		\Statex $pesosPaquetes \gets$ \Call{Lista de Pesos de Paquetes}{} \Comment{$array\langle integer \rangle$}
+	\Ensure
+		\Statex \Call{Cantidad de Camiones}{} \Comment{$integer$}
+		\Statex \Call{Lista de Pesos Cargados en Camiones}{} \Comment{$std::vector\langle integer \rangle$}
+	\Statex
+	
+	\State $camionesOcupados \gets 0$
+	\State $listaCamiones \gets$ \Call{Nueva Lista}{} \Comment{$std::list\langle Camion \rangle$}
+	\State $colaCamiones \gets$ \Call{Nueva Cola de Prioridad}{} \Comment{$std::priority\_queue\langle Camion \rangle$, \bigO{1}}
+	\ForTo {$i$}{$0$}{$cant-1$}
+		\State $peso \gets pesosPaquetes[i]$ 	\Comment{\bigO{1}}
+		\If {\Call{Hay Lugar}{$peso$}} 				\Comment{\texttt{chequeo} \bigO{1}}
+			\State \Call{Agregar Carga}{$peso$}	\Comment{\bigO{\log n}}
+		\Else
+			\State \Call{Nuevo Camión}{$peso$} \Comment{\bigO{\log n}}
+		\EndIf
+	\EndFor{} \Comment{\texttt{ciclo} \bigO{n}}
+	\State \Return $camionesOcupados$, \Call{Cargas}{$listaCamiones$}
+	\Statex{} \Comment{\texttt{final} \bigO{n\log n }}
+	\Statex{}
+	
+	\Function{Hay Lugar}{$peso$}
+		\State $camionMenosCargado \gets$ \Call{Tope De Cola}{$colaCamiones$} \Comment{\bigO{1}}
+		\State $carga \gets$ \Call{Carga}{$camionMenosCargado$}
+		\State \Return $camionesOcupados > 0 \wedge carga + peso \leq limite$ 
+	\EndFunction \Comment{\texttt{final} \bigO{1}}
+	\Statex{}
+	
+	\Procedure{Agregar Carga}{$peso$}
+		\State $camionMenosCargado \gets$ \Call{Tope De Cola}{$colaCamiones$} \Comment{\bigO{1}}
+		\State \Call{Sacar Tope}{$colaCamiones$} \Comment{\bigO{\log n }}
+		\State \Call{Sumar Carga}{$camionMenosCargado, peso$} \Comment{\bigO{1}}
+		\State \Call{Insertar Con Prioridad}{$colaCamiones, camionMenosCargado$} \Comment{\bigO{\log n }}
+	\EndProcedure \Comment{\texttt{final} \bigO{\log n }}
+	\Statex{}
+	
+	\Procedure{Nuevo Camión}{$peso$}
+		\State $nuevoCamion \gets $ \Call{Camion}{$peso, camionesOcupados+1$} \Comment{\bigO{1}}
+		\State $listaCamiones[camionesOcupados] \gets nuevoCamion$ \Comment{\bigO{1}}\label{logpascual:counter}
+		\State \Call{Insertar Con Prioridad}{$colaCamiones, nuevoCamion$}
+					\Comment{\bigO{\log n }}
+		\State $camionesOcupados \gets camionesOcupados + 1$
+	\EndProcedure \Comment{\texttt{final} \bigO{\log n }}
+	
+\end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Justificación formal de correctitud}
+
+Tal como fuimos describiendo a medida que avanzábamos en el desarrollo del algoritmo,
+este problema fue planteado por la cátedra con un funcionamiento correcto. Los paquetes
+llegan en orden en una estructura \emph{iterable}, y luego son recorridos. Cada paquete 
+presenta la posibilidad de ser cargado en un camión, ya sea alguno en uso o uno nuevo. 
+Como los pesos de los paquetes \enquote{encajan} en los camiones (expuesto de forma
+expresa en el propio enunciado), siempre resulta factible conseguir un camión. Esto 
+nos garantiza que al terminar de recorrer todos los paquetes, estos van a
+encontrarse cargados en algún camión, y que todo camión usado tendrá al menos 
+un paquete, ya que la forma de \enquote{inicializarlo} es mediante la asignación de una 
+carga. Por todo lo expuesto, debido a que el objetivo del problema es minimizar el
+gasto temporal de un algoritmo concreto, y no el de investigar o desarrollar un
+mecanismo de distribución de paquetes, es que asumimos que el algoritmo cumple
+con su objetivo.
+
+\subsubsection{Cota de complejidad temporal}
+
+En el algoritmo \textit{Pascual Logarítmico} se recorren los $n$ paquetes y se
+insertan en el mejor camión disponible en ese momento ($\log n$),
+tomando una complejidad final de \bigO{n\log n}.
+
+El \enquote{algoritmo pascual} itera linealmente tanto sobre los paquetes como
+sobre los camiones. De esta manera genera una complejidad de \bigO{n^2}.
+En el peor caso se tendrán $n$ camiones (uno por cada paquete),
+donde eso indica que en ningún caso se puedo meter más de un paquete en un camión.
+Esto implica que ante cada nuevo paquete se recorren todos los camiones existentes sin
+conseguir lugar, necesitando uno nuevo.
+
+Nuestro algoritmo respeta el procedimiento pero introduce una mejora en la búsqueda de
+camiones. En lugar de iterar sobre todos los cargados, se los mantiene dentro de una
+cola de prioridad, permitiendo que la lectura del menos cargado sea en \bigO{1}
+y la inserción o reinserción tome una complejidad de \bigO{\log n}. 
+La reinserción se efectúa cuando se carga un paquete en un camión no vacío.
+Es esos casos, la remoción se hace en tiempo logarítmico y luego se lo reinserta
+con la misma complejidad. En total, la reinserción efectúa dos operaciones logarítmicas consecutivas,
+siendo del orden \bigO{\log n}. La justificación de la complejidad temporal se logra
+gracias a las propiedades de la estructura de la cola prioritaria
+que almacena los elementos en un arbol binario \enquote{heapificado} \bibext{cap.~5.7}{lib:brassard}.
+La cota temporal inmediata está indicada por la propia documentación de la 
+estructura \texttt{priority\_queue} \bib{stl:pqueue}, parte de la \texttt{STL} 
+de \texttt{C++}. La complejidad final termina resultando en un orden \bigO{n \log n},
+dado que por cada paquete a lo sumo se efectúan dos operaciones logarítmicas.
+
+\subsubsection{Verificación mediante casos de prueba}
+
+Para verificar el correcto funcionamiento de nuestro programa tomamos
+una serie de instancias que consideramos representativas de casos extremos
+o sensibles y analizamos el comportamiento. Definimos los siguientes casos:
+
+\begin{verbatim}
+in1: 0 0                         | out1: 0
+in2: 1 0                         | out2: 0
+in3: 1 1 1                       | out3: 1 1
+in4: 1 2 1 1                     | out4: 2 1 1
+in5: 10 10 1 1 1 1 1 1 1 1 1 1   | out5: 1 10
+in6: 10 10 1 2 1 2 1 2 1 2 1 2   | out6: 2 10 5
+in7: 10 10 0 2 1 2 0 2 1 2 1 2   | out7: 2 10 3
+in8: 20 5 9 12 14 19 16          | out8: 5 9 12 14 19 16
+in9: 20 5 10 11 12 13 14         | out9: 5 10 11 12 13 14
+\end{verbatim}
+
+Los casos 1 y 2 muestran los escenarios en dónde no hay paquetes a cargar, con
+lo cual no se cargan camiones. Los casos 8 y 9 se refieren a las condiciones
+dadas para los peores casos, en dónde cada paquete pesa más de la mitad
+del límite de carga o bien, todo par de paquetes pesa más que el límite.
+El resto de los casos no son situaciones extremas pero sirven para analizar
+el comportamiento del algoritmo.
+
+A su vez se realizaron pruebas aleatorias que además de verificar el
+comportamiento se utilizaron para mostrar gráficamente que los resultados
+empíricos se condicen con el análisis teórico. A continuación se pueden
+ver reflejados los resultados.
+
+\subsubsection{Medición empírica de la performance}
+
+Para poder realizar un muestreo significativo se tomaron de 500 a 100 muestras para cada $X$,
+dónde $X$ representa la cantidad de paquetes. Se hizo variar a la cantidad $X$ entre $1$ 
+y $20000$. Para cada valor se tomaron dos muestreos, primeramente enfocandonos en los peores 
+casos (en que la utilización de camiones resultaba máxima). Esta mdición se corresponde con 
+\fig{fig:ej1}, y se eligió marcar a los distintos muestreos como puntos grises, que 
+al superponerse permiten captar de forma efectiva el espectro de densidad de la distribución 
+muestral. Sobre este mismo gráfico, se superpuso una línea blanca, representando el promedio 
+de las mediciones obtenidas para cada $X$. La línea punteada, finalmente, es la cota teórica 
+\bigO{n \log n}, multiplicada por una constante muy pequeña, del órden de 
+$44e-9$~\footnote{Esta cota fue establecida arbitrariamente; con constantes mayores la 
+cota teórica queda muy por encima, generando pérdida de visualización gráfica}.
+
+La primera eliminación de outliers se se realizó calculando la desviación estándar, 
+y descartando los valores que se encontraban a una distancia al promedio superior 
+al doble de la misma. Para tomar las mediciones se utilizó un bucle cuya guarda
+comprobaba la cantidad de \enquote{mediciones buenas}, tomando mediciones indefinidamente
+hasta alcanzar un nivel de muestreo confiable (establecido arbitrariamente, luego
+de sucesivas pruebas).
+
+Asumimos aquí que una \enquote{buena} forma de descartar outliers de un conjunto 
+muestral es asumir que los datos cumplen con la distribución probabilística de
+una función normal; entonces, se realiza el cálculo de la esperanza/promedio, y 
+la distribución estándar, descartando posteriormente aquellos que se encuentran
+en un rango mayor a $2*std$ alrededor de $u$
+(siendo $u$ es la esperanza y $std$ el desvío estándar).
+
+Luego de consultar con diversos docentes, esta medición fue posteriormente 
+descartada (aunque se había estimado que la cantidad y la calidad de los datos 
+descartados en el proceso era despreciable). Se repitió la muestra con un mecanismo
+similar: las muestras fueron tomadas con un mecanismo iterativo: para cada $X$ 
+se tomaron $N$ muestras, y luego se calcularon la esperanza y la $stdev$, al igual
+que antes, \enquote{descartando del conteo} (pero guardándolas en el muestreo) 
+las muestras que se salieran del rango. Llegado un punto, se entra en un proceso
+iterativo en el que se recalculan sucesivamente la esperanza y $stdev$, hasta que 
+la cantidad de \enquote{muestras aceptables} supera en gran medida a la cantidad de \enquote{muestras
+desviadas}. Dicho de otra forma, se estableció un sistema de puntajes 
+positivos/negativos, de forma tal que mientras las \enquote{muestras buenas} 
+sumaban puntaje a nuestro \enquote{contador de muestreo}, las \enquote{muestras malas} restaban,
+obligandonos a tomar mayor cantidad de muestras en los muestreos más \enquote{irregulares}. 
+Para dar un ejemplo, si nuestro muestreo objetivo era de $100$ muestras buenas, 
+y nos encontrabamos con $10$ \enquote{muestras malas}, antes de comenzar el muestreo 
+de $X+1$, tomábamos $10$ muestras \enquote{válidas} más (esto significa que
+quizás terminábamos tomando 15 muestras más, suponiendo que de las nuevas 
+muestras, 5 salieran \enquote{malas}).
+
+Se repitió el proceso para todos los $X$, con la principal diferencia de que 
+ahora se estaban guardando \textbf{todas} las muestras, independientemente si
+eran \enquote{malas} o \enquote{buenas}, a diferencia del primer intento..
+
+Luego de recolectar todos los datos se realizó el gráfico en donde a cada punto
+se le aplicó un valor alpha de 0.3 (transparencia), logrando un efecto de
+<\enquote{mayor densidad} de tonalidad/color en las zonas en que había más ocurrencia
+de muestras (es decir, en donde las muestras se imprimen una por sobre la otra).
+Esto se ve en \fig{fig:ej1}, y se interpreta la información de la siguiente forma:
+
+\begin{itemize}
+	\item En gris se ven las muestras que están más allá de la desviación estándar.
+	Mientras más alejadas estén, más pequeño debería ser el tamaño del punto que las representa. 
+	Para esto se hizo una función que variaba el tamaño del punto conforme aumentaba el desvío del mismo.
+	\item En colores más oscuros, tendiendo al negro, se observan las muestras que están dentro del rango 
+	de muestras aceptadas como válidas.
+	\item En blanco la función que representa el promedio, según lo detallado previamente.
+	\item En línea punteada la cota teórica multiplicada por una constante muy chica.
+\end{itemize}
+
+Para la figura \fig{fig:ej1-a}, en cambio, debido al largo tiempo que había demorado el primer muestreo, 
+se tomó una cantidad de valores de tiempo mucho más baja para cada valor de X (aproximadamente 20 valores, 
+frente a los 500-100 de la figura 1). Se utilizó la misma técnica de \enquote{repetición de muestras malas}, y
+se tomó además un segundo muestreo en donde la entrada fue generada mediante un algoritmo pseudoaleatorio
+que obteniendo los pesos de los paquetes a través de una función de probabilidad uniforme, generó una 
+tanda de \enquote{testcases} (20*20000 = 400000 casos de prueba distintos en total) que luego fue aplicada
+a nuestra versión logarítmica del algoritmo pascual. En este gráfico se representó la muestra de peor 
+caso mediante un grosor de línea muy fino, y la muestra pseudoaleatoria mediante un trazo grueso. Se 
+mantuvo la misma cota teórica que para el ejercicio anterior.
+
+\clearpage
+\begin{figure}[H]
+   \begin{center}
+   \includegraphics[width=1.4\textwidth,angle=90]{img/ejercicio1.png}
+   \caption{\textbf{Muestreo del Ejercicio 1}}
+   \label{fig:ej1}
+   \end{center}
+\end{figure}
+
+\clearpage
+\begin{figure}[H]
+   \begin{center}
+   \includegraphics[width=1.4\textwidth,angle=90]{img/ejercicio1-a.png}
+   \caption{\textbf{Segundo muestreo del Ejercicio 1}}
+   \label{fig:ej1-a}
+   \end{center}
+\end{figure}
+
+% -----------------------------------------------
+\end{document}
