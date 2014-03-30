@@ -44,10 +44,21 @@ Segundo caso:
 Para este caso, el primer d\'ia del per\'iodo de contrataci\'on ser\'a $d=1$ y habr\'an sido inspeccionados, durante los d\'ias D\'ia1, D\'ia2 y D\'ia3, un total de $c=10$ camiones. 
 
 \subsubsection{Hipótesis de resolución}
-
+esta en el jpg
 \subsubsection{Justificación formal de correctitud}
-
+Sabemos que la soluci\'on pertenece al conjunto {d1, ... , dn}. Nuestro algoritmo itera sobre cada elemento di del conjunto calculando P(di), y guardando el elemento e con P(e) m\'aximo encontrado hasta el momento. Al final de las iteraciones, tenemos guardado el elemento e con P(e) maximo en todo el conjunto. Devolvemos e y P(e).
 \subsubsection{Cota de complejidad temporal}
+Aca hace falta un pseudocodigo mas detallado. Puedo hacerlo bien simple sin las optimizaciones. Quizas no. despues se pueden explicar las optimizaciones para la parte de experimentacion, ya que la complejidad teorica es la misma.
+ordenar(d) //O(n log(n))
+der = 1
+for izq in 1..n :
+    while d\[der\] - d\[izq\] < D and der < n:
+        der += 1
+    si es necesario actualizo //O(1)
+
+Consideremos la complejidad del ciclo for. A lo largo del ciclo se van actualizando izq y der, y se va guardando el maximo que lleva  en si O(1).
+?Cuantas veces se actualizan izq y der? Pues, como van en forma creciente de 1 a n, exactamente n veces cada una. El ciclo for tiene complejidad O(2n) = O(n)
+La complejidad del algoritmo es finalmente O(n log n).
 
 \subsubsection{Verificación mediante casos de prueba}
 
