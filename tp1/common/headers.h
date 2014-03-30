@@ -33,19 +33,23 @@ public:
     size_type capacity() const { return this->c.capacity(); }
 };
 
-#ifdef DEBUG
-        #define DEBUGC(x) cout << x
-        #define IFDEBUG(x,y) if(x){ y }
-#else
-        #define DEBUGC(x)
-        #define IFDEBUG(x,y)
+
+    #ifdef DEBUG
+            #define DEBUGC(x) cout << x
+            #define IFDEBUG(x,y) if(x){ y }
+    #else
+            #define DEBUGC(x)
+            #define IFDEBUG(x,y)
+    #endif
+
+    #ifdef TIME
+        #define tomarTiempoInicial() do{}while(0)
+        #define imprimirTiempoFinal() do{}while(0)
+    #else
+        #define tomarTiempoInicial() do{}while(0)
+        #define imprimirTiempoFinal() do{}while(0)
+    #endif
+
 #endif
 
-#ifdef TIME
-        //#include <sys/timeb.h>
-        #define IFTIME(x) x
-#else
-        #define IFTIME(x)
-#endif
 
-#endif

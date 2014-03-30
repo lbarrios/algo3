@@ -77,16 +77,16 @@ ParserDeParametros::ParserDeParametros(int argc, char** argv){
         #endif
         break;
       case 'h' : //< --help
-        _imprimirAyuda(); 
-        exit(EXIT_SUCCESS); 
+        _imprimirAyuda();
+        exit(EXIT_SUCCESS);
         break;
       case '?' : //< ¡¡Opción no reconocida!!
         if(argc <= optind)
           cerr << "No se reconoce la opción " << argv[argc-1] << "." << endl;
         else
           cerr << "No se reconoce la opción " << argv[optind] << "." << endl;
-      default : 
-        _imprimirAyudaError(); 
+      default :
+        _imprimirAyudaError();
     }
   }
 
@@ -163,7 +163,7 @@ void ParserDeParametros::_imprimirAyuda( void ){
            << "\t\t" << "utilizar salida estándar, error ó un archivo" << endl
     #endif
        << endl;
-  cout 
+  cout
   << "Parámetros extra:" << endl
   << "\t" << "Ninguno (por ahora)" << endl;
 
@@ -182,13 +182,13 @@ void ParserDeParametros::_imprimirAyuda( void ){
 }
 void ParserDeParametros::_imprimirErrorInput( string nombreArchivo ){
   cerr << TITULO_ERROR <<
-"No se puede abrir el archivo de input indicado ("<< nombreArchivo <<")." 
+"No se puede abrir el archivo de input indicado ("<< nombreArchivo <<")."
   << endl;
   exit(EXIT_FAILURE);
 }
 void ParserDeParametros::_imprimirErrorOutput( string nombreArchivo ){
   cerr << TITULO_ERROR <<
-"No se puede abrir el archivo de output indicado ("<< nombreArchivo <<")." 
+"No se puede abrir el archivo de output indicado ("<< nombreArchivo <<")."
   << endl;
   exit(EXIT_FAILURE);
 }
@@ -201,7 +201,7 @@ void ParserDeParametros::_imprimirErrorDebug( string nombreArchivo ){
   << endl;
 #else
   cerr << TITULO_ERROR <<
-  "No se puede abrir el archivo de debug indicado ("<< nombreArchivo <<")." 
+  "No se puede abrir el archivo de debug indicado ("<< nombreArchivo <<")."
   << endl;
 #endif
   exit(EXIT_FAILURE);
@@ -214,7 +214,7 @@ void ParserDeParametros::_imprimirErrorTime( string nombreArchivo ){
   endl;
 #else
   cerr << TITULO_ERROR <<
-  "No se puede abrir el archivo de time indicado ("<< nombreArchivo <<")." 
+  "No se puede abrir el archivo de time indicado ("<< nombreArchivo <<")."
   << endl;
 #endif
   exit(EXIT_FAILURE);
@@ -226,19 +226,19 @@ void ParserDeParametros::_imprimirErrorParametro( string parametro, string value
 "Sin embargo, no se reconoce el valor indicado (" << value << ")" << endl;
   exit(EXIT_FAILURE);
 }
-istream &ParserDeParametros::tipoInput ( void )
-{ 
-  return *_input; 
+istream &ParserDeParametros::dameInput ( void )
+{
+  return *_input;
 }
-ostream &ParserDeParametros::tipoOutput ( void )
-{ 
-  return *_output; 
+ostream &ParserDeParametros::dameOutput ( void )
+{
+  return *_output;
 }
-ostream &ParserDeParametros::tipoDebug ( void )
-{ 
-  return *_debug; 
+ostream &ParserDeParametros::dameDebug ( void )
+{
+  return *_debug;
 }
-ostream &ParserDeParametros::tipoTime ( void )
-{ 
-  return *_time; 
+ostream &ParserDeParametros::dameTime ( void )
+{
+  return *_time;
 }

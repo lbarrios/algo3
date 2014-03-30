@@ -17,7 +17,7 @@ private:
   fstream _ftime; ///< Descriptor de archivo para time
   char* _nombrePrograma; ///< Guarda el nombre del ejecutable
   bool _sonValidos;
-  /** 
+  /**
    * Imprime los parámetros del programa.
    */
   void _imprimirAyuda( void );
@@ -61,13 +61,13 @@ private:
   void _imprimirErrorParametro( string, string );
 
 public:
-  istream &tipoInput( void );
-  ostream &tipoOutput( void );
-  ostream &tipoDebug( void );
-  ostream &tipoTime( void );
+  istream &dameInput( void );
+  ostream &dameOutput( void );
+  ostream &dameDebug( void );
+  ostream &dameTime( void );
   bool parametrosSonValidos( void );
   ParserDeParametros(int argc, char** argv);
   ~ParserDeParametros( void );
-  
+
 };
 #endif
