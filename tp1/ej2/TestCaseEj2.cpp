@@ -29,6 +29,7 @@ bool TestCaseEj2::tomarDatos()
   this->_listadoDePiezas->reserve(this->_numeroDePiezasAFabricar);
   for(uint32_t i=0; i<this->_numeroDePiezasAFabricar; i++){
     Pieza pieza;
+    pieza.numeroDeOrden = i+1;
     this->_input >> pieza.perdidaDiariaDeGanancia >> pieza.tiempoDeFabricacion;
     this->_listadoDePiezas->push_back(pieza);
   }

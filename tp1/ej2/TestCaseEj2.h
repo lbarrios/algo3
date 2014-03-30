@@ -6,6 +6,13 @@ public:
   {
     uint32_t perdidaDiariaDeGanancia;
     uint32_t tiempoDeFabricacion;
+    uint32_t numeroDeOrden;
+    inline bool operator<(const Pieza& a) const
+    {
+        return (
+          perdidaDiariaDeGanancia/tiempoDeFabricacion < 
+          a.perdidaDiariaDeGanancia/a.tiempoDeFabricacion);
+    }
   };
   TestCaseEj2( std::istream & );
   ~TestCaseEj2();
