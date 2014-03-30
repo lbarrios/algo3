@@ -6,6 +6,54 @@
 
 \subsubsection{Descripción}
 
+Dada una cantidad $n$ de piezas $i$ de orfebrer\'ia, cada una de las cuales tienen una p\'erdida diaria de ganancia $d_i$ y una cantidad de d\'ias $t_i$ que lleva su fabricaci\'on, se quiere saber el orden en que el joyero Frank O. Yar tendr\'ia que fabricar y vender las mismas para minimizar las p\'erdidas. Cada pieza no entregada dar\'a como m\'inimo una p\'erdida de $d_i$ por $t_i$, y a esto se le sumar\'a $d_i$ por la cantidad de d\'ias que Frank haya estado fabricando otras piezas, ya que \'el s\'olo puede trabajar de a una pieza a la vez. El problema se deber\'a resolver con una complejidad temporal de $\mathcal{O}(n^{2})$, siendo $n$ la cantidad de piezas a fabricar. En el resultado se mostrar\'an: $P$, el monto total perdido de la ganancia, y las piezas $i1,...,in$ ordenadas. \\
+
+Ejemplo $1$: \\
+
+Frank tiene que entregar $n=3$ piezas en total ($i:1,2,3$). Los datos de cada pieza $i$ son los siguientes: 
+
+\begin{itemize}
+\item $d_1:1$, $t_1:3$. 
+\item $d_2:2$, $t_2:3$. 
+\item $d_3:3$, $t_3:3$.
+\end{itemize}  
+    
+La fabricaci\'on de las $3$ piezas le llevar\'a $9$ d\'ias en total y durante estos d\'ias se ir\'an sumando las p\'erdidas diarias de ganancia correspondiente a cada pieza sin terminar. 
+
+\begin{itemize}
+\item D\'ia1: $3+2+1$. 
+\item D\'ia2: $3+2+1$. 
+\item D\'ia3: $3+2+1$ $\rightarrow$ entrega pieza $3$.
+\item D\'ia4: $2+1$.
+\item D\'ia5: $2+1$. 
+\item D\'ia6: $2+1$ $\rightarrow$ entrega pieza $2$.
+\item D\'ia7: $1$
+\item D\'ia8: $1$
+\item D\'ia9: $1$ $\rightarrow$ entrega pieza $1$.
+\end{itemize}  	
+	
+Como resultado se obtendr\'ia el orden $3,2,1$ y $P:30$, el monto total perdido de la ganancia. \\
+
+Ejemplo $2$: \\
+
+Frank tiene que entregar $n=2$ piezas en total ($i:1,2$). Los datos de cada pieza $i$ son los siguientes: 
+
+\begin{itemize}
+\item $d_1:1$, $t_1:3$. 
+\item $d_2:3$, $t_2:1$. 
+\end{itemize}  
+    
+La fabricaci\'on de las $2$ piezas le llevar\'a $4$ d\'ias en total y durante estos d\'ias se ir\'an sumando las p\'erdidas diarias de ganancia correspondiente a cada pieza sin terminar. 
+
+\begin{itemize}
+\item D\'ia1: $3+1$ $\rightarrow$ entrega pieza $2$. 
+\item D\'ia2: $1$. 
+\item D\'ia3: $1$.
+\item D\'ia4: $1$ $\rightarrow$ entrega pieza $1$.
+\end{itemize}  	
+	
+Como resultado se obtendr\'ia el orden $2,1$ y $P:7$, el monto total perdido de la ganancia. 
+
 \subsubsection{Hipótesis de resolución}
 Esta en el jpg.
 \subsubsection{Justificación formal de correctitud}
