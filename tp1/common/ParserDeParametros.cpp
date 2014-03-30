@@ -119,7 +119,36 @@ ParserDeParametros::ParserDeParametros(int argc, char** argv){
     _imprimirAyudaError();
 }
 ParserDeParametros::~ParserDeParametros( void ){
-  /* Destructor */
+  if(this->_finput!=NULL){
+    fflush(stdin);
+    fclose(stdin);
+    this->_finput.flush();
+    this->_finput.close();
+  }
+  if(this->_foutput!=NULL){
+    fflush(stdout);
+    fclose(stdout);
+    fflush(stderr);
+    fclose(stderr);
+    this->_foutput.flush();
+    this->_foutput.close();
+  }
+  if(this->_fdebug!=NULL){
+    fflush(stdout);
+    fclose(stdout);
+    fflush(stderr);
+    fclose(stderr);
+    this->_fdebug.flush();
+    this->_fdebug.close();
+  }
+  if(this->_ftime!=NULL){
+    fflush(stdout);
+    fclose(stdout);
+    fflush(stderr);
+    fclose(stderr);
+    this->_ftime.flush();
+    this->_ftime.close();
+  }
 }
 void ParserDeParametros::_imprimirAyudaError( void ){
 #ifdef DEBUG

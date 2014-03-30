@@ -21,8 +21,8 @@ int main( int argc, char** argv ){
     tomarTiempoInicial();
 
     // Obtengo los parámetros del testcase.
-    uint32_t intervaloInspector = testcase.dameIntervaloInspector();
-    uint32_t cantidadDeCamiones = testcase.dameCantidadDeCamiones();
+    const uint32_t &intervaloInspector = testcase.dameIntervaloInspector();
+    const uint32_t &cantidadDeCamiones = testcase.dameCantidadDeCamiones();
     uint32_t* fechasCamiones = testcase.dameFechasCamiones();
 
     // Ordeno el listado de fechas de los camiones
