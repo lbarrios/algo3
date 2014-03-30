@@ -14,8 +14,10 @@
 #include <queue>
 #include <set>
 
-#include <ctime>
-#include <time.h>
+#include <stdint.h>
+
+//#include <ctime>
+//#include <time.h>
 #include <unistd.h>
 using namespace std;
 

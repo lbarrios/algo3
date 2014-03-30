@@ -1,17 +1,17 @@
 #include "../common/TestCase.h"
 
-class TestCaseEj1 : TestCase { //: public TestCase {
+class TestCaseEj1 : TestCase {
 public:
 	TestCaseEj1( std::istream & );
 	~TestCaseEj1();
 	bool tomarDatos();
 	// Getters
-	int dameIntervaloInspector(void);
-	int* dameFechasCamiones(void);
-	int dameCantidadCamiones(void);
+	uint32_t dameIntervaloInspector(void);
+	uint32_t* dameFechasCamiones(void);
+	uint32_t dameCantidadDeCamiones(void);
 private:
-	int _intervaloInspector;
-	int _cantidadCamiones;
-	int* _fechasCamiones;
+	uint32_t _intervaloInspector;
+	uint32_t _cantidadDeCamiones;
+	uint32_t* _fechasCamiones;
 };
 

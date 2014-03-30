@@ -1,5 +1,5 @@
-#ifndef EJ1_H
-#define EJ1_H
+#ifndef EJ2_H
+#define EJ2_H
 
 #include "../common/headers.h"
 #include "../common/ParserDeParametros.h"

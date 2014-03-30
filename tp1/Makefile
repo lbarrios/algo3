@@ -21,17 +21,16 @@ endif
 .PHONY: all allBSD clean cleanBSD entrega
 
 all:
-	cd ej1 && make all
-	#cd ej1 && $(MAKE) all
-	#cd ej2 && $(MAKE) all
-	#cd ej3 && $(MAKE) all
-	#cd informe && make all
+	cd ej1 && $(MAKE) all
+	cd ej2 && $(MAKE) all
+	cd ej3 && $(MAKE) all
+	cd informe && $(MAKE) all
 
 clean:
 	cd ej1 && $(MAKE) clean
 	cd ej2 && $(MAKE) clean
 	cd ej3 && $(MAKE) clean
-	cd informe && make clean clean-trash
+	cd informe && $(MAKE) clean clean-trash
 	rm -rf entrega entrega.zip entrega.rar entrega.tar.gz entrega.tar.gz.crypt
 
 entrega: clean
