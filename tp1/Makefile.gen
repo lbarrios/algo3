@@ -49,5 +49,7 @@ $(COMMON_DIR)/%.o.time: $(COMMON_DIR)/%.cpp $(COMMON_DIR)/%.h
 	$(CC) $(CFLAGSTIME) $< -o $@
 
 clean:
+	@rm -f $(EXE) $(EXE).debug $(EXE).time 
+	@rm -f $(OBJS) $(OBJSDEBUG) $(OBJSTIME)
+	@rm -f $(COMMON_OBJS) $(COMMON_OBJS_DEBUG) $(COMMON_OBJS_TIME)
 	@rm -rf $(OBJSDIR)
-	@rm -f $(EXE) $(OBJS) $(COMMON_OBJS) $(EXE).debug $(EXE).time
