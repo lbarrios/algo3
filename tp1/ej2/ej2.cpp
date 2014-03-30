@@ -1,10 +1,8 @@
 #include "ej2.h"
 #include "TestCaseEj2.h"
 
+// DEBUG
 #include <iomanip>
-
-void imprime_piezas(vector<TestCaseEj2::Pieza> *p){
-}
 
 int main( int argc, char** argv ){
   /*
@@ -16,7 +14,7 @@ int main( int argc, char** argv ){
     Esta clase representa un caso de prueba,
     y lo toma desde el input que le provee el parser
   */
-    TestCaseEj2 testcase ( parser.dameInput() );
+  TestCaseEj2 testcase ( parser.dameInput() );
   /*
     Itero sobre los distintos casos de prueba
     hasta obtener un testcase nulo
@@ -25,14 +23,9 @@ int main( int argc, char** argv ){
     // Mido el tiempo inicial
     tomarTiempoInicial();
     // Obtengo los parámetros del testcase.
-    uint32_t numeroDePiezas = testcase.dameNumeroDePiezasAFabricar();
+    const uint32_t &numeroDePiezas = testcase.dameNumeroDePiezasAFabricar();
     vector<TestCaseEj2::Pieza> *piezas = testcase.dameListadoDePiezas();
     sort( piezas->begin(), piezas->end() );
-    /* 
-      TODO
-      ...
-      ...
-    */
     // Mido el tiempo final
     imprimirTiempoFinal();
     // Devuelvo el resultado con el formato solicitado

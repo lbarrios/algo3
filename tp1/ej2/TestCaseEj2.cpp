@@ -5,7 +5,7 @@
  */
 TestCaseEj2::TestCaseEj2( std::istream &pinput ) : TestCase(pinput)
 {
-  this->_listadoDePiezas=NULL;
+  this->_listaDePiezas=NULL;
   this->_numeroDePiezasAFabricar=0;
 }
 
@@ -15,9 +15,9 @@ TestCaseEj2::TestCaseEj2( std::istream &pinput ) : TestCase(pinput)
 bool TestCaseEj2::tomarDatos()
 {
   // Libero memoria de la toma de datos anterior
-  if (this->_listadoDePiezas!=NULL){
-    delete this->_listadoDePiezas;
-    this->_listadoDePiezas = NULL;
+  if (this->_listaDePiezas!=NULL){
+    delete this->_listaDePiezas;
+    this->_listaDePiezas = NULL;
   }
   // Tomo la cantidad de piezas a fabricar
   this->_input >> this->_numeroDePiezasAFabricar;
@@ -25,29 +25,15 @@ bool TestCaseEj2::tomarDatos()
     return false;
   }
   // Tomo el listado de piezas (pérdida y tiempo)
-  this->_listadoDePiezas = new vector<Pieza>;
-  this->_listadoDePiezas->reserve(this->_numeroDePiezasAFabricar);
+  this->_listaDePiezas = new vector<Pieza>;
+  this->_listaDePiezas->reserve(this->_numeroDePiezasAFabricar);
   for(uint32_t i=0; i<this->_numeroDePiezasAFabricar; i++){
     Pieza pieza;
     pieza.numeroDeOrden = i+1;
     this->_input >> pieza.perdidaDiariaDeGanancia >> pieza.tiempoDeFabricacion;
-    this->_listadoDePiezas->push_back(pieza);
+    this->_listaDePiezas->push_back(pieza);
   }
   return true;
-}
-/**
- * Devuelve la cantidad de piezas que se necesitan fabricar
- */
-uint32_t TestCaseEj2::dameNumeroDePiezasAFabricar(void)
-{
-  return this->_numeroDePiezasAFabricar;
-}
-/**
- * Devuelve el listado de piezas
- */
-vector<TestCaseEj2::Pieza> *TestCaseEj2::dameListadoDePiezas(void)
-{
-  return this->_listadoDePiezas;
 }
 /**
  * Destructor
@@ -55,8 +41,8 @@ vector<TestCaseEj2::Pieza> *TestCaseEj2::dameListadoDePiezas(void)
 TestCaseEj2::~TestCaseEj2(void)
 {
   // Libero la memoria
-  if (this->_listadoDePiezas!=NULL){
-    delete[] this->_listadoDePiezas;
-    this->_listadoDePiezas = NULL;
+  if (this->_listaDePiezas!=NULL){
+    delete[] this->_listaDePiezas;
+    this->_listaDePiezas = NULL;
   }
 }

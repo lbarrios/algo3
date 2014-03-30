@@ -17,11 +17,22 @@ public:
   TestCaseEj2( std::istream & );
   ~TestCaseEj2();
   bool tomarDatos();
+  /*
   // Getters
   uint32_t dameNumeroDePiezasAFabricar(void);
   vector<Pieza> *dameListadoDePiezas(void);
+  */
 private:
   uint32_t _numeroDePiezasAFabricar;
-  vector<Pieza> *_listadoDePiezas;
+  vector<Pieza> *_listaDePiezas;
+public:
+  /**
+   * Devuelve la cantidad de piezas que se necesitan fabricar
+   */
+  inline const uint32_t& dameNumeroDePiezasAFabricar(void) const { return this->_numeroDePiezasAFabricar; }
+  /**
+   * Devuelve el listado de piezas
+   */
+  inline vector<TestCaseEj2::Pieza>* dameListadoDePiezas(void) { return this->_listaDePiezas; }
 };
 

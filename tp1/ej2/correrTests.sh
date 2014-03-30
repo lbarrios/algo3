@@ -62,8 +62,6 @@ Los resultados serán volcados a la carpeta '$OUTPUT_FOLDER'
         else
           if [ $VERBOSE == true ]; then
             cat $OUTPUT
-          else
-            echo $VERBOSE
           fi
         fi
     done
