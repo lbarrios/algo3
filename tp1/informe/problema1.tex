@@ -10,38 +10,50 @@ Un inspector de un puesto de control de camiones quiere contratar a un experto p
 \\
 Por ejemplo: 
 \\
-Si se contrata al experto por $D=3$ d\'ias consecutivos y en total hay $n=20$ camiones sospechosos ($c1,c2,...,c20$) que pasan por el puesto seg\'un se muestra a continuaci\'on: \\
-
-Primer caso: 
+Si se contrata al experto por $D=3$ d\'ias consecutivos y en total hay $n=20$ camiones sospechosos ($c1,c2,...,c20$) que pasan por el puesto seg\'un se muestra a continuaci\'on: \\ 
 
 \begin{itemize}
-\item D\'ia1: $c5$, $c6$, $c7$, $c8$, $c9$. 
-\item D\'ia2: $c10$. 
-\item D\'ia3: $c14$.
-\item D\'ia4: $c4$.
-\item D\'ia5: $c15$, $c16$, $c17$, $c18$, $c19$. 
-\item D\'ia6: $c11$, $c12$, $c13$.
-\item D\'ia7: 
-\item D\'ia8: 
-\item D\'ia9: $c3$, $c20$.
-\item D\'ia10: $c1$, $c2$ .
-\end{itemize}  
+\item Primer caso:
+\end{itemize} 
+
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|}
+\hline
+\bf Día      &  $1$  & $2$   & $3$   & $4$   & $5$   & $6$ & $7$ & $8$ & $9$   & $10$  \\
+\hline
+\bf Camiones &  $c5$ & $c10$ & $c14$ & $c4$  & $c15$ & $c11$ &   &     & $c3$  & $c1$  \\
+	         &  $c6$ &       &       &       & $c16$ & $c12$ &   &     & $c20$ & $c2$  \\    
+			 &	$c7$ &       &       &       & $c17$ & $c13$ &   &     &       &       \\  
+			 &	$c8$ &       &       &       & $c18$ &       &   &     &       &       \\
+			 &	$c9$ &       &       &       & $c19$ &       &   &     &       &       \\
+\hline
+\end{tabular} \\
+
 
 El primer d\'ia del per\'iodo de contrataci\'on ser\'a $d=4$ y habr\'an sido inspeccionados, durante los d\'ias D\'ia4, D\'ia5 y D\'ia6, un total de $c=9$ camiones. \\
 
-Segundo caso:
-
 \begin{itemize}
-\item D\'ia1: $c5$, $c6$, $c7$, $c8$, $c9$, $c10$, $c14$, $c4$, $c1$, $c2$. 
-\item D\'ia2:  
-\item D\'ia3: 
-\item D\'ia4: $c15$, $c16$, $c17$, $c18$, $c19$. 
-\item D\'ia5: 
-\item D\'ia6: 
-\item D\'ia7: $c11$, $c12$, $c13$, $c3$, $c20$.
-\end{itemize}  
+\item Segundo caso:
+\end{itemize} 
+
+\begin{tabular}{|l|l|l|l|l|l|l|l|}
+\hline
+\bf Día      &  $1$  & $2$   & $3$   & $4$    & $5$ & $6$ & $7$   \\
+\hline
+\bf Camiones &  $c5$ &       &       & $c15$  &     &     & $c11$ \\
+	         &  $c6$ &       &       & $c16$  &     &     & $c12$ \\    
+			 &	$c7$ &       &       & $c17$  &     &     & $c13$ \\  
+			 &	$c8$ &       &       & $c18$  &     &     & $c3$  \\
+			 &	$c9$ &       &       & $c19$  &     &     & $c20$ \\
+			 &	$c10$&       &       &        &     &     &       \\
+			 &	$c14$&       &       &        &     &     &       \\
+			 &	$c4$ &       &       &        &     &     &       \\
+			 &	$c1$ &       &       &        &     &     &       \\
+		     &	$c2$ &       &       &        &     &     &       \\
+\hline
+\end{tabular} \\
 
 Para este caso, el primer d\'ia del per\'iodo de contrataci\'on ser\'a $d=1$ y habr\'an sido inspeccionados, durante los d\'ias D\'ia1, D\'ia2 y D\'ia3, un total de $c=10$ camiones. 
+
 
 \subsubsection{Hipótesis de resolución}
 esta en el jpg
