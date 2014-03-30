@@ -123,11 +123,13 @@ ParserDeParametros::~ParserDeParametros( void ){
 }
 void ParserDeParametros::_imprimirAyudaError( void ){
 #ifdef DEBUG
-  cerr << "Uso: Ejecute " << endl <<
+  cerr << endl << " --- VERSION DE DEBUG --- " << endl << endl <<
+    "Uso: Ejecute " << endl <<
     "\t" << _nombrePrograma << " -i INPUT -o OUPUT -d DEBUG" << endl;
 #else
 	#ifdef TIME
- 		cerr << "Uso: Ejecute " << endl <<
+  	cerr << endl << " --- VERSION DE MEDICION DE TIEMPO --- " << endl << endl <<
+	    "Uso: Ejecute " << endl <<
 	    "\t" << _nombrePrograma << " -i INPUT -o OUPUT -t TIME" << endl;
 	#else
  		cerr << "Uso: Ejecute " << endl <<
