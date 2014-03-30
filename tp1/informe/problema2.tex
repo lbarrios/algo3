@@ -7,10 +7,21 @@
 \subsubsection{Descripción}
 
 \subsubsection{Hipótesis de resolución}
-
+Esta en el jpg.
 \subsubsection{Justificación formal de correctitud}
-
+Nuestro algoritmo ordena de forma decreciente por el cociente \pi, luego devolvemos un vector v \'optimo. Iteramos sobre v con el indice i, acumulando la p\'erdida del subvector v[1..i]. Al final de las iteraciones tenemos entonces la p\'erdida completa correspondiente al vector v.
 \subsubsection{Cota de complejidad temporal}
+sort(arreglo, \pi) //O(n log (n))
+
+perdida = 0
+dias = 0
+
+for i=1 to n    //O(n)
+    dias = dias + ti    //O(1)
+    perdida = perdida + dias * di   //O(1)
+
+La complejidad del algoritmo es O(n log (n)).
+
 
 \subsubsection{Verificación mediante casos de prueba}
 
