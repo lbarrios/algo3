@@ -6,6 +6,24 @@
 
 \subsubsection{Descripción}
 
+Este problema consiste en ubicar en un tablero la mayor cantidad de piezas posibles siguiendo ciertas reglas.  
+
+\begin{itemize}
+\item El tablero contiene $n \times m$ casilleros cuadrados, $n$ filas y $m$ columnas. 
+\item Piezas existentes: $1,...,n \times m$. (Cantidad total de piezas: $n \times m$).     
+\item Una pieza es cuadrada y puede tener de $1$ a $4$ colores distintos. A cada lado $(sup, izq, der, inf)$ le corresponde un color. 
+\item Las piezas no se pueden rotar.
+\item Colores posibles: $1,...,c$ ($c$ entero positivo). 
+\item 2 piezas pueden ubicarse en casilleros adyacentes sólo si sus lados adyacentes tienen el mismo color. Podría ocurrir que no sea posible llenar completamente el tablero con las piezas existentes. 
+\item Cantidad mínima de piezas que se pueden colocar en el tablero: $(n \times m)\div 2$. (Se intercalan las piezas en el tablero).  
+\item El contenido final de una casilla podría ser $1,...,n \times m$, si se pudo colocar alguna ficha, o $0$ si quedara vacía. 
+
+\end{itemize} 
+
+El problema se deberá resolver utilizando la técnica de $Backtracking$ eligiendo algunas podas para mejorar los tiempos de ejecución del programa.
+
+% Me falta agregar algún ejemplo...  
+
 \subsubsection{Hipótesis de resolución}
 
 \subsubsection{Justificación formal de correctitud}
