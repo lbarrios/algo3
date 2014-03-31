@@ -28,19 +28,27 @@ for f in files:
     tests[testname][testtype][x].append(y)
   file.close()
 
-tests_average_xy = defaultdict(make_listdict)
+tests_mean_xy = defaultdict(make_listdict)
+tests_mean_p_xy = defaultdict(make_listdict)
 for testname in tests:
   for testtype in tests[testname]:
     for testsize in tests[testname][testtype]:
+      y_values = tests[testname][testtype][testsize]
+      y_p_values = [yp for yp in y_values if yp < np.percentile(y_values,75) and yp > np.percentile(y_values,25) ]
+      # -
       x = testsize
-      y = float ( np.mean(tests[testname][testtype][testsize]) / float(1e9) )
-      tests_average_xy[testname][testtype].append( (x,y) )
-    tests_average_xy[testname][testtype].sort()
+      y = float( np.mean( y_values ) / float(1e9) )
+      y_p = float( np.mean( y_p_values ) / float(1e9) )
+      # -
+      tests_mean_xy[testname][testtype].append( (x,y) )
+      tests_mean_p_xy[testname][testtype].append( (x,y_p) )
+    tests_mean_xy[testname][testtype].sort()
+    tests_mean_p_xy[testname][testtype].sort()
 
-t_names = len(tests_average_xy)
-t_types = len(tests_average_xy[testname])
+t_names = len(tests_mean_xy)
+t_types = len(tests_mean_xy[testname])
 
-colors = ['red','blue','black','green']
+colors = ['blue','green','red','cyan','magenta','yellow','black','grey','white']
 
 
 import matplotlib.pyplot as plt
@@ -56,16 +64,24 @@ subplot.yaxis.set_major_formatter(formatter)
 
 # Aplico formato
 plt.grid(True)
-plt.title("Ejercicio 1")
+plt.title("Ejercicio 1 (cuartiles)")
 plt.ylabel('Tiempo (segundos)')
 plt.xlabel(u'Tamaño de entrada (camiones)')
 
+"""
+linestyle or ls [ ‘-‘ | ‘--’ | '.' | ‘-.’ | ‘:’ | ‘steps’ | ...]
+marker  [ ‘+’ | ‘,’ | ‘.’ | ‘1’ | ‘2’ | ‘3’ | ‘4’ ]
+"""
+
 for test_number in range(0,t_names):
-  testname = tests_average_xy.keys()[test_number]
-  testtype = tests_average_xy[testname].keys()[0]#[int(i/t_names)]
-  x = np.array( zip(*tests_average_xy[testname][testtype])[0] )
-  y = np.array( zip(*tests_average_xy[testname][testtype])[1] )
-  plt.plot(x, y, linestyle='-',  color=colors[test_number], linewidth=.6, label=testname)
+  testname = tests_mean_xy.keys()[test_number]
+  testtype = tests_mean_xy[testname].keys()[0]#[int(i/t_names)]
+  #x = np.array( zip(*tests_mean_xy[testname][testtype])[0] )
+  #y = np.array( zip(*tests_mean_xy[testname][testtype])[1] )
+  #plt.plot(x, y, linestyle='-',  color=colors[test_number], linewidth=0.2, label=testname, alpha=1)
+  x = np.array( zip(*tests_mean_p_xy[testname][testtype])[0] )
+  y = np.array( zip(*tests_mean_p_xy[testname][testtype])[1] )
+  plt.plot(x, y, linestyle='-',  color=colors[test_number], linewidth=0.2, label=testname, alpha=1) #, marker='.', markersize=0.3)
 
 subplot.plot(x, ((x*np.log(x))*10)/float(1e9),    '--', color='black', linewidth=2, label="c.x.log2(x)")
 plt.legend(loc=2)
