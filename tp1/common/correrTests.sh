@@ -8,6 +8,7 @@ HELP=false
 DEFAULT=true
 DESDE=false
 HASTA=false
+TIPODEPRUEBA=false
 platform='unknown'
 MAKE=make
 unamestr=`uname`
@@ -55,6 +56,10 @@ case $i in
   HASTA="${i#*=}"
   shift
   ;;
+  --tipodeprueba=*)
+  TIPODEPRUEBA="${i#*=}"
+  shift
+  ;;
   -h|--help)
   HELP=true
   shift
@@ -100,6 +105,28 @@ Opciones:
   exit 0
 fi
 
+if [ $DESDE = false ] && [ $HASTA = false ] && [ $TIPODEPRUEBA = false ]; then
+	RANGO=false
+else
+	if [ $DESDE != false ] && [ $HASTA != false ] && [ $TIPODEPRUEBA != false ]; then
+		RANGO=true
+	else
+		echo "Los parámetros --desde, --hasta y --tipodeprueba
+deben ser introducidos en conjunto."
+		if [ $DESDE = false ]; then
+			echo "No se ha introducido el parametro --desde"
+		fi
+		if [ $HASTA = false ]; then
+			echo "No se ha introducido el parametro --hasta"
+		fi
+		if [ $TIPODEPRUEBA = false ]; then
+			echo "No se ha introducido el parametro --tipodeprueba"
+		fi
+			echo "Chau"
+			exit 0
+	fi
+fi
+
 
 #                                                                              #
 #                                                                              #
@@ -116,7 +143,7 @@ fi
 clear
 $MAKE $EXE
 if [ $? = 0 ]; then
-  if [ $DESDE = false ] && [ $HASTA = false ]; then
+  if [ $RANGO = false ]; then
     pause "Se correra el programa para TODOS los archivos de input 
 que se encuentren en la carpeta '$INPUT_FOLDER'.
 
@@ -126,8 +153,10 @@ Los resultados serán volcados a la carpeta '$OUTPUT_FOLDER'
 Puede obtener ayuda sobre el programa ejecutando --help.
 Si desea cancelar la ejecución, ahora es el momento."
     clear
+    INPUTS=$INPUT_FOLDER/*.txt
+  else
+    INPUTS=$INPUT_FOLDER/${TIPODEPRUEBA}_*.txt
   fi
-  INPUTS=$INPUT_FOLDER/*.txt
   for INPUT in $INPUTS
   do
       OUTPUT=$OUTPUT_FOLDER/${INPUT##*/}
