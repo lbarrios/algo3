@@ -1,6 +1,8 @@
+#ifndef TIMER_H
+#define TIMER_H
+
 #include "headers.h"
-#include <map>
-#include <string>
+#include <sys/timeb.h>
 
 class Timer {
 public:
@@ -12,7 +14,10 @@ public:
   void saveAllTimes( void );
 
 private:
-  map<string, uint64_t> _initialTimes;
-  map<string, uint64_t> _finalTimes;
+  typedef map<string, timespec> time_dicc;
+  time_dicc _initialTimes;
+  time_dicc _finalTimes;
   ostream &_time;
 };
+
+#endif

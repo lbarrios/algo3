@@ -1,6 +1,8 @@
 #ifndef HEADERS_H
 #define HEADERS_H
 
+#include <map>
+#include <string>
 #include <iostream>
 #include <fstream>
 #include <cstdio>

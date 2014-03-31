@@ -1,3 +1,6 @@
+#ifndef TESTCASE_H
+#define TESTCASE_H
+
 #include "headers.h"
 class TestCase {
 public:
@@ -7,3 +10,5 @@ public:
 protected:
   istream &_input;
 };
+
+#endif
