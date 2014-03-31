@@ -1,8 +1,8 @@
 #!/usr/bin/python3
-from genTest.generadorDeTestsEj1 import generadorDeTestsEj1
+from genTest.generadorDeTestsEj2 import generadorDeTestsEj2
 import sys
 
-generador = generadorDeTestsEj1()
+generador = generadorDeTestsEj2()
 desde = 1
 hasta = 1000
 casosPorTest = 50
@@ -39,8 +39,5 @@ if escape == "salir":
 for i in range( desde , hasta, paso):
   print( i)
   generador.generarTest(i, "casoAleatorio", casosPorTest)
-  generador.generarTest(i, "mejorCaso", casosPorTest)
-  generador.generarTest(i, "peorCaso", casosPorTest)
-
 
 print (" Los test se generaron correctamente ")
