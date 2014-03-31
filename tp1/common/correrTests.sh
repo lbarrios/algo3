@@ -170,7 +170,11 @@ Si desea cancelar la ejecución, ahora es el momento."
            echo "HUBO UN ERROR AL CORRER EL INPUT ${INPUT##*/}!!!"
       else
         if [ $VERBOSE == true ]; then
-          cat $OUTPUT
+          if [ $TIME = true ]; then
+            cat $OUTPUT.time
+          else
+            cat $OUTPUT
+          fi
         fi
       fi
   done

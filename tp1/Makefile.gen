@@ -7,7 +7,7 @@ OBJS := $(addprefix ${OBJSDIR}/,${OBJS})
 OBJSDEBUG := $(addsuffix .debug,${OBJS})
 OBJSTIME := $(addsuffix .time,${OBJS})
 COMMON_DIR=../common
-COMMON_OBJS=$(COMMON_DIR)/ParserDeParametros.o $(COMMON_DIR)/TestCase.o
+COMMON_OBJS=$(COMMON_DIR)/ParserDeParametros.o $(COMMON_DIR)/TestCase.o $(COMMON_DIR)/Timer.o
 COMMON_OBJS_DEBUG := $(addsuffix .debug,${COMMON_OBJS})
 COMMON_OBJS_TIME := $(addsuffix .time,${COMMON_OBJS})
 

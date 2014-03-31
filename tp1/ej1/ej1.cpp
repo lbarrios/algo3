@@ -1,5 +1,4 @@
 #include "ej1.h"
-#include "TestCaseEj1.h"
 
 int main( int argc, char** argv ){
   /*
@@ -13,12 +12,16 @@ int main( int argc, char** argv ){
   */
   TestCaseEj1 testcase ( parser.dameInput() );
   /*
+    Esta clase se encarga de medir el tiempo.
+  */
+  Timer timer ( parser.dameTime() );
+  /*
     Itero sobre los distintos casos de prueba
     hasta obtener un testcase nulo
   */
   while( testcase.tomarDatos() != TestCase::TESTCASE_NULL ){
     // Mido el tiempo inicial
-    tomarTiempoInicial();
+    timer.setInitialTime("todoElCiclo");
 
     // Obtengo los parámetros del testcase.
     const uint32_t &intervaloInspector = testcase.dameIntervaloInspector();
@@ -56,10 +59,12 @@ int main( int argc, char** argv ){
     }
 
     // Mido el tiempo final
-    imprimirTiempoFinal();
+    timer.setFinalTime("todoElCiclo");
     // Devuelvo el resultado con el formato solicitado
     #ifndef TIME
     parser.dameOutput() << mejorDia << " " << mejorCantidadDeCamiones << endl;
+    #else
+    timer.saveAllTimes();
     #endif
   }
 }
