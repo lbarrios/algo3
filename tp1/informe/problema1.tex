@@ -13,43 +13,43 @@ Por ejemplo:
 Si se contrata al experto por $D=3$ d\'ias consecutivos y en total hay $n=20$ camiones sospechosos ($c1,c2,...,c20$) que pasan por el puesto seg\'un se muestra a continuaci\'on: \\ 
 
 \begin{itemize}
-\item Primer caso:
+	\item Primer caso:
 \end{itemize} 
 
 \begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|}
-\hline
-\bf Día      &  $1$  & $2$   & $3$   & $4$   & $5$   & $6$ & $7$ & $8$ & $9$   & $10$  \\
-\hline
-\bf Camiones &  $c5$ & $c10$ & $c14$ & $c4$  & $c15$ & $c11$ &   &     & $c3$  & $c1$  \\
-	         &  $c6$ &       &       &       & $c16$ & $c12$ &   &     & $c20$ & $c2$  \\    
-			 &	$c7$ &       &       &       & $c17$ & $c13$ &   &     &       &       \\  
-			 &	$c8$ &       &       &       & $c18$ &       &   &     &       &       \\
-			 &	$c9$ &       &       &       & $c19$ &       &   &     &       &       \\
-\hline
+	\hline
+	Día          &  $1$  & $2$   & $3$   & $4$   & $5$   & $6$ & $7$ & $8$ & $9$   & $10$  \\
+	\hline
+	Camiones     &  $c5$ & $c10$ & $c14$ & $c4$  & $c15$ & $c11$ &   &     & $c3$  & $c1$  \\
+				 &  $c6$ &       &       &       & $c16$ & $c12$ &   &     & $c20$ & $c2$  \\    
+				 &	$c7$ &       &       &       & $c17$ & $c13$ &   &     &       &       \\  
+				 &	$c8$ &       &       &       & $c18$ &       &   &     &       &       \\
+				 &	$c9$ &       &       &       & $c19$ &       &   &     &       &       \\
+	\hline
 \end{tabular} \\
 
 
 El primer d\'ia del per\'iodo de contrataci\'on ser\'a $d=4$ y habr\'an sido inspeccionados, durante los d\'ias D\'ia4, D\'ia5 y D\'ia6, un total de $c=9$ camiones. \\
 
 \begin{itemize}
-\item Segundo caso:
+	\item Segundo caso:
 \end{itemize} 
 
 \begin{tabular}{|l|l|l|l|l|l|l|l|}
-\hline
-\bf Día      &  $1$  & $2$   & $3$   & $4$    & $5$ & $6$ & $7$   \\
-\hline
-\bf Camiones &  $c5$ &       &       & $c15$  &     &     & $c11$ \\
-	         &  $c6$ &       &       & $c16$  &     &     & $c12$ \\    
-			 &	$c7$ &       &       & $c17$  &     &     & $c13$ \\  
-			 &	$c8$ &       &       & $c18$  &     &     & $c3$  \\
-			 &	$c9$ &       &       & $c19$  &     &     & $c20$ \\
-			 &	$c10$&       &       &        &     &     &       \\
-			 &	$c14$&       &       &        &     &     &       \\
-			 &	$c4$ &       &       &        &     &     &       \\
-			 &	$c1$ &       &       &        &     &     &       \\
-		     &	$c2$ &       &       &        &     &     &       \\
-\hline
+	\hline
+	Día          &  $1$  & $2$   & $3$   & $4$    & $5$ & $6$ & $7$   \\
+	\hline
+	Camiones     &  $c5$ &       &       & $c15$  &     &     & $c11$ \\
+				 &  $c6$ &       &       & $c16$  &     &     & $c12$ \\    
+				 &	$c7$ &       &       & $c17$  &     &     & $c13$ \\  
+				 &	$c8$ &       &       & $c18$  &     &     & $c3$  \\
+				 &	$c9$ &       &       & $c19$  &     &     & $c20$ \\
+				 &	$c10$&       &       &        &     &     &       \\
+				 &	$c14$&       &       &        &     &     &       \\
+				 &	$c4$ &       &       &        &     &     &       \\
+				 &	$c1$ &       &       &        &     &     &       \\
+				 &	$c2$ &       &       &        &     &     &       \\
+	\hline
 \end{tabular} \\
 
 Para este caso, el primer d\'ia del per\'iodo de contrataci\'on ser\'a $d=1$ y habr\'an sido inspeccionados, durante los d\'ias D\'ia1, D\'ia2 y D\'ia3, un total de $c=10$ camiones. 
@@ -73,6 +73,38 @@ Consideremos la complejidad del ciclo for. A lo largo del ciclo se van actualiza
 La complejidad del algoritmo es finalmente O(n log n).
 
 \subsubsection{Verificación mediante casos de prueba}
+
+A continuación presentamos distintas instancias que sirven para verificar que el programa funciona correctamente. \\ 
+\\
+Input: [D n $d_1$...$d_n$], Output: [d c] \\
+\\
+Sea $L$ el intervalo de días en que llegan los camiones. \\
+$L$ $=$ (máx $d_i$ $-$ mín $d_i$ $+ 1$) con $1 \le i \le n$. \\
+
+De los datos de entrada y salida sabemos que: 
+
+\begin{itemize}
+    \item $1$ $\le$ D, n, $d_i$ (con $1$ $\le$ i $\le$ n).
+	\item $1 \le $ c $\le$ n 
+	\item $1 \le $ mín $d_i$ $\le$ d $\le$ máx $d_i$ 
+\end{itemize}
+
+Entonces, podemos separar el conjunto de soluciones en los siguientes casos: \\
+
+\begin{tabular}{|l|l|l|l|}
+	\hline
+	Caso &  Condición  						              & Ej.Input      & Ej.Output \\
+	\hline
+	$1$  &  D$=$L, d$=$mín $d_i$, c$=$n    				  & 3 3 1 2 3     & 1 3 \\	
+	$2$  &	D$>$L, d$=$mín $d_i$, c$=$n     		      & 5 3 1 2 3     & 1 3 \\
+	\hline	
+	$3$  &	D$<$L, d$=$mín $d_i$, c$<$n     			  & 3 4 1 2 5 1   & 1 3 \\
+	$4$  &	D$<$L, mín $d_i$ $<$ d $<$ máx $d_i$, c$<$n   & 2 5 1 3 4 7 4 & 3 3 \\
+	$5$  &	D$=1$, d$=$máx $d_i$, c$<$n     			  & 1 4 1 5 5 5   & 5 3 \\	
+	\hline
+\end{tabular} \\
+
+Si c$=$n podemos deducir que sólo es posible que d$=$mín $d_i$ y que D$\ge$L (casos $1,2$). De no ser así, quedarían camiones sin inspeccionar y eso estaría contradiciendo que c$=$n. En cambio si c$<$n, por lo que mencionamos anteriormente, sólo nos queda que el período de contratación del experto sea menor al intervalo $L$ (casos $3,4,5$). 
 
 \subsubsection{Medición empírica de la performance}
 
