@@ -6,7 +6,7 @@
 % -----------------------------------------------
 
 \subsubsection{Descripción}
-Un inspector de un puesto de control de camiones quiere contratar a un experto por $D$ d\'ias consecutivos para que \'este pueda detectar si alg\'un cami\'on de la empresa $il Ravioli$ est\'a transportando sustancias ilegales. Lo que se quiere es maximizar la cantidad de camiones inspeccionados, es decir que la mayor cantidad de camiones tienen que estar pasando por el puesto durante el per\'iodo de contraci\'on del experto. Se conocen los d\'ias en que cada uno de los $n$ camiones de la empresa estar\'an pasando, pero esta informaci\'on podr\'ia no estar dada en orden cronol\'ogico. Adem\'as, el problema se deber\'a resolver con una complejidad estrictamente mejor que $\mathcal{O}(n^{2})$, siendo $n$ la cantidad total de camiones. El resultado que se deber\'a obtener es el d\'ia inicial en que convendr\'ia contratar al experto y el total de camiones que ser\'an inspeccionados por el mismo.\\
+Un inspector de un puesto de control de camiones quiere contratar a un experto por $D$ días consecutivos para que \'este pueda detectar si alg\'un cami\'on de la empresa \textit{il Ravioli} est\'a transportando sustancias ilegales. Lo que se quiere es maximizar la cantidad de camiones inspeccionados, es decir que la mayor cantidad de camiones tienen que estar pasando por el puesto durante el per\'iodo de contraci\'on del experto. Se conocen los d\'ias en que cada uno de los $n$ camiones de la empresa estar\'an pasando, pero esta informaci\'on podr\'ia no estar dada en orden cronol\'ogico. Adem\'as, el problema se deber\'a resolver con una complejidad estrictamente mejor que $\mathcal{O}(n^{2})$, siendo $n$ la cantidad total de camiones. El resultado que se deber\'a obtener es el d\'ia inicial en que convendr\'ia contratar al experto y el total de camiones que ser\'an inspeccionados por el mismo.\\
 \\
 Por ejemplo: 
 \\
@@ -69,7 +69,7 @@ for izq in 1..n :
     si es necesario actualizo //O(1)
 
 Consideremos la complejidad del ciclo for. A lo largo del ciclo se van actualizando izq y der, y se va guardando el maximo que lleva  en si O(1).
-?Cuantas veces se actualizan izq y der? Pues, como van en forma creciente de 1 a n, exactamente n veces cada una. El ciclo for tiene complejidad O(2n) = O(n)
+¿Cuántas veces se actualizan izq y der? Pues, como van en forma creciente de 1 a n, exactamente n veces cada una. El ciclo for tiene complejidad O(2n) = O(n)
 La complejidad del algoritmo es finalmente O(n log n).
 
 \subsubsection{Verificación mediante casos de prueba}
