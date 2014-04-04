@@ -6,11 +6,11 @@
 % -----------------------------------------------
 
 \subsubsection{Descripción}
-Un inspector de un puesto de control de camiones quiere contratar a un experto por $D$ días consecutivos para que \'este pueda detectar si alg\'un cami\'on de la empresa \textit{il Ravioli} est\'a transportando sustancias ilegales. Lo que se quiere es maximizar la cantidad de camiones inspeccionados, es decir que la mayor cantidad de camiones tienen que estar pasando por el puesto durante el per\'iodo de contraci\'on del experto. Se conocen los d\'ias en que cada uno de los $n$ camiones de la empresa estar\'an pasando, pero esta informaci\'on podr\'ia no estar dada en orden cronol\'ogico. Adem\'as, el problema se deber\'a resolver con una complejidad estrictamente mejor que $\mathcal{O}(n^{2})$, siendo $n$ la cantidad total de camiones. El resultado que se deber\'a obtener es el d\'ia inicial en que convendr\'ia contratar al experto y el total de camiones que ser\'an inspeccionados por el mismo.\\
+Un inspector de un puesto de control de camiones quiere contratar a un experto por $D$ días consecutivos para que éste pueda detectar si algún camión de la empresa \textit{il Ravioli} está transportando sustancias ilegales. Lo que se quiere es maximizar la cantidad de camiones inspeccionados, es decir que la mayor cantidad de camiones tienen que estar pasando por el puesto durante el período de contración del experto. Se conocen los días en que cada uno de los $n$ camiones de la empresa estarán pasando, pero esta información podría no estar dada en orden cronológico. Además, el problema se deberá resolver con una complejidad estrictamente mejor que $\mathcal{O}(n^{2})$, siendo $n$ la cantidad total de camiones. El resultado que se deberá obtener es el día inicial en que convendría contratar al experto y el total de camiones que serán inspeccionados por el mismo.\\
 \\
 Por ejemplo: 
 \\
-Si se contrata al experto por $D=3$ d\'ias consecutivos y en total hay $n=20$ camiones sospechosos ($c1,c2,...,c20$) que pasan por el puesto seg\'un se muestra a continuaci\'on: \\ 
+Si se contrata al experto por $D=3$ días consecutivos y en total hay $n=20$ camiones sospechosos ($c1,c2,...,c20$) que pasan por el puesto según se muestra a continuación: \\ 
 
 \begin{itemize}
 	\item Primer caso:
@@ -29,7 +29,7 @@ Si se contrata al experto por $D=3$ d\'ias consecutivos y en total hay $n=20$ ca
 \end{tabular} \\
 
 
-El primer d\'ia del per\'iodo de contrataci\'on ser\'a $d=4$ y habr\'an sido inspeccionados, durante los d\'ias D\'ia4, D\'ia5 y D\'ia6, un total de $c=9$ camiones. \\
+El primer día del período de contratación será $d=4$ y habrán sido inspeccionados, durante los días Día4, Día5 y Día6, un total de $c=9$ camiones. \\
 
 \begin{itemize}
 	\item Segundo caso:
@@ -52,7 +52,7 @@ El primer d\'ia del per\'iodo de contrataci\'on ser\'a $d=4$ y habr\'an sido ins
 	\hline
 \end{tabular} \\
 
-Para este caso, el primer d\'ia del per\'iodo de contrataci\'on ser\'a $d=1$ y habr\'an sido inspeccionados, durante los d\'ias D\'ia1, D\'ia2 y D\'ia3, un total de $c=10$ camiones. 
+Para este caso, el primer día del período de contratación será $d=1$ y habrán sido inspeccionados, durante los días Día1, Día2 y Día3, un total de $c=10$ camiones. 
 
 
 \subsubsection{Hipótesis de resolución}
@@ -104,7 +104,8 @@ Entonces, podemos separar el conjunto de soluciones en los siguientes casos: \\
 	\hline
 \end{tabular} \\
 
-Si c$=$n podemos deducir que sólo es posible que d$=$mín $d_i$ y que D$\ge$L (casos $1,2$). De no ser así, quedarían camiones sin inspeccionar y eso estaría contradiciendo que c$=$n. En cambio si c$<$n, por lo que mencionamos anteriormente, sólo nos queda que el período de contratación del experto sea menor al intervalo $L$ (casos $3,4,5$). 
+Si c$=$n podemos deducir que sólo es posible que d$=$mín $d_i$ y que D$\ge$L (casos $1,2$). De no ser así, quedarían camiones sin inspeccionar y eso estaría contradiciendo que c$=$n. En cambio si c$<$n, por lo que mencionamos anteriormente, sólo nos queda que el período de contratación del experto sea menor al intervalo $L$ (casos $3,4,5$). \\
+Estos $5$ casos cubrirían todo el espacio de soluciones. Ejecutamos distintos ejemplos correspondientes a cada uno de ellos y obtuvimos la respuesta esperada. Por lo tanto, podemos concluir que el comportamiento del programa es correcto. 
 
 \subsubsection{Medición empírica de la performance}
 
