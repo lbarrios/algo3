@@ -6,7 +6,7 @@
 
 \subsubsection{Descripción}
 
-Dada una cantidad $n$ de piezas $i$ de orfebrer\'ia, cada una de las cuales tienen una p\'erdida diaria de ganancia $d_i$ y una cantidad de d\'ias $t_i$ que lleva su fabricaci\'on, se quiere saber el orden en que el joyero Frank O. Yar tendr\'ia que fabricar y vender las mismas para minimizar las p\'erdidas. Cada pieza no entregada dar\'a como m\'inimo una p\'erdida de $d_i$ por $t_i$, y a esto se le sumar\'a $d_i$ por la cantidad de d\'ias que Frank haya estado fabricando otras piezas, ya que \'el s\'olo puede trabajar de a una pieza a la vez. El problema se deber\'a resolver con una complejidad temporal de $\mathcal{O}(n^{2})$, siendo $n$ la cantidad de piezas a fabricar. En el resultado se mostrar\'an: $P$, el monto total perdido de la ganancia, y las piezas $i1,...,in$ ordenadas. \\
+Dada una cantidad $n$ de piezas $i$ de orfebrería, cada una de las cuales tienen una pérdida diaria de ganancia $d_i$ y una cantidad de días $t_i$ que lleva su fabricación, se quiere saber el orden en que el joyero Frank O. Yar tendría que fabricar y vender las mismas para minimizar las pérdidas. Cada pieza no entregada dará como mínimo una pérdida de $d_i$ por $t_i$, y a esto se le sumará $d_i$ por la cantidad de días que Frank haya estado fabricando otras piezas, ya que él sólo puede trabajar de a una pieza a la vez. El problema se deberá resolver con una complejidad temporal de $\mathcal{O}(n^{2})$, siendo $n$ la cantidad de piezas a fabricar. En el resultado se mostrarán: $P$, el monto total perdido de la ganancia, y las piezas $i1,...,in$ ordenadas. \\
 
 \begin{itemize}
 	\item Ejemplo $1$: 
@@ -26,7 +26,7 @@ Frank tiene que entregar $n=3$ piezas en total ($i:1,2,3$). Los datos de cada pi
 	\hline 
 \end{tabular} \\ 
     
-La fabricaci\'on de las $3$ piezas le llevar\'a $9$ d\'ias en total y durante estos d\'ias se ir\'an sumando las p\'erdidas diarias de ganancia correspondiente a cada pieza sin terminar. 
+La fabricación de las $3$ piezas le llevará $9$ días en total y durante estos días se irán sumando las pérdidas diarias de ganancia correspondiente a cada pieza sin terminar. 
 
 \begin{itemize}
 	\item D\'ia1: $3+2+1$. 
@@ -40,7 +40,7 @@ La fabricaci\'on de las $3$ piezas le llevar\'a $9$ d\'ias en total y durante es
 	\item D\'ia9: $1$ $\rightarrow$ entrega pieza $1$.
 \end{itemize}  	
 	
-Como resultado se obtendr\'ia el orden $3,2,1$ y $P:30$, el monto total perdido de la ganancia. \\
+Como resultado se obtendría el orden $3,2,1$ y $P:30$, el monto total perdido de la ganancia. \\
 
 \begin{itemize}
 	\item Ejemplo $2$: 
@@ -58,16 +58,16 @@ Frank tiene que entregar $n=2$ piezas en total ($i:1,2$). Los datos de cada piez
 	\hline 
 \end{tabular} \\ 
     
-La fabricaci\'on de las $2$ piezas le llevar\'a $4$ d\'ias en total y durante estos d\'ias se ir\'an sumando las p\'erdidas diarias de ganancia correspondiente a cada pieza sin terminar. 
+La fabricación de las $2$ piezas le llevará $4$ días en total y durante estos días se irán sumando las pérdidas diarias de ganancia correspondiente a cada pieza sin terminar. 
 
 \begin{itemize}
-	\item D\'ia1: $3+1$ $\rightarrow$ entrega pieza $2$. 
-	\item D\'ia2: $1$. 
-	\item D\'ia3: $1$.
-	\item D\'ia4: $1$ $\rightarrow$ entrega pieza $1$.
+	\item Día1: $3+1$ $\rightarrow$ entrega pieza $2$. 
+	\item Día2: $1$. 
+	\item Día3: $1$.
+	\item Día4: $1$ $\rightarrow$ entrega pieza $1$.
 \end{itemize}  	
 	
-Como resultado se obtendr\'ia el orden $2,1$ y $P:7$, el monto total perdido de la ganancia. 
+Como resultado se obtendría el orden $2,1$ y $P:7$, el monto total perdido de la ganancia. 
 
 \subsubsection{Hipótesis de resolución}
 Esta en el jpg.
@@ -87,6 +87,175 @@ La complejidad del algoritmo es O(n log (n)).
 
 
 \subsubsection{Verificación mediante casos de prueba}
+
+A continuación presentamos distintas instancias que sirven para verificar que el programa funciona correctamente: \\ 
+
+\begin{minipage}{0.2\textwidth}
+	\begin{tabular}{ll}
+		Input  \\
+		\hline
+		n &  \\
+		$d_1$ & $t_1$ \\
+		\vdots & \vdots \\
+		$d_n$ & $t_n$ 
+	\end{tabular} \\ 
+\end{minipage}
+\begin{minipage}{0.2\textwidth}
+	\begin{tabular}{ll}
+		Output  \\
+		\hline
+		$i_1$ \dots $i_n$ & P \\
+		 \\
+		 \\
+		 \\
+	\end{tabular} \\ 
+\end{minipage}  \\
+\\
+n: cant. total de piezas  \\
+$d_i$: cant. de pérdida diaria de la pieza $i$ \\
+$t_i$: cant. de días de fabricación ($1 \le i \le n$) \\
+$i_1$ \dots $i_n$: n piezas ordenadas \\
+P: monto total perdido de la ganancia \\
+
+Podemos separar el conjunto de soluciones en los siguientes casos: 
+\begin{enumerate}
+    \item $\frac{d_i}{t_i}$ es igual  $\forall$ $i$. 
+	
+		\begin{minipage}{0.2\textwidth}
+			\begin{tabular}{l}
+				Input  \\
+				\hline
+				$3$   \\
+				$2$ $1$ \\
+				$4$ $2$ \\
+				$8$ $4$ 
+			\end{tabular} \\ 
+		\end{minipage}
+		\begin{minipage}{0.2\textwidth}
+			\begin{tabular}{ll}
+				Output  \\
+				\hline
+				$1$   $2$  $3$ & $70$ \\
+				$1$   $3$  $2$ & $70$ \\
+				\vdots         & \vdots\\
+				$3$   $2$  $1$ & $70$ \\
+			\end{tabular} \\ 
+		\end{minipage}  \\
+		\textnormal{Cualquier permutación de las piezas $1,2,3$ es una solución válida para este caso. $P=70$ en los $6$ posibles outputs. Esto es porque el cociente entre la pérdida diaria y el tiempo de fabricación es igual para las $3$ piezas, $\frac{d_i}{t_i}=2, \forall i = 1,2,3$.} \\
+
+	\item $\exists$ $j$ tal que $\frac{d_i}{t_i}$ $\ne$ $\frac{d_j}{t_j}$, j $\ne$ i, con j, i $=$ $1,...,n$. 
+	
+	\begin{itemize}
+		\item Fijo $t_i$ y varío $d_i$, $\forall$ $i$. Entonces el orden va a estar determinado por la pérdida diaria $d_i$.
+		
+		\begin{minipage}{0.2\textwidth}
+			\begin{tabular}{l}
+				Input  \\
+				\hline
+				$5$   \\
+				$1$ $2$ \\
+				$2$ $2$ \\
+				$3$ $2$ \\
+				$5$ $2$ \\
+				$4$ $2$ \\
+			\end{tabular} \\ 
+		\end{minipage}
+		\begin{minipage}{0.3\textwidth}
+			\begin{tabular}{ll}
+				Output  \\
+				\hline
+				$4$ $5$ $3$ $2$ $1$ & $70$ \\
+				\\
+				\\
+				\\
+			    \\
+				\\
+			\end{tabular} \\ 
+		\end{minipage}  
+		\begin{minipage}{0.2\textwidth}
+			\begin{tabular}{l|l}
+				Pieza i & $d_i$  \\
+				\hline
+				$1$ & $1$  \\
+				$2$ & $2$ \\
+				$3$ & $3$ \\
+				$4$ & $5$ \\
+				$5$ & $4$ \\
+                        \\
+			\end{tabular} \\ 
+		\end{minipage}
+		
+		\item Fijo $d_i$ y varío $t_i$ $\forall$ $i$. El orden depende del cociente entre $d_i$ y $t_i$.
+		
+		\begin{minipage}{0.2\textwidth}
+			\begin{tabular}{l}
+				Input  \\
+				\hline
+				$3$   \\
+				$2$ $1$ \\
+				$2$ $2$ \\
+				$2$ $3$ \\
+			\end{tabular} \\ 
+		\end{minipage}
+		\begin{minipage}{0.3\textwidth}
+			\begin{tabular}{ll}
+				Output  \\
+				\hline
+				$1$ $2$ $3$ & $20$ \\
+				\\
+				\\
+				\\
+			\end{tabular} \\ 
+		\end{minipage}  
+		\begin{minipage}{0.2\textwidth}
+			\begin{tabular}{l|l}
+				Pieza i & $\frac{d_i}{t_i}$  \\
+				\hline
+				$1$     & $2$ \\
+				$2$     & $1$ \\
+				$3$     & $0,67$ \\
+				\\
+			\end{tabular} \\ 
+		\end{minipage}  \\
+		
+		\item Varío $d_i$ y $t_i$ $\forall$ $i$ pero sin que todos los $\frac{d_i}{t_i}$ sean iguales. El orden depende del cociente entre $d_i$ y $t_i$. 
+		
+		\begin{minipage}{0.2\textwidth}
+			\begin{tabular}{l}
+				Input  \\
+				\hline
+				$3$   \\
+				$3$ $1$ \\
+				$1$ $2$ \\
+				$2$ $3$ \\
+			\end{tabular} \\ 
+		\end{minipage}
+		\begin{minipage}{0.3\textwidth}
+			\begin{tabular}{ll}
+				Output  \\
+				\hline
+				$1$ $3$ $2$ & $14$ \\
+				\\
+				\\
+				\\
+			\end{tabular} \\ 
+		\end{minipage}  
+        	\begin{minipage}{0.2\textwidth}
+			\begin{tabular}{l|l}
+				Pieza i & $\frac{d_i}{t_i}$  \\
+				\hline
+				$1$     & $3$ \\
+				$2$     & $0,5$ \\
+				$3$     & $0,67$ \\
+				\\
+			\end{tabular} \\ 
+		\end{minipage}  \\		
+		
+	\end{itemize}
+	
+\end{enumerate}
+
+Estos casos cubrirían todo el espacio de soluciones. Ejecutamos distintos ejemplos correspondientes a cada uno de ellos y obtuvimos la respuesta esperada. Por lo tanto, podemos concluir que el comportamiento del programa es correcto. 
 
 \subsubsection{Medición empírica de la performance}
 
