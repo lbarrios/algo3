@@ -8,7 +8,7 @@ ParserDeParametros::ParserDeParametros(int argc, char** argv){
   if ( argc < 1 ) exit(EXIT_FAILURE);
   _nombrePrograma = argv[0];
   _input=NULL, _output=NULL, _debug=NULL, _time=NULL;
-  int tipoDeSolucion=-1;
+  //int tipoDeSolucion=-1;
   static struct option l_opts[] = {
     {"input",            required_argument,    NULL,   'i' },
     {"output",           required_argument,    NULL,   'o' },
