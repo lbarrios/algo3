@@ -64,6 +64,9 @@ case $i in
   HELP=true
   shift
   ;;
+  --todo)
+  shift
+  ;;
   #-b=*|--blabla=*)
   #BLABLA="${i#*=}"
   #shift
@@ -88,19 +91,28 @@ El script corre el ejecutable EXE desde la carpeta INPUT_FOLDER
 y los guarda con el mismo nombre en la carpeta OUTPUT_FOLDER.
 
 Valores por defecto:
-    INPUT_FOLDER: input
-    OUTPUT_FOLDER: output
+    INPUT_FOLDER: ./input/
+    OUTPUT_FOLDER: ./output/
 
-Opciones:
+Opciones disponibles:
   --help | -h:
-      Muestra este mensaje de ayuda.
+    Muestra este mensaje de ayuda.
+
+	--desde=d, --hasta=h, --tipodeprueba=nombre:
+    Especifica el tamaño de entrada mínimo,
+    tamaño de entrada máximo, y tipo de prueba
+    que ejecutar.
+
+	--todo:
+    Especifica que se correrán TODOS los tests que
+    se encuentren en la carpeta INPUT_FOLDER.
 
   --verbose | -v:
-      Muestra el output obtenido al correr los tests.
+    Muestra el output obtenido al correr los tests.
 
   --time | --tiempo | -t:
-      Realiza mediciones de tiempo.
-      Los archivos se guardarán con la extension '.time'
+    Realiza mediciones de tiempo.
+    Los archivos se guardarán con la extension '.time'
 "
   exit 0
 fi

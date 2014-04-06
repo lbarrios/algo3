@@ -1,3 +1,6 @@
+#ifndef TESTCASE_EJ1_H
+#define TESTCASE_EJ1_H
+
 #include "../common/TestCase.h"
 
 class TestCaseEj1 : TestCase {
@@ -24,3 +27,4 @@ public:
   inline const uint32_t& dameCantidadDeCamiones(void) const{ return this->_cantidadDeCamiones; };
 };
 
+#endif

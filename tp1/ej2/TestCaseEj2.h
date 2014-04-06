@@ -1,3 +1,6 @@
+#ifndef TESTCASE_EJ2_H
+#define TESTCASE_EJ2_H
+
 #include "../common/TestCase.h"
 
 class TestCaseEj2 : TestCase {
@@ -36,3 +39,4 @@ public:
   inline vector<TestCaseEj2::Pieza>* dameListadoDePiezas(void) { return this->_listaDePiezas; }
 };
 
+#endif

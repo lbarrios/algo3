@@ -15,6 +15,10 @@ TestCaseEj3::TestCaseEj3( std::istream &pinput ) : TestCase(pinput)
 /**
  * Realiza la lectura de datos para el ejercicio
  */
+/**
+ * descripcion
+ * @return aaaa
+ */
 bool TestCaseEj3::tomarDatos()
 {
   // Libero memoria de la toma de datos anterior
@@ -33,7 +37,11 @@ bool TestCaseEj3::tomarDatos()
   // Tomo las piezas
   uint32_t cantidadDePiezas = this->_cantidadDeFilas*this->_cantidadDeColumnas;
   this->_listaDePiezas = new vector<Pieza>;
-  this->_listaDePiezas->reserve(cantidadDePiezas);
+  this->_listaDePiezas->reserve(cantidadDePiezas+1);
+  // Agrego una pieza vacia en la posicion 0
+  Pieza piezaVacia;
+  this->_listaDePiezas->push_back(piezaVacia);
+  // Agrego el resto de las piezas
   for(uint32_t i=0; i<cantidadDePiezas; i++){
     Pieza pieza;
     this->_input 
@@ -56,4 +64,18 @@ TestCaseEj3::~TestCaseEj3(void){
     delete this->_listaDePiezas;
     this->_listaDePiezas = NULL;
   }
+}
+
+// Getters
+uint32_t TestCaseEj3::dameCantidadDeFilas(void){
+  return this->_cantidadDeFilas;
+}
+uint32_t TestCaseEj3::dameCantidadDeColumnas(void){
+  return this->_cantidadDeColumnas;
+}
+uint32_t TestCaseEj3::dameCantidadDeColores(void){
+  return this->_cantidadDeColores;
+}
+vector<TestCaseEj3::Pieza>& TestCaseEj3::dameListaDePiezas(void){
+  return (*this->_listaDePiezas);
 }
