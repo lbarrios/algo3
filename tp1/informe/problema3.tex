@@ -13,10 +13,10 @@ Este problema consiste en ubicar en un tablero la mayor cantidad de piezas posib
 	\item Piezas existentes: $1,...,n \times m$. (Cantidad total de piezas: $n \times m$).     
 	\item Una pieza es cuadrada y puede tener de $1$ a $4$ colores distintos. A cada lado $(sup, izq, der, inf)$ le corresponde un color. 
 	\item Las piezas no se pueden rotar.
-	\item Colores posibles: $1,...,c$ ($c$ entero positivo). 
+	\item Colores posibles: $1,...,c$ ($c$ entero positivo). Como una pieza puede tener como mucho $4$ colores distintos y son $n \times m$ piezas en total, $ 1 \le c \le (4 \times n \times m)$.  
 	\item 2 piezas pueden ubicarse en casilleros adyacentes sólo si sus lados adyacentes tienen el mismo color. Podría ocurrir que no sea posible llenar completamente el tablero con las piezas existentes. 
 	\item El contenido final de una casilla podría ser $1,...,n \times m$, si se pudo colocar alguna ficha, o $0$ si quedara vacía. 
-	\item Cantidad mínima de piezas que se pueden colocar en el tablero: $(n \times m)\div 2$. (Se intercalan las piezas en el tablero). \\
+	\item Cantidad mínima de piezas que se pueden colocar en el tablero: $(n \times m)/ 2$. (Se intercalan las piezas en el tablero). \\
 	Para un tablero de $3\times 3$ y uno de $2\times 2$, suponiendo un caso donde ninguna ficha puede colocarse adyacente a otra, una de las posibles soluciones sería la siguiente: \\
 	\\
 	En el tablero de $3\times 3$ se podrían colocar las fichas $1,2,3,4$ y $5$, y en el de $2\times 2$, las fichas $1$ y $2$.  \\
@@ -48,70 +48,67 @@ El problema se deberá resolver utilizando la técnica de $Backtracking$ eligien
 
 Por ejemplo: \\ 
 \\
-Se tiene un tablero de $2\times 2$, los colores $1,2,3$ y las piezas \bf 1,\bf 2,\bf 3,\bf 4 $:$ \\
+Se tiene un tablero de $2\times 2$, los colores $1,2,3$ y las piezas \textbf{1},\textbf{2},\textbf{3},\textbf{4} $:$ \\
 \\
 
 \begin{minipage}{0.2\textwidth}
 	\begin{tabular}{ |l l l|}
 		\hline
-			 & $1$   &       \\
-		$3$  & \bf 1 &   $2$ \\ 
-			 & $2$   &       \\
+			 & $1$     &       \\
+		$3$  & \textbf{1} &   $2$ \\ 
+			 & $2$     &       \\
 		\hline
 	\end{tabular}
 \end{minipage}
 \begin{minipage}{0.2\textwidth}
 	\begin{tabular}{ |l l l|}
 		\hline
-			 & $3$   &       \\
-		$2$  & \bf 2 & $2$ \\ 
-			 & $1$   &       \\
+			 & $3$     &       \\
+		$2$  & \textbf{2} & $2$ \\ 
+			 & $1$     &       \\
 		\hline
 	\end{tabular}
 \end{minipage}
 \begin{minipage}{0.2\textwidth}
 	\begin{tabular}{ |l l l|}
 		\hline
-			 & $3$    &       \\
-		$1$  & \bf 2  & $3$ \\ 
-			 & $2$    &       \\
+			 & $3$      &       \\
+		$1$  & \textbf{2}  & $3$ \\ 
+			 & $2$      &       \\
 		\hline
 	\end{tabular}
 \end{minipage}
 \begin{minipage}{0.2\textwidth}
 	\begin{tabular}{ |l l l|}
 		\hline
-			 & $1$    &       \\
-		$1$  & \bf 4  & $2$   \\ 
-			 & $2$    &       \\
+			 & $1$      &       \\
+		$1$  & \textbf{4}  & $2$   \\ 
+			 & $2$      &       \\
 		\hline
 	\end{tabular} 
-\end{minipage}
+\end{minipage}  \\
 
-\begin{itemize}
-	\item \textnormal{En este caso, la cantidad máxima de piezas que se pueden colocar en el tablero es $3$. Entonces las posibles soluciones serían:} 
-\end{itemize}
+En este caso, la cantidad máxima de piezas que se pueden colocar en el tablero es $3$. Entonces las posibles soluciones serían: \\
 
 \begin{minipage}{0.5\textwidth}
 	\centering
 	\begin{tabular}{ | l | l |}
 		\hline 
-		\bf 1  & 2 \\ 
+		\textbf{1}  & \textbf{2} \\ 
 		\hline 
-		$0$  & 4 \\ 
+		$0$  & \textbf{4} \\ 
 		\hline
-	\end{tabular}  
-	\end{minipage}
+	\end{tabular}  \\
+\end{minipage}
 \begin{minipage}{0.5\textwidth}
 	\begin{tabular}{ | l | l |}
 		\hline 
-		$0$  & 2 \\ 
+		$0$     & \textbf{2} \\ 
 		\hline 
-		3  & 1 \\ 
+		\textbf{3}  & \textbf{1} \\ 
 		\hline
-	\end{tabular}
-\end{minipage}
-
+	\end{tabular} \\
+\end{minipage}  \\
 
 \subsubsection{Hipótesis de resolución}
 
@@ -120,6 +117,8 @@ Se tiene un tablero de $2\times 2$, los colores $1,2,3$ y las piezas \bf 1,\bf 2
 \subsubsection{Cota de complejidad temporal}
 
 \subsubsection{Verificación mediante casos de prueba}
+
+
 
 \subsubsection{Medición empírica de la performance}
 
