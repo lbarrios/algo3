@@ -1,3 +1,4 @@
+#ifdef TIME
 #include "Timer.h"
 Timer::Timer(ostream &ptime) : _time(ptime)
 {
@@ -35,3 +36,4 @@ void Timer::saveAllTimes( void )
     _time << it->first << " " << this->getTime(it->first) << endl;
   }
 }
+#endif
