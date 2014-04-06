@@ -1,0 +1,52 @@
+-PROBLEMA1
+
+ Informe: 
+*Descripción  - OK   
+*Hipótesis de resolución 
+*Justificación formal de correctitud
+*Cota de complejidad temporal 
+*Verificación mediante casos de prueba  - OK
+*Medición empírica de performance
+
+ Código: 
+*Algoritmo - OK
+*Tests 
+
+
+ 
+-PROBLEMA2
+
+ Informe:
+*Descripción - OK
+*Hipótesis de resolución
+*Justificación formal de correctitud
+*Cota de complejidad temporal
+*Verificación mediante casos de prueba - OK
+*Medición empírica de performance
+
+ Código: 
+*Algoritmo - OK
+*Tests
+
+
+
+-PROBLEMA3
+
+ Informe:
+*Descripción - OK
+*Hipótesis de resolución
+*Justificación formal de correctitud
+*Cota de complejidad temporal
+*Verificación mediante casos de prueba -YA CASI LO TERMINO
+*Medición empírica de performance
+
+ Código: 
+*Algoritmo
+*Tests
+
+
+
+-INFORME: 
+
+*Introducción  
+*Bibliografía
