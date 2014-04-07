@@ -6,7 +6,7 @@
 class TestCaseEj3 : TestCase {
 public:
   static const uint32_t PIEZA_VACIA = 0;
-  typedef struct Pieza{
+  struct Pieza{
     uint32_t colorIzquierda;
     uint32_t colorDerecha;
     uint32_t colorArriba;

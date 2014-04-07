@@ -1,27 +1,18 @@
 #include "ej3.h"
 
-//uint32_t maximoDePiezas;
-//vector<TestCaseEj3::Pieza> *listaDePiezas;
 Tablero& backtrack( Tablero &, IndiceDeColores &, uint32_t );
 
 int main( int argc, char** argv ){
-  /*
-    Parseo los parámetros con que fue llamado
-    el ejecutable
-  */
+  // Parseo los parámetros con que fue llamado el ejecutable
   ParserDeParametros parser( argc, argv );
-  /*
-    Esta clase representa un caso de prueba,
-    y lo toma desde el input que le provee el parser
-  */
+  // Esta clase representa un caso de prueba, y lo toma desde el input que le provee el parser
   TestCaseEj3 testcase ( parser.dameInput() );
-  /*
-    Itero sobre los distintos casos de prueba
-    hasta obtener un testcase nulo
-  */
+  Timer timer ( parser.dameTime() );
+  // Itero sobre los distintos casos de prueba hasta obtener un testcase nulo
+	cerr << "Ejecutando testacse??	" << endl;
   while( testcase.tomarDatos() != false ){
     // Mido el tiempo inicial
-    tomarTiempoInicial();
+    timer.setInitialTime("todoElCiclo");
     // Obtengo los parámetros del testcase.
     uint32_t cantidadDeFilas = testcase.dameCantidadDeFilas();
     uint32_t cantidadDeColumnas = testcase.dameCantidadDeColumnas();
@@ -34,6 +25,7 @@ int main( int argc, char** argv ){
     Tablero &mejorTablero = backtrack( tablero, indiceDeColores, 0 );
 
     // Mido el tiempo final
+    timer.setFinalTime("todoElCiclo");
     imprimirTiempoFinal();
     // Devuelvo el resultado con el formato solicitado
     #ifndef TIME
@@ -45,8 +37,11 @@ int main( int argc, char** argv ){
       }
       parser.dameOutput() << endl;
     }
+    #else
+    timer.saveAllTimes();
     #endif
   }
+  return 0;
 }
 /**
  * Devuelve la cantidad máxima de posiciones llenas encontradas

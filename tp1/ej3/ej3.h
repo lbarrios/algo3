@@ -3,6 +3,7 @@
 
 #include "../common/headers.h"
 #include "../common/ParserDeParametros.h"
+#include "../common/Timer.h"
 #include "TestCaseEj3.h"
 
 

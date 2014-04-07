@@ -26,7 +26,7 @@ bool TestCaseEj3::tomarDatos()
     delete this->_listaDePiezas;
     this->_listaDePiezas = NULL;
   }
-  if( !this->_yaSeEjecuto ){
+  if( this->_yaSeEjecuto ){
     return false;
   }
   // Tomo las cantidades de filas, columnas y colores respectivamente

@@ -15,9 +15,9 @@ informe:
 
 introduccion: introduccion.tex
 	$(LATEX) $(OPTS) introduccion.tex
-ej1: ej1.tex
-	$(LATEX) $(OPTS) ej1.tex
-ej2: ej2.tex
+problema11: problema11.tex
+	$(LATEX) $(OPTS) problema1.tex
+problema12: problema1.tex
 	$(LATEX) $(OPTS) ej2.tex
 ej3: ej3.tex
 	$(LATEX) $(OPTS) ej3.tex
