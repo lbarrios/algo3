@@ -74,10 +74,20 @@ class IndiceDeColores {
 public:
   IndiceDeColores( uint32_t p_cantidadDeColores, vector<TestCaseEj3::Pieza> &p_listaDePiezas ) 
     : listaDePiezas(p_listaDePiezas){
+    v_color_derecha_abajo.resize(p_cantidadDeColores); DEBUG_INT( (v_color_derecha_abajo.size()) );
+    for(vector< vector< list< uint32_t > > >::iterator it = v_color_derecha_abajo.begin(); 
+      it < v_color_derecha_abajo.end(); it++){
+      (*it).resize(p_cantidadDeColores); DEBUG_INT( (*it).size() );
+    }
+    v_color_abajo.resize(p_cantidadDeColores);
+    v_color_derecha.resize(p_cantidadDeColores);
+    _C("Agrego las piezas al índice de piezas por color");
     // Agrego las piezas al índice de piezas por color
     for (uint32_t i = 1; i<this->listaDePiezas.size()+1; i++){
+      _C("this->agregarPieza( "<<i<<" );");
       this->agregarPieza( i );
     }
+    _C("this->agregarPieza( "<<"TestCaseEj3::PIEZA_VACIA"<<" );");
     this->agregarPieza( TestCaseEj3::PIEZA_VACIA );
     /** PSEUDOCODIGO
     vector< list< uint32_t > > bla; vector.reserve(cantidadDeColores);
@@ -89,18 +99,21 @@ public:
    * la agrega al vector de piezas
    */
   void agregarPieza ( uint32_t indice ){
-    uint32_t colorDerecha = listaDePiezas[indice].colorDerecha;
-    uint32_t colorAbajo = listaDePiezas[indice].colorAbajo;
+    uint32_t colorDerecha = listaDePiezas[indice].colorDerecha - 1; DEBUG_INT(colorDerecha);
+    uint32_t colorAbajo = listaDePiezas[indice].colorAbajo - 1; DEBUG_INT(colorAbajo);
     v_color_derecha_abajo[colorDerecha][colorAbajo].push_back(indice);
+    _C("v_color_derecha_abajo[colorDerecha][colorAbajo].push_back(indice);");
     v_color_abajo[colorAbajo].push_back(indice);
+    _C("v_color_abajo[colorAbajo].push_back(indice);");
     v_color_derecha[colorDerecha].push_back(indice);
+    _C("v_color_derecha[colorDerecha].push_back(indice);");
   }
   /**
    * Dado un ID de pieza, lo quita del índice
    */
   void quitarPieza ( uint32_t indice ){
-    uint32_t colorDerecha = listaDePiezas[indice].colorDerecha;
-    uint32_t colorAbajo = listaDePiezas[indice].colorAbajo;
+    uint32_t colorDerecha = listaDePiezas[indice].colorDerecha - 1;
+    uint32_t colorAbajo = listaDePiezas[indice].colorAbajo - 1;
     v_color_derecha_abajo[colorDerecha][colorAbajo].push_front(indice);
     v_color_abajo[colorAbajo].push_front(indice);
     v_color_derecha[colorDerecha].push_front(indice);

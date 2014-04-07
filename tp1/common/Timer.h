@@ -2,8 +2,11 @@
 #define TIMER_H
 
 #include "headers.h"
-//#include <sys/timeb.h>
+#ifdef __clang__
+#include <sys/timeb.h>
+#else
 #include "time.h"
+#endif
 
 class Timer {
 public:

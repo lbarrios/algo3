@@ -8,22 +8,25 @@ int main( int argc, char** argv ){
   // Esta clase representa un caso de prueba, y lo toma desde el input que le provee el parser
   TestCaseEj3 testcase ( parser.dameInput() );
   Timer timer ( parser.dameTime() );
+  _C("Itero sobre los distintos casos de prueba hasta obtener un testcase nulo");
   // Itero sobre los distintos casos de prueba hasta obtener un testcase nulo
-	cerr << "Ejecutando testacse??	" << endl;
   while( testcase.tomarDatos() != false ){
-    // Mido el tiempo inicial
+    _C("Mido el tiempo inicial.");
+    // Mido el tiempo inicial.
     timer.setInitialTime("todoElCiclo");
     // Obtengo los parámetros del testcase.
-    uint32_t cantidadDeFilas = testcase.dameCantidadDeFilas();
-    uint32_t cantidadDeColumnas = testcase.dameCantidadDeColumnas();
-    uint32_t cantidadDeColores = testcase.dameCantidadDeColores();
+    _C("Obtengo los parámetros del testcase.");
+    uint32_t cantidadDeFilas = testcase.dameCantidadDeFilas(); DEBUG_UINT(cantidadDeFilas);
+    uint32_t cantidadDeColumnas = testcase.dameCantidadDeColumnas(); DEBUG_UINT(cantidadDeColumnas);
+    uint32_t cantidadDeColores = testcase.dameCantidadDeColores(); DEBUG_UINT(cantidadDeColores);
+    _C("Inicializo estructuras del Ej.");
     // Inicializo estructuras del Ej.
-    vector<TestCaseEj3::Pieza>& listaDePiezas = testcase.dameListaDePiezas();
+    vector<TestCaseEj3::Pieza>& listaDePiezas = testcase.dameListaDePiezas(); DEBUG_INT(listaDePiezas.size());
     IndiceDeColores indiceDeColores(cantidadDeColores, listaDePiezas);
-    Tablero tablero(cantidadDeFilas, cantidadDeColumnas);
-
+    Tablero tablero(cantidadDeFilas, cantidadDeColumnas); DEBUG_INT(tablero.cantidadDePosiciones());
+    _C("Obtengo el mejor tablero a través de backtracking");
     Tablero &mejorTablero = backtrack( tablero, indiceDeColores, 0 );
-
+    _C("Mido el tiempo final");
     // Mido el tiempo final
     timer.setFinalTime("todoElCiclo");
     imprimirTiempoFinal();
