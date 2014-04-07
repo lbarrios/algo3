@@ -118,7 +118,323 @@ En este caso, la cantidad máxima de piezas que se pueden colocar en el tablero 
 
 \subsubsection{Verificación mediante casos de prueba}
 
+A continuación presentamos distintas instancias que sirven para verificar que el programa funciona correctamente.\\ 
 
+\begin{minipage}{0.5\textwidth}
+	\begin{tabular}{llll}
+		Input  \\
+		\hline
+		n       & m       & c       &         \\
+		$sup_1$ & $izq_1$ & $der_1$ & $inf_1$ \\
+		\vdots & \vdots   & \vdots  & \vdots  \\
+		$sup_{nxm}$ & $izq_{nxm}$ & $der_{nxm}$ & $inf_{nxm}$ \\ 
+	\end{tabular} \\  
+\end{minipage}
+\begin{minipage}{0.5\textwidth}	
+	\begin{tabular}{lll}
+		Output  \\
+		\hline
+		$x_1$ & \dots & $x_m$ \\
+		\vdots&       & \vdots \\
+		$x_n$ & \dots & $x_{nxm}$ \\
+		 \\
+	\end{tabular} \\
+\end{minipage} \\
+\\
+n: cant. filas del tablero. \\
+m: cant. columnas del tablero. \\
+c: cant. colores distintos en las piezas. \\
+$sup_i$, $izq_i$, $der_i$, $inf_i$: colores (entre 1 y c) de los lados de la pieza $i$. \\
+$x_i$: número de la pieza en la casilla $i$ del tablero. ($0$ si no hay ninguna pieza). \\
+\\
+
+Separamos en casos y mostramos ejemplos para cada uno: 
+\begin{itemize}
+\item Todas las piezas son iguales:
+	\begin{itemize}
+		\item El tablero se completa. \\
+			\begin{minipage}{0.2\textwidth}
+				\begin{tabular}{l}
+					Input  \\
+					\hline
+					$2$ $2$ $1$       \\
+					$1$ $1$ $1$ $1$ \\
+					$1$ $1$ $1$ $1$ \\
+					$1$ $1$ $1$ $1$ \\
+					$1$ $1$ $1$ $1$ \\
+				\end{tabular} \\  
+			\end{minipage}
+			\begin{minipage}{0.2\textwidth}	
+				\begin{tabular}{l}
+					Output  \\
+					\hline
+					$1$ $2$ \\
+					$3$ $4$ \\
+					\\
+					\\
+					\\
+				\end{tabular} \\
+			\end{minipage} \\
+			\begin{minipage}{0.2\textwidth}
+				\begin{tabular}{l}
+					Input  \\
+					\hline
+					$2$ $2$ $2$       \\
+					$1$ $2$ $2$ $1$ \\
+					$1$ $2$ $2$ $1$ \\
+					$1$ $2$ $2$ $1$ \\
+					$1$ $2$ $2$ $1$ \\
+				\end{tabular} \\  
+			\end{minipage}
+			\begin{minipage}{0.2\textwidth}	
+				\begin{tabular}{l}
+					Output  \\
+					\hline
+					$1$ $2$ \\
+					$3$ $4$ \\
+					\\
+					\\
+					\\
+				\end{tabular} \\
+			\end{minipage} \\
+			
+			En estos ejemplos el tablero se completaría colocando las $4$ piezas de cualquier forma. No hay restricciones. \\
+
+		\item El tablero tiene la mínima cantidad de piezas (($n \times m)/2$).\\
+		
+		    \begin{minipage}{0.2\textwidth}
+				\begin{tabular}{l}
+					Input  \\
+					\hline
+					$2$ $2$ $2$       \\
+					$1$ $2$ $1$ $2$ \\
+					$1$ $2$ $1$ $2$ \\
+					$1$ $2$ $1$ $2$ \\
+					$1$ $2$ $1$ $2$ \\
+				\end{tabular} \\  
+			\end{minipage}
+			\begin{minipage}{0.2\textwidth}	
+				\begin{tabular}{l}
+					Output  \\
+					\hline
+					$1$ $0$ \\
+					$0$ $2$ \\
+					\\
+					\\
+					\\
+				\end{tabular} \\
+			\end{minipage} 
+			\begin{minipage}{0.2\textwidth}	
+				\begin{tabular}{l}
+					Output  \\
+					\hline
+					$0$ $1$ \\
+					$2$ $0$ \\
+					\\
+					\\
+					\\
+				\end{tabular} \\
+			\end{minipage} \\
+			
+			En este caso sólo se pueden colocar las piezas intercaladas. Se podrían tomar $2$ piezas cualesquiera para la solución (Ej: piezas $3$ y $4$). \\
+			
+	\end{itemize}
+\item Todas las piezas son diferentes:
+     \begin{itemize}
+		\item El tablero se completa. \\
+		
+		    \begin{minipage}{0.2\textwidth}
+				\begin{tabular}{l}
+					Input  \\
+					\hline
+					$3$ $3$ $8$     \\
+				    $8$ $2$ $6$ $2$ \\ 
+					$1$ $1$ $2$ $4$ \\
+					$1$ $2$ $7$ $5$ \\
+					$3$ $4$ $4$ $6$ \\
+					$4$ $4$ $3$ $7$ \\
+					$5$ $3$ $6$ $8$ \\
+					$6$ $4$ $1$ $2$ \\
+					$7$ $1$ $2$ $7$ \\
+					$8$ $8$ $1$ $3$ \\
+				\end{tabular} \\  
+			\end{minipage}
+			\begin{minipage}{0.2\textwidth}	
+				\begin{tabular}{l}
+					Output  \\
+					\hline
+					$9$ $2$ $3$ \\
+					$4$ $5$ $6$ \\
+					$7$ $8$ $1$ \\
+					\\
+					\\
+					\\
+					\\
+					\\
+					\\
+					\\
+				\end{tabular} \\
+			\end{minipage} \\
+		
+		\item El tablero tiene la mínima cantidad de piezas (($n \times m)/2$). \\
+		
+			\begin{minipage}{0.2\textwidth}
+				\begin{tabular}{l}
+					Input  \\
+					\hline
+					$2$ $2$ $3$     \\
+					$2$ $3$ $2$ $2$ \\
+					$1$ $1$ $2$ $2$ \\
+					$1$ $3$ $2$ $2$ \\
+					$2$ $1$ $2$ $2$ \\
+				\end{tabular} \\  
+			\end{minipage}
+			\begin{minipage}{0.2\textwidth}	
+				\begin{tabular}{l}
+					Output  \\
+					\hline
+					$1$ $0$ \\
+					$0$ $2$ \\
+					\\
+					\\
+					\\
+				\end{tabular} \\
+			\end{minipage} 
+			\begin{minipage}{0.2\textwidth}	
+				\begin{tabular}{l}
+					Output  \\
+					\hline
+					$0$ $1$ \\
+					$2$ $0$ \\
+					\\
+					\\
+					\\
+				\end{tabular} \\
+			\end{minipage} \\
+		
+		En este caso sólo se pueden colocar las piezas intercaladas. Se podrían tomar $2$ piezas cualesquiera para la solución (Ej: piezas $3$ y $4$). \\
+		
+		\item El tablero no se completa pero se llena más que el mínimo posible. \\
+		
+			\begin{minipage}{0.2\textwidth}
+				\begin{tabular}{l}
+					Input  \\
+					\hline
+					$2$ $2$ $3$     \\
+					$1$ $2$ $1$ $1$ \\
+					$1$ $1$ $1$ $2$ \\
+					$2$ $2$ $3$ $2$ \\
+					$3$ $2$ $3$ $3$ \\
+				\end{tabular} \\  
+			\end{minipage}
+			\begin{minipage}{0.2\textwidth}	
+				\begin{tabular}{l}
+					Output  \\
+					\hline
+					$1$ $2$ \\
+					$0$ $3$ \\
+					\\
+					\\
+					\\
+				\end{tabular} \\
+			\end{minipage} \\
+	\end{itemize}
+	
+\item Existe alguna pieza diferente al resto: 
+     \begin{itemize}
+		\item El tablero se completa. \\
+		
+			\begin{minipage}{0.2\textwidth}
+				\begin{tabular}{l}
+					Input  \\
+					\hline
+					$2$ $2$ $2$     \\
+					$2$ $2$ $1$ $2$ \\
+					$2$ $2$ $1$ $2$ \\
+					$2$ $1$ $2$ $2$ \\
+					$2$ $1$ $2$ $2$ \\
+				\end{tabular} \\  
+			\end{minipage}
+			\begin{minipage}{0.2\textwidth}	
+				\begin{tabular}{l}
+					Output  \\
+					\hline
+					$1$ $3$ \\
+					$2$ $4$ \\
+					\\
+					\\
+					\\
+				\end{tabular} \\
+			\end{minipage} \\
+		
+		\item El tablero tiene la mínima cantidad de piezas (($n \times m)/2$). \\
+		
+			\begin{minipage}{0.2\textwidth}
+				\begin{tabular}{l}
+					Input  \\
+					\hline
+					$2$ $2$ $3$     \\
+					$2$ $2$ $1$ $2$ \\
+					$3$ $3$ $3$ $1$ \\
+					$3$ $2$ $1$ $1$ \\
+					$2$ $2$ $1$ $2$ \\
+				\end{tabular} \\  
+			\end{minipage}
+			\begin{minipage}{0.2\textwidth}	
+				\begin{tabular}{l}
+					Output  \\
+					\hline
+					$1$ $0$ \\
+					$0$ $4$ \\
+					\\
+					\\
+					\\
+				\end{tabular} \\
+			\end{minipage} 
+			\begin{minipage}{0.2\textwidth}	
+				\begin{tabular}{l}
+					Output  \\
+					\hline
+					$0$ $1$ \\
+					$2$ $0$ \\
+					\\
+					\\
+					\\
+				\end{tabular} \\
+			\end{minipage} \\
+		
+		En este caso sólo se pueden colocar las piezas intercaladas. Se podrían tomar $2$ piezas cualesquiera para la solución (Ej: piezas $3$ y $4$). \\
+		
+		\item El tablero no se completa pero se llena más que el mínimo posible. \\
+		
+			\begin{minipage}{0.2\textwidth}
+				\begin{tabular}{l}
+					Input  \\
+					\hline
+					$2$ $2$ $3$     \\
+					$2$ $2$ $1$ $2$ \\
+					$3$ $2$ $3$ $1$ \\
+					$3$ $1$ $3$ $2$ \\
+					$2$ $2$ $1$ $2$ \\
+				\end{tabular} \\  
+			\end{minipage}
+			\begin{minipage}{0.2\textwidth}	
+				\begin{tabular}{l}
+					Output  \\
+					\hline
+					$1$ $3$ \\
+					$0$ $4$ \\
+					\\
+					\\
+					\\
+				\end{tabular} \\
+			\end{minipage} \\
+		
+	\end{itemize}
+		
+\end{itemize}
+
+Ejecutamos el programa con los distintos ejemplos y se llegó a la solución esperada. Por lo tanto, podemos concluir que el comportamiento del programa es correcto. 
 
 \subsubsection{Medición empírica de la performance}
 

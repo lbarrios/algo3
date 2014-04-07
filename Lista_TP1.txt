@@ -29,7 +29,7 @@ PROBLEMA 3
     * Hipótesis de resolución:
     * Justificación formal de correctitud:
     * Cota de complejidad temporal:
-    * Verificación mediante casos de prueba: YA CASI LO TERMINO
+    * Verificación mediante casos de prueba: OK
     * Medición empírica de performance:
   Código:
     * Algoritmo: NO ANDA
