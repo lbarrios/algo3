@@ -1,52 +1,43 @@
--PROBLEMA1
 
- Informe: 
-*Descripci髇  - OK   
-*Hip髏esis de resoluci髇 
-*Justificaci髇 formal de correctitud
-*Cota de complejidad temporal 
-*Verificaci髇 mediante casos de prueba  - OK
-*Medici髇 emp韗ica de performance
+PROBLEMA 1
+  Informe:
+    * Descripci贸n: OK
+    * Hip贸tesis de resoluci贸n:
+    * Justificaci贸n formal de correctitud:
+    * Cota de complejidad temporal:
+    * Verificaci贸n mediante casos de prueba: OK
+    * Medici贸n emp铆rica de performance:
+  C贸digo:
+    * Algoritmo: OK
+    * Tests: No est谩n hechos. Se pueden hacer
 
- C骴igo: 
-*Algoritmo - OK
-*Tests 
+PROBLEMA 2
+  Informe:
+    * Descripci贸n: OK
+    * Hip贸tesis de resoluci贸n:
+    * Justificaci贸n formal de correctitud:
+    * Cota de complejidad temporal:
+    * Verificaci贸n mediante casos de prueba: OK
+    * Medici贸n emp铆rica de performance:
+  C贸digo:
+    * Algoritmo: OK
+    * Tests: No est谩n hechos. Se pueden hacer.
 
-
- 
--PROBLEMA2
-
- Informe:
-*Descripci髇 - OK
-*Hip髏esis de resoluci髇
-*Justificaci髇 formal de correctitud
-*Cota de complejidad temporal
-*Verificaci髇 mediante casos de prueba - OK
-*Medici髇 emp韗ica de performance
-
- C骴igo: 
-*Algoritmo - OK
-*Tests
-
-
-
--PROBLEMA3
-
- Informe:
-*Descripci髇 - OK
-*Hip髏esis de resoluci髇
-*Justificaci髇 formal de correctitud
-*Cota de complejidad temporal
-*Verificaci髇 mediante casos de prueba -YA CASI LO TERMINO
-*Medici髇 emp韗ica de performance
-
- C骴igo: 
-*Algoritmo
-*Tests
+PROBLEMA 3
+  Informe:
+    * Descripci贸n: OK
+    * Hip贸tesis de resoluci贸n:
+    * Justificaci贸n formal de correctitud:
+    * Cota de complejidad temporal:
+    * Verificaci贸n mediante casos de prueba: YA CASI LO TERMINO
+    * Medici贸n emp铆rica de performance:
+  C贸digo:
+    * Algoritmo: NO ANDA
+    * Tests: NO.
 
 
 
--INFORME: 
+INFORME:
+  * Introducci贸n
+  * Bibliograf铆a
 
-*Introducci髇  
-*Bibliograf韆

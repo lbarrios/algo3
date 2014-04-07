@@ -48,8 +48,8 @@ public:
 
   #ifdef DEBUG
     #define DEBUG_ENTER fprintf (stderr, "\n")
-    #define DEBUG_INT(x) fprintf(stderr, "DEBUG: %s=%d in %s (%s:%d)\n",#x,(void*)(x),__func__,__FILE__,__LINE__)
-    #define DEBUG_UINT(x) fprintf(stderr, "DEBUG: %s=%u in %s (%s:%d)\n",#x,(void*)(x),__func__,__FILE__,__LINE__)
+    #define DEBUG_INT(x) fprintf(stderr, "DEBUG: %s=%d in %s (%s:%d)\n",#x,(int)(x),__func__,__FILE__,__LINE__)
+    #define DEBUG_UINT(x) fprintf(stderr, "DEBUG: %s=%u in %s (%s:%d)\n",#x,(uint32_t)(x),__func__,__FILE__,__LINE__)
     #define DEBUG_POINTER(x) fprintf (stderr, "DEBUG: %s=%p in %s (%s:%d)\n",#x,(void*)(x),__func__,__FILE__,__LINE__)
     #define DEBUG_CHAR(x) fprintf (stderr, "DEBUG: %s=%c in %s (%s:%d)\n",#x,x,__func__,__FILE__,__LINE__)
     #define DEBUG_STRING(x) fprintf (stderr, "DEBUG: %s=%s in %s (%s:%d)\n",#x,x,__func__,__FILE__,__LINE__)

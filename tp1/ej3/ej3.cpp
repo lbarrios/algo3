@@ -54,8 +54,52 @@ Tablero& backtrack( Tablero &t, IndiceDeColores &ic, uint32_t posicion ){
   uint32_t piezaIzquierda = t.dameLaPiezaDeIzquierdaDe( posicion );
   uint32_t piezaArriba = t.dameLaPiezaDeArribaDe( posicion );
   // Obtengo la lista de piezas posibles según el índice
-  list< uint32_t > *piezasPosibles;
-  if( piezaIzquierda == TestCaseEj3::PIEZA_VACIA ){
+  //list< uint32_t > *piezasPosibles;
+  IndiceDeColores::Iterador& piezasPosibles = ic.damePiezasPosibles(piezaIzquierda, piezaArriba);
+  // Me fijo si estoy antes de la última posición del tablero
+  if( posicion < t.cantidadDePosiciones() - 1 )
+  {
+    // Si es así, entonces calculo la máxima cantidad de piezas
+    // para todas las ramas, y la retorno
+    Tablero *mejorTablero = NULL;
+    while( piezasPosibles.hayPiezasPosibles() )
+    {
+      list<uint32_t>::iterator piezaIt = piezasPosibles.dameIterador();
+      uint32_t pieza = *piezaIt; // Resguardo la pieza
+      t.ponerPiezaEnPosicion( pieza, posicion ); // Pongo pieza en tablero
+      // Quito la pieza del índice y obtengo puntero al siguiente
+      list<uint32_t>::iterator piezaItSiguiente = ic.quitarPieza( piezasPosibles );
+      if ( mejorTablero == NULL )
+      {
+        mejorTablero = &(backtrack(t,ic,posicion+1));
+      }
+      else 
+      {
+        Tablero *tableroBacktrack = &(backtrack(t,ic,posicion+1));
+        if( (*mejorTablero) < (*tableroBacktrack) )
+        {
+          delete mejorTablero;
+          mejorTablero = tableroBacktrack;
+        }
+        else 
+        {
+          delete tableroBacktrack;
+        }
+      }
+      // Agrego la pieza nuevamente al índice
+      //ic.agregarPieza( pieza, piezaSiguiente );
+      piezasPosibles.avanzarIterador();
+    }
+    return *mejorTablero;
+  }
+  else 
+  {
+    // De lo contrario (si estoy en la última posición del tablero)
+    // retorno una copia de ese tablero
+      Tablero& ret = (*new Tablero(t));
+      return ret;
+  }
+  /*if( piezaIzquierda == TestCaseEj3::PIEZA_VACIA ){
     piezasPosibles = &(ic.damePiezasPosiblesParaAbajoDe( piezaArriba ));
   }
   else{
@@ -65,29 +109,39 @@ Tablero& backtrack( Tablero &t, IndiceDeColores &ic, uint32_t posicion ){
     else{
       piezasPosibles = &(ic.damePiezasPosibles(piezaIzquierda, piezaArriba));
     }
-  }
+  }*/
   // Me fijo si estoy antes de la última posición del tablero
+  /*
   if( posicion < t.cantidadDePosiciones() - 1 ){
     // Si es así, entonces calculo la máxima cantidad de piezas
     // para todas las ramas, y la retorno
     Tablero *mejorTablero = NULL;
-    for( list< uint32_t >::iterator pieza = piezasPosibles->begin(); pieza != piezasPosibles->end(); pieza++){
-      t.ponerPiezaEnPosicion( *pieza, posicion ); // Pongo pieza en tablero
-      ic.quitarPieza( *pieza ); // Quito la pieza del índice
-      if ( mejorTablero == NULL ){
+    for( list< uint32_t >::iterator piezaIt = piezasPosibles->begin(); 
+    piezaIt != piezasPosibles->end(); piezaIt++)
+    {
+      uint32_t pieza = *piezaIt; // Resguardo la pieza
+      t.ponerPiezaEnPosicion( pieza, posicion ); // Pongo pieza en tablero
+      // Quito la pieza del índice y obtengo puntero al siguiente
+      list< uint32_t >::iterator piezaSiguiente = ic.quitarPieza( piezaIt );
+      if ( mejorTablero == NULL )
+      {
         mejorTablero = &(backtrack(t,ic,posicion+1));
       }
-      else {
+      else 
+      {
         Tablero *tableroBacktrack = &(backtrack(t,ic,posicion+1));
-        if( (*mejorTablero) < (*tableroBacktrack) ){
+        if( (*mejorTablero) < (*tableroBacktrack) )
+        {
           delete mejorTablero;
           mejorTablero = tableroBacktrack;
         }
-        else {
+        else 
+        {
           delete tableroBacktrack;
         }
       }
-      ic.agregarPieza( *pieza ); // Agrego la pieza al índice
+      // Agrego la pieza nuevamente al índice
+      ic.agregarPieza( pieza, piezaSiguiente );
     }
     return *mejorTablero;
   } 
@@ -97,4 +151,5 @@ Tablero& backtrack( Tablero &t, IndiceDeColores &ic, uint32_t posicion ){
       Tablero& ret = (*new Tablero(t));
       return ret;
   }
+  */
 }
