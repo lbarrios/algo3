@@ -8,28 +8,22 @@ int main( int argc, char** argv ){
   // Esta clase representa un caso de prueba, y lo toma desde el input que le provee el parser
   TestCaseEj3 testcase ( parser.dameInput() );
   Timer timer ( parser.dameTime() );
-  _C("Itero sobre los distintos casos de prueba hasta obtener un testcase nulo");
   // Itero sobre los distintos casos de prueba hasta obtener un testcase nulo
   while( testcase.tomarDatos() != false ){
-    _C("Mido el tiempo inicial.");
     // Mido el tiempo inicial.
     timer.setInitialTime("todoElCiclo");
     // Obtengo los parámetros del testcase.
-    _C("Obtengo los parámetros del testcase.");
-    uint32_t cantidadDeFilas = testcase.dameCantidadDeFilas(); DEBUG_UINT(cantidadDeFilas);
-    uint32_t cantidadDeColumnas = testcase.dameCantidadDeColumnas(); DEBUG_UINT(cantidadDeColumnas);
-    uint32_t cantidadDeColores = testcase.dameCantidadDeColores(); DEBUG_UINT(cantidadDeColores);
-    _C("Inicializo estructuras del Ej.");
+    uint32_t cantidadDeFilas = testcase.dameCantidadDeFilas();
+    uint32_t cantidadDeColumnas = testcase.dameCantidadDeColumnas();
+    uint32_t cantidadDeColores = testcase.dameCantidadDeColores();
     // Inicializo estructuras del Ej.
     vector<TestCaseEj3::Pieza>& listaDePiezas = testcase.dameListaDePiezas(); DEBUG_INT(listaDePiezas.size());
     IndiceDeColores indiceDeColores(cantidadDeColores, listaDePiezas);
-    Tablero tablero(cantidadDeFilas, cantidadDeColumnas); DEBUG_INT(tablero.cantidadDePosiciones());
-    _C("Obtengo el mejor tablero a través de backtracking");
+    Tablero &tablero = *new Tablero(cantidadDeFilas, cantidadDeColumnas); DEBUG_INT(tablero.cantidadDePosiciones());
+    //Obtengo el mejor tablero a través de backtracking
     Tablero &mejorTablero = backtrack( tablero, indiceDeColores, 0 );
-    _C("Mido el tiempo final");
     // Mido el tiempo final
     timer.setFinalTime("todoElCiclo");
-    imprimirTiempoFinal();
     // Devuelvo el resultado con el formato solicitado
     #ifndef TIME
     for( uint32_t columna = 0; columna < mejorTablero.cantidadDeColumnas; columna++){
@@ -46,36 +40,55 @@ int main( int argc, char** argv ){
   }
   return 0;
 }
+
+void imprimeTablero(Tablero &t){
+  for(int y=0;y<t.cantidadDeFilas;y++)
+  {
+    for(int x=0;x<t.cantidadDeColumnas;x++)
+    {
+      uint32_t posicion = y*t.cantidadDeColumnas + x;
+      cout << t[posicion] << " ";
+    }
+    cout << endl;
+  }
+  cout << endl;
+}
 /**
  * Devuelve la cantidad máxima de posiciones llenas encontradas
  */
 Tablero& backtrack( Tablero &t, IndiceDeColores &ic, uint32_t posicion ){
+  _C("Entrando posición: " << posicion);
   // Obtengo las piezas de la izquierda y de arriba
   uint32_t piezaIzquierda = t.dameLaPiezaDeIzquierdaDe( posicion );
   uint32_t piezaArriba = t.dameLaPiezaDeArribaDe( posicion );
   // Obtengo la lista de piezas posibles según el índice
-  //list< uint32_t > *piezasPosibles;
-  IndiceDeColores::Iterador& piezasPosibles = ic.damePiezasPosibles(piezaIzquierda, piezaArriba);
+  IndiceDeColores::Iterador &piezasPosibles = ic.damePiezasPosibles(piezaIzquierda, piezaArriba);
   // Me fijo si estoy antes de la última posición del tablero
   if( posicion < t.cantidadDePosiciones() - 1 )
   {
-    // Si es así, entonces calculo la máxima cantidad de piezas
-    // para todas las ramas, y la retorno
+    // Si es así, entonces calculo la máxima cantidad de piezas para todas las ramas, y la retorno
     Tablero *mejorTablero = NULL;
     while( piezasPosibles.hayPiezasPosibles() )
     {
-      list<uint32_t>::iterator piezaIt = piezasPosibles.dameIterador();
-      uint32_t pieza = *piezaIt; // Resguardo la pieza
-      t.ponerPiezaEnPosicion( pieza, posicion ); // Pongo pieza en tablero
-      // Quito la pieza del índice y obtengo puntero al siguiente
-      list<uint32_t>::iterator piezaItSiguiente = ic.quitarPieza( piezasPosibles );
+      uint32_t pieza = *piezasPosibles; // Obtengo la nueva pieza
+      DEBUG_INT(pieza);
+      uint32_t piezaAnterior = t[posicion]; // Resguardo pieza anterior
+      t.ponerPiezaEnPosicion( pieza, posicion ); // Pongo nueva pieza en tablero
+      if( pieza != TestCaseEj3::PIEZA_VACIA )
+      {
+        ic.quitarPieza( piezasPosibles ); // Quito la pieza del índice y obtengo puntero al siguiente
+      }
       if ( mejorTablero == NULL )
       {
+        _C("Llamando backtrack("<<posicion+1<<") desde posicion("<<posicion<<")");
         mejorTablero = &(backtrack(t,ic,posicion+1));
+        _C("Regresando de backtrack("<<posicion+1<<") hacia posicion("<<posicion<<")");
       }
       else 
       {
+        _C("Llamando backtrack("<<posicion+1<<") desde posicion("<<posicion<<")");
         Tablero *tableroBacktrack = &(backtrack(t,ic,posicion+1));
+        _C("Regresando de backtrack("<<posicion+1<<") hacia posicion("<<posicion<<")");
         if( (*mejorTablero) < (*tableroBacktrack) )
         {
           delete mejorTablero;
@@ -87,69 +100,36 @@ Tablero& backtrack( Tablero &t, IndiceDeColores &ic, uint32_t posicion ){
         }
       }
       // Agrego la pieza nuevamente al índice
-      //ic.agregarPieza( pieza, piezaSiguiente );
-      piezasPosibles.avanzarIterador();
+      imprimeTablero(t);
+      if( pieza != TestCaseEj3::PIEZA_VACIA )
+      {
+        ic.restaurarPieza( piezasPosibles );
+      }
+      t.ponerPiezaEnPosicion( piezaAnterior, posicion ); // Recupero pieza vieja a tablero
+      piezasPosibles++;
     }
+    DEBUG_INT(posicion);
+    _C("         NO HAY MAS PIEZAS POSIBLES EN LA POSICION "<<posicion);
+    delete &piezasPosibles;
     return *mejorTablero;
   }
   else 
   {
-    // De lo contrario (si estoy en la última posición del tablero)
-    // retorno una copia de ese tablero
-      Tablero& ret = (*new Tablero(t));
-      return ret;
-  }
-  /*if( piezaIzquierda == TestCaseEj3::PIEZA_VACIA ){
-    piezasPosibles = &(ic.damePiezasPosiblesParaAbajoDe( piezaArriba ));
-  }
-  else{
-    if ( piezaArriba == TestCaseEj3::PIEZA_VACIA ){
-      piezasPosibles = &(ic.damePiezasPosiblesParaLaDerechaDe( piezaIzquierda ));
-    }
-    else{
-      piezasPosibles = &(ic.damePiezasPosibles(piezaIzquierda, piezaArriba));
-    }
-  }*/
-  // Me fijo si estoy antes de la última posición del tablero
-  /*
-  if( posicion < t.cantidadDePosiciones() - 1 ){
-    // Si es así, entonces calculo la máxima cantidad de piezas
-    // para todas las ramas, y la retorno
-    Tablero *mejorTablero = NULL;
-    for( list< uint32_t >::iterator piezaIt = piezasPosibles->begin(); 
-    piezaIt != piezasPosibles->end(); piezaIt++)
+    if (*piezasPosibles != TestCaseEj3::PIEZA_VACIA)
     {
-      uint32_t pieza = *piezaIt; // Resguardo la pieza
-      t.ponerPiezaEnPosicion( pieza, posicion ); // Pongo pieza en tablero
-      // Quito la pieza del índice y obtengo puntero al siguiente
-      list< uint32_t >::iterator piezaSiguiente = ic.quitarPieza( piezaIt );
-      if ( mejorTablero == NULL )
-      {
-        mejorTablero = &(backtrack(t,ic,posicion+1));
-      }
-      else 
-      {
-        Tablero *tableroBacktrack = &(backtrack(t,ic,posicion+1));
-        if( (*mejorTablero) < (*tableroBacktrack) )
-        {
-          delete mejorTablero;
-          mejorTablero = tableroBacktrack;
-        }
-        else 
-        {
-          delete tableroBacktrack;
-        }
-      }
-      // Agrego la pieza nuevamente al índice
-      ic.agregarPieza( pieza, piezaSiguiente );
+      t.ponerPiezaEnPosicion( *piezasPosibles, posicion ); // Pongo nueva pieza en tablero
     }
-    return *mejorTablero;
-  } 
-  else {
-    // De lo contrario (si estoy en la última posición del tablero)
-    // retorno una copia de ese tablero
-      Tablero& ret = (*new Tablero(t));
-      return ret;
+    // De lo contrario (si estoy en la última posición del tablero) 
+    /*
+      Pruebo con las piezas que tengo
+      ...
+      ...
+     */
+    // Retorno una copia del tablero final
+    delete &piezasPosibles;
+    Tablero *newTablero = new Tablero(t);
+    t.ponerPiezaEnPosicion(TestCaseEj3::PIEZA_VACIA, posicion);
+    imprimeTablero(*newTablero);
+    return *newTablero;
   }
-  */
 }

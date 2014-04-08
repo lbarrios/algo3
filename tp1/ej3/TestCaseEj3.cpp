@@ -37,7 +37,7 @@ bool TestCaseEj3::tomarDatos()
   // Tomo las piezas
   uint32_t cantidadDePiezas = this->_cantidadDeFilas*this->_cantidadDeColumnas;
   this->_listaDePiezas = new vector<Pieza>;
-  this->_listaDePiezas->reserve(cantidadDePiezas+1);
+  this->_listaDePiezas->reserve(cantidadDePiezas);
   // Agrego una pieza vacia en la posicion 0
   Pieza piezaVacia;
   this->_listaDePiezas->push_back(piezaVacia);
@@ -50,6 +50,7 @@ bool TestCaseEj3::tomarDatos()
       >> pieza.colorDerecha
       >> pieza.colorAbajo;
     this->_listaDePiezas->push_back(pieza);
+    //_C("Leída pieza= ["<< pieza.colorArriba << "," << pieza.colorIzquierda << "," << pieza.colorDerecha << "," << pieza.colorAbajo << "]");
   }
   this->_yaSeEjecuto = true;
   return true;
