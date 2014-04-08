@@ -5,7 +5,7 @@ LISTINGOBJS = listings.sty lstdoc.sty lstlang1.sty lstlang2.sty lstlang3.sty lst
 
 .PHONY: all clean clean-trash
 
-all: clean introduccion problema11 problema12 problema13 codigo informe
+all: clean introduccion problema1 problema2 problema3 codigo informe
 
 informe: 
 # $(LISTINGOBJS)
@@ -15,11 +15,11 @@ informe:
 
 introduccion: introduccion.tex
 	$(LATEX) $(OPTS) introduccion.tex
-problema11: problema1.tex
+problema1: problema1.tex
 	$(LATEX) $(OPTS) problema1.tex
-problema12: problema2.tex
+problema2: problema2.tex
 	$(LATEX) $(OPTS) problema2.tex
-problema13: problema3.tex
+problema3: problema3.tex
 	$(LATEX) $(OPTS) problema3.tex
 codigo: codigo-fuente.tex
 	$(LATEX) $(OPTS) codigo-fuente.tex
@@ -29,7 +29,7 @@ codigo: codigo-fuente.tex
 
 clean-trash: clean
 	#@rm -f $(LISTINGOBJS) 
-	@rm -f introduccion.pdf ej1.pdf ej2.pdf ej3.pdf codigo-fuente.pdf build
+	@rm -f introduccion.pdf problema1.pdf problema2.pdf problema3.pdf codigo-fuente.pdf build
 	#@rm -f img/*-eps-converted-to.pdf
 
 clean:
