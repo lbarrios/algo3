@@ -5,7 +5,7 @@ LISTINGOBJS = listings.sty lstdoc.sty lstlang1.sty lstlang2.sty lstlang3.sty lst
 
 .PHONY: all clean clean-trash
 
-all: clean introduccion ej1 ej2 ej3 codigo informe
+all: clean introduccion problema11 problema12 problema13 codigo informe
 
 informe: 
 # $(LISTINGOBJS)
@@ -15,12 +15,12 @@ informe:
 
 introduccion: introduccion.tex
 	$(LATEX) $(OPTS) introduccion.tex
-problema11: problema11.tex
+problema11: problema1.tex
 	$(LATEX) $(OPTS) problema1.tex
-problema12: problema1.tex
-	$(LATEX) $(OPTS) ej2.tex
-ej3: ej3.tex
-	$(LATEX) $(OPTS) ej3.tex
+problema12: problema2.tex
+	$(LATEX) $(OPTS) problema2.tex
+problema13: problema3.tex
+	$(LATEX) $(OPTS) problema3.tex
 codigo: codigo-fuente.tex
 	$(LATEX) $(OPTS) codigo-fuente.tex
 

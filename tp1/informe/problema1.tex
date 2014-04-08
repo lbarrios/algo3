@@ -60,17 +60,94 @@ esta en el jpg
 \subsubsection{Justificación formal de correctitud}
 Sabemos que la soluci\'on pertenece al conjunto {d1, ... , dn}. Nuestro algoritmo itera sobre cada elemento di del conjunto calculando P(di), y guardando el elemento e con P(e) m\'aximo encontrado hasta el momento. Al final de las iteraciones, tenemos guardado el elemento e con P(e) maximo en todo el conjunto. Devolvemos e y P(e).
 \subsubsection{Cota de complejidad temporal}
-Aca hace falta un pseudocodigo mas detallado. Puedo hacerlo bien simple sin las optimizaciones. Quizas no. despues se pueden explicar las optimizaciones para la parte de experimentacion, ya que la complejidad teorica es la misma.
-ordenar(d) //O(n log(n))
-der = 1
-for izq in 1..n :
-    while d\[der\] - d\[izq\] < D and der < n:
-        der += 1
-    si es necesario actualizo //O(1)
+El algoritmo a analizar es el siguiente:
+
+\begin{algorithm}
+\caption{Algoritmo Camiones Sospechosos}\label{logpascual}
+\footnotesize\begin{algorithmic}[1]
+	\Require
+		\Statex $intervaloInspector \gets$ \Call{dameIntervaloInspector}{} \Comment{$integer$}
+		\Statex $cantidadDeCamiones \gets$ \Call{dameCantidadCamiones}{} \Comment{$integer$}
+		\Statex $fechasCamiones \gets$ \Call{dameFechasCamiones}{} \Comment{$arreglo\langle integer \rangle$}
+	\Ensure
+		\Statex \Call{Fecha Óptima Inspector}{} \Comment{$integer$}
+		\Statex \Call{Cantidad De Camiones Analizados}{} \Comment{$integer$}
+	\Statex
+	
+  \State \Call{ordenar}{fechasCamiones} \Comment{\bigO{n.\log n}}
+  \State $inicioInter \gets 0$ \Comment{\bigO{1}}
+  \State $finInter \gets 0$ \Comment{\bigO{1}}
+  \State $mDia \gets 0$ \Comment{\bigO{1}}
+  \State $mCantidadCamiones \gets 0$ \Comment{\bigO{1}}
+
+  \While {$finInter < cantidadDeCamiones$} \Comment{ \texttt{Como máximo n interaciones}}
+    \While {$ \Call{DiferenciaMenorAInterInspector}{inicioInter, finInter} $}
+      \State $ finInter \gets finInter+1$
+    \EndWhile 
+  \If {$\Call{CantCamionesEn}{inicioInter, finInterl} < mCantidadCamiones$} \Comment{\bigO{1}}
+    \State $ mDia \gets inicioInter$ \Comment{\bigO{1}}
+    \State $ mCantidadCamiones \gets \Call{CantCamionesEn}{inicioInter,finInter}$ \Comment{\bigO{1}}
+  \EndIf {}
+  \State $inicioInter \gets inicioInter +1$
+  \EndWhile \Comment{\texttt{ciclo} \bigO{n}}
+  \State \Return {$mDia, mCantCamiones$}
+  \State
+
+
+	\Function{CantCamionesEn}{$inicioInter, finInter$}
+  \State \Return { $finInter - inicioInter$ } \Comment{\bigO{1}}
+	\EndFunction \Comment{\texttt{final} \bigO{1}}
+  \State
+
+	\Function{DiferenciaMenorAInterInspector}{$inicioInter, finInter$}
+    \State $diferencia \gets fechasCamiones_{finInter} - fechasCamiones_{inicioInter}$ \Comment{\bigO{1}}
+    \State \Return {$ finInter < cantidadDeCamiones \texttt{ and } diferencia < intervaloInspector $} \Comment{\bigO{1}}
+	\EndFunction \Comment{\texttt{final} \bigO{1}}
+
+	\Statex{}
+	
+\end{algorithmic}
+\end{algorithm}
+
 
 Consideremos la complejidad del ciclo for. A lo largo del ciclo se van actualizando izq y der, y se va guardando el maximo que lleva  en si O(1).
 ¿Cuántas veces se actualizan izq y der? Pues, como van en forma creciente de 1 a n, exactamente n veces cada una. El ciclo for tiene complejidad O(2n) = O(n)
 La complejidad del algoritmo es finalmente O(n log n).
+
+Como se puede ver el algorítmo tiene 2 partes bien diferenciadas: Primero 
+tiene un ordenamiento de un arreglo unidimensional. Para eso se usa el algorítmo de ordenamiento
+que brinda a librería standard de \textit{c++}. En la documentación de la misma se puede apreciar
+que su complijidad en el peor caso es de \bigO{n. \log n}\footnote{http://www.cplusplus.com/reference/algorithm/sort/}
+donde \textit{n} es la distancia que hay entre el primer y el último elemento que se quieren ordenar.
+En este caso se necesita ordenar todo el arreglo, por lo que termina siendo \bigO{n.\log n} con respecto
+al tamaño de la entrada.
+
+Luego hay un bucle while. El bucle \texttt{mientras} se repite mientras que el fin del intervalo a analizar
+se encuentre dentro del arreglo de camiones.
+
+Apenas se entra al ciclo \texttt{mientras} hay otro ciclo, el cuál tiene una complejidad de peor caso de \bigO{n}.
+Este ciclo interno se encarga de hacer avanzar el puntero \textit{finInter} hasta que la diferencia entre
+de las fechas entre el principio del intervalo a analizar y el final del intervalo a analizar sea menor a
+\textit{intervaloInspector}. El peor caso posible en este ciclo sería que la diferencia entre el la fecha mas próxima
+y la fecha mas lejana sea menor a intervalo inspector. En ese caso sale del bucle porque se pasó del máximo. Sim embargo
+si eso ocurre también se deja de cumplir la condición de la guarda externa, por lo tanto el bucle externo también termina.
+
+Es decir, ambas guardas dependen de la misma comparación entre \textit{finInter} y \textit{cantCamiones}, por lo tanto cuando
+termine una va a terminar la otra. Por otra parte \textit{finInter} siempre avanza. No hay ningún caso en el cuál retroceda.
+Esto significa que siempre va a recorrer exactamente \textit{cantCamiones}, es decir que en el peor de los casos va a haber
+\texttt{n} iteraciones del ciclo. Como el resto de las operaciones son todas \bigO{1} podemos concluir que el ciclo completo
+tiene una complejidad de \bigO{n}
+
+De esta manera el algorítmo teermina teniendo una complejidad de \bigO{n.\log n + n} = \bigO{n. \log n}. De esta manera
+la complejidad es estrictamente menor que $\bigO{n^{2}}$.
+
+
+
+
+
+
+
+
 
 \subsubsection{Verificación mediante casos de prueba}
 
