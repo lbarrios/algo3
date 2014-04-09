@@ -73,17 +73,68 @@ Como resultado se obtendría el orden $2,1$ y $P:7$, el monto total perdido de l
 Esta en el jpg.
 \subsubsection{Justificación formal de correctitud}
 Nuestro algoritmo ordena de forma decreciente por el cociente $\pi$, luego devolvemos un vector v \'optimo. Iteramos sobre v con el indice i, acumulando la p\'erdida del subvector v[1..i]. Al final de las iteraciones tenemos entonces la p\'erdida completa correspondiente al vector v.
+
+\newpage
+
 \subsubsection{Cota de complejidad temporal}
-sort(arreglo, $\pi$) //O(n log (n))
 
-perdida = 0
-dias = 0
+\begin{algorithm}
+\caption{Algoritmo La joya del Río de la plata}\label{logpascual}
+\footnotesize\begin{algorithmic}[1]
+	\Require
+		\Statex $cantidadDePiezas \gets$ \Call{dameCantidadDePiezas}{} \Comment{$integer$}
+		\Statex $listaDePiezas \gets$ \Call{dameListaDePiezas}{} \Comment{$vector<Pieza>$}
+	\Ensure
+		\Statex \Call{Orden Óptimo Piezas}{} \Comment{$vector<Pieza>$}
+	\Statex
+	
+  \State $sumaTotal \gets 0$ \Comment{\bigO{1}}
+  \State $tiempoAcum \gets 0$ \Comment{\bigO{1}}
+  \State \Call{ordenar}{listaDePiezas, \textsc{compararPiezasMayorQue} } \Comment{\bigO{n.\log n}}
+  \ForAll {$pieza$ \texttt{en} $listaDePiezas$} \Comment {\texttt{n} iteraciones}
+    \State $tiempoAcum \gets tiempoAcum + pieza.tiempo$ \Comment{ \bigO{1}}
+    \State $sumaTotal \gets sumaTotal + pieza.devaluaci\acute{o}n * tiempoAcum $ \Comment{ \bigO{1}}
+    \EndFor \Comment{\texttt{ciclo}\bigO{n}}
+  \State \Return $listaDePiezas, sumaTotal$
+  \State
 
-for i=1 to n    //O(n)
-    dias = dias + ti    //O(1)
-    perdida = perdida + dias * di   //O(1)
+  \Statex{}
+  \Function{compararPiezasMayorQue}{$pieza1, pieza2$} \Comment{\bigO{1}}
+  \If {$(pieza1.devaluaci\acute{o}n/pieza1.tiempo) > (pieza2.devaluaci\acute{o}n/pieza2.tiempo$} \Comment{\bigO{1}}
+    \State \Return {1} \Comment{\bigO{1}}
+  \Else
+    \State \Return {0 \Comment{\bigO{1}}}
+  \EndIf
+	\EndFunction \Comment{\texttt{final} \bigO{1}}
+  \State
 
-La complejidad del algoritmo es O(n log (n)).
+  \Statex
+  \State Definición \textbf{Pieza}:
+  \State \texttt{ integer } tiempo \Comment{tiempo de fabricación}
+  \State \texttt{ integer } devaluación \Comment{cantidad de dinero perdido por unidad de tiempo}
+	\Statex{}
+	
+\end{algorithmic}
+\end{algorithm}
+
+
+
+  Como se puede ver en el pseudo código la complejidad está dada por un Ordenamiento.
+El ordenamiento se realiza utilizando un criterio específico de comparación que consiste
+en comparar el cociente entre la devaluación diaria de una pieza y el tiempo que toma
+fabricar esa pieza. La comparación entonces tiene una complejidad de \bigO{1}, por lo que
+un ordenamiento basado en comparaciones tiene complejidad de \bigO{n.\log n}.
+
+  Luego hay un ciclo \textbf{para cada} que itera una por cada elemento en \textit{listaDePiezas},
+por lo tanto el ciclo se realiza \textit{cantidadDePiezas} veces. Cada iteración del ciclo realiza
+sólo acciones \bigO{1}, por lo tanto el ciclo en si es \bigO{cantidadDePiezas}. La cantidad de piezas
+es proporcional al tamaño de la entrada, por lo tanto el ciclo es \bigO{n}.
+
+  En conclusión el algorítmo tiene una complejidad temporal \bigO{n + n. \log n}=\bigO{n. \log n}
+
+  
+
+
 
 
 \subsubsection{Verificación mediante casos de prueba}
