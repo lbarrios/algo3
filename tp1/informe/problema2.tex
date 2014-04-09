@@ -70,9 +70,57 @@ La fabricación de las $2$ piezas le llevará $4$ días en total y durante estos
 Como resultado se obtendría el orden $2,1$ y $P:7$, el monto total perdido de la ganancia. 
 
 \subsubsection{Hipótesis de resolución}
-Esta en el jpg.
+
+Contamos con $n \in \mathbb{N}$, donde cada collar queda determinado por una $3$-upla: (p,d,t) donde \\
+$p \in \{1,...,n\}$ es el número de collar $(p_i \neq p_j)$, \\
+$d \in \mathbb{N}$ es la pérdida diaria de ganancia del collar, y \\
+$t \in \mathbb{N}$ es el tiempo de fabricación (en días) del collar. \\
+Se pide devolver el orden de fabricación de los collares que minimice la pérdida total. \\
+El espacio de soluciones es luego, todos los vectores que son permutaciones de los primeros $n$ naturales. \\
+\\
+Sea $v = (v_1,v_2,...,v_n)$ y entiéndase, \\
+$d[V_i]$ como la segunda componente del collar que tiene $p=v_i$ \\
+$t[V_i]$ como la tercer componente del collar que tiene $p=v_i$. \\
+Sea $\displaystyle{C(V)= \sum_{i=1}^{n} ((\sum_{j=1}^{i} t[v_i])d[v_i])}$ la función que queremos minimizar sobre el espacio de soluciones. La \underline{solución} $v$ cumple $(\forall V')$ C(v) $\le$ C(v').\\
+Para cada $i \in 1,...n$ consideramos $\displaystyle{ \pi(i)= \frac{d[v_i]}{t[v_i]}}$. \\
+Veamos que $v$ cumple $\displaystyle{(\forall i \in 1...n-1) \pi(i) \ge \pi(i+1)}$. \\
+\\
+Supongo que no, es decir, $\displaystyle{(\exists X \in 1...n-1) \pi(X) < \pi(X+1)}$. \\
+\\
+Sea V'$=(v_1,v_2,...,v_{X-1},v_{X+1},v_X,v_{X+2},...,v_n)$, es decir, se construye a partir de V con las posiciones X e X$+1$ intercambiadas. \\
+Veamos que C(v')$<$C(v). \\
+\\
+C(v)$-$C(v')$= \displaystyle {\sum_{i=1}^{n} (d[v_i](\sum_{j=1}^{i} t[v_j]))- \sum_{i=1}^{n}(d[v'_i](\sum_{j=1}^{i} t[v'_j]))} = $\\
+
+$ \underbrace{\sum_{i=1}^{x-1} (d[v_i]\sum_{j=1}^{i} t[v_j]-\sum_{i=1}^{x-1}d[v'_i]\sum_{j=1}^{i} t[v'_j]}_{0,\textnormal{ pues} \forall i \in 1...x-1, v_i=v'_i}$ + 
+$\displaystyle{d[v_x]\sum_{j=1}^{x} t[v_j] - d[v'_x]\sum_{j=1}^{x}t[v'_j] +}$ \\ 
+$\displaystyle{d[v_{x+1}]\sum_{j=1}^{x+1} t[v_j] - d[v'_{x+1}]\sum_{j=1}^{x+1}t[v'_j] + }$ 
+$\underbrace{\sum_{i=x+2}^{n} (d[v_i]\sum_{j=1}^{i} t[v_j]-\sum_{i=x+2}^{n}d[v'_i]\sum_{j=1}^{i} t[v'_j]}_{0,\textnormal{ pues} \forall i \in x+2...n, v_i=v'_i \textnormal{y} \sum_{j=1}^{i}t[v_j]=\sum_{j=1}^{i}t[v'_j]} =$ \\
+$\displaystyle{d[v_x](\sum_{j=1}^{x-1} t[v_j]+ t[v_x]) - d[v_{x+1}](\sum_{j=1}^{x-1} t[v_j] + t[v_{x+1}]) + }$ \\
+$\displaystyle{d[v_{x+1}](\sum_{j=1}^{x-1} t[v_j] + t[v_x] + t[v_{x+1}]) - d[v_x](\sum_{j=1}^{x-1} t[v_j] + t[v_{x+1}] + t[v_x])=} $\\
+$\displaystyle{-d[v_x] t[v_{x+1}] + d[v_{x+1}] t[v_x] > 0 \Leftrightarrow \frac{d[v_{x+1}]}{t[v_{x+1}]} > \frac{d[v_x]}{t[v_x]} } \Leftrightarrow $ \\
+$\displaystyle{\pi(x+1) > \pi(x) }$ que asumimos como verdadero. \\
+Abs! Pues $v$ era óptimo. Luego, $(\forall i \in 1...n-1) \pi(i) \ge \pi(i+1)$. \\
+\\
+Sabemos pues $v$ óptimo $\Rightarrow v$ ordenado no ascendentemente por $\pi$. \\
+Sabemos que existe $v*$ óptima, luego existte $v*$ óptima y ordenada. \\
+Veamos que $v$ ordenada $\Rightarrow v$ óptima, es decir que no existe $v$ ordenada y no óptima. \\
+\\
+C(v)$=$C(v*) pues uno siempre puede ir intercambiando dos posiciones $x$ y $x+1$ que mantengan el ordenamiento (es decir $\pi(x)=\pi(x+1))$ las veces que sea necesario hasta que $v=v*$ y luego, C(v)$=$C(v*) y por lo tanto, $v$ óptima. \\
+\\
+Veamos que se pueden intercambiar $x$ y $x+1$: \\
+$v = (v_1,...,v_x,v_{x+1},...,v_n)$ \\
+$v'= (v_1,...,v_{x+1},v_x,...,v_n)$ \\
+\\
+Desarrollando como hecho previamente, \\
+$\displaystyle{C(v) - C(v') = -d[v_x]t[v_{x+1}] + d[v_{x+1}]t[v_x]=0 \Leftrightarrow }$\\
+$\displaystyle{\frac{d[v_{x+1}]}{t[v_{x+1}]} = \frac{d[v_x]}{t[v_x]} \Leftrightarrow \pi(x+1) = \pi(x)}$ que asumimos verdadero. \\
+\\
+Luego, $v$ ordenado $\Rightarrow v$ óptimo. \\ 
+
+
 \subsubsection{Justificación formal de correctitud}
-Nuestro algoritmo ordena de forma decreciente por el cociente $\pi$, luego devolvemos un vector v \'optimo. Iteramos sobre v con el indice i, acumulando la p\'erdida del subvector v[1..i]. Al final de las iteraciones tenemos entonces la p\'erdida completa correspondiente al vector v.
+Nuestro algoritmo ordena de forma decreciente por el cociente $\pi$, luego devolvemos un vector v óptimo. Iteramos sobre v con el indice i, acumulando la pérdida del subvector v[1..i]. Al final de las iteraciones tenemos entonces la pérdida completa correspondiente al vector v.
 
 \newpage
 
