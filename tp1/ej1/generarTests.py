@@ -6,7 +6,7 @@ generador = generadorDeTestsEj1()
 desde = 1
 hasta = 20000
 casosPorTest = 4
-paso = 10
+paso = 100
 
 
 print (
