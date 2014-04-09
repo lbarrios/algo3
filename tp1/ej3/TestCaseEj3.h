@@ -11,6 +11,7 @@ public:
     uint32_t colorDerecha;
     uint32_t colorArriba;
     uint32_t colorAbajo;
+    uint32_t id;
   };
   TestCaseEj3( std::istream & );
   ~TestCaseEj3();
