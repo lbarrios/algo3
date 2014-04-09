@@ -56,7 +56,18 @@ Para este caso, el primer día del período de contratación será $d=1$ y habr�
 
 
 \subsubsection{Hipótesis de resolución}
-esta en el jpg
+Consideremos los días de llegada ordenados en forma creciente: $d_1 \le d_2 \le \dots \le d_n$ son enteros \underline{positivos} al igual que $D$. \\
+Definimos P(x), donde $x \in \mathbb{N}$, como $\sum_{i=1}^{n} I(d_i)_{[x,x+D-1]}$. \\
+Buscamos $d$ tal que $(\forall x)$ P(x) $\le$ P(d). \\
+Veamos que $d \le d_n$: \\
+P$(d_n)=1$ pues $d_n \in [d_n,d_n + D - 1]$ pero $\forall x > d_n$, P(x)$=0$ pues $d_i < x, \forall i \in 1...n$.\\
+Luego, si $d > d_n, d$ no es óptimo. \\
+Veamos que existe un $d$ óptimo tal que $d=d_i$ para algún $i \in 1...n$. \\
+Sea $d'$ óptimo. \\
+Sea $d=min_{i \in 1...n}$ $d_i \big| d_i \ge d'$. \\
+P(d)$\ge$ P(d') pues $\forall i$ tal que $d_i \in [d',d'+D-1], d_i \in [d,d+D-1]$ ya que $\not\exists$ $j$ tal que $d' \le d_j < d$ y pues $d'+D-1 \le d+D-1$. \\
+Luego, hemos reducido el espacio de solución a $\{$ $d_1,...,d_n$$\}$.
+
 \subsubsection{Justificación formal de correctitud}
 Sabemos que la soluci\'on pertenece al conjunto {d1, ... , dn}. Nuestro algoritmo itera sobre cada elemento di del conjunto calculando P(di), y guardando el elemento e con P(e) m\'aximo encontrado hasta el momento. Al final de las iteraciones, tenemos guardado el elemento e con P(e) maximo en todo el conjunto. Devolvemos e y P(e).
 \subsubsection{Cota de complejidad temporal}
