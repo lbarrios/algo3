@@ -4,14 +4,14 @@ import sys
 
 generador = generadorDeTestsEj3()
 desde_n = 1
-hasta_n = 40
+hasta_n = 20
 paso_n = 1
 desde_m = 1
-hasta_m = 40
+hasta_m = 20
 paso_m = 1
 paso_colores = 1
 desde_colores = 1
-hasta_colores = 100
+hasta_colores = 50
 casosPorTest = 10
 
 print (
