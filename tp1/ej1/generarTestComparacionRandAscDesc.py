@@ -2,9 +2,9 @@
 from genTest.generadorDeTestsEj1 import generadorDeTestsEj1
 import sys
 
-generador = generadorDeTestsEj1()
+carpetaInput = "input/testParaCompRandAscDesc"
 desde = 1
-hasta = 20000
+hasta = 100000
 casosPorTest = 4
 paso = 100
 
@@ -36,12 +36,14 @@ if escape == "salir":
   sys.exit()
   
 
+generador = generadorDeTestsEj1(inputDir = carpetaInput)
 
 for i in range( desde , hasta, paso):
   print( i)
-  generador.generarTest(i, "casoAleatorio", casosPorTest)
-  generador.generarTest(i, "mejorCaso", casosPorTest)
-  generador.generarTest(i, "peorCaso", casosPorTest)
+  params = {"n":i}
+  generador.generarTest( params, "casoAleatorio", casosPorTest)
+  generador.generarTest( params, "casoAscendente", casosPorTest)
+  generador.generarTest( params, "casoDescendente", casosPorTest)
 
 
 print (" Los test se generaron correctamente ")

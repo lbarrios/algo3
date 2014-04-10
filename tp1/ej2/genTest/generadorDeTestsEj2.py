@@ -35,8 +35,9 @@ class generadorDeTests:
 
 class generadorDeTestsEj2 (generadorDeTests):
   """ Generador de test para el ejercicio 1"""
-  limPerdidaDiaria = 10**3 # número máximo que se le asigna al intervalo del inspector.
-  limTiempoDeElaboracion = 10**3 # Número máximo que se le asigna a la fecha de los camiones.
+  limPerdidaDiaria = 10**2 # número máximo que se le asigna a la devaluación
+  limTiempoDeElaboracion = 10**3 # Número máximo que se le asigna al tiempo de elaboración.
+  limCoeficiente = 5
 
   def __init__(self, inputDir = "input", outputDir = "output"):
     super(generadorDeTestsEj2, self).__init__(inputDir, outputDir)
@@ -57,33 +58,36 @@ class generadorDeTestsEj2 (generadorDeTests):
   def nuevoCasoAscendente (self, params):
     """Genera un caso de test donde las piezas vienen con su coeficiente PI ordenado ascendentemente"""
     n = params["n"]
-    listaCoeficientes = [ random.randint(1, limCoeficiente) for i in range(n) ]
+    listaCoeficientes = [ random.random()/self.limCoeficiente for i in range(n) ]
+    print(listaCoeficientes)
     listaCoeficientes.sort()
     listaDePiezas = []
     for coeficiente in listaCoeficientes:
-      nuevaDevaluacion = random.randint(1, self.limPerdidaDiaria)
-      nuevoTiempo = nuevaDevaluacion//coeficiente
+      nuevoTiempo = random.randint(1, self.limTiempoDeElaboracion)
+      nuevaDevaluacion = int(coeficiente * nuevoTiempo)
       listaDePiezas.append("{} {}".format( nuevaDevaluacion, nuevoTiempo ))
 
-    return "{}\n{}".format( n, " ".join(listaDePiezas))
+    return "{}\n{}".format( n, "\n".join(listaDePiezas))
 
 
   def nuevoCasoDescendente (self, params):
     """Genera un caso de test donde las piezas vienen con su coeficiente PI ordenado en forma decreciente"""
     n = params["n"]
-    listaCoeficientes = [ random.randint(1, limCoeficiente) for i in range(n) ]
+    listaCoeficientes = [ random.random()/self.limCoeficiente for i in range(n) ]
+    print(listaCoeficientes)
     listaCoeficientes.sort()
     listaCoeficientes.reverse()
     listaDePiezas = []
     for coeficiente in listaCoeficientes:
-      nuevaDevaluacion = random.randint(1, self.limPerdidaDiaria)
-      nuevoTiempo = nuevaDevaluacion//coeficiente
+      nuevoTiempo = random.randint(1, self.limTiempoDeElaboracion)
+      nuevaDevaluacion = int(coeficiente * nuevoTiempo)
       listaDePiezas.append("{} {}".format( nuevaDevaluacion, nuevoTiempo ))
 
-    return "{}\n{}".format( n, " ".join(listaDePiezas))
+    return "{}\n{}".format( n, "\n".join(listaDePiezas))
 
 
 
 if __name__ == '__main__':
   coso = generadorDeTestsEj2();
   print ( coso.nuevoCasoAleatorio( {"n":3} ))
+  print ( coso.nuevoCasoAscendente( {"n":10} ))
