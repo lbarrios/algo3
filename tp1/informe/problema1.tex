@@ -86,7 +86,7 @@ Luego, hemos reducido el espacio de solución a $\{$ $d_1,...,d_n$$\}$.
 
 \newpage
 \subsubsection{Cota de complejidad temporal}
-El algoritmo a utilizado es el siguiente:
+El algoritmo utilizado es el siguiente:
 
 \begin{algorithm}
 \caption{Algoritmo Camiones Sospechosos}\label{logpascual}
@@ -143,7 +143,7 @@ La complejidad del algoritmo es finalmente O(n log n).
 Como se puede ver el algorítmo tiene 2 partes bien diferenciadas: Primero 
 tiene un ordenamiento de un arreglo unidimensional. Para eso se usa el algorítmo de ordenamiento
 que brinda a librería standard de \textit{c++}. En la documentación de la misma se puede apreciar
-que su complijidad en el peor caso es de \bigO{n. \log n}\footnote{http://www.cplusplus.com/reference/algorithm/sort/}
+que su complejidad en el peor caso es de \bigO{n. \log n}\footnote{http://www.cplusplus.com/reference/algorithm/sort/}
 donde \textit{n} es la distancia que hay entre el primer y el último elemento que se quieren ordenar.
 En este caso se necesita ordenar todo el arreglo, por lo que termina siendo \bigO{n.\log n} con respecto
 al tamaño de la entrada.
@@ -164,7 +164,7 @@ Esto significa que siempre va a recorrer exactamente \textit{cantCamiones}, es d
 \texttt{n} iteraciones del ciclo. Como el resto de las operaciones son todas \bigO{1} podemos concluir que el ciclo completo
 tiene una complejidad de \bigO{n}
 
-De esta manera el algorítmo teermina teniendo una complejidad de \bigO{n.\log n + n} = \bigO{n. \log n}. De esta manera
+De esta manera el algorítmo termina teniendo una complejidad de \bigO{n.\log n + n} = \bigO{n. \log n}. De esta manera
 la complejidad es estrictamente menor que $\bigO{n^{2}}$.
 
 
@@ -217,6 +217,30 @@ Si c$=$n podemos deducir que sólo es posible que d$=$mín $d_i$ y que D$\ge$L (
 Estos $5$ casos cubrirían todo el espacio de soluciones. Ejecutamos distintos ejemplos correspondientes a cada uno de ellos y obtuvimos la respuesta esperada. Por lo tanto, podemos concluir que el comportamiento del programa es correcto. 
 
 \subsubsection{Medición empírica de la performance}
+
+Como se mencionó en la sección de $Cota de complejidad temporal$, el algoritmo elegido para la resolución del problema,
+está dividido en dos partes. La primera corresponde al ordenamiento de un arreglo con las fechas en que los 
+camiones estarán pasando, con complejidad para el peor caso de \bigO{n. \log n}. La segunda corresponde a dos ciclos
+anidados, donde se decide desde qué día el inspector tendría que ser contratado para revisar la mayor cantidad 
+de camiones posibles. La complejidad para esta parte en el peor caso es de \bigO{n}. Por lo tanto, la complejidad
+final estaría dada básicamente por el algoritmo de ordenamiento. \\
+Para la elección de los casos de tests, tuvimos esto en cuenta y decidimos tomar los tiempos de ejecución del programa,
+variando el orden de las fechas de los camiones en el input. 
+
+\begin{itemize}
+\item Orden ascendente de fechas
+\item Orden descendente de fechas
+\item Orden aleatorio de fechas
+\end{itemize}     
+
+Comparamos, entonces, cada uno de estos $3$ casos en un gráfico de $tiempo$ vs $n: cantidad de camiones$. \\
+
+%Gráfico1
+
+Además, para comprobar que efectivamente la complejidad final está dominada por el algoritmo de sort, realizamos 
+una prueba comparando los tiempos de ejecución con $2$ algoritmos de sort diferentes. \\
+
+ 
 
 % -----------------------------------------------
 \end{document}
