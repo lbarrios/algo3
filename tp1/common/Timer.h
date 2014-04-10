@@ -21,7 +21,7 @@ private:
   typedef map<string, timespec> time_dicc;
   time_dicc _initialTimes;
   time_dicc _finalTimes;
-  ostream &_time;
+  ostream &_timeOutput;
 };
 
 #endif

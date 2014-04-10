@@ -1,5 +1,4 @@
 #include "ej3.h"
-using namespace std;
 
 struct Pieza{
   int sup;

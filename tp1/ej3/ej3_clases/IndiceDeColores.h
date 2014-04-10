@@ -19,7 +19,6 @@ private:
   };
   vector<TestCaseEj3::Pieza> &listaDePiezas;
   vector< vector< listaDisponibles > > v;
-  vector< piezaIndexada > _v_pieza_indexada;
   inline uint32_t colorDerecha (uint32_t indice)
   {
     return this->listaDePiezas[indice].colorDerecha - 1;
@@ -31,7 +30,8 @@ private:
 public:
   struct Iterador{
     IndiceDeColores& _ic;
-    inline void quitarPieza() {
+    inline void quitarPieza()
+    {
       (this->_ic.*_quitarPieza)( *this );
     }
     vector< vector< listaDisponibles > >& _v;
@@ -51,22 +51,26 @@ public:
     inline void _avanzaIteradorNormal() {
       this->_indice++;
     }
-    inline void _avanzaIteradorPrimerCasillero(){
-      this->_indice++;
-    }
-    inline void _avanzaIteradorPrimeraColumna(){
-      if (this->_hayPosiblesNormal()){
-        this->_indice++;
-      }
-      else
+    inline void _avanzaIteradorPrimerCasillero()
+    {
+      _C("_avanzaIteradorPrimerCasillero();");
+      this->_avanzaIteradorNormal();
+      if ( !this->_hayPosiblesNormal() )
       {
+        _C("No hay posibles en este color " << this->_colorAbajoActual);
         listaDisponibles l;
         while(true)
         {
-          this->_colorDerechaActual++;
-           l = _v[this->_colorDerechaActual][this->_colorAbajoActual];
+          this->_colorAbajoActual++;
+          if (this->_colorAbajoActual >= this->_v.size())
+          {
+            this->_colorAbajoActual = 0;
+            this->_colorDerechaActual++;
+          }
+          l = _v[this->_colorDerechaActual][this->_colorAbajoActual];
           if ((l.lista.size() - l.principio) > 0)
           {
+            _C("Encontrado color disponible: derecha:" << this->_colorDerechaActual << ", abajo: " << this->_colorAbajoActual);
             break;
           }
         }
@@ -74,12 +78,34 @@ public:
         this->_indice = l.principio;
       }
     }
-    inline void _avanzaIteradorPrimeraFila(){
-      if (this->_hayPosiblesNormal()){
-        this->_indice++;
-      }
-      else
+    inline void _avanzaIteradorPrimeraColumna(){
+      _C("_avanzaIteradorPrimeraColumna();");
+      this->_avanzaIteradorNormal();
+      if ( !this->_hayPosiblesNormal() )
       {
+        _C("No hay posibles en este color " << this->_colorAbajoActual);
+        listaDisponibles l;
+        while(true)
+        {
+          this->_colorDerechaActual++;
+           l = _v[this->_colorDerechaActual][this->_colorAbajoActual];
+          if ((l.lista.size() - l.principio) > 0)
+          {
+            _C("Encontrado color disponible: derecha:" << this->_colorDerechaActual << ", abajo: " << this->_colorAbajoActual);
+            break;
+          }
+        }
+        this->_v_res = &(l.lista);
+        this->_indice = l.principio;
+      }
+    }
+    inline void _avanzaIteradorPrimeraFila()
+    {
+      _C("_avanzaIteradorPrimeraFila();");
+      this->_avanzaIteradorNormal();
+      if ( !this->_hayPosiblesNormal() )
+      {
+        _C("No hay posibles en este color " << this->_colorAbajoActual);
         listaDisponibles l;
         while(true)
         {
@@ -87,6 +113,7 @@ public:
            l = _v[this->_colorDerechaActual][this->_colorAbajoActual];
           if ((l.lista.size() - l.principio) > 0)
           {
+            _C("Encontrado color disponible: derecha:" << this->_colorDerechaActual << ", abajo: " << this->_colorAbajoActual);
             break;
           }
         }
@@ -96,6 +123,8 @@ public:
     }
     inline bool _hayPosiblesNormal() 
     {
+      _C("Verificando hayPosiblesNormal. indice: "<< this->_indice <<", this->_v_res->size=" << this->_v_res->size());
+      DEBUG_BOOL(this->_indice < this->_v_res->size());
       return (this->_indice < this->_v_res->size());
     }
     inline bool _hayPosiblesPrimeraColumna() 
@@ -104,6 +133,8 @@ public:
       {
         return true;
       }
+      _C("hayPosiblesPrimeraColumna: Debe cambiar de color");
+      DEBUG_INT(this->_colorDerechaActual);
       for(uint32_t i = this->_colorDerechaActual+1;i<this->_v.size();i++)
       {
         listaDisponibles l = _v[i][this->_colorAbajoActual];
@@ -120,6 +151,8 @@ public:
       {
         return true;
       }
+      _C("HayPosiblesPrimeraFila: Debe cambiar de color");
+      DEBUG_INT(this->_colorAbajoActual);
       for(uint32_t i = this->_colorAbajoActual+1;i<this->_v.size();i++)
       {
         listaDisponibles l = _v[this->_colorDerechaActual][i];
@@ -132,7 +165,22 @@ public:
     }
     inline bool _hayPosiblesPrimerCasillero() 
     {
-      return this->_indice < this->_ic.listaDePiezas.size();
+      if (this->_hayPosiblesNormal())
+      {
+        return true;
+      }
+      for(uint32_t i = this->_colorAbajoActual; i<this->_v.size(); i++)
+      {
+        for(uint32_t j = this->_colorDerechaActual+1; j<this->_v.size(); j++)
+        {
+          listaDisponibles l = _v[j][i];
+          if ((l.lista.size() - l.principio) > 0)
+          {
+            return true;
+          }
+        }
+      }
+      return false;
     }
     Iterador( IndiceDeColores& p_ic, uint32_t p_i, uint32_t p_a ) : 
       _ic(p_ic),
@@ -144,6 +192,7 @@ public:
         // Si es primera columna pero no primera fila
         if(this->_primeraColumna && !this->_primeraFila)
         {
+          _C("IC::IT() El casillero es primera columna pero no es primera fila");
           this->_avanza = &Iterador::_avanzaIteradorPrimeraColumna;
           this->_hayPosibles = &Iterador::_hayPosiblesPrimeraColumna;
           this->_colorDerechaActual = 0;
@@ -152,6 +201,7 @@ public:
         // Si es primera fila pero no primera columna
         if(this->_primeraFila && !this->_primeraColumna)
         {
+          _C("IC::IT() El casillero es primera fila pero no es primera columna");
           this->_avanza = &Iterador::_avanzaIteradorPrimeraFila;
           this->_hayPosibles = &Iterador::_hayPosiblesPrimeraFila;
           this->_colorDerechaActual = _ic.colorDerecha(p_i); 
@@ -160,6 +210,7 @@ public:
         // Si no es ni primera columna ni primera fila
         if(!this->_primeraFila && !this->_primeraColumna)
         {
+          _C("IC::IT() El casillero no es primera columna ni primera fila");
           this->_avanza = &Iterador::_avanzaIteradorNormal;
           this->_hayPosibles = &Iterador::_hayPosiblesNormal;
           this->_colorDerechaActual = _ic.colorDerecha(p_i); 
@@ -168,19 +219,25 @@ public:
         // Si es el primer casillero (1ra columna y 1ra fila a la vez)
         if(this->_primeraColumna && this->_primeraFila)
         {
+          _C("IC::IT() El casillero es primera columna y primera fila (1er casillero)");
           this->_avanza = &Iterador::_avanzaIteradorPrimerCasillero;
           this->_hayPosibles = &Iterador::_hayPosiblesPrimerCasillero;
-          this->_quitarPieza = &IndiceDeColores::_quitarPiezaNormal;//_quitarPiezaPrimerCasillero;
+          this->_quitarPieza = &IndiceDeColores::_quitarPieza;
           this->_colorDerechaActual = 0; 
           this->_colorAbajoActual = 0;
-          this->_indice = 1;
-          this->_v_res = &(p_ic._v_pieza_indexada);
+          //this->_indice = 1;
         }
         else
         {
-          this->_quitarPieza = &IndiceDeColores::_quitarPiezaNormal;
-          this->_indice = this->_v[this->_colorDerechaActual][this->_colorAbajoActual].principio;
-          this->_v_res = &(this->_v[_colorDerechaActual][_colorAbajoActual].lista);
+          this->_quitarPieza = &IndiceDeColores::_quitarPieza;
+        }
+        this->_v_res = &(this->_v[_colorDerechaActual][_colorAbajoActual].lista);
+        this->_indice = this->_v[this->_colorDerechaActual][this->_colorAbajoActual].principio;
+        _C("IC::IT() colorDerechaActual= "<< this->_colorDerechaActual <<", colorAbajoActual= " << this->_colorAbajoActual << ", indice= " << this->_indice);
+        if(this->_v_res->size() == 0)
+        {
+          _C("IC::IT(); avanzando hasta colorDerechaActual= "<< this->_colorDerechaActual <<", colorAbajoActual= " << this->_colorAbajoActual << ", indice= " << this->_indice);
+          (this->*_avanza)();
         }
       }
     /**
@@ -203,9 +260,11 @@ public:
     inline Iterador& operator++( int )
     {
       if (!((this->*_hayPosibles)())){
+        _C("Avanzando el iterador. Ya no quedan piezas. (pieza transparente).");
         this->_piezaTransparenteUtilizada = true;
         return *this;
       }
+      _C("Avanzando el iterador normalmente");
       (this->*_avanza)();
       return *this;
     }
@@ -218,6 +277,10 @@ public:
       {
         return TestCaseEj3::PIEZA_VACIA;
       }
+      DEBUG_INT(this->_indice);
+      DEBUG_INT((*this->_v_res).size());
+      return (*this->_v_res)[this->_indice].indiceEnListaDePiezas;
+      /*
       if( !(this->_primeraColumna && this->_primeraFila) )
       {
         return (*this->_v_res)[this->_indice].indiceEnListaDePiezas;
@@ -226,18 +289,19 @@ public:
       {
         return _indice;
       }
+      */
     }
   };
   IndiceDeColores( uint32_t p_cantidadDeColores, vector<TestCaseEj3::Pieza> &p_listaDePiezas ) 
   : listaDePiezas(p_listaDePiezas), v(p_cantidadDeColores, vector<listaDisponibles>(3, listaDisponibles()) ){
-    this->_v_pieza_indexada.push_back(IndiceDeColores::piezaIndexada(0,0));
+    //this->_v_pieza_indexada.push_back(IndiceDeColores::piezaIndexada(0,0));
     // Agrego las piezas al índice de piezas por color, me salteo pieza vacía
     for (uint32_t i = 1; i<this->listaDePiezas.size(); i++){
       TestCaseEj3::Pieza pieza = this->listaDePiezas[i];
       uint32_t colorDerecha = this->colorDerecha(i);
       uint32_t colorAbajo = this->colorAbajo(i);
       v[colorDerecha][colorAbajo].lista.push_back(IndiceDeColores::piezaIndexada(i,v[colorDerecha][colorAbajo].lista.size()));
-      this->_v_pieza_indexada.push_back(IndiceDeColores::piezaIndexada(i,v[colorDerecha][colorAbajo].lista.size()));
+      //this->_v_pieza_indexada.push_back(IndiceDeColores::piezaIndexada(i,v[colorDerecha][colorAbajo].lista.size()));
     }
     /*
     // Agrego piezas transparentes para todos los colores
@@ -264,14 +328,7 @@ public:
     /**
      * Dado un ID de pieza, lo quita del índice
      */
-    void _quitarPiezaPrimerCasillero ( Iterador &it )
-    {
-
-    }
-    /**
-     * Dado un ID de pieza, lo quita del índice
-     */
-    void _quitarPiezaNormal ( Iterador &it )
+    void _quitarPieza ( Iterador &it )
     {
       uint32_t colorDerecha = this->colorDerecha(*it);// listaDePiezas[*it].colorDerecha;
       uint32_t colorAbajo = this->colorAbajo(*it);// listaDePiezas[*it].colorAbajo;
@@ -312,6 +369,10 @@ public:
    */
   Iterador &damePiezasPosibles( uint32_t piezaIzquierda, uint32_t piezaArriba)
   {
+    if(piezaIzquierda != TestCaseEj3::PIEZA_VACIA && piezaArriba != TestCaseEj3::PIEZA_VACIA){ _C("IC::IT damePiezasPosibles("<< piezaIzquierda <<","<< piezaArriba <<") -> con piezas no nulas");}
+    if(piezaIzquierda == TestCaseEj3::PIEZA_VACIA && piezaArriba != TestCaseEj3::PIEZA_VACIA){ _C("IC::IT damePiezasPosibles("<< piezaIzquierda <<","<< piezaArriba <<") -> con pieza izquierda nula");}
+    if(piezaIzquierda != TestCaseEj3::PIEZA_VACIA && piezaArriba == TestCaseEj3::PIEZA_VACIA){ _C("IC::IT damePiezasPosibles("<< piezaIzquierda <<","<< piezaArriba <<") -> con pieza arriba nula");}
+    if(piezaIzquierda == TestCaseEj3::PIEZA_VACIA && piezaArriba == TestCaseEj3::PIEZA_VACIA){ _C("IC::IT damePiezasPosibles("<< piezaIzquierda <<","<< piezaArriba <<") -> con ambas piezas nulas");}
     Iterador *it = new Iterador( *this, piezaIzquierda, piezaArriba );
     return *it;
   }

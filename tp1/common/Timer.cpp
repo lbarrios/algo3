@@ -1,5 +1,5 @@
 #include "Timer.h"
-Timer::Timer(ostream &ptime) : _time(ptime)
+Timer::Timer(ostream &ptime) : _timeOutput(ptime)
 {
 
 }
@@ -40,7 +40,7 @@ void Timer::saveAllTimes( void )
 #ifdef TIME
   for(time_dicc::iterator it = this->_initialTimes.begin(); 
   it != this->_initialTimes.end(); it++){
-    _time << it->first << " " << this->getTime(it->first) << endl;
+    _timeOutput << it->first << " " << this->getTime(it->first) << endl;
   }
 #endif
 }

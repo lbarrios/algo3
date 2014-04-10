@@ -53,7 +53,7 @@ public:
     #define DEBUG_STRING(x) fprintf (stderr, "DEBUG: %s=%s in %s (%s:%d)\n",#x,x,__func__,__FILE__,__LINE__)
     #define DEBUG_BOOL(x) fprintf (stderr, "DEBUG: %s=%s in %s (%s:%d)\n",#x,(x?"true":"false"),__func__,__FILE__,__LINE__)
     #define DEBUGC(x) cerr << "DEBUG: " << x << endl
-    #define _C(x) DEBUGC(x)
+    #define _C(x) DEBUGC(string(__FILE__).substr(0,string(__FILE__).find_last_of('.')) << "::"<< string(__func__).substr(0,string(__func__).find_last_of('.')) << "(): " << x)
     #define IFDEBUG(x,y) if(x){ y }
   #else
     #define DEBUG_ENTER do{}while(false)
