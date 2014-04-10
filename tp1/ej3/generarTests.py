@@ -12,7 +12,6 @@ paso_m = 1
 paso_colores = 1
 desde_colores = 1
 hasta_colores = 50
-casosPorTest = 10
 
 print (
 """
@@ -34,6 +33,15 @@ lo puede hacer mediante un rudimentario sistema:
     - paso_x: el "step" del parámetro 'x'. Es decir el paso que hay entre cada test quese genera.
     - casosPorTest: cuantos casos se generan por cada combinación de parámetros
 
+  Algunos datos útiles:
+    - Si quieren dejar fijar alguna variable
+      basta con poner en "desde" y "hasta" números consecutivos. Supongamos
+      que yo quiero solo tests con n=3. Entonces seteo 'desde_n=3' y
+      'hasta_n=4'.
+    - Si quieren que no se genere alguna clase de test
+      basta con comentar abajo la línea que genera
+      esa clase de test.
+
 Para continuar... Presione ENTER.
 Para abortar precione CTRL-C o escriba "salir" y precione ENTER
 """
@@ -49,7 +57,11 @@ for color in range( desde_colores , hasta_colores, paso_colores):
   for n in range( desde_n, hasta_n, paso_n):
     for m in range( desde_m, hasta_m, paso_m):
       print("n:{},m:{}, c:{}".format(n,m,color))
-      generador.generarTest(n, m, color, "casoAleatorio", casosPorTest)
+      params = {"n":n,"m":m,"colores":color}
+      generador.generarTest(params, "casoAleatorio")
+      generador.generarTest(params, "casoPiezasIncompatibles")
+      generador.generarTest(params, "casoTrivial")
+
 
 
 print (" Los test se generaron correctamente ")

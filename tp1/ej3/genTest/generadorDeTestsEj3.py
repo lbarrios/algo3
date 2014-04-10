@@ -45,6 +45,8 @@ class generadorDeTestsEj3 (generadorDeTests):
     super(generadorDeTestsEj3, self).__init__(inputDir, outputDir)
     self.nombresFuncionesGeneradoras =  {
                                           "casoAleatorio": self.nuevoCasoAleatorio,
+                                          "casoPiezasIncompatibles": self.nuevoCasoPiezasIncompatibles,
+                                          "casoTrivial": self.nuevoCasoTrivial,
                                         }
 
   def nuevoCasoAleatorio (self, params):
@@ -55,14 +57,41 @@ class generadorDeTestsEj3 (generadorDeTests):
     colores = params["colores"]
     primeraLinea = "{} {} {}".format(n,m, colores)
     listaPiezas = []
-    for i in range(n):
+    for i in range(n*m):
       valor = lambda: random.randint(1,colores+1)
       listaPiezas.append( "{} {} {} {}".format( valor(), valor(), valor(), valor()))
 
     return "{}\n{}".format( primeraLinea, "\n".join(listaPiezas))
 
-  def generarTest(self, n, m, colores, nombre, cantCasos = 20):
+
+  def nuevoCasoPiezasIncompatibles(self, params):
+    n = params["n"]
+    m = params["m"]
+    colores = 4 # Uno para cada esquina
+    primeraLinea = "{} {} {}".format(n,m,colores)
+    listaPiezas = []
+    for i in range(n*m):
+      listaPiezas.append("1 2 3 4")
+    return "{}\n{}".format( primeraLinea, "\n".join(listaPiezas))
+
+
+  def nuevoCasoTrivial(self, params):
+    n = params["n"]
+    m = params["m"]
+    colores = 4 # Podría ser 1.
+    primeraLinea = "{} {} {}".format(n,m,colores)
+    listaPiezas = []
+    for i in range(n*m):
+      listaPiezas.append("1 1 1 1")
+    return "{}\n{}".format( primeraLinea, "\n".join(listaPiezas))
+
+
+
+  def generarTest(self, params, nombre, cantCasos = 1):
     """ Genera un test completo y lo guarda en el directorio que se asignó para los inputs """
+    n = params["n"]
+    m = params["m"]
+    colores = params["colores"]
     genCasos = self.nombresFuncionesGeneradoras.get(nombre)
     if not genCasos:
       raise Exception("Nombre debe pertenecer a la lista: [ {} ]".format( " ,".join( [ key for key in nombresFuncionesGeneradoras.keys() ])))
@@ -86,4 +115,6 @@ class generadorDeTestsEj3 (generadorDeTests):
 if __name__ == '__main__':
   coso = generadorDeTestsEj3();
   print ( coso.nuevoCasoAleatorio({"n":3,"m":3,"colores":4}))
-  coso.generarTest(3,4,10 , "casoAleatorio")
+  coso.generarTest({"n":3,"m":4,"colores":10} , "casoAleatorio")
+  print (coso.nuevoCasoPiezasIncompatibles({"n":3,"m":3,"colores":10}))
+  print (coso.nuevoCasoTrivial({"n":3,"m":3,"colores":10}))
