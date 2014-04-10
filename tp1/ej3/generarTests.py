@@ -18,7 +18,7 @@ print (
 """
 Usted está a punto de generar muuuuchos tests... Muchos.
 Cuando la ejecución de esto termine su carpeta "input" va a pesar
-aproximadamente 3gb y van a haber pasado muchos muchos minutos.
+aproximadamente 100mb y van a haber pasado pocos minutos.
 
 Usted está advertido.
 
