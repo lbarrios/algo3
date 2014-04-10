@@ -2,16 +2,29 @@
 PROBLEMA 1
   Informe:
     * Descripción: OK
-    * Hipótesis de resolución: 
-    * Justificación formal de correctitud:~~ Pseudo hecho y lindo. Falta revisar la partre escrita.
-    * Cota de complejidad temporal:
+    * Hipótesis de resolución: ok
+    * Justificación formal de correctitud: ok
+    * Cota de complejidad temporal: ~~ Pseudo hecho y lindo. Falta revisar la partre escrita.
     * Verificación mediante casos de prueba: OK
     * Medición empírica de performance:
         1> grafico dividiendo por n^2 para mostrar que es subcuadratico
         2> grafico mostrando que la complejidad general esta dominada por el sort, podes comparar ordenado,
-            pa tras, desordenado
+            pa tras, desordenado	
+			
         3> analizar el tiempo variando cuan cerca estan los camiones en relacion al vigilante. no es demasiado
             claro como implementar estos casos
+	    
+        -Test1: ordenamiento de fechas de camiones (ascend, descend, aleatorio). 
+		       (es igual a lo del 2>) 
+           Gráfico: tiempo vs n:cant camiones (en el mismo se comparan los 3 casos). 
+	       Análisis: 
+		
+		-Test2: variación de amplitud del intervalo de fechas de camiones teniendo fijo intervalo inspector. 
+              (las fechas ordenadas ascend, descen, aleatorio). n es fijo. 
+            Gráfico: tiempo vs intervalo de fechas camiones (se comparan los 3 casos ascend, descen, aleat). 
+            Análisis: 	   
+ 
+			
   Código:
     * Algoritmo: OK
     * Tests: Migue terminadolo
@@ -19,13 +32,19 @@ PROBLEMA 1
 PROBLEMA 2
   Informe:
     * Descripción: OK
-    * Hipótesis de resolución:
-    * Justificación formal de correctitud:
-    * Cota de complejidad temporal:
+    * Hipótesis de resolución: ok
+    * Justificación formal de correctitud: ok
+    * Cota de complejidad temporal: ok
     * Verificación mediante casos de prueba: OK
     * Medición empírica de performance:
         1> grafico dividiendo por n log n y viendo que es constante.
             no se me ocurre nada mas interesante para decir.
+		
+		-Test1: variación entre cociente di/ti (pérdida de ganancia y tiempo de fabricación por pieza). 
+	           (todos los di/ti iguales, di/ti aleatorio). 
+		Gráfico: tiempo vs n: cant piezas (se comparan los 2 casos en el mismo gráfico). 
+		Análisis: 		
+			
   Código:
     * Algoritmo: OK
     * Tests: Migue terminandolo
