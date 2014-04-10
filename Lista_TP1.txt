@@ -7,6 +7,11 @@ PROBLEMA 1
     * Cota de complejidad temporal:
     * Verificación mediante casos de prueba: OK
     * Medición empírica de performance:
+        1> grafico dividiendo por n^2 para mostrar que es subcuadratico
+        2> grafico mostrando que la complejidad general esta dominada por el sort, podes comparar ordenado,
+            pa tras, desordenado
+        3> analizar el tiempo variando cuan cerca estan los camiones en relacion al vigilante. no es demasiado
+            claro como implementar estos casos
   Código:
     * Algoritmo: OK
     * Tests: Migue terminadolo
@@ -19,6 +24,8 @@ PROBLEMA 2
     * Cota de complejidad temporal:
     * Verificación mediante casos de prueba: OK
     * Medición empírica de performance:
+        1> grafico dividiendo por n log n y viendo que es constante.
+            no se me ocurre nada mas interesante para decir.
   Código:
     * Algoritmo: OK
     * Tests: Migue terminandolo
@@ -31,6 +38,10 @@ PROBLEMA 3
     * Cota de complejidad temporal:
     * Verificación mediante casos de prueba: OK
     * Medición empírica de performance:
+        1> grafico viendo que la complejidad es exponencial
+        2> comparar de acuerdo a si las fichas estan distribuidas o todas del mismo color
+        3> probar sacando la poda de los huecos, que es facil de hacer   
+            debe haber un par de cosas mas interesantes. no me acuerdo ahora
   Código:
     * Algoritmo: Anda.
     * Tests: OK.
