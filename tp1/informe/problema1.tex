@@ -56,6 +56,20 @@ Para este caso, el primer día del período de contratación será $d=1$ y habr�
 
 
 \subsubsection{Hipótesis de resolución}
+
+Nos interesa saber cuál es el mejor día entre $d_1$ y $d_n$ para contratar al experto. 
+Desde el día elegido hasta el día $D - 1$, buscamos que la cantidad de camiones sea máxima.  
+Primero, entonces, ordenamos en forma creciente el conjunto {$d_1$,...,$d_n$} dado.  
+Sabemos que la solución pertenece a este conjunto. 
+Tenemos a $P(x)$ como la suma de la cantidad de camiones que pasan desde el día $x$ hasta el día $x+D-1$.
+Nuestro algoritmo itera sobre cada elemento $d_i$ del conjunto calculando P($d_i$), y guardando el elemento $e$ 
+con P($e$) máximo encontrado hasta el momento. Al final de las iteraciones, tenemos guardado el elemento $e$ con 
+P($e$) máximo en todo el conjunto. Devolvemos $e$ y P($e$).
+
+
+
+\subsubsection{Justificación formal de correctitud}
+
 Consideremos los días de llegada ordenados en forma creciente: $d_1 \le d_2 \le \dots \le d_n$ son enteros \underline{positivos} al igual que $D$. \\
 Definimos P(x), donde $x \in \mathbb{N}$, como $\sum_{i=1}^{n} I(d_i)_{[x,x+D-1]}$. \\
 Buscamos $d$ tal que $(\forall x)$ P(x) $\le$ P(d). \\
@@ -68,8 +82,7 @@ Sea $d=min_{i \in 1...n}$ $d_i \big| d_i \ge d'$. \\
 P(d)$\ge$ P(d') pues $\forall i$ tal que $d_i \in [d',d'+D-1], d_i \in [d,d+D-1]$ ya que $\nexists$ $j$ tal que $d' \le d_j < d$ y pues $d'+D-1 \le d+D-1$. \\
 Luego, hemos reducido el espacio de solución a $\{$ $d_1,...,d_n$$\}$.
 
-\subsubsection{Justificación formal de correctitud}
-Sabemos que la solución pertenece al conjunto {d1, ... , dn}. Nuestro algoritmo itera sobre cada elemento di del conjunto calculando P(di), y guardando el elemento e con P(e) máximo encontrado hasta el momento. Al final de las iteraciones, tenemos guardado el elemento e con P(e) maximo en todo el conjunto. Devolvemos e y P(e).
+
 
 \newpage
 \subsubsection{Cota de complejidad temporal}
