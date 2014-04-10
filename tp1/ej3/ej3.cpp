@@ -27,11 +27,7 @@ int main(int argc, char** argv) {
   Timer timer( parser.dameTime());
   timer.setInitialTime("todoElEjercicio");
 
-  Pieza blanco;
-  blanco.sup = 0;
-  blanco.izq = 0;
-  blanco.der = 0;
-  blanco.inf = 0;
+  Pieza blanco = {0, 0, 0, 0};
   //de esta forma la pieza blanca queda con el id 0
   listaDePiezas.push_back(blanco);
 
@@ -41,14 +37,10 @@ int main(int argc, char** argv) {
   input >> n >> m >> c;
   for (int i=1; i <= n*m; i++) {
     int sup, izq, der, inf;
-    Pieza pongo;
     //Entran una ficha;
     input >> sup >> izq >> der >> inf;
     //hacerlo mas eficiente
-    pongo.sup = sup;
-    pongo.izq = izq;
-    pongo.der = der;
-    pongo.inf = inf;
+    Pieza pongo = {sup, izq, der, inf};
     listaDePiezas.push_back(pongo);
     //cada pieza queda con su id correspondiente
     piezasPorColores[sup][izq].push_back(i);
@@ -64,11 +56,15 @@ int main(int argc, char** argv) {
 
   #ifndef TIME
   ostream& output = parser.dameOutput();
-  output << "orden de las piezas: ";
-  for(list<int>::iterator it = orden_global.begin(); it != orden_global.end(); it++)
-    output << *it << " ";
-  output << endl;
-  output << "max_global: " << max_global << endl;
+  list<int>::iterator it = orden_global.begin();
+  for(int i=0; i<n; i++) {
+    for (int j=0; j<m; j++) {
+       output << *it << " ";
+       it++;
+    }
+    output << endl;
+  }
+  
   #else
   timer.saveAllTimes();
   #endif
