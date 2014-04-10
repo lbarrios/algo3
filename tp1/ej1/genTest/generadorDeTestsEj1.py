@@ -34,49 +34,79 @@ class generadorDeTests:
 
 class generadorDeTestsEj1 (generadorDeTests):
   """ Generador de test para el ejercicio 1"""
-  limIntervaloInspector = 10**4 # número máximo que se le asigna al intervalo del inspector.
-  limFechasCamiones = 10**6 # Número máximo que se le asigna a la fecha de los camiones.
+  limIntervaloInspector_p = 500 # número máximo que se le asigna al intervalo del inspector.
+  limFechasCamiones_p = 4000 # Número máximo que se le asigna a la fecha de los camiones.
 
   def __init__(self, inputDir = "input", outputDir = "output"):
     super(generadorDeTestsEj1, self).__init__(inputDir, outputDir)
     self.nombresFuncionesGeneradoras = { 
                         "casoAleatorio": self.nuevoCasoAleatorio,
-                        "mejorCaso": self.nuevoCasoOrdenadoCrecientemente,
-                        "peorCaso": self.nuevoCasoOrdenadoDecrecientemente,
+                        "casoAscendente": self.nuevoCasoOrdenadoCrecientemente,
+                        "casoDescendente": self.nuevoCasoOrdenadoDecrecientemente,
                       }
 
 
 
-  def nuevoCasoAleatorio (self, n):
+  def nuevoCasoAleatorio (self, params):
     """Genera un caso de test completamente aleatorio"""
-    intervaloInspector = random.randint(1, self.limIntervaloInspector)
+    n = params["n"]
+    limIntervaloInspector =params.get( "limIntervaloInspector", self.limIntervaloInspector_p )
+    limFechasCamiones = params.get( "limFechasCamiones", self.limFechasCamiones_p )
+    intervaloInspector = random.randint(1, limIntervaloInspector)
     fechasCamiones = []
     for i in range(n):
-      fechasCamiones.append( str( random.randint(1, self.limFechasCamiones)))
+      fechasCamiones.append( str( random.randint(1, limFechasCamiones)))
     return "{0} {1} {2}".format(intervaloInspector,n, " ".join(fechasCamiones))
 
-  def nuevoCasoOrdenadoCrecientemente (self, n):
-    """Genera un caso prueba con las fechas de camiones ordeandas ascendentemente."""
-    intervaloInspector = random.randint( 1, self.limIntervaloInspector)
-    intervaloMaximo = intervaloInspector # esta variable está por separado porque este valor se podría querer cambiar.
+  def nuevoCasoOrdenadoCrecientemente (self, params):
+    """Genera un caso prueba con las fechas de camiones ordeandas ascendentemente.
+    Se pueden tocar los parámetros para poner un intervaloInspector fijo y una determinada
+    amplitud en las fechas"""
+
+    n = params["n"]
+    factorAmplitud = params.get("amplitud", 1)
+
+    if not "intervaloInspector" in params:
+      limIntervaloInspector = params.get( "limIntervaloInspector", self.limIntervaloInspector_p )
+      intervaloInspector = random.randint(1, limIntervaloInspector)
+    else:
+      intervaloInspector = params["intervaloInspector"]
+
+    intervaloMaximo = intervaloInspector*factorAmplitud # está variable está por separado porque este valor se podría querer cambiar.
     fechasCamiones = []
-    fechaActual = random.randint( 1, intervaloMaximo )
     for i in range(n):
-      fechasCamiones.append( str(fechaActual) )
-      fechaActual += random.randint( 1, intervaloMaximo )
+      fechaActual = random.randint( 1, intervaloMaximo )
+      fechasCamiones.append( fechaActual )
+
+    fechasCamiones.sort()
+    fechasCamiones = [str(fecha) for fecha in fechasCamiones]
     return "{0} {1} {2}".format(intervaloInspector,n, " ".join(fechasCamiones))
 
-  def nuevoCasoOrdenadoDecrecientemente (self, n):
-    """Genera un caso prueba con las fechas de camiones ordeandas decrecientemente."""
-    intervaloInspector = random.randint( 1, self.limIntervaloInspector)
-    intervaloMaximo = min (self.limFechasCamiones // n, intervaloInspector )
+  def nuevoCasoOrdenadoDecrecientemente (self, params):
+    """Genera un caso prueba con las fechas de camiones ordeandas decrecientemente.
+    Se pueden tocar los parámetros para poner un intervaloInspector fijo y una determinada
+    amplitud en las fechas"""
+
+    n = params["n"]
+    factorAmplitud = params.get("amplitud", 10)
+
+    if not "intervaloInspector" in params:
+      limIntervaloInspector = params.get( "limIntervaloInspector", self.limIntervaloInspector_p )
+      intervaloInspector = random.randint(1, limIntervaloInspector)
+    else:
+      intervaloInspector = params["intervaloInspector"]
+
+    intervaloMaximo = intervaloInspector*factorAmplitud # está variable está por separado porque este valor se podría querer cambiar.
     fechasCamiones = []
-    fechaActual = self.limFechasCamiones - random.randint( 1, intervaloMaximo )
     for i in range(n):
-      fechasCamiones.append( str(fechaActual) )
-      fechaActual -= random.randint( 1, intervaloMaximo )
-    return "{0} {1} {2}".format(intervaloInspector,n, " ".join(fechasCamiones))
+      fechaActual = random.randint( 1, intervaloMaximo )
+      fechasCamiones.append( fechaActual )
 
+    fechasCamiones.sort()
+    fechasCamiones.reverse()
+    fechasCamiones = [str(fecha) for fecha in fechasCamiones]
+    return "{0} {1} {2}".format(intervaloInspector,n, " ".join(fechasCamiones))
+    
 
 
 
@@ -84,8 +114,7 @@ class generadorDeTestsEj1 (generadorDeTests):
 
 if __name__ == '__main__':
   coso = generadorDeTestsEj1();
-  print ( coso.nuevoCasoAleatorio(3))
-  print (coso.nuevoCasoOrdenadoCrecientemente(10))
-  print (coso.nuevoCasoOrdenadoDecrecientemente(10))
-  coso.generarTest(3, "casoAleatorio",10)
-  coso.generarTest(1, "casoAleatorio",10)
+  print ( coso.nuevoCasoAleatorio({"n":3}) )
+  print ( coso.nuevoCasoOrdenadoCrecientemente( {"n":10}))
+  print ( coso.nuevoCasoOrdenadoCrecientemente( {"n":10, "intervaloInspector":300, "amplitud":2}))
+  print ( coso.nuevoCasoOrdenadoDecrecientemente( {"n":10} ))

@@ -96,7 +96,7 @@ class generadorDeTestsEj3 (generadorDeTests):
     if not genCasos:
       raise Exception("Nombre debe pertenecer a la lista: [ {} ]".format( " ,".join( [ key for key in nombresFuncionesGeneradoras.keys() ])))
     os.chdir ( self.inputDir )
-    nombreArchivo = "{}_n{:0>4}m{:0<4}c{:0<4}.txt".format(nombre, n, m, colores)
+    nombreArchivo = "{}_n{:0>4}m{:0>4}c{:0>4}.txt".format(nombre, n, m, colores)
     if os.path.isfile( nombreArchivo ):
       os.remove( nombreArchivo)
 

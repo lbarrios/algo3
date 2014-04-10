@@ -16,6 +16,8 @@ vector<Pieza> listaDePiezas;
 vector<int> piezasPorColores[1024][1024];
 int t[1024][1024];
 
+
+
 int main(int argc, char** argv) {
   //Parseo el input.
   ParserDeParametros parser(argc, argv);

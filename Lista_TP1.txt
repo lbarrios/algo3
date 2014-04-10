@@ -2,14 +2,14 @@
 PROBLEMA 1
   Informe:
     * Descripción: OK
-    * Hipótesis de resolución:
-    * Justificación formal de correctitud:
+    * Hipótesis de resolución: 
+    * Justificación formal de correctitud:~~ Pseudo hecho y lindo. Falta revisar la partre escrita.
     * Cota de complejidad temporal:
     * Verificación mediante casos de prueba: OK
     * Medición empírica de performance:
   Código:
     * Algoritmo: OK
-    * Tests: No están hechos. Se pueden hacer
+    * Tests: Migue terminadolo
 
 PROBLEMA 2
   Informe:
@@ -21,7 +21,7 @@ PROBLEMA 2
     * Medición empírica de performance:
   Código:
     * Algoritmo: OK
-    * Tests: No están hechos. Se pueden hacer.
+    * Tests: Migue terminandolo
 
 PROBLEMA 3
   Informe:
@@ -32,8 +32,8 @@ PROBLEMA 3
     * Verificación mediante casos de prueba: OK
     * Medición empírica de performance:
   Código:
-    * Algoritmo: NO ANDA
-    * Tests: NO.
+    * Algoritmo: Anda.
+    * Tests: OK.
 
 
 
