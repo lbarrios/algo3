@@ -7,7 +7,14 @@
 \subsubsection{Descripción}
 
 
-Dada una cantidad $n$ de piezas $i$ de orfebrería, cada una de las cuales tienen una pérdida diaria de ganancia $d_i$ y una cantidad de días $t_i$ que lleva su fabricación, se quiere saber el orden en que el joyero Frank O. Yar tendría que fabricar y vender las mismas para minimizar las pérdidas. Cada pieza no entregada dará como mínimo una pérdida de $d_i$ por $t_i$, y a esto se le sumará $d_i$ por la cantidad de días que Frank haya estado fabricando otras piezas, ya que él sólo puede trabajar de a una pieza a la vez. El problema se deberá resolver con una complejidad temporal de $\mathcal{O}(n^{2})$, siendo $n$ la cantidad de piezas a fabricar. En el resultado se mostrarán: $P$, el monto total perdido de la ganancia, y las piezas $i1,...,in$ ordenadas. \\
+Dada una cantidad $n$ de piezas $i$ de orfebrería, cada una de las cuales tienen una pérdida diaria de 
+ganancia $d_i$ y una cantidad de días $t_i$ que lleva su fabricación, se quiere saber el orden en que el 
+joyero Frank O. Yar tendría que fabricar y vender las mismas para minimizar las pérdidas. 
+Cada pieza no entregada dará como mínimo una pérdida de $d_i$ por $t_i$, y a esto se le sumará $d_i$ por la  
+cantidad de días que Frank haya estado fabricando otras piezas, ya que él sólo puede trabajar de a una pieza 
+a la vez. El problema se deberá resolver con una complejidad temporal de $\mathcal{O}(n^{2})$, siendo $n$ 
+la cantidad de piezas a fabricar. En el resultado se mostrarán: $P$, el monto total perdido de la ganancia,
+y las piezas $i1,...,in$ ordenadas. \\
 
 \begin{itemize}
 	\item Ejemplo $1$: 
@@ -27,7 +34,8 @@ Frank tiene que entregar $n=3$ piezas en total ($i:1,2,3$). Los datos de cada pi
 	\hline 
 \end{tabular} \\ 
     
-La fabricación de las $3$ piezas le llevará $9$ días en total y durante estos días se irán sumando las pérdidas diarias de ganancia correspondiente a cada pieza sin terminar. 
+La fabricación de las $3$ piezas le llevará $9$ días en total y durante estos días se irán sumando las 
+pérdidas diarias de ganancia correspondiente a cada pieza sin terminar. 
 
 \begin{itemize}
 	\item D\'ia1: $3+2+1$. 
@@ -59,7 +67,8 @@ Frank tiene que entregar $n=2$ piezas en total ($i:1,2$). Los datos de cada piez
 	\hline 
 \end{tabular} \\ 
     
-La fabricación de las $2$ piezas le llevará $4$ días en total y durante estos días se irán sumando las pérdidas diarias de ganancia correspondiente a cada pieza sin terminar. 
+La fabricación de las $2$ piezas le llevará $4$ días en total y durante estos días se irán sumando las pérdidas 
+diarias de ganancia correspondiente a cada pieza sin terminar. 
 
 \begin{itemize}
 	\item Día1: $3+1$ $\rightarrow$ entrega pieza $2$. 
@@ -71,6 +80,18 @@ La fabricación de las $2$ piezas le llevará $4$ días en total y durante estos
 Como resultado se obtendría el orden $2,1$ y $P:7$, el monto total perdido de la ganancia. 
 
 \subsubsection{Hipótesis de resolución}
+
+Tenemos $n$ piezas, cada uno de los cuales cuenta con un valor de $d$, es lo que se va devaluando diariamente,
+y $t$, el tiempo que tomará su fabricación. Nos interesa minimizar la pérdida de la ganancia total, dando el mejor
+orden en que habría que ir fabricando las piezas $(1,...,n)$. \\
+Definimos un cociente $\pi$ como $d/t$ para cada uno de los $n$ elementos. La relación entre $d$ y $t$ es la que nos
+determinará cuál es el orden óptimo de fabricación. \\
+Contamos con un vector $v = (v_1,v_2,...,v_n)$. Cada $v_i$ representa la pieza $i$ a fabricar, $i=1,...,n$. \\ 
+Nuestro algoritmo ordena de forma decreciente por el cociente $\pi$, luego devolvemos un vector $v$ óptimo. 
+Iteramos sobre $v$ con el indice $i$, acumulando la pérdida del subvector v[1..i]. 
+Al final de las iteraciones tenemos entonces la pérdida completa correspondiente al vector $v$.
+
+\subsubsection{Justificación formal de correctitud}
 
 Contamos con $n \in \mathbb{N}$, donde cada collar queda determinado por una $3$-upla: (p,d,t) donde \\
 $p \in \{1,...,n\}$ es el número de collar $(p_i \neq p_j)$, \\
@@ -119,9 +140,6 @@ $\displaystyle{\frac{d[v_{x+1}]}{t[v_{x+1}]} = \frac{d[v_x]}{t[v_x]} \Leftrighta
 \\
 Luego, $v$ ordenado $\Rightarrow v$ óptimo. \\ 
 
-
-\subsubsection{Justificación formal de correctitud}
-Nuestro algoritmo ordena de forma decreciente por el cociente $\pi$, luego devolvemos un vector v óptimo. Iteramos sobre v con el indice i, acumulando la pérdida del subvector v[1..i]. Al final de las iteraciones tenemos entonces la pérdida completa correspondiente al vector v.
 
 \newpage
 
