@@ -359,11 +359,38 @@ Se puede observar que la cota teórica calculada es correcta.
    \end{center}
 \end{figure}
 
+
+Si bien como se explicó previamente y se plasmó en las figuras \ref{fig:ej1-1} y \ref{fig:ej1-2}
+la complejidad del algoritmo está dada por el ordenamiento. Sin embargo también resulta interesante
+analizar  otro factor que entra en juego en el rendimiento del algoritmo. La segunda parte
+del algoritmo tiene un mejor caso en el cual la diferencia entre los entre la mayor fecha y la menor fecha
+es menor o igual a \textit{intervaloInspector}. Si eso ocurre la condición de la guarda interna se cumple
+en una primera iteración y la constante del ciclo se ve completamente amortizada. Sigue siendo lineal, pero
+la constante resulta muy baja. El peor caso sería el caso contrario: Cada fecha está a mas de \textit{intervaloInspector}
+días de su vecina. Esto significaría que para iteración del bucle exterior el iterador del final del intervalo 
+solo puede avanzar un día, por lo tanto para cada elemento hay que realizar toda la lógica de comparación y descarte.
+
+Esto significa que esa segunda parte, la parte lineal, funciona muy bien cuando hay mucha densidad de datos y pierde
+eficacia cuando hay mucha dispersión de datos. Para contrastar esto lo que se hizo fue fijar un tamaño de entrada
+(5000 camiones) y un intervalo de inspector ( 200 ) y generar diferentes casos de prueba, en los cuales lo que cambia
+es la dispersión de los datos. Para eso lo que se hizo fue tomar intervalos de tamaño creciente y ubicar
+todos los datos de entrada en esos intervalos ditribuidos uniformemente. Al aumentar el tamaño del intervalo
+y distribuir los mismos datos en el intervalo lo que se obtiene es una menor densidad de datos. El intervalo
+se midió en manera porcentual con respecto a \textit{intervaloInspector}. En la figura \ref{fig:ej1-3} se puede
+apreciar este experimento.
+
+Es interesante además notar que mientras el tamaño del intervalo no llega al 100\% de \textit{intervaloInspector}
+el tiempo de mantiene completamente constante. Luego aumenta de manera claramente lineal. Por otra parte se puede
+observar como la parte de ordenamiento se estabiliza rapidamente mientras que el tiempo total de ejecución aumenta debido
+a la parte lineal del algorítmo.
+
+
+
 \clearpage
 \begin{figure}[H]
    \begin{center}
    \includegraphics[width=1.4\textwidth,angle=90]{../ej1/graficos/test_3.pdf}
-   \caption{}
+   \caption{Tiempo de ejecución contra disperción de los datos}
    \label{fig:ej1-3}
    \end{center}
 \end{figure}
