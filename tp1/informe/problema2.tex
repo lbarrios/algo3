@@ -373,9 +373,30 @@ Podemos separar el conjunto de soluciones en los siguientes casos:
 	
 \end{enumerate}
 
-Estos casos cubrirían todo el espacio de soluciones. Ejecutamos distintos ejemplos correspondientes a cada uno de ellos y obtuvimos la respuesta esperada. Por lo tanto, podemos concluir que el comportamiento del programa es correcto. 
+Estos casos cubrirían todo el espacio de soluciones. Ejecutamos distintos ejemplos correspondientes a cada
+uno de ellos y obtuvimos la respuesta esperada. Por lo tanto, podemos concluir que el comportamiento del programa 
+es correcto. 
 
 \subsubsection{Medición empírica de la performance}
+
+El algoritmo consta de dos partes, una de ordenamiento al principio, con complejidad \bigO{n. \log n} y la segunda,
+con un ciclo que toma \bigO{n}, siendo $n$ la cantidad total de piezas. Como la complejidad mayor está dada por la
+primer parte, decidimos enfocarnos en los parámetros de entrada que son tenidos en cuenta para dicho ordenamiento. 
+Estos son $d_i$ pérdida de ganancia diaria y $t_i$ tiempo de fabricación de la pieza. Lo que se termina ordenando 
+es el cociente $\pi=d_i/t_i$ de cada pieza $i$.\\
+Entonces, en la medición empírica de la performance del programa, realizamos pruebas comparando los tiempos según el
+ordenamiento dado de estos cocientes. Los casos son: 
+
+\begin{itemize}
+\item Orden ascendente de $\pi$. 
+\item Orden descendente de $\pi$ 
+\item Orden aleatorio de $\pi$. Se tomaron valores random de $d_i$ y $t_i$ para cada pieza $i$. 
+\end{itemize}     
+
+Para cada uno de los $3$ casos mencionados, tomamos los tiempos de ejecución variando la cantidad de piezas totales.\\
+Se puede observar en el gráfico $tiempo$ vs $n$ que la cota teórica calculada \bigO{n. \log n} fue correcta.  
+ 
+%Gráfico
 
 % -----------------------------------------------
 \end{document}
