@@ -11,6 +11,7 @@ void backtrack(int, int);
 int n, m, c, max_global, max_local, huecos;
 list<int> orden_global, orden_local;
 vector<Pieza> listaDePiezas;
+vector<Pieza> piezasQueQuedan;
 //por ahora asi es mas facil
 vector<int> piezasPorColores[1024][1024];
 int t[1024][1024];
@@ -32,7 +33,6 @@ int main(int argc, char** argv) {
   listaDePiezas.push_back(blanco);
 
 
-
   //Pongos los datos en variables
   input >> n >> m >> c;
   for (int i=1; i <= n*m; i++) {
@@ -42,6 +42,7 @@ int main(int argc, char** argv) {
     //hacerlo mas eficiente
     Pieza pongo = {sup, izq, der, inf};
     listaDePiezas.push_back(pongo);
+    piezasQueQuedan.push_back(i);
     //cada pieza queda con su id correspondiente
     piezasPorColores[sup][izq].push_back(i);
   }
@@ -78,12 +79,30 @@ int main(int argc, char** argv) {
   return 0;
 }
 
-  void probaConTodasLasFichas(int x, int y, vector<int> &listaPosibles) {
+  void probaConTodasLasFichas(int x, int y, vector<int> &listaPosibles, bool estoyEnPiezasPorColores) {
     if (!yaLlegueAlMaximoAbsoluto) {
     for(int i=listaPosibles.size() - 1; i >= 0; i--) {
       int fichaQueVoyAPoner = listaPosibles[i];
-      listaPosibles[i] = listaPosibles.back();
-      listaPosibles.pop_back();
+      
+      vector<int> laOtraLista;
+      if (estoyEnPiezasPorColores) {
+        laOtraLista = &piezasQueQuedan;
+      } else {
+        int color_sup = listaDePiezas[fichaQueVoyAPoner].sup;
+        int color_izq = listaDePiezas[fichaQueVoyAPoner].izq;
+        laOtraLista = &piezasPorColores[color_sup][color_izq];
+      }
+      // O(n)
+      listaPosibles.erase(@listaPosibles[i]); 
+      
+      //listaPosibles[i] = listaPosibles.back();
+      //listaPosibles.pop_back();
+      // atencion: O(n)
+      vector<int>::iterator indiceParaGuardar = laOtraLista.begin();
+      // nunca deberia pasarse de rango, digo por si da SEGFAULT
+      while (*it != fichaQueVoyAPoner)
+          indiceParaGuardar++;
+      laOtraLista.erase(indiceParaGuardar);
       max_local++;
       t[x][y] = fichaQueVoyAPoner;
       orden_local.push_back(fichaQueVoyAPoner);
@@ -111,7 +130,8 @@ int main(int argc, char** argv) {
       //deshago todo lo que hice
       orden_local.pop_back();
       max_local--;
-      listaPosibles.push_back(fichaQueVoyAPoner);
+      listaPosibles.insert(&listaPosibles[i], fichaQueVoyAPoner);
+      laOtraLista.insert(indiceParaGuardar, fichaQueVoyAPoner);
     }
   }
  }
@@ -124,23 +144,33 @@ int main(int argc, char** argv) {
     if (color_sup > 0 && color_izq > 0) {
       probaConTodasLasFichas(x, y, piezasPorColores[color_sup][color_izq]);  
     } else if (color_sup > 0) {
-      for(int r=1; r<=c; r++) {
-        if (yaLlegueAlMaximoAbsoluto) break;
-        probaConTodasLasFichas(x, y, piezasPorColores[color_sup][r]);
+      if (max_local + huecos < c) {
+        probaConTodasLasFichas(x, y, piezasQueQuedan); 
+      } else {
+          for(int r=1; r<=c; r++) {
+            if (yaLlegueAlMaximoAbsoluto) break;
+            probaConTodasLasFichas(x, y, piezasPorColores[color_sup][r]);
+          }
       }
     } else if (color_izq > 0) {
+      if (max_local + huecos < c) {
+        probaConTodasLasFichas(x, y, piezasQueQuedan); 
+      } else {
       for(int r=1; r<=c; r++) {
         if (yaLlegueAlMaximoAbsoluto) break;
         probaConTodasLasFichas(x, y, piezasPorColores[r][color_izq]);
-      }
+      }}
     } else {
+      if (max_local + huecos < c*c) {
+        probaConTodasLasFichas(x, y, piezasQueQuedan); 
+      } else {
       for (int r1=1; r1<=c; r1++) {
         if (yaLlegueAlMaximoAbsoluto) break;
         for(int r2=1; r2<=c; r2++) {
           if (yaLlegueAlMaximoAbsoluto) break;
           probaConTodasLasFichas(x, y, piezasPorColores[r1][r2]);
         }
-      }
+      }}
     }
     if (!yaLlegueAlMaximoAbsoluto) {
     //ahora hay que probar metiendo la casilla vacia
