@@ -15,7 +15,7 @@ def make_listdictdict():
 
 tests = defaultdict(make_listdictdict)
 
-files = sorted(glob("./output/testParaCompRandAscDesc/*.time"))
+files = sorted(glob("./output/testParaDivision/*.time"))
 for f in files:
   file = open(f)
   testname = f.split("/")[-1].split("_")[0]
@@ -55,19 +55,19 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as tck
 from time import strftime
 # - Arreglo la columna tiempo
-formatter = tck.EngFormatter(unit='s', places=1) # Formato "segundos"
-formatter.ENG_PREFIXES[-6] = 'u' # Arreglo el símbolo "mu"
+#formatter = tck.EngFormatter(unit='s', places=1) # Formato "segundos"
+#formatter.ENG_PREFIXES[-6] = 'u' # Arreglo el símbolo "mu"
 # - Creo los subplot
 #fig, subplot = plt.subplots(nrows=t_types, ncols=1, sharex=True, sharey=False)
 fig,subplot = plt.subplots()
-subplot.yaxis.set_major_formatter(formatter)
+#subplot.yaxis.set_major_formatter(formatter)
 
 # Aplico formato
 plt.grid(True)
 plt.title("Ejercicio 1 (cuartiles)")
-plt.ylabel('Tiempo (segundos)')
+plt.ylabel('Cociente (adimensional)')
 plt.xlabel(u'Tamaño de entrada (camiones)')
-
+plt.ylim(0, 0.000000018)
 """
 linestyle or ls [ ‘-‘ | ‘--’ | '.' | ‘-.’ | ‘:’ | ‘steps’ | ...]
 marker  [ ‘+’ | ‘,’ | ‘.’ | ‘1’ | ‘2’ | ‘3’ | ‘4’ ]
@@ -81,12 +81,14 @@ for test_number in range(0,t_names):
   #plt.plot(x, y, linestyle='-',  color=colors[test_number], linewidth=0.2, label=testname, alpha=1)
   x = np.array( zip(*tests_mean_p_xy[testname][testtype])[0] )
   y = np.array( zip(*tests_mean_p_xy[testname][testtype])[1] )
+  for i in range( len(y)):
+    y[i] = y[i] / ( x[i] * np.log( x[i] ) )
+  print (y)
   plt.plot(x, y, linestyle='-',  color=colors[test_number], linewidth=0.2, label=testname, alpha=1) #, marker='.', markersize=0.3)
 
 subplot.plot(x, ((x*np.log(x))*10)/float(1e9),    '--', color='black', linewidth=2, label="c.x.log2(x)")
 plt.legend(loc=2)
 
 #plt.show()
-if not os.path.exists('./graficos/') or not os.path.isdir('./graficos/'):
-  os.makedirs('./graficos/')
-plt.savefig("graficos/test_1.pdf")
+#os.makedirs('./graficos/')
+plt.savefig("graficos/test_2.pdf")

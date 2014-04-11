@@ -2,11 +2,12 @@
 from genTest.generadorDeTestsEj1 import generadorDeTestsEj1
 import sys
 
-carpetaInput = "input/testParaDivision"
-desde = 100
-hasta = 15000
+carpetaInput = "input/testParaIntervaloInspector"
+n_const = 1000
+intervaloInspector_const = 200
+limiteFactor = 10
+pasoFactor = 0.1
 casosPorTest = 30
-paso = 100
 
 
 print (
@@ -36,12 +37,14 @@ if escape == "salir":
   sys.exit()
   
 
-generador = generadorDeTestsEj1(carpetaInput)
-
-for i in range( desde , hasta, paso):
+generador = generadorDeTestsEj1(inputDir = carpetaInput)
+params = { "n": n_const, "intervaloInspector": intervaloInspector_const}
+i = 0.1
+while i < limiteFactor:
   print( i)
-  params = {"n":i}
-  generador.generarTest( params, "casoAleatorio", casosPorTest)
+  params["amplitud"] = i
+  generador.generarTest( params, "casoAscendente", casosPorTest)
+  i+=pasoFactor
 
 
 print (" Los test se generaron correctamente ")

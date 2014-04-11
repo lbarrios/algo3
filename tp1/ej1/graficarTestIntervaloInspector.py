@@ -15,7 +15,7 @@ def make_listdictdict():
 
 tests = defaultdict(make_listdictdict)
 
-files = sorted(glob("./output/testParaCompRandAscDesc/*.time"))
+files = sorted(glob("./output/testParaIntervaloInspector/*.time"))
 for f in files:
   file = open(f)
   testname = f.split("/")[-1].split("_")[0]

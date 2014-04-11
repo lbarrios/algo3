@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 EXE=${PWD##*/}
-INPUT_FOLDER=input
-OUTPUT_FOLDER=output
+INPUT_FOLDER=input/testParaDivision
+OUTPUT_FOLDER=output/testParaDivision
 VERBOSE=false
 TIME=false
 HELP=false

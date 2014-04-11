@@ -4,9 +4,9 @@ import sys
 
 carpetaInput = "input/testParaCompRandAscDesc"
 desde = 1
-hasta = 10000
-casosPorTest = 4
-paso = 100
+hasta = 20000
+casosPorTest = 20
+paso = 10
 
 
 print (
