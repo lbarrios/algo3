@@ -4,8 +4,8 @@ import sys
 
 carpetaInput = "input/testParaDivision"
 desde = 100
-hasta = 15000
-casosPorTest = 30
+hasta = 40000
+casosPorTest = 40
 paso = 100
 
 

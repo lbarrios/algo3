@@ -86,8 +86,8 @@ for test_number in range(0,t_names):
     y[i] = y[i] / ( x[i]**2 )
   plt.plot(x, y, linestyle='-',  color=colors[test_number], linewidth=0.2, label=testname, alpha=1) #, marker='.', markersize=0.3)
 
-subplot.plot(x, ((x*np.log(x))*10)/float(1e9),    '--', color='black', linewidth=2, label="c.x.log2(x)")
-plt.legend(loc=2)
+#subplot.plot(x, ((x*np.log(x))*10)/float(1e9),    '--', color='black', linewidth=2, label="c.x.log2(x)")
+#plt.legend(loc=2)
 
 #plt.show()
 #os.makedirs('./graficos/')

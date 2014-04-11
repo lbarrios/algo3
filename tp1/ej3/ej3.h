@@ -6,7 +6,7 @@
 #include "../common/Timer.h"
 #include "TestCaseEj3.h"
 
-#include "Tablero.h"
-#include "IndiceDeColores.h"
+//#include "Tablero.h"
+//#include "IndiceDeColores.h"
 
 #endif
