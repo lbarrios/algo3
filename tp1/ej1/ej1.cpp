@@ -21,7 +21,6 @@ int main( int argc, char** argv ){
   */
   while( testcase.tomarDatos() != TestCase::TESTCASE_NULL ){
     // Mido el tiempo inicial
-    timer.setInitialTime("todoElCiclo");
 
     // Obtengo los parámetros del testcase.
     const uint32_t &intervaloInspector = testcase.dameIntervaloInspector();
@@ -32,7 +31,10 @@ int main( int argc, char** argv ){
     sort( fechasCamiones, fechasCamiones+cantidadDeCamiones );
 
     uint32_t p_inicio=0, p_fin=0, mejorDia = 0, mejorCantidadDeCamiones = 0;
+    mejorDia++;
+    mejorDia--;
     // Itero sobre las fechas con dos punteros p_inicio y p_fin
+    timer.setInitialTime("busquedaDelMejor");
     while(p_fin<cantidadDeCamiones){
       /*
         Avanzo p_fin hasta la posición en que la distancia de fechas
@@ -59,7 +61,7 @@ int main( int argc, char** argv ){
     }
 
     // Mido el tiempo final
-    timer.setFinalTime("todoElCiclo");
+    timer.setFinalTime("busquedaDelMejor");
     // Devuelvo el resultado con el formato solicitado
     #ifndef TIME
     parser.dameOutput() << mejorDia << " " << mejorCantidadDeCamiones << endl;

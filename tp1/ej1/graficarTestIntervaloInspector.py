@@ -23,7 +23,7 @@ for f in files:
   for line in file:
     testtype = line.split()[0]
     value = line.split()[1]
-    x = int(testsize)
+    x = float(testsize)
     y = int(value)
     tests[testname][testtype][x].append(y)
   file.close()
@@ -64,9 +64,9 @@ subplot.yaxis.set_major_formatter(formatter)
 
 # Aplico formato
 plt.grid(True)
-plt.title("Ejercicio 1 (cuartiles)")
+plt.title(u"Ejercicio 1 - Variación con respecto a la amplitud de los datos")
 plt.ylabel('Tiempo (segundos)')
-plt.xlabel(u'Tamaño de entrada (camiones)')
+plt.xlabel(u'Relación porcentual ((intervaloInspector/amplitudDeDatos)*100)')
 
 """
 linestyle or ls [ ‘-‘ | ‘--’ | '.' | ‘-.’ | ‘:’ | ‘steps’ | ...]
@@ -89,4 +89,4 @@ plt.legend(loc=2)
 #plt.show()
 if not os.path.exists('./graficos/') or not os.path.isdir('./graficos/'):
   os.makedirs('./graficos/')
-plt.savefig("graficos/test_1.pdf")
+plt.savefig("graficos/test_3.pdf")

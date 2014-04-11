@@ -3,7 +3,7 @@ from genTest.generadorDeTestsEj1 import generadorDeTestsEj1
 import sys
 
 carpetaInput = "input/testParaIntervaloInspector"
-n_const = 1000
+n_const = 5000
 intervaloInspector_const = 200
 limiteFactor = 10
 pasoFactor = 0.1

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 EXE=${PWD##*/}
-INPUT_FOLDER=input/testParaDivision
-OUTPUT_FOLDER=output/testParaDivision
+INPUT_FOLDER=input/testParaIntervaloInspector
+OUTPUT_FOLDER=output/testParaIntervaloInspector
 VERBOSE=false
 TIME=false
 HELP=false

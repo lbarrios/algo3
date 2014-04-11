@@ -23,7 +23,7 @@ class generadorDeTests:
     if not genCasos:
       raise Exception("Nombre debe pertenecer a la lista: [ {} ]".format( " ,".join( [ key for key in nombresFuncionesGeneradoras.keys() ])))
     os.chdir ( self.inputDir )
-    nombreArchivo = "{}_{:0>10}.txt".format(nombre, n) if not a else "{}_{:1.4f}".format(nombre,a)
+    nombreArchivo = "{}_{:0>10}.txt".format(nombre, n) if not a else "{}_{:0>5}.txt".format(nombre,int(a*100))
     if os.path.isfile( nombreArchivo ):
       os.remove( nombreArchivo)
 

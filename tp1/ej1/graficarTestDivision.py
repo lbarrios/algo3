@@ -83,7 +83,6 @@ for test_number in range(0,t_names):
   y = np.array( zip(*tests_mean_p_xy[testname][testtype])[1] )
   for i in range( len(y)):
     y[i] = y[i] / ( x[i] * np.log( x[i] ) )
-  print (y)
   plt.plot(x, y, linestyle='-',  color=colors[test_number], linewidth=0.2, label=testname, alpha=1) #, marker='.', markersize=0.3)
 
 subplot.plot(x, ((x*np.log(x))*10)/float(1e9),    '--', color='black', linewidth=2, label="c.x.log2(x)")
