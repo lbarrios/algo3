@@ -218,7 +218,7 @@ Estos $5$ casos cubrirían todo el espacio de soluciones. Ejecutamos distintos e
 
 \subsubsection{Medición empírica de la performance}
 
-Como se mencionó en la sección de $Cota de complejidad temporal$, el algoritmo elegido para la resolución del problema,
+Como se mencionó en la sección de 'Cota de complejidad temporal', el algoritmo elegido para la resolución del problema,
 está dividido en dos partes. La primera corresponde al ordenamiento de un arreglo con las fechas en que los 
 camiones estarán pasando, con complejidad para el peor caso de \bigO{n. \log n}. La segunda corresponde a dos ciclos
 anidados, donde se decide desde qué día el inspector tendría que ser contratado para revisar la mayor cantidad 
@@ -233,18 +233,26 @@ variando el orden de las fechas de los camiones en el input.
 \item Orden aleatorio de fechas
 \end{itemize}     
 
-Comparamos, entonces, cada uno de estos $3$ casos en un gráfico de $tiempo$ vs $n: cantidad de camiones$. \\
+Comparamos, entonces, cada uno de estos $3$ casos en un gráfico de $tiempo$ vs $n$: cantidad de camiones. \\
+Se puede observar que la cota teórica calculada es correcta. \\
 
 %Gráfico1
 
-Además, para comprobar que efectivamente la complejidad final está dominada por el algoritmo de sort, realizamos dos
-pruebas diferentes. \\
+%Lo siguiente lo dejo escrito pero hay que ver si hay tiempo para hacer todos esos tests... 
 
-\begin{itemize}
-\item Comparación de tiempos con $2$ algoritmos de sort distintos. 
-\item Comparación de tiempos de la primer parte del algoritmo (sort) y la segunda (ciclos). 
-\end{itemize}  
- 
+%Además, para comprobar que efectivamente la complejidad final está dominada por el algoritmo de sort, se compararon
+%los tiempos de la primer parte del algoritmo ($Sort$) y la segunda ($Ciclos$). \\
+%Se observa en el siguiente gráfico de $tiempo$ vs $n$:cantidad de camiones, que para el caso del $Sort$ los tiempos
+%son mayores, pero siempre por debajo de la complejidad calculada.   
+
+% Gráfico2
+
+%Por último, se compararon los diferentes tiempos según se variaba la longitud $L$ del intervalo formado por 
+%la mínima fecha y la máxima fecha en que pasan los camiones, dejando el parámetro $D$ período de contratación del 
+%inspector fijo. \\
+%Se puede observar que si $D$ es mayor a $L$ el tiempo aumenta como esperábamos, ya que se producen más iteraciones.
+
+% Gráfico3 
 
 % -----------------------------------------------
 \end{document}
