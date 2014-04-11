@@ -67,7 +67,7 @@ plt.grid(True)
 plt.title("Ejercicio 1 (cuartiles)")
 plt.ylabel('Cociente (adimensional)')
 plt.xlabel(u'Tamaño de entrada (camiones)')
-plt.ylim(0, 0.000000018)
+plt.ylim(0, 0.0000000001)
 """
 linestyle or ls [ ‘-‘ | ‘--’ | '.' | ‘-.’ | ‘:’ | ‘steps’ | ...]
 marker  [ ‘+’ | ‘,’ | ‘.’ | ‘1’ | ‘2’ | ‘3’ | ‘4’ ]
@@ -81,8 +81,9 @@ for test_number in range(0,t_names):
   #plt.plot(x, y, linestyle='-',  color=colors[test_number], linewidth=0.2, label=testname, alpha=1)
   x = np.array( zip(*tests_mean_p_xy[testname][testtype])[0] )
   y = np.array( zip(*tests_mean_p_xy[testname][testtype])[1] )
+  
   for i in range( len(y)):
-    y[i] = y[i] / ( x[i] * np.log( x[i] ) )
+    y[i] = y[i] / ( x[i]**2 )
   plt.plot(x, y, linestyle='-',  color=colors[test_number], linewidth=0.2, label=testname, alpha=1) #, marker='.', markersize=0.3)
 
 subplot.plot(x, ((x*np.log(x))*10)/float(1e9),    '--', color='black', linewidth=2, label="c.x.log2(x)")
