@@ -400,26 +400,50 @@ Estos casos cubrirían todo el espacio de soluciones. Ejecutamos distintos ejemp
 uno de ellos y obtuvimos la respuesta esperada. Por lo tanto, podemos concluir que el comportamiento del programa 
 es correcto. 
 
+\newpage
 \subsubsection{Medición empírica de la performance}
 
-El algoritmo consta de dos partes, una de ordenamiento al principio, con complejidad \bigO{n. \log n} y la segunda,
-con un ciclo que toma \bigO{n}, siendo $n$ la cantidad total de piezas. Como la complejidad mayor está dada por la
-primer parte, decidimos enfocarnos en los parámetros de entrada que son tenidos en cuenta para dicho ordenamiento. 
-Estos son $d_i$ pérdida de ganancia diaria y $t_i$ tiempo de fabricación de la pieza. Lo que se termina ordenando 
-es el cociente $\pi=d_i/t_i$ de cada pieza $i$.\\
-Entonces, en la medición empírica de la performance del programa, realizamos pruebas comparando los tiempos según el
-ordenamiento dado de estos cocientes. Los casos son: 
+El algoritmo consta de dos partes, una de ordenamiento al principio, con complejidad \bigO{  cantPiezas . \log cantPiezas }
+y una segunda parte que es sencillamente un recorrido por todas las piezas donde para cada pieza se hace
+una multiplicación y una suma, por lo que claramente es lineal con respecto al tamaño de la entrada, pero no solo
+en el peor caso sino que en cualquier caso. De esta manera el algorítmo pertenece a los de complejidad \bigO{n . \log n}.
 
-\begin{itemize}
-\item Orden ascendente de $\pi$. 
-\item Orden descendente de $\pi$ 
-\item Orden aleatorio de $\pi$. Se tomaron valores random de $d_i$ y $t_i$ para cada pieza $i$. 
-\end{itemize}     
+Para contrastar esta idea de manera empírica lo que se hizo fue analizar el resultado del siguiente cociente: 
 
-Para cada uno de los $3$ casos mencionados, tomamos los tiempos de ejecución variando la cantidad de piezas totales.\\
-Se puede observar en el gráfico $tiempo$ vs $n$ que la cota teórica calculada \bigO{n. \log n} fue correcta.  
+\begin{center}
+$\frac{tiempoDeEjecuci\acute{o}n}{n. \log n}$
+\end{center}
+
+La figura \ref{fig:ej2-1} muestra el resultado de de este cociente para diferentes tamaños de la entrada.
+Se puede apreciar que para tamaños de entrada grandes la curva se estabiliza muy cerca de una constante.
+Este resultado reafirma la hipótesis de que el algorítmo pertenece a los de complejidad \bigO{n. \log n}
+
+
+%Como la complejidad mayor está dada por la
+%primer parte, decidimos enfocarnos en los parámetros de entrada que son tenidos en cuenta para dicho ordenamiento. 
+%Estos son $d_i$ pérdida de ganancia diaria y $t_i$ tiempo de fabricación de la pieza. Lo que se termina ordenando 
+%es el cociente $\pi=d_i/t_i$ de cada pieza $i$.\\
+%Entonces, en la medición empírica de la performance del programa, realizamos pruebas comparando los tiempos según el
+%ordenamiento dado de estos cocientes. Los casos son: 
+
+%\begin{itemize}
+%\item Orden ascendente de $\pi$. 
+%\item Orden descendente de $\pi$ 
+%\item Orden aleatorio de $\pi$. Se tomaron valores random de $d_i$ y $t_i$ para cada pieza $i$. 
+%\end{itemize}     
+
+%Para cada uno de los $3$ casos mencionados, tomamos los tiempos de ejecución variando la cantidad de piezas totales.\\
+%Se puede observar en el gráfico $tiempo$ vs $n$ que la cota teórica calculada \bigO{n. \log n} fue correcta.  
  
 %Gráfico
+
+\begin{figure}[H]
+   \begin{center}
+   \includegraphics[width=1\textwidth,angle=0]{../ej2/graficos/test_2.pdf}
+   \caption{}
+   \label{fig:ej2-1}
+   \end{center}
+\end{figure}
 
 % -----------------------------------------------
 \end{document}

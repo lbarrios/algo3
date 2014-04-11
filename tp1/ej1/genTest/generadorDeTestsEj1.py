@@ -81,7 +81,7 @@ class generadorDeTestsEj1 (generadorDeTests):
       fechaActual = random.randint( 1, intervaloMaximo )
       fechasCamiones.append( fechaActual )
 
-    fechasCamiones.sort()
+    #fechasCamiones.sort()
     fechasCamiones = [str(fecha) for fecha in fechasCamiones]
     return "{0} {1} {2}".format(intervaloInspector,n, " ".join(fechasCamiones))
 

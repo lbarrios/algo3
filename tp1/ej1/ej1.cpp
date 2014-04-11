@@ -21,7 +21,6 @@ int main( int argc, char** argv ){
   */
   while( testcase.tomarDatos() != TestCase::TESTCASE_NULL ){
     // Mido el tiempo inicial
-    timer.setInitialTime("cicloEntero");
 
     // Obtengo los parámetros del testcase.
     const uint32_t &intervaloInspector = testcase.dameIntervaloInspector();
@@ -31,7 +30,7 @@ int main( int argc, char** argv ){
     // Ordeno el listado de fechas de los camiones
     sort( fechasCamiones, fechasCamiones+cantidadDeCamiones );
 
-    timer.setFinalTime("cicloEntero");
+    timer.setInitialTime("cicloEntero");
 
     uint32_t p_inicio=0, p_fin=0, mejorDia = 0, mejorCantidadDeCamiones = 0;
     mejorDia++;
@@ -63,6 +62,7 @@ int main( int argc, char** argv ){
     }
 
     // Mido el tiempo final
+    timer.setFinalTime("cicloEntero");
     // Devuelvo el resultado con el formato solicitado
     #ifndef TIME
     parser.dameOutput() << mejorDia << " " << mejorCantidadDeCamiones << endl;

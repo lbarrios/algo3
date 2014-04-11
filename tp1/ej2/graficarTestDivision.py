@@ -64,10 +64,10 @@ fig,subplot = plt.subplots()
 
 # Aplico formato
 plt.grid(True)
-plt.title("Ejercicio 1 (cuartiles)")
+plt.title(u"Ejercicio 2 - tiempo sobre complejidad teórica")
 plt.ylabel('Cociente (adimensional)')
 plt.xlabel(u'Tamaño de entrada (camiones)')
-plt.ylim(0, 0.000000018)
+#plt.ylim(0, 0.000000018)
 """
 linestyle or ls [ ‘-‘ | ‘--’ | '.' | ‘-.’ | ‘:’ | ‘steps’ | ...]
 marker  [ ‘+’ | ‘,’ | ‘.’ | ‘1’ | ‘2’ | ‘3’ | ‘4’ ]
@@ -83,7 +83,7 @@ for test_number in range(0,t_names):
   y = np.array( zip(*tests_mean_p_xy[testname][testtype])[1] )
   for i in range( len(y)):
     y[i] = y[i] / ( x[i] * np.log( x[i] ) )
-  plt.plot(x, y, linestyle='-',  color=colors[test_number], linewidth=0.2, label=testname, alpha=1) #, marker='.', markersize=0.3)
+  plt.plot(x, y, linestyle='-',  color=colors[test_number], linewidth=1, label=testname, alpha=1) #, marker='.', markersize=0.3)
 
 #subplot.plot(x, ((x*np.log(x))*10)/float(1e9),    '--', color='black', linewidth=2, label="c.x.log2(x)")
 #plt.legend(loc=2)

@@ -7,7 +7,7 @@ n_const = 5000
 intervaloInspector_const = 200
 limiteFactor = 10
 pasoFactor = 0.1
-casosPorTest = 30
+casosPorTest = 50
 
 
 print (

@@ -105,7 +105,6 @@ int main(int argc, char** argv) {
       max_local++;
       t[x][y] = fichaQueVoyAPoner;
       orden_local.push_back(fichaQueVoyAPoner);
-      bool yaLlegueAlMaximoAbsoluto = false;
       if (x == n-1 && y == m-1) {
         if (max_local > max_global) {
           max_global = max_local;
