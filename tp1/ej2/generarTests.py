@@ -4,9 +4,9 @@ import sys
 
 generador = generadorDeTestsEj2()
 desde = 1
-hasta = 1000
-casosPorTest = 50
-paso = 1
+hasta = 20000
+casosPorTest =400
+paso = 50
 
 print (
 """
@@ -38,6 +38,6 @@ if escape == "salir":
 
 for i in range( desde , hasta, paso):
   print( i)
-  generador.generarTest(i, "casoAleatorio", casosPorTest)
+  generador.generarTest({"n":i}, "casoAleatorio", casosPorTest)
 
 print (" Los test se generaron correctamente ")

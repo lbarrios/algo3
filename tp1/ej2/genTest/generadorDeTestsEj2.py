@@ -14,9 +14,10 @@ class generadorDeTests:
       raise Exception ("No existe el directio de output")
     self.nombresFuncionesGeneradoras = {}
 
-  def generarTest(self, n, nombre, cantCasos = 20):
+  def generarTest(self, params, nombre, cantCasos = 20):
     """ Genera un test completo y lo guarda en el directorio que se asignó para los inputs """
     genCasos = self.nombresFuncionesGeneradoras.get(nombre)
+    n = params["n"]
     if not genCasos:
       raise Exception("Nombre debe pertenecer a la lista: [ {} ]".format( " ,".join( [ key for key in nombresFuncionesGeneradoras.keys() ])))
     os.chdir ( self.inputDir )
@@ -27,7 +28,7 @@ class generadorDeTests:
     with open( nombreArchivo , "a") as archivo:
       test = []
       for i in range( cantCasos ):
-        test.append (genCasos(n))
+        test.append (genCasos(params))
       archivo.write( "\n".join(test))
       archivo.write( "\n0" )
     os.chdir ("..")
