@@ -6,94 +6,119 @@
 
 \subsubsection{Descripción}
 
+Dada una cantidad $n$ de pizzas $i$ de orfebrería, cada una de las cuales tienen
+una pérdida diaria de ganancia $d_i$ y una cantidad de días $t_i$ que lleva su
+fabricación, se quiere saber el orden en que el pizzero Franco Shar tendría que
+fabricar y vender las mismas para minimizar las pérdidas. Cada pizza no
+entregada pasadas las media hora dará como mínimo una pérdida de $d_i$ por
+$t_i$, y a esto se le sumará $d_i$ por la cantidad de días que Frank haya estado
+fabricando otras pizzas, ya que él sólo puede trabajar de a una pizza a la vez.
+El problema se deberá resolver con una complejidad temporal de
+$\mathcal{O}(n^{2})$, siendo $n$ la cantidad de pizzas a fabricar. En el
+resultado se mostrarán: $P$, el monto total perdido de la ganancia, y las pizzas
+$i1,...,in$ ordenadas.
 
-Dada una cantidad $n$ de piezas $i$ de orfebrería, cada una de las cuales tienen una pérdida diaria de 
-ganancia $d_i$ y una cantidad de días $t_i$ que lleva su fabricación, se quiere saber el orden en que el 
-joyero Frank O. Yar tendría que fabricar y vender las mismas para minimizar las pérdidas. 
-Cada pieza no entregada dará como mínimo una pérdida de $d_i$ por $t_i$, y a esto se le sumará $d_i$ por la  
-cantidad de días que Frank haya estado fabricando otras piezas, ya que él sólo puede trabajar de a una pieza 
-a la vez. El problema se deberá resolver con una complejidad temporal de $\mathcal{O}(n^{2})$, siendo $n$ 
-la cantidad de piezas a fabricar. En el resultado se mostrarán: $P$, el monto total perdido de la ganancia,
-y las piezas $i1,...,in$ ordenadas. \\
 
-\begin{itemize}
-	\item Ejemplo $1$: 
-\end{itemize}
+\begin{ejemplo}\hspace{1em}
 
-Frank tiene que entregar $n=3$ piezas en total ($i:1,2,3$). Los datos de cada pieza $i$ son los siguientes: \\
+	Frank tiene que entregar $n=3$ piezas en total ($i:1,2,3$). 
 
-\begin{tabular}{|l|l|l|}
-	\hline
-	Pieza &  Pérdida diaria & $\#$ días de fabr.\\
-	\hline
-	$1$   &     $1$         & $3$               \\
-	\hline 
-	$2$   &     $2$         & $3$               \\
-	\hline 
-	$3$   &     $3$         & $3$               \\
-	\hline 
-\end{tabular} \\ 
-    
-La fabricación de las $3$ piezas le llevará $9$ días en total y durante estos días se irán sumando las 
-pérdidas diarias de ganancia correspondiente a cada pieza sin terminar. 
+	Los datos de cada pieza $i$ son los siguientes:
 
-\begin{itemize}
-	\item D\'ia1: $3+2+1$. 
-	\item D\'ia2: $3+2+1$. 
-	\item D\'ia3: $3+2+1$ $\rightarrow$ entrega pieza $3$.
-	\item D\'ia4: $2+1$.
-	\item D\'ia5: $2+1$. 
-	\item D\'ia6: $2+1$ $\rightarrow$ entrega pieza $2$.
-	\item D\'ia7: $1$
-	\item D\'ia8: $1$
-	\item D\'ia9: $1$ $\rightarrow$ entrega pieza $1$.
-\end{itemize}  	
+	\begin{center}
+		\begin{tabular}{|l|l|l|}
+			\hline
+			Pieza &  Pérdida diaria & $\#$ días de fabr.\\
+			\hline
+			$1$   &     $1$         & $3$               \\
+			\hline 
+			$2$   &     $2$         & $3$               \\
+			\hline 
+			$3$   &     $3$         & $3$               \\
+			\hline 
+		\end{tabular}
+	\end{center}
+
+	La fabricación de las $3$ piezas le llevará $9$ días en total y durante estos
+	días se irán sumando las pérdidas diarias de ganancia correspondiente a cada
+	pieza sin terminar.
+
 	
-Como resultado se obtendría el orden $3,2,1$ y $P:30$, el monto total perdido de la ganancia. \\
+		\begin{itemize}[leftmargin=+6em]
+			\item[Día 1:] $3+2+1$. 
+			\item[Día 2:] $3+2+1$. 
+			\item[Día 3:] $3+2+1$ $\rightarrow$ entrega pizza $3$.
+			\item[Día 4:] $2+1$.
+			\item[Día 5:] $2+1$. 
+			\item[Día 6:] $2+1$ $\rightarrow$ entrega pizza $2$.
+			\item[Día 7:] $1$
+			\item[Día 8:] $1$
+			\item[Día 9:] $1$ $\rightarrow$ entrega pizza $1$.
+		\end{itemize}
 
-\begin{itemize}
-	\item Ejemplo $2$: 
-\end{itemize}
-
-Frank tiene que entregar $n=2$ piezas en total ($i:1,2$). Los datos de cada pieza $i$ son los siguientes: \\
-
-\begin{tabular}{|l|l|l|}
-	\hline
-	Pieza &  Pérdida diaria & $\#$ días de fabr.\\
-	\hline
-	$1$   &     $1$         & $3$               \\
-	\hline 
-	$2$   &     $3$         & $1$               \\
-	\hline 
-\end{tabular} \\ 
-    
-La fabricación de las $2$ piezas le llevará $4$ días en total y durante estos días se irán sumando las pérdidas 
-diarias de ganancia correspondiente a cada pieza sin terminar. 
-
-\begin{itemize}
-	\item Día1: $3+1$ $\rightarrow$ entrega pieza $2$. 
-	\item Día2: $1$. 
-	\item Día3: $1$.
-	\item Día4: $1$ $\rightarrow$ entrega pieza $1$.
-\end{itemize}  	
 	
-Como resultado se obtendría el orden $2,1$ y $P:7$, el monto total perdido de la ganancia. 
+		
+
+	Como resultado se obtendría el orden $3,2,1$ y $P:30$, el monto total perdido
+	de la ganancia.
+\end{ejemplo}
+
+\begin{ejemplo}\hspace{1em}
+
+	Frank tiene que entregar $n=2$ piezas en total ($i:1,2$). Los datos de cada pieza $i$ son los siguientes: \\
+
+	\begin{center}
+		\begin{tabular}{|l|l|l|}
+			\hline
+			Pieza &  Pérdida diaria & $\#$ días de fabr.\\
+			\hline
+			$1$   &     $1$         & $3$               \\
+			\hline 
+			$2$   &     $3$         & $1$               \\
+			\hline 
+		\end{tabular}
+	\end{center}
+	    
+	La fabricación de las $2$ piezas le llevará $4$ días en total y durante estos días se irán sumando las pérdidas 
+	diarias de ganancia correspondiente a cada pieza sin terminar. 
+
+	\begin{itemize}[leftmargin=+6em]
+		\item Día1: $3+1$ $\rightarrow$ entrega pieza $2$. 
+		\item Día2: $1$. 
+		\item Día3: $1$.
+		\item Día4: $1$ $\rightarrow$ entrega pieza $1$.
+	\end{itemize}  	
+		
+	Como resultado se obtendría el orden $2,1$ y $P:7$, el monto total perdido de la ganancia. 
+
+
+\end{ejemplo}
 
 \subsubsection{Hipótesis de resolución}
 
-Tenemos $n$ piezas, cada uno de los cuales cuenta con un valor de $d$, es lo que se va devaluando diariamente,
-y $t$, el tiempo que tomará su fabricación. Nos interesa minimizar la pérdida de la ganancia total, dando el mejor
-orden en que habría que ir fabricando las piezas $(1,...,n)$. \\
-Definimos un cociente $\pi$ como $d/t$ para cada uno de los $n$ elementos. La relación entre $d$ y $t$ es la que nos
-determinará cuál es el orden óptimo de fabricación. \\
-Contamos con un vector $v = (v_1,v_2,...,v_n)$. Cada $v_i$ representa la pieza $i$ a fabricar, $i=1,...,n$. \\ 
-Nuestro algoritmo ordena de forma decreciente por el cociente $\pi$, luego devolvemos un vector $v$ óptimo. 
-Iteramos sobre $v$ con el indice $i$, acumulando la pérdida del subvector v[1..i]. 
-Al final de las iteraciones tenemos entonces la pérdida completa correspondiente al vector $v$.
+Tenemos $n$ pizzas, cada una de los cuales cuenta con un valor de $d$, es lo que
+se va devaluando diariamente, y $t$, el tiempo que tomará su fabricación. Nos
+interesa minimizar la pérdida de la ganancia total, dando el mejor orden en que
+habría que ir fabricando las piezas $(1,...,n)$.
+
+Definimos un cociente $\pi$ como $d/t$ para cada uno de los $n$ elementos. La
+relación entre $d$ y $t$ es la que nos determinará cuál es el orden óptimo de
+fabricación.
+
+Contamos con un vector $v = (v_1,v_2,...,v_n)$. Cada $v_i$ representa la pieza
+$i$ a fabricar, $i=1,...,n$.
+
+Nuestro algoritmo ordena de forma decreciente por el cociente $\pi$, luego
+devolvemos un vector $v$ óptimo.
+
+Iteramos sobre $v$ con el indice $i$, acumulando la pérdida del subvector
+v[1..i]. Al final de las iteraciones tenemos entonces la pérdida completa
+correspondiente al vector $v$.
+
 
 \subsubsection{Justificación formal de correctitud}
 
-Contamos con $n \in \mathbb{N}$, donde cada collar queda determinado por una $3$-upla: (p,d,t) donde \\
+Contamos con $n \in \mathbb{N}$, donde cada collar queda determinado por una \texttt{3-upla}: ($p$,$d$,$t$) donde \\
 $p \in \{1,...,n\}$ es el número de collar $(p_i \neq p_j)$, \\
 $d \in \mathbb{N}$ es la pérdida diaria de ganancia del collar, y \\
 $t \in \mathbb{N}$ es el tiempo de fabricación (en días) del collar. \\
@@ -141,12 +166,10 @@ $\displaystyle{\frac{d[v_{x+1}]}{t[v_{x+1}]} = \frac{d[v_x]}{t[v_x]} \Leftrighta
 Luego, $v$ ordenado $\Rightarrow v$ óptimo. \\ 
 
 
-\newpage
-
 \subsubsection{Cota de complejidad temporal}
 
 \begin{algorithm}
-\caption{La joya del Río de la plata}\label{logpascual}
+\caption{La joya del Río de la plata}\label{alg:joyarioplata}
 \footnotesize\begin{algorithmic}[1]
 	\Require
 		\Statex $cantidadDePiezas \gets$ \Call{dameCantidadDePiezas}{} \Comment{$integer$}

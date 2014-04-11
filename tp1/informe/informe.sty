@@ -30,6 +30,7 @@
 \newcommand{\fig}[1]{\textit{Figura \ref{#1}}}
 \newcommand{\bib}[1]{\cite{#1}}
 \newcommand{\bibext}[2]{\cite[#1]{#2}}
+\newcommand{\secref}[1]{\texttt{Sección \textbf{\titleref{#1}} (página \pageref{#1})}}
 
 % -- condifigure code styles
 \lstset{ %
@@ -92,18 +93,18 @@
 
 % config amsthm for theorems
 \theoremstyle{plain}
-\newtheorem{prop}{Proposición}[subsubsection]
-\newtheorem{teor}[prop]{Teorema}
-\newtheorem{demostracion}[prop]{Demostracion}
-\newtheorem{corol}[prop]{Corolario}
-\newtheorem{lema}[prop]{Lema}
+\newtheorem{proposicion}{Proposición}[subsubsection]
+\newtheorem{teorema}[proposicion]{Teorema}
+\newtheorem{demostracion}[proposicion]{Demostracion}
+\newtheorem{corolario}[proposicion]{Corolario}
+\newtheorem{lema}[proposicion]{Lema}
 \theoremstyle{definition}
 \newtheorem{definicion}{Definición}[subsubsection]
-\newtheorem{ejem}{Ejemplo}
-\newtheorem{ejer}{Ejercicio}
+\newtheorem{ejemplo}{Ejemplo}[subsubsection]
+\newtheorem{ejercicio}{Ejercicio}
 \theoremstyle{remark}
 \newtheorem*{aclaracion}{Nota}
-\newtheorem*{notac}{Notación}
+\newtheorem*{notacion}{Notación}
 
 % -------------------------------------------------------------------------------------------
 \newenvironment{TP1}{%
@@ -114,3 +115,5 @@
 }
 \renewcommand{\tablename}{Tabla}
 \usetikzlibrary{matrix}
+
+\setlength{\headheight}{15pt}
