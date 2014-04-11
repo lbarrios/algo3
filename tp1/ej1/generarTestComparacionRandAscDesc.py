@@ -4,7 +4,7 @@ import sys
 
 carpetaInput = "input/testParaCompRandAscDesc"
 desde = 1
-hasta = 100000
+hasta = 10000
 casosPorTest = 4
 paso = 100
 

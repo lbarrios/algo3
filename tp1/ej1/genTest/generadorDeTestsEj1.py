@@ -17,12 +17,13 @@ class generadorDeTests:
   def generarTest(self, params, nombre, cantCasos = 20):
     """ Genera un test completo y lo guarda en el directorio que se asignó para los inputs """
     n = params["n"]
+    a = params.get("amplitud", False)
     cwd = os.getcwd();
     genCasos = self.nombresFuncionesGeneradoras.get(nombre)
     if not genCasos:
       raise Exception("Nombre debe pertenecer a la lista: [ {} ]".format( " ,".join( [ key for key in nombresFuncionesGeneradoras.keys() ])))
     os.chdir ( self.inputDir )
-    nombreArchivo = "{}_{:0>10}.txt".format(nombre, n)
+    nombreArchivo = "{}_n:{:0>10}.txt".format(nombre, n) if not a else "{}_a:{:1.4f}".format(nombre,a)
     if os.path.isfile( nombreArchivo ):
       os.remove( nombreArchivo)
 
@@ -74,7 +75,7 @@ class generadorDeTestsEj1 (generadorDeTests):
     else:
       intervaloInspector = params["intervaloInspector"]
 
-    intervaloMaximo = intervaloInspector*factorAmplitud # está variable está por separado porque este valor se podría querer cambiar.
+    intervaloMaximo = int(intervaloInspector*factorAmplitud) # está variable está por separado porque este valor se podría querer cambiar.
     fechasCamiones = []
     for i in range(n):
       fechaActual = random.randint( 1, intervaloMaximo )
@@ -118,5 +119,4 @@ if __name__ == '__main__':
   coso = generadorDeTestsEj1();
   print ( coso.nuevoCasoAleatorio({"n":3}) )
   print ( coso.nuevoCasoOrdenadoCrecientemente( {"n":10}))
-  print ( coso.nuevoCasoOrdenadoCrecientemente( {"n":10, "intervaloInspector":300, "amplitud":2}))
-  print ( coso.nuevoCasoOrdenadoDecrecientemente( {"n":10} ))
+  print ( coso.nuevoCasoOrdenadoCrecientemente( {"n":10, "intervaloInspector":30, "amplitud":5}))
