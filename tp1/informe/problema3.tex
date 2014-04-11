@@ -111,6 +111,25 @@ En este caso, la cantidad máxima de piezas que se pueden colocar en el tablero 
 \end{minipage}  \\
 
 \subsubsection{Hipótesis de resolución}
+El objetivo del problema es diseñar un algoritmo itilizando la técnica de \textit{backtracking}. La idea base es ir llenando el tablero en cierto orden, \\
+probando colocar en cada casillero piezas que no rompan las reglas, y analizando la cantidad total de piezas del tablero que hayan sido cubiertas.\\
+Se debe guardar de alguna forma la combinación de piezas que haya cubierto más casilleros. \\
+Consideramos dejar un casillero libre como colocar la pieza representada por el 0.\\
+En este problema una solución candidata o rama es una sucesión de piezas (que puede o no incluir el 0), que van cubriendo el tablero.\\
+Una primera decisión que se tomo fue guardar una estructura piezasPorColores que para cada par de colores (x, y) guarda una lista \\
+con todos las piezas que tienen como color superior e izquierdo x e y, respectivamente.\\
+Vamos recorriendo el tablero en cada fila de izquierda a derecha, desde la fila superior hasta la inferior. De este modo una pieza es legal en\\
+una posición si su color izquierdo es igual al color derecho de la pieza a su izquierda (de existir), y su color superior es igual al color\\
+inferior de la pieza ubicada arriba (de existir). Podemos obtener las piezas candidatas que cumplen con esa restricción de colores\\
+en piezasDeColores. De este modo nos aseguramos que todas las piezas por las que nos vamos ramificando mantienen las restricciones del tablero.\\
+Evitamos asi tener que iterar sobre todas las piezas verificando si cumplen la restricción.\\
+Una poda trivial que se implementó fue dejar de buscar soluciones cuando encontramos una solución que cubre todo el tablero.\\
+Al comenzar la búsqueda sabemos que por lo menos vamos a poder llenar la mitad de los casilleros del tablero. Ésto siempre se puede conseguir si\\
+visualizamos nuestro tablero como uno de ajedrez y ponemos las piezas en los casilleros negros. Ningun par de piezas compartiría lado.\\
+Vamos llevando cuenta de los huecos que dejamos en el tablero. Si hemos dejado tantos huecos como para que, aun llenando correctamente\\
+lo que queda del tablero, no alcanza para superar la mejor solución encontrada hasta el momento, abandonamos la rama.\\
+
+
 
 \subsubsection{Justificación formal de correctitud}
 

@@ -47,6 +47,13 @@ int main(int argc, char** argv) {
   }
   yaLlegueAlMaximoAbsoluto = false;
   max_global = (n*m)/2;
+  //inicializo orden_global (mas eficiente es hacerlo en el ciclo de arriba, pero por claridad)
+  for (int i=1; i <= n*m; i++) {
+    if (i % 2 == 1)
+        max_global.push_back(i);
+    else
+        max_global.push_back(0);
+  } 
   max_local = 0;
   huecos = 0;
   backtrack(0, 0);
