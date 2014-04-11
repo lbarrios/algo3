@@ -84,7 +84,7 @@ for test_number in range(0,t_names):
   
   for i in range( len(y)):
     y[i] = y[i] / ( x[i]**2 )
-  plt.plot(x, y, linestyle='-',  color=colors[test_number], linewidth=0.2, label=testname, alpha=1) #, marker='.', markersize=0.3)
+  plt.plot(x, y, linestyle='-',  color=colors[test_number], linewidth=1, label=testname, alpha=1) #, marker='.', markersize=0.3)
 
 #subplot.plot(x, ((x*np.log(x))*10)/float(1e9),    '--', color='black', linewidth=2, label="c.x.log2(x)")
 #plt.legend(loc=2)

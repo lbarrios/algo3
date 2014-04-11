@@ -81,7 +81,7 @@ for test_number in range(0,t_names):
   #plt.plot(x, y, linestyle='-',  color=colors[test_number], linewidth=0.2, label=testname, alpha=1)
   x = np.array( zip(*tests_mean_p_xy[testname][testtype])[0] )
   y = np.array( zip(*tests_mean_p_xy[testname][testtype])[1] )
-  plt.plot(x, y, linestyle='-',  color=colors[test_number], linewidth=0.2, label=testname, alpha=1) #, marker='.', markersize=0.3)
+  plt.plot(x, y, linestyle='-',  color=colors[test_number], linewidth=0.5, label=testname, alpha=1) #, marker='.', markersize=0.3)
 
 #subplot.plot(x, ((x*np.log(x))*10)/float(1e9),    '--', color='black', linewidth=2, label="c.x.log2(x)")
 plt.legend(loc=2)
