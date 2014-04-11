@@ -262,11 +262,6 @@ $\bigO{n^{2}}$.
 
 
 
-
-
-
-
-
 \subsubsection{Verificación mediante casos de prueba}
 
 A continuación presentamos distintas instancias que sirven para verificar que el programa funciona correctamente. \\ 
@@ -319,13 +314,31 @@ Por lo tanto, podemos concluir que el comportamiento del programa es correcto.
 \subsubsection{Medición empírica de la performance}
 
 Como se mencionó en \secref{sec:ej1cotatemporal}, el algoritmo elegido para la
-resolución del problema, está dividido en dos partes. La primera corresponde al
-ordenamiento de un arreglo con las fechas en que los camiones estarán pasando,
-con complejidad para el peor caso de \bigO{n. \log n}. La segunda corresponde a
-dos ciclos anidados, donde se decide desde qué día el inspector tendría que ser
-contratado para revisar la mayor cantidad de camiones posibles. La complejidad
-para esta parte en el peor caso es de \bigO{n}. Por lo tanto, la complejidad
-final estaría dada básicamente por el algoritmo de ordenamiento.
+resolución del problema, está dividido en dos partes. 
+
+La primera parte del algoritmo corresponde al ordenamiento de un arreglo con las
+fechas en que los camiones estarán pasando, con una complejidad para el peor
+caso de \bigO{n. \log n}. Debido a que este ordenamiento está provisto por el
+\textit{sort} de la \textit{STL de C++}, lo asumimos como un caso de
+\texttt{caja negra}, es decir, no vale la pena realizar un análisis profundo del
+comportamiento empírico de esta parte del algoritmo, ya que no tenemos
+conocimiento ni control sobre su comportamiento interno, por lo cual no sería
+justo efectuar a priori un planteo teórico realista sobre mejores o peores
+casos.
+
+En la segunda parte se corren dos ciclos anidados, en donde se decide desde qué
+día el inspector tendría que ser contratado para revisar la mayor cantidad de
+camiones posibles. Como se explicó en el análisis teórico, la complejidad es
+amortizada en n, por lo que en el peor caso esta sección pertenece a las
+familias de las \bigO{n}.
+
+\begin{comment} 
+Complejidad Amortizada: Tarjan 
+\end{comment} 
+
+
+Ya que $\bigO{n} \subset \bigO{n.\log{n}}$, es intuitivo decir que la
+complejidad final del algoritmo estaría regida por el algoritmo de ordenamiento.
 
 Para la elección de los casos de tests, tuvimos esto en cuenta y decidimos tomar
 los tiempos de ejecución del programa, variando el orden de las fechas de los
@@ -390,7 +403,7 @@ a la parte lineal del algorítmo.
 \begin{figure}[H]
    \begin{center}
    \includegraphics[width=1.4\textwidth,angle=90]{../ej1/graficos/test_3.pdf}
-   \caption{Tiempo de ejecución contra disperción de los datos}
+   \caption{Tiempo de ejecución contra dispersión de los datos}
    \label{fig:ej1-3}
    \end{center}
 \end{figure}
