@@ -1,0 +1,68 @@
+n : Cantidad de pueblos
+k : Cantidad máxima de cetrales de gas
+v : vector de coordenadas de los pueblos
+
+float Grafo [n][n] <-- Se inicializa con 0.
+Heap indiceDistancias <-- Inicializar.
+pueblos pueblosConCentrales <--- Se inicializa en False
+int cantidadDeTuberías = 0
+
+Para cada puebloActual hacer:
+    masCercano = -1
+    mejorDistacia = inf
+    Para cada otroPueblo hacer:
+        Si no hay conexión entre puebloActual y otroPueblo:
+            Si distancia entre puebloActual y otroPueblo < mejorDistacia:
+                masCercao = otroPueblo
+                mejorDistacia = distacia entre pueblo y otroPueblo
+    Grafo[puebloActual][masCercano] = mejorDistacia;
+    Grafo[masCercano][puebloActual] = mejorDistacia;
+    cantidadDeTuberías ++
+    indiDistancias.agregar( { puebloActual, otroPueblo, mejorDistacia })
+
+%%%---- Ahí ya está inicializado el Grafo con distancias mínimas.
+
+int centralesUbicadas = 0
+
+Mitras k > 0 :
+    conexiónActual = indiceDistacias.dameUna()
+    si pueblosConCentrales[conexiónActual.pueblo1] == False:
+        pueblosConCentrales[conexiónActual.publo1] = True
+        k--
+        centralesUbicadas++
+    si k>0 && pueblosConCentrales[conexiónActual.pueblo2] == False:
+        pueblosConCentrales[conexiónActual.pueblo2] = True
+        k--
+        centralesUbicadas++
+    // Se saca la arista del grafo.
+    si pueblosConCentrales[pueblo1] == pueblosConCentrales[pueblo2] == True:
+        Grafo[pueblo1][pueblo2] = 0
+        Grafo[pueblo2][pueblo1] = 0
+        cantidadDeTuberías --
+
+%%%---- Se elimiaron todas las aristas largas posibles.
+%% Las centrales están ubicadas.
+
+devolver centralesUbicadas, cantidadDeTuberias
+Para cada pueblo en pueblosConCentrales:
+    Si pueblo == True:
+        devolver pueblo
+
+For ( i = 0, i < cantFilas, i++):
+    For( j = i+1, j < cantColumnas, j ++ ):
+        si Grafo[i][j] != 0:
+            devolver i, j
+    
+
+        
+
+    
+
+
+*Inicializar matriz de adyacencia
+
+Unir cada nodo con su nodo mas cercano. Hay que guardar las distancias.
+
+Las aristas de mayor dsitancia se destruyen poniendo centrales.
+
+
