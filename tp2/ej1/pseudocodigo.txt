@@ -1,0 +1,90 @@
+MODELO:
+
+Carta = número entero con el valor de la carta de la entrada.
+
+CARTAS = Arreglo de n cartas (enteros), en donde CARTAS[i] representa la carta i.
+
+
+PSEUDO:
+
+#define INF (1<<31)
+
+vector<int>* cartas;
+vector<int> sumaTotal;
+int main(int argc, char const *argv[])
+{
+	// obtengo la cantidad de cartas
+	int cantidadDeCartas = testcase.cantidadDeCartas();
+	cartas = testcase.cartas();
+	// calculo la suma parcial de las cartas
+	calcularSumaTotal( cantidadDeCartas );
+	// guardo el caso base la matriz de dinamica
+	guardarCasoBase( cantidadDeCartas );
+	// obtengo el mejor puntaje
+	int mejorPuntaje = mejorPuntaje(1,cantidadDeCartas);
+	return 0;
+}
+void calcularSumaTotal()
+{
+	sumaTotal[0] = cartas[0];
+	for(int i = 1; i<cantidadDeCartas; i++)
+	{
+		sumaTotal[i] = sumaTotal[i-1] + cartas[i];
+	}
+}
+void guardarCasoBase( cantidadDeCartas )
+{
+	for(int i = 1; i<cantidadDeCartas; i++)
+	{
+		_mejorPuntaje[i][i] = cartas[i];
+	}
+}
+int mejorPuntaje ( izquierda, derecha )
+{
+	// caso base...
+	if ( izquierda == derecha )
+	{
+		return cartas[izquierda];
+	}
+	// si no es caso base...
+	if (_mejorPuntaje[izquierda][derecha] == NULL)
+	{
+		int puntajeOponenteIzquierda = INF, puntajeOponenteDerecha = INF;
+		sumaTotal = suma( izquierda, derecha ); // O(1)
+
+		// Itero sobre las cartas del oponente, si yo saco de la izquierda, y tomo el mínimo
+		for ( int izquierdaOponente = izquierda; izquierdaOponente<derecha; izquierdaOponente++ )
+		{
+			puntajeOponenteIzquierda = min(
+				puntajeOponenteIzquierda,
+				mejorPuntaje ( izquierdaOponente, derecha )
+			);
+		}
+		// Itero sobre las cartas del oponente, si yo saco de la derecha, y tomo el mínimo
+		for ( int derechaOponente = derecha; derechaOponente>izquierda; derechaOponente-- )
+		{
+			puntajeOponenteIzquierda = min(
+				puntajeOponenteDerecha,
+				mejorPuntaje ( izquierda, derechaOponente )
+			);
+		}
+
+		/* 
+			Calculo el máximo puntaje que me queda si
+			1- Saco todas las cartas
+			2- Saco cartas a la izquierda
+			3- Saco cartas a la derecha
+		*/
+		mejorPuntaje = max (
+			sumaTotal,
+			sumaTotal - puntajeOponenteIzquierda,
+			sumaTotal - puntajeOponenteDerecha
+		);
+		_mejorPuntaje[izquierda][derecha] = mejorPuntaje;
+	}
+	return _mejorPuntaje[izquierda][derecha];
+}
+
+//prepoceso para tener suma(i, j) en O(1). lleva O(n)
+
+f(i, j) = ""
