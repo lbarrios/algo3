@@ -1,0 +1,67 @@
+CC=g++
+CFLAGS=-c -Wall -pedantic
+CFLAGSDEBUG=$(CFLAGS) -ggdb -DDEBUG
+CFLAGSTIME=$(CFLAGS) -DTIME -O2
+OBJSDIR=OBJS
+OBJS := $(addprefix ${OBJSDIR}/,${OBJS})
+OBJSDEBUG := $(addsuffix .debug,${OBJS})
+OBJSTIME := $(addsuffix .time,${OBJS})
+COMMON_DIR=../common
+COMMON_OBJS=$(COMMON_DIR)/ParserDeParametros.o $(COMMON_DIR)/TestCase.o $(COMMON_DIR)/Timer.o
+COMMON_OBJS_DEBUG := $(addsuffix .debug,${COMMON_OBJS})
+COMMON_OBJS_TIME := $(addsuffix .time,${COMMON_OBJS})
+
+.PHONY: all debug time clean $(OBJSDIR) # upload_input upload_output
+
+## Targets virtuales
+all: $(EXE) $(EXE).debug $(EXE).time
+debug: $(EXE).debug
+time: $(EXE).time
+$(OBJSDIR):
+	@mkdir -p $(OBJSDIR)
+
+##  Targets
+$(EXE): $(OBJS) $(COMMON_OBJS)
+	$(CC) $(OBJS) $(COMMON_OBJS) -o $@
+
+$(EXE).debug: $(OBJSDEBUG) $(COMMON_OBJS_DEBUG)
+	$(CC) $(OBJSDEBUG) $(COMMON_OBJS_DEBUG) -o $@
+
+$(EXE).time: $(OBJSTIME) $(COMMON_OBJS_TIME)
+	$(CC) -lrt $(OBJSTIME) $(COMMON_OBJS_TIME) -o $@ -lrt
+
+## Objetos
+$(OBJSDIR)/%.o: %.cpp %.h | $(OBJSDIR)
+	$(CC) $(CFLAGS) $< -o $@
+
+$(OBJSDIR)/%.o.debug: %.cpp %.h | $(OBJSDIR)
+	$(CC) $(CFLAGSDEBUG) $< -o $@
+
+$(OBJSDIR)/%.o.time: %.cpp %.h | $(OBJSDIR)
+	$(CC) $(CFLAGSTIME) $< -o $@
+
+$(OBJS): | $(OBJSDIR)
+
+$(COMMON_DIR)/%.o.debug: $(COMMON_DIR)/%.cpp $(COMMON_DIR)/%.h
+	$(CC) $(CFLAGSDEBUG) $< -o $@
+
+$(COMMON_DIR)/%.o.time: $(COMMON_DIR)/%.cpp $(COMMON_DIR)/%.h
+	$(CC) $(CFLAGSTIME) $< -o $@
+
+clean:
+	@rm -f $(EXE) $(EXE).debug $(EXE).time vgcore.* *.core
+	@rm -f $(OBJS) $(OBJSDEBUG) $(OBJSTIME)
+	@rm -f $(COMMON_OBJS) $(COMMON_OBJS_DEBUG) $(COMMON_OBJS_TIME)
+	@rm -rf $(OBJSDIR)
+
+#upload_input:
+#	@tar cf - input | bzip2 -9 - > $(EXE)_input_pack.tar.bz
+#	@ftp -u "ftp://tp.uba:##@uba.wibex.com.ar/public_html/" $(EXE)_input_pack.tar.bz
+#	@rm -rf $(EXE)_input_pack.tar.bz
+
+#upload_output:
+#	@tar cf - output | bzip2 -9 - > $(EXE)_output_pack.tar.bz
+#	@ftp -u "ftp://tp.uba:##@uba.wibex.com.ar/public_html/" $(EXE)_output_pack.tar.bz
+#	@rm -rf $(EXE)_output_pack.tar.bz
+
+	
