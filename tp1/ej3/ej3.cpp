@@ -1,216 +1,199 @@
 #include "ej3.h"
+#include "Tablero.h"
+#include "IndiceDePiezas.h"
 
-struct Pieza{
-  int sup;
-  int izq;
-  int der;
-  int inf;
-};
+Tablero& backtrack( Tablero&, IndiceDePiezas&, uint32_t );
+void imprimeTablero( Tablero& );
 
-void backtrack(int, int);
-int n, m, c, max_global, max_local, huecos;
-list<int> orden_global, orden_local;
-vector<Pieza> listaDePiezas;
-vector<int> piezasQueQuedan;
-//por ahora asi es mas facil
-vector<int> piezasPorColores[1024][1024];
-int t[1024][1024];
-bool yaLlegueAlMaximoAbsoluto;
+int main( int argc, char** argv )
+{
+  // Parseo los parámetros con que fue llamado el ejecutable
+  ParserDeParametros parser( argc, argv );
+  // Esta clase representa un caso de prueba, y lo toma desde el input que le provee el parser
+  TestCaseEj3 testcase ( parser.dameInput() );
+  Timer timer ( parser.dameTime() );
 
-
-int main(int argc, char** argv) {
-  //Parseo el input.
-  ParserDeParametros parser(argc, argv);
-  //Consigo el input.
-  istream& input = parser.dameInput();
-
-  //Genero el timer
-  Timer timer( parser.dameTime());
-  timer.setInitialTime("todoElEjercicio");
-
-  Pieza blanco = {0, 0, 0, 0};
-  //de esta forma la pieza blanca queda con el id 0
-  listaDePiezas.push_back(blanco);
-
-  //Pongos los datos en variables
-  input >> n >> m >> c;
-  for (int i=1; i <= n*m; i++) {
-    int sup, izq, der, inf;
-    //Entran una ficha;
-    input >> sup >> izq >> der >> inf;
-    //hacerlo mas eficiente
-    Pieza pongo = {sup, izq, der, inf};
-    listaDePiezas.push_back(pongo);
-    piezasQueQuedan.push_back(i);
-    //cada pieza queda con su id correspondiente
-    piezasPorColores[sup][izq].push_back(i);
-  }
-  yaLlegueAlMaximoAbsoluto = false;
-  max_global = (n*m)/2;
-  //inicializo orden_global (mas eficiente es hacerlo en el ciclo de arriba, pero por claridad)
-  for (int i=1; i <= n*m; i++) {
-    if (i % 2 == 1)
-        orden_global.push_back(i);
-    else
-        orden_global.push_back(0);
-  } 
-  max_local = 0;
-  huecos = 0;
-  backtrack(0, 0);
-  timer.setFinalTime("todoElEjercicio");
-  // A partir de acá el ejercicio ya está resuelto.
-  
-
-  #ifndef TIME
-  ostream& output = parser.dameOutput();
-  list<int>::iterator it = orden_global.begin();
-  for(int i=0; i<n; i++) {
-    for (int j=0; j<m; j++) {
-       output << *it << " ";
-       it++;
+  // Itero sobre los distintos casos de prueba hasta obtener un testcase nulo
+  while ( testcase.tomarDatos() != false )
+  {
+    // Mido el tiempo inicial.
+    timer.setInitialTime( "todoElCiclo" );
+    // Obtengo los parámetros del testcase.
+    uint32_t cantidadDeFilas = testcase.dameCantidadDeFilas();
+    uint32_t cantidadDeColumnas = testcase.dameCantidadDeColumnas();
+    uint32_t cantidadDeColores = testcase.dameCantidadDeColores();
+    vector<TestCaseEj3::Pieza>& listaDePiezas = testcase.dameListaDePiezas();
+    // Inicializo el tablero (estructura auxiliar)
+    Tablero tablero( cantidadDeFilas, cantidadDeColumnas );
+    // Inicializo el índice de piezas (estructura auxiliar)
+    IndiceDePiezas indiceDePiezas( cantidadDeColores, listaDePiezas, tablero );
+    //Obtengo el mejor tablero a través de backtracking
+    Tablero& mejorTablero = backtrack( tablero, indiceDePiezas, 0 );
+    // Mido el tiempo final
+    timer.setFinalTime( "todoElCiclo" );
+    timer.saveAllTimes();
+    // Devuelvo el resultado con el formato solicitado
+#ifndef TIME
+    /*
+    for( uint32_t columna = 0; columna < mejorTablero.cantidadDeColumnas; columna++)
+    {
+      for( uint32_t fila = 0; fila < mejorTablero.cantidadDeFilas; fila++)
+      {
+        uint32_t posicion = (columna * mejorTablero.cantidadDeFilas) + fila;
+        uint32_t pieza = mejorTablero.dameLaPiezaEnPosicion( posicion );
+        parser.dameOutput() << pieza << " ";
+      }
+      parser.dameOutput() << endl;
     }
-    output << endl;
+    */
+#endif
+    delete &mejorTablero;
   }
-  
-  #else
-  timer.saveAllTimes();
-  #endif
+
   return 0;
 }
 
-  void probaConTodasLasFichas(int x, int y, vector<int> &listaPosibles, bool estoyEnPiezasPorColores) {
-    if (!yaLlegueAlMaximoAbsoluto) {
-    for(int i=listaPosibles.size() - 1; i >= 0; i--) {
-      int fichaQueVoyAPoner = listaPosibles[i];
-     
-                
-    int color_sup_necesario = x>0 ? listaDePiezas[t[x-1][y]].inf : 0;
-    int color_izq_necesario = y>0 ? listaDePiezas[t[x][y-1]].der : 0;
+Tablero& backtrack( Tablero& t, IndiceDePiezas& ip, uint32_t posicion )
+{
+  _C( "Entrando posición: " << posicion ); imprimeTablero( t ); DEBUG_ENTER;
+  Tablero* mejorTablero = NULL;
+  IteradorIndiceDePiezas& it = ip.dameIterador( posicion );
 
+  // Me fijo si estoy antes de la última posición
+  if ( posicion < t.cantidadDePosiciones - 1 )
+  {
+    while ( it.hayPiezasPosibles() )
+    {
+      printf( "AAAAAAAAAAAAAAAAAAAAAAAAA" );
+      uint32_t pieza = *it;
+      // Si es así, entonces llamo a backtrack para cada pieza posible
+      t.ponerPiezaEnPosicion( pieza, posicion );
+      // Hago recursión en el backtracking
+      Tablero* otroTablero = NULL;
+      otroTablero = &( backtrack( t, ip, posicion + 1 ) );
 
-        int color_sup_mio = listaDePiezas[fichaQueVoyAPoner].sup;
-        int color_izq_mio = listaDePiezas[fichaQueVoyAPoner].izq;
-        
-        if (color_sup_mio != color_sup_necesario && color_sup_necesario != 0 && color_izq_mio != color_izq_necesario && color_izq_necesario != 0)
-            break;
-
-      vector<int> *laOtraLista = NULL;
-      if (estoyEnPiezasPorColores) {
-        laOtraLista = &piezasQueQuedan;
-      } else {
-        laOtraLista = &piezasPorColores[color_sup_necesario][color_izq_necesario];
+      if ( mejorTablero < otroTablero )
+      {
+        delete mejorTablero;
+        mejorTablero = otroTablero;
       }
-      // O(n)
-      listaPosibles.erase(listaPosibles.begin() + i); 
-      
-      //listaPosibles[i] = listaPosibles.back();
-      //listaPosibles.pop_back();
-      // atencion: O(n)
-      vector<int>::iterator indiceParaGuardar = laOtraLista->begin();
-      // nunca deberia pasarse de rango, digo por si da SEGFAULT
-      while (indiceParaGuardar != laOtraLista->end() && *indiceParaGuardar != fichaQueVoyAPoner)
-          indiceParaGuardar++;
-      laOtraLista->erase(indiceParaGuardar);
-      max_local++;
-      t[x][y] = fichaQueVoyAPoner;
-      orden_local.push_back(fichaQueVoyAPoner);
-      if (x == n-1 && y == m-1) {
-        if (max_local > max_global) {
-          max_global = max_local;
-          orden_global = orden_local;
-          if (max_global == n * m) yaLlegueAlMaximoAbsoluto = true;
-        }
-      } else {
-        //veo adonde voy a ir despues
-        int sig_x, sig_y;
-        if (y < m-1) {
-          sig_x = x;
-          sig_y = y + 1;
-        } else { 
-          sig_x = x + 1;
-          sig_y = 0;
-        }
 
-        backtrack(sig_x, sig_y);
-      }
-      
-      //deshago todo lo que hice
-      orden_local.pop_back();
-      max_local--;
-      listaPosibles.insert(listaPosibles.begin() + i, fichaQueVoyAPoner);
-      laOtraLista->insert(indiceParaGuardar, fichaQueVoyAPoner);
+      it++;
     }
   }
- }
+  else
+  {
+    // (si estoy en la última posición del tablero)
+    // Intento colocar la última pieza
+    // Retorno una copia del tablero final
+    mejorTablero = new Tablero( t );
+  }
 
-  void backtrack(int x, int y) {
-    if (!yaLlegueAlMaximoAbsoluto) {
-    //primero veo que fichas puedo poner aca
-    int color_sup = x>0 ? listaDePiezas[t[x-1][y]].inf : 0;
-    int color_izq = y>0 ? listaDePiezas[t[x][y-1]].der : 0;
-    if (color_sup > 0 && color_izq > 0) {
-      probaConTodasLasFichas(x, y, piezasPorColores[color_sup][color_izq], true);  
-    } else if (color_sup > 0) {
-      if (max_local + huecos < c) {
-        probaConTodasLasFichas(x, y, piezasQueQuedan, false); 
-      } else {
-          for(int r=1; r<=c; r++) {
-            if (yaLlegueAlMaximoAbsoluto) break;
-            probaConTodasLasFichas(x, y, piezasPorColores[color_sup][r], true);
-          }
+  return *mejorTablero;
+}
+
+/**
+ * Dado un tablero, lo imprime a consola (stderr).
+ */
+void imprimeTablero( Tablero& t )
+{
+  for ( uint32_t y = 0; y < t.cantidadDeFilas; y++ )
+  {
+    for ( uint32_t x = 0; x < t.cantidadDeColumnas; x++ )
+    {
+      uint32_t posicion = y * t.cantidadDeColumnas + x;
+      cerr << t[posicion] << " ";
+    }
+
+    cerr << endl;
+  }
+
+  cerr << endl;
+}
+
+/**
+ * Devuelve la cantidad máxima de posiciones llenas encontradas
+ */
+
+
+/*
+
+Tablero& backtrack( Tablero &t, IndiceDeColores &ic, uint32_t posicion )
+{
+  _C("Entrando posición: " << posicion);
+  imprimeTablero(t);
+  DEBUG_ENTER;
+  // Obtengo las piezas de la izquierda y de arriba
+  uint32_t piezaIzquierda = t.dameLaPiezaDeIzquierdaDe( posicion );
+  uint32_t piezaArriba = t.dameLaPiezaDeArribaDe( posicion );
+  // Obtengo la lista de piezas posibles según el índice
+  _C("Obteniendo lista de piezas posibles");
+  IndiceDeColores::Iterador &piezasPosibles = ic.damePiezasPosibles(piezaIzquierda, piezaArriba);
+  // Me fijo si estoy antes de la última posición del tablero
+  if( posicion < t.cantidadDePosiciones() - 1 )
+  {
+    // Si es así, entonces calculo la máxima cantidad de piezas para todas las ramas, y la retorno
+    Tablero *mejorTablero = NULL;
+    while( piezasPosibles.hayPiezasPosibles() )
+    {
+      uint32_t pieza = *piezasPosibles; // Obtengo la nueva pieza
+      DEBUG_INT(pieza);
+      uint32_t piezaAnterior = t[posicion]; // Resguardo pieza anterior
+      t.ponerPiezaEnPosicion( pieza, posicion ); // Pongo nueva pieza en tablero
+      if( pieza != TestCaseEj3::PIEZA_VACIA )
+      {
+        //_C("Quitando pieza " << *piezasPosibles << " del índice de colores.");
+        piezasPosibles.quitarPieza(); // Quito la pieza del índice y obtengo puntero al siguiente
       }
-    } else if (color_izq > 0) {
-      if (max_local + huecos < c) {
-        probaConTodasLasFichas(x, y, piezasQueQuedan, false); 
-      } else {
-      for(int r=1; r<=c; r++) {
-        if (yaLlegueAlMaximoAbsoluto) break;
-        probaConTodasLasFichas(x, y, piezasPorColores[r][color_izq], true);
-      }}
-    } else {
-      if (max_local + huecos < c*c) {
-        probaConTodasLasFichas(x, y, piezasQueQuedan, false); 
-      } else {
-      for (int r1=1; r1<=c; r1++) {
-        if (yaLlegueAlMaximoAbsoluto) break;
-        for(int r2=1; r2<=c; r2++) {
-          if (yaLlegueAlMaximoAbsoluto) break;
-          probaConTodasLasFichas(x, y, piezasPorColores[r1][r2], true);
+      if ( mejorTablero == NULL )
+      {
+        _C("BT: Llamando primer backtrack("<<posicion+1<<") desde posicion("<<posicion<<")");
+        mejorTablero = &(backtrack(t,ic,posicion+1));
+        _C("BT: Regresando de backtrack("<<posicion+1<<") hacia posicion("<<posicion<<")");
+      }
+      else
+      {
+        //_C("Llamando backtrack("<<posicion+1<<") desde posicion("<<posicion<<")");
+        Tablero *tableroBacktrack = &(backtrack(t,ic,posicion+1));
+        //_C("Regresando de backtrack("<<posicion+1<<") hacia posicion("<<posicion<<")");
+        if( (*mejorTablero) < (*tableroBacktrack) )
+        {
+          delete mejorTablero;
+          mejorTablero = tableroBacktrack;
         }
-      }}
+        else
+        {
+          delete tableroBacktrack;
+        }
+      }
+      // Agrego la pieza nuevamente al índice
+      imprimeTablero(t);
+      if( pieza != TestCaseEj3::PIEZA_VACIA )
+      {
+        ic.restaurarPieza( piezasPosibles );
+      }
+      t.ponerPiezaEnPosicion( piezaAnterior, posicion ); // Recupero pieza vieja a tablero
+      piezasPosibles++;
     }
-    if (!yaLlegueAlMaximoAbsoluto) {
-    //ahora hay que probar metiendo la casilla vacia
-    int piezaBlanca = 0;
-    t[x][y] = piezaBlanca;
-    huecos++;
-    //esto es una poda
-    bool continua = true;
-    if (max_local + m*n - huecos <= max_global) bool continua = false;
-    if (continua) {
-    orden_local.push_back(piezaBlanca);
-    if (x == n-1 && y == m-1) {
-      if (max_local > max_global) {
-        max_global = max_local;
-        orden_global = orden_local;
-      }
-    } else {
-      //veo adonde voy a ir despues
-      int sig_x, sig_y;
-      if (y < m-1) {
-        sig_x = x;
-        sig_y = y + 1;
-      } else { 
-        sig_x = x + 1;
-        sig_y = 0;
-      }
+    _C("         NO HAY MAS PIEZAS POSIBLES EN LA POSICION "<<posicion);
+    delete &piezasPosibles;
+    return *mejorTablero;
+  }
+  else
+  { // De lo contrario (si estoy en la última posición del tablero)
+    // Intento colocar la última pieza
+    if (*piezasPosibles != TestCaseEj3::PIEZA_VACIA)
+    { // Si es distinta de "PIEZA VACIA", la pongo en el tablero
+      t.ponerPiezaEnPosicion( *piezasPosibles, posicion );
+    }
+    // Retorno una copia del tablero final
+    delete &piezasPosibles;
+    Tablero *newTablero = new Tablero(t);
+    t.ponerPiezaEnPosicion(TestCaseEj3::PIEZA_VACIA, posicion);
+    imprimeTablero(*newTablero);
+    return *newTablero;
+  }
+}
 
-      backtrack(sig_x, sig_y);
-     }
-     //desarmo lo que hice
-     huecos--;
-     orden_local.pop_back();
-    }
-    }
-    }
-}  
+*/
+

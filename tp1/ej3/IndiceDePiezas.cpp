@@ -1,12 +1,32 @@
 #include "IndiceDePiezas.h"
 
-
-IndiceDePiezas::IndiceDePiezas( uint32_t p_cantidadDeColores, vector<TestCaseEj3::Pieza>& p_listaDePiezas )
+IndiceDePiezas::IndiceDePiezas( uint32_t p_cantidadDeColores, vector<TestCaseEj3::Pieza>& p_listaDePiezas, Tablero& t ):
+  _t( t ), _listaDePiezas( p_listaDePiezas ), _indiceDeColores( p_cantidadDeColores, vector< list<uint32_t> >( p_cantidadDeColores,
+      list<uint32_t>( 0 ) ) )
 {
+  for ( uint32_t i = 1; i < this->_listaDePiezas.size(); i++ )
+  {
+    TestCaseEj3::Pieza pieza = this->_listaDePiezas[i];
+    uint32_t colorDerecha = pieza.colorDerecha;
+    uint32_t colorAbajo = pieza.colorAbajo;
+    _indiceDeColores[colorDerecha - 1][colorAbajo - 1].push_back( i );
+  }
+}
+
+IndiceDePiezas::~IndiceDePiezas( )
+{
+  for ( vector<IteradorIndiceDePiezas*>::iterator it = this->_iteradores.begin(); it != this->_iteradores.end(); ++it )
+  {
+    delete *it;
+  }
 }
 
 IteradorIndiceDePiezas& IndiceDePiezas::dameIterador( uint32_t posicion )
 {
+  IteradorIndiceDePiezas* it = NULL;
+  // Obtengo las piezas de la izquierda y de arriba
+  //uint32_t piezaIzquierda = _t.dameLaPiezaDeIzquierdaDePosicion( posicion );
+  //uint32_t piezaArriba = _t.dameLaPiezaDeArribaDePosicion( posicion );
   /*
   // Si es primera columna pero no primera fila
   if ( this->_primeraColumna && !this->_primeraFila )
@@ -50,8 +70,9 @@ IteradorIndiceDePiezas& IndiceDePiezas::dameIterador( uint32_t posicion )
     //this->_indice = 1;
   }
   */
-  IteradorIndiceDePiezas* it = NULL;
-  it = new IteradorIndiceDePiezas();
+  //it = new IteradorIndiceDePiezas( posicion );
+  it = new IteradorNormal( *this, posicion );
+  this->_iteradores.push_back( it );
   return *it;
 }
 
