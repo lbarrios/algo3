@@ -82,14 +82,23 @@ int main(int argc, char** argv) {
     if (!yaLlegueAlMaximoAbsoluto) {
     for(int i=listaPosibles.size() - 1; i >= 0; i--) {
       int fichaQueVoyAPoner = listaPosibles[i];
-      
+     
+                
+    int color_sup_necesario = x>0 ? listaDePiezas[t[x-1][y]].inf : 0;
+    int color_izq_necesario = y>0 ? listaDePiezas[t[x][y-1]].der : 0;
+
+
+        int color_sup_mio = listaDePiezas[fichaQueVoyAPoner].sup;
+        int color_izq_mio = listaDePiezas[fichaQueVoyAPoner].izq;
+        
+        if (color_sup_mio != color_sup_necesario && color_sup_necesario != 0 && color_izq_mio != color_izq_necesario && color_izq_necesario != 0)
+            break;
+
       vector<int> *laOtraLista = NULL;
       if (estoyEnPiezasPorColores) {
         laOtraLista = &piezasQueQuedan;
       } else {
-        int color_sup = listaDePiezas[fichaQueVoyAPoner].sup;
-        int color_izq = listaDePiezas[fichaQueVoyAPoner].izq;
-        laOtraLista = &piezasPorColores[color_sup][color_izq];
+        laOtraLista = &piezasPorColores[color_sup_necesario][color_izq_necesario];
       }
       // O(n)
       listaPosibles.erase(listaPosibles.begin() + i); 
@@ -99,7 +108,7 @@ int main(int argc, char** argv) {
       // atencion: O(n)
       vector<int>::iterator indiceParaGuardar = laOtraLista->begin();
       // nunca deberia pasarse de rango, digo por si da SEGFAULT
-      while (*indiceParaGuardar != fichaQueVoyAPoner)
+      while (indiceParaGuardar != laOtraLista->end() && *indiceParaGuardar != fichaQueVoyAPoner)
           indiceParaGuardar++;
       laOtraLista->erase(indiceParaGuardar);
       max_local++;
