@@ -34,18 +34,19 @@ int main( int argc, char** argv )
     timer.saveAllTimes();
     // Devuelvo el resultado con el formato solicitado
 #ifndef TIME
-    /*
-    for( uint32_t columna = 0; columna < mejorTablero.cantidadDeColumnas; columna++)
+
+    for ( uint32_t columna = 0; columna < mejorTablero.cantidadDeColumnas; columna++ )
     {
-      for( uint32_t fila = 0; fila < mejorTablero.cantidadDeFilas; fila++)
+      for ( uint32_t fila = 0; fila < mejorTablero.cantidadDeFilas; fila++ )
       {
-        uint32_t posicion = (columna * mejorTablero.cantidadDeFilas) + fila;
-        uint32_t pieza = mejorTablero.dameLaPiezaEnPosicion( posicion );
+        uint32_t posicion = ( columna * mejorTablero.cantidadDeFilas ) + fila;
+        uint32_t pieza = mejorTablero[ posicion ];
         parser.dameOutput() << pieza << " ";
       }
+
       parser.dameOutput() << endl;
     }
-    */
+
 #endif
     delete &mejorTablero;
   }
@@ -74,10 +75,23 @@ Tablero& backtrack( Tablero& t, IndiceDePiezas& ip, uint32_t posicion )
       Tablero* otroTablero = NULL;
       otroTablero = &( backtrack( t, ip, posicion + 1 ) );
 
-      if ( mejorTablero < otroTablero )
+      if ( !mejorTablero )
       {
-        delete mejorTablero;
         mejorTablero = otroTablero;
+      }
+      else
+      {
+        if ( *mejorTablero < *otroTablero )
+        {
+          cout << "Se encontró un mejor tablero" << endl;
+          t.imprimeTablero();
+          delete mejorTablero;
+          mejorTablero = otroTablero;
+        }
+        else
+        {
+          delete otroTablero;
+        }
       }
 
       ip.marcarPiezaDisponible ( it );
