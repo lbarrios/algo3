@@ -55,11 +55,8 @@ bool TestCaseEj3::tomarDatos()
         >> pieza.colorIzquierda
         >> pieza.colorDerecha
         >> pieza.colorAbajo;
-    cout << "pieza " << i + 1 << ":"
-         << " colorArriba " << pieza.colorArriba
-         << " colorIzquierda " << pieza.colorIzquierda
-         << " colorDerecha " << pieza.colorDerecha
-         << " colorAbajo " << pieza.colorAbajo << endl;
+    _C( "pieza " << i + 1 << ":" << " colorArriba " << pieza.colorArriba << " colorIzquierda " << pieza.colorIzquierda
+        << " colorDerecha " << pieza.colorDerecha << " colorAbajo " << pieza.colorAbajo );
     this->_listaDePiezas->push_back( pieza );
     //_C("Leída pieza= ["<< pieza.colorArriba << "," << pieza.colorIzquierda << "," << pieza.colorDerecha << "," << pieza.colorAbajo << "]");
   }
