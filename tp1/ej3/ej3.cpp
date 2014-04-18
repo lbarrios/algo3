@@ -24,7 +24,7 @@ int main( int argc, char** argv )
     uint32_t cantidadDeColores = testcase.dameCantidadDeColores();
     vector<TestCaseEj3::Pieza>& listaDePiezas = testcase.dameListaDePiezas();
     // Inicializo el tablero (estructura auxiliar)
-    Tablero tablero( cantidadDeFilas, cantidadDeColumnas );
+    Tablero tablero( cantidadDeFilas, cantidadDeColumnas, listaDePiezas );
     // Inicializo el índice de piezas (estructura auxiliar)
     IndiceDePiezas indiceDePiezas( cantidadDeColores, listaDePiezas, tablero );
     //Obtengo el mejor tablero a través de backtracking
@@ -58,6 +58,16 @@ Tablero& backtrack( Tablero& t, IndiceDePiezas& ip, uint32_t posicion )
 {
   DEBUG_ENTER; _C( "Entrando a recursión en posición: " << posicion + 1 );
   Tablero* mejorTablero = NULL;
+
+  // Poda
+  if ( t.yaEncontreElMejorTableroPosible() )
+  {
+    _C( "PODANDO CON TABLERO NULO" );
+    // Si ya encontré el mejor tablero posible,
+    // corto todas las recursiones retornando nulo
+    return *mejorTablero;
+  }
+
   IteradorIndiceDePiezas& it = ip.dameIterador( posicion );
 
   // Me fijo si estoy antes de la última posición
@@ -79,16 +89,22 @@ Tablero& backtrack( Tablero& t, IndiceDePiezas& ip, uint32_t posicion )
       }
       else
       {
-        if ( *mejorTablero < *otroTablero )
+        if ( !otroTablero )
         {
-          cout << "Se encontró un mejor tablero: " << endl;
-          otroTablero->imprimeTablero();
-          delete mejorTablero;
-          mejorTablero = otroTablero;
+          // Si la recursión me devolvió un puntero a nulo termino el BT
+          break;
         }
         else
         {
-          delete otroTablero;
+          if ( *mejorTablero < *otroTablero )
+          {
+            delete mejorTablero;
+            mejorTablero = otroTablero;
+          }
+          else
+          {
+            delete otroTablero;
+          }
         }
       }
 
@@ -99,14 +115,16 @@ Tablero& backtrack( Tablero& t, IndiceDePiezas& ip, uint32_t posicion )
   else
   {
     // (si estoy en la última posición del tablero)
-    // Creo una copia del tablero final
-    mejorTablero = new Tablero( t );
-
     // Intento colocar la última pieza
     if ( it.hayPiezasPosibles() )
     {
-      mejorTablero->ponerPiezaEnPosicion( *it, posicion );
+      t.ponerPiezaEnPosicion( *it, posicion );
     }
+
+    // Creo una copia del tablero final
+    mejorTablero = new Tablero( t );
+    // Pongo una pieza transparente en el lugar donde puse (o no) una pieza
+    t.ponerPiezaEnPosicion( TestCaseEj3::PIEZA_VACIA, posicion );
   }
 
   _C( "Saliendo de recursión en posición: " << posicion + 1 ); DEBUG_ENTER;

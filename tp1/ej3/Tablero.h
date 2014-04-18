@@ -5,15 +5,22 @@
 class Tablero
 {
 private:
+  vector<TestCaseEj3::Pieza>& _listaDePiezas;
   vector<uint32_t> _piezasEnElTablero;
+  uint32_t _cantidadDePosicionesVacias;
+  uint32_t _mejorCantidadDePosicionesVacias;
+
+  // Poda
+  uint32_t _mejorCantidadDePosicionesVaciasPosible;
+  void _calcularMejorCantidadDePiezasPosible();
 public:
-  Tablero( uint32_t p_filas, uint32_t p_columnas );
+  Tablero( uint32_t p_filas, uint32_t p_columnas, vector<TestCaseEj3::Pieza>& );
   /**
    * Operador binario, indica si un tablero es menor a otro
    */
   inline bool operator< ( Tablero& t )
   {
-    return this->cantidadDePosicionesVacias > t.cantidadDePosicionesVacias;
+    return this->_cantidadDePosicionesVacias > t._cantidadDePosicionesVacias;
   }
   /**
    * Permite acceder a la pieza ubicada en una posición determinada
@@ -41,14 +48,15 @@ public:
    * Coloca una pieza en la posición indicada
    */
   void ponerPiezaEnPosicion( uint32_t, uint32_t );
-  uint32_t cantidadDeFilas;
-  uint32_t cantidadDeColumnas;
-  uint32_t cantidadDePosiciones;
-  uint32_t cantidadDePosicionesVacias;
+  const uint32_t cantidadDeFilas;
+  const uint32_t cantidadDeColumnas;
+  const uint32_t cantidadDePosiciones;
   inline const uint32_t cantidadDePosicionesLlenas( void )
   {
-    return this->cantidadDePosiciones - this->cantidadDePosicionesVacias;
+    return this->cantidadDePosiciones - this->_cantidadDePosicionesVacias;
   };
+  //uint32_t mejorTableroHastaElMomento( void );
+  bool yaEncontreElMejorTableroPosible( void );
   void imprimeTablero();
 private:
 
