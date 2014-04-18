@@ -55,15 +55,17 @@ int main( int argc, char** argv )
 
 Tablero& backtrack( Tablero& t, IndiceDePiezas& ip, uint32_t posicion )
 {
-  _C( "Entrando posición: " << posicion );
+  DEBUG_ENTER; _C( "Entrando a recursión en posición: " << posicion + 1 );
   Tablero* mejorTablero = NULL;
   IteradorIndiceDePiezas& it = ip.dameIterador( posicion );
+  int i = 0;
 
   // Me fijo si estoy antes de la última posición
   if ( posicion < t.cantidadDePosiciones - 1 )
   {
     while ( it.hayPiezasPosibles() )
     {
+      i++; DEBUG_INT( i );
       _C( "Pieza disponible: " << *it );
       // Si es así, entonces llamo a backtrack para cada pieza posible
       t.ponerPiezaEnPosicion( *it, posicion );
@@ -78,6 +80,7 @@ Tablero& backtrack( Tablero& t, IndiceDePiezas& ip, uint32_t posicion )
         mejorTablero = otroTablero;
       }
 
+      ip.marcarPiezaDisponible ( it );
       it++;
     }
   }
@@ -94,6 +97,7 @@ Tablero& backtrack( Tablero& t, IndiceDePiezas& ip, uint32_t posicion )
     }
   }
 
+  _C( "Saliendo de recursión en posición: " << posicion + 1 ); DEBUG_ENTER;
   return *mejorTablero;
 }
 

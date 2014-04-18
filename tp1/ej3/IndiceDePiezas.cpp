@@ -4,16 +4,16 @@ IndiceDePiezas::IndiceDePiezas( uint32_t p_cantidadDeColores, vector<TestCaseEj3
   _t( t ),
   _listaDePiezas( p_listaDePiezas ),
   _indiceDeDosColores(
-    p_cantidadDeColores,
+    p_cantidadDeColores + 1,
     vector< stack< listaDePiezas > >(
-      p_cantidadDeColores,
+      p_cantidadDeColores + 1,
       stack< listaDePiezas >(
         deque<listaDePiezas>( 1, listaDePiezas( 0 ) )
       )
     )
   ),
-  _indiceSecuencial(
-    deque<listaDePiezas>( 1, listaDePiezas( 0 ) )
+  _indicePiezasDisponibles(
+    p_listaDePiezas.size(), true
   )
 {
   for ( uint32_t i = 1; i < this->_listaDePiezas.size(); i++ )
@@ -21,8 +21,8 @@ IndiceDePiezas::IndiceDePiezas( uint32_t p_cantidadDeColores, vector<TestCaseEj3
     TestCaseEj3::Pieza pieza = this->_listaDePiezas[i];
     uint32_t colorDerecha = pieza.colorDerecha;
     uint32_t colorAbajo = pieza.colorAbajo;
-    _indiceDeDosColores[colorDerecha - 1][colorAbajo - 1].top().push_back( i );
-    _indiceSecuencial.top().push_back( i );
+    _indiceDeDosColores[colorDerecha][colorAbajo].top().push_back( i );
+    _indiceSecuencial.push_back( i );
   }
 }
 
@@ -84,12 +84,46 @@ IteradorIndiceDePiezas& IndiceDePiezas::dameIterador( uint32_t posicion )
   }
   */
   //it = new IteradorIndiceDePiezas( posicion );
-  it = new IteradorNormal( *this, posicion );
+  it = new IteradorSecuencial( *this, posicion );
   this->_iteradores.push_back( it );
   return *it;
 }
-void IndiceDePiezas::marcarPiezaUtilizada( IteradorIndiceDePiezas& )
+void IndiceDePiezas::marcarPiezaUtilizada( IteradorIndiceDePiezas& it )
 {
+  _C( "Marcando como utilizada la pieza: " << *it );
+
+  if ( *it == TestCaseEj3::PIEZA_VACIA )
+  {
+    it.utilizarPiezaTransparente();
+  }
+  else
+  {
+    // Marco la pieza como no disponible
+    this->_indicePiezasDisponibles[*it] = false;
+    // Obtengo la pieza del listado de piezas
+    TestCaseEj3::Pieza pieza = this->_listaDePiezas[*it];
+    // Pusheo una copia del índice para esos dos colores
+    this->_indiceDeDosColores[pieza.colorDerecha][pieza.colorAbajo].push(
+      this->_indiceDeDosColores[pieza.colorDerecha][pieza.colorAbajo].top()
+    );
+    // Borro el elemento de la nueva lista
+    this->_indiceDeDosColores[pieza.colorDerecha][pieza.colorAbajo].top().erase(
+      lower_bound( this->_indiceDeDosColores[pieza.colorDerecha][pieza.colorAbajo].top().begin(),
+                   this->_indiceDeDosColores[pieza.colorDerecha][pieza.colorAbajo].top().end(), *it )
+    );
+  }
+}
+void IndiceDePiezas::marcarPiezaDisponible( IteradorIndiceDePiezas& it )
+{
+  if ( *it != TestCaseEj3::PIEZA_VACIA )
+  {
+    _C( "Marcando como disponible la pieza: " << *it );
+    // Marco la pieza como disponible
+    this->_indicePiezasDisponibles[*it] = true;
+    // Obtengo la pieza del listado de piezas
+    TestCaseEj3::Pieza pieza = this->_listaDePiezas[*it];
+    this->_indiceDeDosColores[pieza.colorDerecha][pieza.colorAbajo].pop();
+  }
 }
 
 

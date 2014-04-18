@@ -13,13 +13,13 @@ const uint32_t Tablero::dameLaPiezaDeArribaDePosicion( uint32_t posicion )
 
   if ( noEsPrimeraFila )
   {
-    _C( "La pieza arriba de la posición " << posicion << " es: " <<
+    _C( "La pieza arriba de la posición " << posicion + 1 << " es: " <<
         this->_piezasEnElTablero[posicion - 1] );
     return this->_piezasEnElTablero[posicion - this->cantidadDeColumnas];
   }
   else
   {
-    _C( "La posición " << posicion << " contiene una pieza vacía a arriba" );
+    _C( "La posición " << posicion + 1 << " contiene una pieza vacía a arriba" );
     return TestCaseEj3::PIEZA_VACIA;
   }
 }
@@ -29,12 +29,12 @@ const uint32_t Tablero::dameLaPiezaDeIzquierdaDePosicion( uint32_t posicion )
 
   if ( noEsPrimeraColumna )
   {
-    _C( "La pieza izquierda de la posición " << posicion << " es: " << this->_piezasEnElTablero[posicion - 1] );
+    _C( "La pieza izquierda de la posición " << posicion + 1 << " es: " << this->_piezasEnElTablero[posicion - 1] );
     return this->_piezasEnElTablero[posicion - 1];
   }
   else
   {
-    _C( "La posición " << posicion << " contiene una pieza vacía a su izquierda" );
+    _C( "La posición " << posicion + 1 << " contiene una pieza vacía a su izquierda" );
     return TestCaseEj3::PIEZA_VACIA;
   }
 }
@@ -46,7 +46,7 @@ uint32_t Tablero::cantidadDePosiciones( void )
 */
 void Tablero::ponerPiezaEnPosicion( uint32_t pieza, uint32_t posicion )
 {
-  _C( "Poniendo pieza: " << pieza << " en posicion: " << posicion );
+  _C( "Poniendo pieza: " << pieza << " en posicion: " << posicion + 1 );
 
   if ( this->_piezasEnElTablero[posicion] == TestCaseEj3::PIEZA_VACIA )
   {
@@ -63,12 +63,44 @@ void Tablero::ponerPiezaEnPosicion( uint32_t pieza, uint32_t posicion )
       this->cantidadDePosicionesVacias++;
     }
 
-#ifdef DEBUG
     this->_piezasEnElTablero[posicion] = pieza;
-#endif
   }
 
+#ifdef DEBUG
   this->imprimeTablero();
+#else
+  cerr << " ";
+
+  for ( uint32_t x = 0; x < ( this->cantidadDeColumnas * 2 ) + 1; x++ )
+  {
+    cerr << "-";
+  }
+
+  cerr << endl;
+
+  for ( uint32_t y = 0; y < this->cantidadDeFilas; y++ )
+  {
+    cerr << "| ";
+
+    for ( uint32_t x = 0; x < this->cantidadDeColumnas; x++ )
+    {
+      uint32_t posicion = y * this->cantidadDeColumnas + x;
+      cerr << Tablero::operator[]( posicion ) << " ";
+    }
+
+    cerr << "|";
+    cerr << endl;
+  }
+
+  cerr << " ";
+
+  for ( uint32_t x = 0; x < ( this->cantidadDeColumnas * 2 ) + 1; x++ )
+  {
+    cerr << "-";
+  }
+
+  cerr << endl;
+#endif
 }
 void Tablero::imprimeTablero()
 {
@@ -82,7 +114,5 @@ void Tablero::imprimeTablero()
 
     cerr << endl;
   }
-
-  cerr << endl;
 }
 
