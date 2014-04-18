@@ -7,12 +7,6 @@ Tablero::Tablero( uint32_t p_filas, uint32_t p_columnas )
   this->cantidadDePosicionesVacias = this->cantidadDePosiciones;
   this->_piezasEnElTablero.assign( p_filas * p_columnas, 0 );
 }
-bool Tablero::operator< ( Tablero& t )
-{
-  uint32_t a = this->cantidadDePosicionesVacias;
-  uint32_t b = t.cantidadDePosicionesVacias;
-  return a > b;
-}
 const uint32_t Tablero::dameLaPiezaDeArribaDePosicion( uint32_t posicion )
 {
   bool noEsPrimeraFila = ( posicion >= this->cantidadDeColumnas );

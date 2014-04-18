@@ -22,6 +22,7 @@ public:
   IndiceDePiezas( uint32_t, vector<TestCaseEj3::Pieza>&, Tablero& );
   ~IndiceDePiezas();
   IteradorIndiceDePiezas& dameIterador( uint32_t );
+  bool puedeColorarPiezaEnPosicion( uint32_t, uint32_t );
   void marcarPiezaUtilizada( IteradorIndiceDePiezas& );
   void marcarPiezaDisponible( IteradorIndiceDePiezas& );
 

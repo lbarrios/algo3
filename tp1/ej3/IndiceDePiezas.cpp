@@ -126,4 +126,12 @@ void IndiceDePiezas::marcarPiezaDisponible( IteradorIndiceDePiezas& it )
   }
 }
 
-
+bool IndiceDePiezas::puedeColorarPiezaEnPosicion( uint32_t i_pieza, uint32_t posicion )
+{
+  TestCaseEj3::Pieza pieza = this->_listaDePiezas[i_pieza];
+  uint32_t piezaArriba = this->_t.dameLaPiezaDeArribaDePosicion( posicion );
+  bool arriba = piezaArriba == TestCaseEj3::PIEZA_VACIA || pieza.colorArriba == this->_listaDePiezas[piezaArriba].colorAbajo;
+  uint32_t piezaIzquierda = this->_t.dameLaPiezaDeIzquierdaDePosicion( posicion );
+  bool izquierda = piezaIzquierda == TestCaseEj3::PIEZA_VACIA || pieza.colorIzquierda == this->_listaDePiezas[piezaIzquierda].colorDerecha;
+  return arriba && izquierda;
+}

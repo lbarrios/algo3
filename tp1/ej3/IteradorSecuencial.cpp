@@ -6,24 +6,36 @@ IteradorSecuencial::IteradorSecuencial( IndiceDePiezas& ip, uint32_t posicion )
   _v = &( this->_indiceSecuencial );
   _v_it = _v->begin();
 
-  if ( !this->_indicePiezasDisponibles[*( this->_v_it )] )
+  if ( !this->_indicePiezasDisponibles[*( this->_v_it )] ||
+       !this->_ip.puedeColorarPiezaEnPosicion( *( this->_v_it ), this->_posicion  )
+     )
   {
     this->operator++( 0 );
   }
 }
+IteradorSecuencial::~IteradorSecuencial()
+{
+}
 IteradorSecuencial& IteradorSecuencial::operator++( int )
 {
-  _C( "IteradorSecuencial::++" );
-
-  // Avanzo al menos una pieza en el vector secuencial
+  // Primero, avanzo al menos una pieza en el vector secuencial
   if ( this->_v_it != this->_v->end() )
   {
+    _C( "IteradorSecuencial::++" );
     ( this->_v_it )++;
   }
 
-  // Si hay piezas en el vector secuencial pero ya están ocupadas...
-  while ( this->_v_it != this->_v->end() && !this->_indicePiezasDisponibles[*( this->_v_it )] )
+  /*
+    Luego avanzo, mientras queden piezas en el vector secuencial
+    siempre que las piezas que me encuentre ya estén utilizadas,
+    o que estén desocupadas pero no me sirvan...
+  */
+  while ( this->_v_it != this->_v->end() && (
+            !this->_indicePiezasDisponibles[*( this->_v_it )] ||
+            !this->_ip.puedeColorarPiezaEnPosicion( *( this->_v_it ), this->_posicion )
+          ) )
   {
+    _C( "IteradorSecuencial::++" );
     ( this->_v_it )++;
   }
 
@@ -35,9 +47,6 @@ IteradorSecuencial& IteradorSecuencial::operator++( int )
   }
 
   return *this;
-}
-IteradorSecuencial::~IteradorSecuencial()
-{
 }
 bool IteradorSecuencial::hayPiezasPosibles( )
 {

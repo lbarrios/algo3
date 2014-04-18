@@ -11,7 +11,10 @@ public:
   /**
    * Operador binario, indica si un tablero es menor a otro
    */
-  bool operator< ( Tablero& t );
+  inline bool operator< ( Tablero& t )
+  {
+    return this->cantidadDePosicionesVacias > t.cantidadDePosicionesVacias;
+  }
   /**
    * Permite acceder a la pieza ubicada en una posición determinada
    */

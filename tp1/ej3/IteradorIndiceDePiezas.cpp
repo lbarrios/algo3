@@ -2,7 +2,9 @@
 
 IteradorIndiceDePiezas::IteradorIndiceDePiezas( IndiceDePiezas& ip, uint32_t posicion )
   : _indicePiezasDisponibles( ip._indicePiezasDisponibles ),
-    _indiceSecuencial ( ip._indiceSecuencial )
+    _indiceSecuencial ( ip._indiceSecuencial ),
+    _ip( ip ),
+    _posicion( posicion )
 {
   this->_piezaTransparenteUtilizada = false;
   this->_utilizarPiezaTransparente = false;

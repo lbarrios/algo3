@@ -59,14 +59,12 @@ Tablero& backtrack( Tablero& t, IndiceDePiezas& ip, uint32_t posicion )
   DEBUG_ENTER; _C( "Entrando a recursión en posición: " << posicion + 1 );
   Tablero* mejorTablero = NULL;
   IteradorIndiceDePiezas& it = ip.dameIterador( posicion );
-  int i = 0;
 
   // Me fijo si estoy antes de la última posición
   if ( posicion < t.cantidadDePosiciones - 1 )
   {
     while ( it.hayPiezasPosibles() )
     {
-      i++; DEBUG_INT( i );
       _C( "Pieza disponible: " << *it );
       // Si es así, entonces llamo a backtrack para cada pieza posible
       t.ponerPiezaEnPosicion( *it, posicion );
@@ -83,8 +81,8 @@ Tablero& backtrack( Tablero& t, IndiceDePiezas& ip, uint32_t posicion )
       {
         if ( *mejorTablero < *otroTablero )
         {
-          cout << "Se encontró un mejor tablero" << endl;
-          t.imprimeTablero();
+          cout << "Se encontró un mejor tablero: " << endl;
+          otroTablero->imprimeTablero();
           delete mejorTablero;
           mejorTablero = otroTablero;
         }
@@ -134,89 +132,4 @@ void imprimeTablero( Tablero& t )
   cerr << endl;
 }
 
-/**
- * Devuelve la cantidad máxima de posiciones llenas encontradas
- */
-
-
-/*
-
-Tablero& backtrack( Tablero &t, IndiceDeColores &ic, uint32_t posicion )
-{
-  _C("Entrando posición: " << posicion);
-  imprimeTablero(t);
-  DEBUG_ENTER;
-  // Obtengo las piezas de la izquierda y de arriba
-  uint32_t piezaIzquierda = t.dameLaPiezaDeIzquierdaDe( posicion );
-  uint32_t piezaArriba = t.dameLaPiezaDeArribaDe( posicion );
-  // Obtengo la lista de piezas posibles según el índice
-  _C("Obteniendo lista de piezas posibles");
-  IndiceDeColores::Iterador &piezasPosibles = ic.damePiezasPosibles(piezaIzquierda, piezaArriba);
-  // Me fijo si estoy antes de la última posición del tablero
-  if( posicion < t.cantidadDePosiciones() - 1 )
-  {
-    // Si es así, entonces calculo la máxima cantidad de piezas para todas las ramas, y la retorno
-    Tablero *mejorTablero = NULL;
-    while( piezasPosibles.hayPiezasPosibles() )
-    {
-      uint32_t pieza = *piezasPosibles; // Obtengo la nueva pieza
-      DEBUG_INT(pieza);
-      uint32_t piezaAnterior = t[posicion]; // Resguardo pieza anterior
-      t.ponerPiezaEnPosicion( pieza, posicion ); // Pongo nueva pieza en tablero
-      if( pieza != TestCaseEj3::PIEZA_VACIA )
-      {
-        //_C("Quitando pieza " << *piezasPosibles << " del índice de colores.");
-        piezasPosibles.quitarPieza(); // Quito la pieza del índice y obtengo puntero al siguiente
-      }
-      if ( mejorTablero == NULL )
-      {
-        _C("BT: Llamando primer backtrack("<<posicion+1<<") desde posicion("<<posicion<<")");
-        mejorTablero = &(backtrack(t,ic,posicion+1));
-        _C("BT: Regresando de backtrack("<<posicion+1<<") hacia posicion("<<posicion<<")");
-      }
-      else
-      {
-        //_C("Llamando backtrack("<<posicion+1<<") desde posicion("<<posicion<<")");
-        Tablero *tableroBacktrack = &(backtrack(t,ic,posicion+1));
-        //_C("Regresando de backtrack("<<posicion+1<<") hacia posicion("<<posicion<<")");
-        if( (*mejorTablero) < (*tableroBacktrack) )
-        {
-          delete mejorTablero;
-          mejorTablero = tableroBacktrack;
-        }
-        else
-        {
-          delete tableroBacktrack;
-        }
-      }
-      // Agrego la pieza nuevamente al índice
-      imprimeTablero(t);
-      if( pieza != TestCaseEj3::PIEZA_VACIA )
-      {
-        ic.restaurarPieza( piezasPosibles );
-      }
-      t.ponerPiezaEnPosicion( piezaAnterior, posicion ); // Recupero pieza vieja a tablero
-      piezasPosibles++;
-    }
-    _C("         NO HAY MAS PIEZAS POSIBLES EN LA POSICION "<<posicion);
-    delete &piezasPosibles;
-    return *mejorTablero;
-  }
-  else
-  { // De lo contrario (si estoy en la última posición del tablero)
-    // Intento colocar la última pieza
-    if (*piezasPosibles != TestCaseEj3::PIEZA_VACIA)
-    { // Si es distinta de "PIEZA VACIA", la pongo en el tablero
-      t.ponerPiezaEnPosicion( *piezasPosibles, posicion );
-    }
-    // Retorno una copia del tablero final
-    delete &piezasPosibles;
-    Tablero *newTablero = new Tablero(t);
-    t.ponerPiezaEnPosicion(TestCaseEj3::PIEZA_VACIA, posicion);
-    imprimeTablero(*newTablero);
-    return *newTablero;
-  }
-}
-
-*/
 
