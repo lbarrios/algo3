@@ -63,6 +63,26 @@ void Tablero::ponerPiezaEnPosicion( uint32_t pieza, uint32_t posicion )
       this->cantidadDePosicionesVacias++;
     }
 
+#ifdef DEBUG
     this->_piezasEnElTablero[posicion] = pieza;
+#endif
   }
+
+  this->imprimeTablero();
 }
+void Tablero::imprimeTablero()
+{
+  for ( uint32_t y = 0; y < this->cantidadDeFilas; y++ )
+  {
+    for ( uint32_t x = 0; x < this->cantidadDeColumnas; x++ )
+    {
+      uint32_t posicion = y * this->cantidadDeColumnas + x;
+      cerr << Tablero::operator[]( posicion ) << " ";
+    }
+
+    cerr << endl;
+  }
+
+  cerr << endl;
+}
+

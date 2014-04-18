@@ -49,6 +49,7 @@ public:
   {
     return this->cantidadDePosiciones - this->cantidadDePosicionesVacias;
   };
+  void imprimeTablero();
 private:
 
 };

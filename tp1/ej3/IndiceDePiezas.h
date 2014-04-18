@@ -11,14 +11,17 @@ private:
   Tablero& _t;
   vector<TestCaseEj3::Pieza>& _listaDePiezas;
   vector<IteradorIndiceDePiezas*> _iteradores;
-  vector< vector< list<uint32_t> > > _indiceDeColores;
-  list<uint32_t> _indiceSecuencial;
+  typedef list<uint32_t> listaDePiezas;
+  vector< vector< stack< listaDePiezas > > > _indiceDeDosColores;
+  stack < listaDePiezas > _indiceSecuencial;
   //IteradorIndiceDePiezas* _it;
   //
 public:
   IndiceDePiezas( uint32_t, vector<TestCaseEj3::Pieza>&, Tablero& );
   ~IndiceDePiezas();
   IteradorIndiceDePiezas& dameIterador( uint32_t );
+  void marcarPiezaUtilizada( IteradorIndiceDePiezas& );
+
   //: listaDePiezas(p_listaDePiezas), v(p_cantidadDeColores, vector<listaDisponibles>(3, listaDisponibles()) ){
 
 };

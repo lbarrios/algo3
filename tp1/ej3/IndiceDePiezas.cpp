@@ -1,15 +1,28 @@
 #include "IndiceDePiezas.h"
 
 IndiceDePiezas::IndiceDePiezas( uint32_t p_cantidadDeColores, vector<TestCaseEj3::Pieza>& p_listaDePiezas, Tablero& t ):
-  _t( t ), _listaDePiezas( p_listaDePiezas ), _indiceDeColores( p_cantidadDeColores, vector< list<uint32_t> >( p_cantidadDeColores,
-      list<uint32_t>( 0 ) ) )
+  _t( t ),
+  _listaDePiezas( p_listaDePiezas ),
+  _indiceDeDosColores(
+    p_cantidadDeColores,
+    vector< stack< listaDePiezas > >(
+      p_cantidadDeColores,
+      stack< listaDePiezas >(
+        deque<listaDePiezas>( 1, listaDePiezas( 0 ) )
+      )
+    )
+  ),
+  _indiceSecuencial(
+    deque<listaDePiezas>( 1, listaDePiezas( 0 ) )
+  )
 {
   for ( uint32_t i = 1; i < this->_listaDePiezas.size(); i++ )
   {
     TestCaseEj3::Pieza pieza = this->_listaDePiezas[i];
     uint32_t colorDerecha = pieza.colorDerecha;
     uint32_t colorAbajo = pieza.colorAbajo;
-    _indiceDeColores[colorDerecha - 1][colorAbajo - 1].push_back( i );
+    _indiceDeDosColores[colorDerecha - 1][colorAbajo - 1].top().push_back( i );
+    _indiceSecuencial.top().push_back( i );
   }
 }
 
@@ -74,6 +87,9 @@ IteradorIndiceDePiezas& IndiceDePiezas::dameIterador( uint32_t posicion )
   it = new IteradorNormal( *this, posicion );
   this->_iteradores.push_back( it );
   return *it;
+}
+void IndiceDePiezas::marcarPiezaUtilizada( IteradorIndiceDePiezas& )
+{
 }
 
 

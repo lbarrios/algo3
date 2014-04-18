@@ -55,7 +55,7 @@ int main( int argc, char** argv )
 
 Tablero& backtrack( Tablero& t, IndiceDePiezas& ip, uint32_t posicion )
 {
-  _C( "Entrando posición: " << posicion ); imprimeTablero( t ); DEBUG_ENTER;
+  _C( "Entrando posición: " << posicion );
   Tablero* mejorTablero = NULL;
   IteradorIndiceDePiezas& it = ip.dameIterador( posicion );
 
@@ -64,10 +64,10 @@ Tablero& backtrack( Tablero& t, IndiceDePiezas& ip, uint32_t posicion )
   {
     while ( it.hayPiezasPosibles() )
     {
-      printf( "AAAAAAAAAAAAAAAAAAAAAAAAA" );
-      uint32_t pieza = *it;
+      _C( "Pieza disponible: " << *it );
       // Si es así, entonces llamo a backtrack para cada pieza posible
-      t.ponerPiezaEnPosicion( pieza, posicion );
+      t.ponerPiezaEnPosicion( *it, posicion );
+      ip.marcarPiezaUtilizada( it );
       // Hago recursión en el backtracking
       Tablero* otroTablero = NULL;
       otroTablero = &( backtrack( t, ip, posicion + 1 ) );
@@ -84,9 +84,14 @@ Tablero& backtrack( Tablero& t, IndiceDePiezas& ip, uint32_t posicion )
   else
   {
     // (si estoy en la última posición del tablero)
-    // Intento colocar la última pieza
-    // Retorno una copia del tablero final
+    // Creo una copia del tablero final
     mejorTablero = new Tablero( t );
+
+    // Intento colocar la última pieza
+    if ( it.hayPiezasPosibles() )
+    {
+      mejorTablero->ponerPiezaEnPosicion( *it, posicion );
+    }
   }
 
   return *mejorTablero;

@@ -1,14 +1,14 @@
 #include "IteradorIndiceDePiezas.h"
 
 IteradorIndiceDePiezas::IteradorIndiceDePiezas( IndiceDePiezas& ip, uint32_t posicion )
-  : _v( ip._indiceSecuencial )
+  : _indiceSecuencial( ip._indiceSecuencial.top() )
 {
   this->_piezaTransparenteUtilizada = false;
 }
 
 IteradorIndiceDePiezas::~IteradorIndiceDePiezas()
 {
-  _C( "IteradorIndiceDePiezas::~IteradorIndiceDePiezas()" );
+  //_C( "IteradorIndiceDePiezas::~IteradorIndiceDePiezas()" );
 }
 
 bool IteradorIndiceDePiezas::hayPiezasPosibles()
@@ -17,13 +17,18 @@ bool IteradorIndiceDePiezas::hayPiezasPosibles()
 }
 IteradorIndiceDePiezas& IteradorIndiceDePiezas::operator++( int )
 {
+  _C( "IteradorIndiceDePiezas::operator++" );
   this->_piezaTransparenteUtilizada = true;
   return *this;
 }
 uint32_t IteradorIndiceDePiezas::operator*()
 {
+  _C( "IteradorIndiceDePiezas::operator*" );
+  DEBUG_BOOL( this->_piezaTransparenteUtilizada );
+
   if ( this->_piezaTransparenteUtilizada )
   {
+    _C( "Utilizando pieza transparente" );
     return TestCaseEj3::PIEZA_VACIA;
   }
   else
