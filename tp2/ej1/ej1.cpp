@@ -6,7 +6,7 @@
 
 using namespace std;
 
-struct DirCant {
+struct Levante {
   bool direccion;
   int cantidad;
 };
@@ -14,7 +14,7 @@ struct DirCant {
 
 struct Jugada {
   int turnosHastaAhora;
-  list<DirCant>* turnosQuePasaron;
+  Levante levanteRealizado;
   int mejorPuntaje;
   inline bool operator<(const Jugada& j) {
     return mejorPuntaje < j.mejorPuntaje;
@@ -63,7 +63,8 @@ int main(int argc, const char *argv[]) {
     {
       mejoresJugadas[i][j].mejorPuntaje = 0;
       mejoresJugadas[i][j].turnosHastaAhora = 0;
-      mejoresJugadas[i][j].turnosQuePasaron = NULL;
+      mejoresJugadas[i][j].levanteRealizado.cantidad = 0;
+      mejoresJugadas[i][j].levanteRealizado.direccion = 0;
     }
   }
 
@@ -75,9 +76,13 @@ int main(int argc, const char *argv[]) {
   // que calcular a parte. A patín viejo, a patín.
   
   for (int i = 0; i < cantCartas; i++) {
-    mejoresJugadas[i][i].mejorPuntaje = cartas[i];
-    mejoresJugadas[i][i].turnosHastaAhora = 1;
+    Jugada& unaJugadaTamUno = mejoresJugadas[i][i];
+    unaJugadaTamUno.mejorPuntaje = cartas[i];
+    unaJugadaTamUno.turnosHastaAhora = 1;
+    unaJugadaTamUno.levanteRealizado.direccion = 0;
+    unaJugadaTamUno.levanteRealizado.cantidad = 1;
   }
+
   for (int tamSubconjunto = 2; tamSubconjunto <= cantCartas; tamSubconjunto++) {
     int principio = 0;
     int final = tamSubconjunto;
@@ -87,12 +92,12 @@ int main(int argc, const char *argv[]) {
       minActual.mejorPuntaje = 1 << 30;// Máximo número posible en int;
       bool direccion;
       int cuantosAgarro;
-      for (int i = principio+1; i < final; i++) {
+      for (int i = principio; i < final; i++) {
         Jugada jugadaEnemigo = mejoresJugadas[i][final-1];
         if ( jugadaEnemigo < minActual ) {
           direccion = 0; //Esto significa izquierda
           minActual = jugadaEnemigo;
-          cuantosAgarro = i;
+          cuantosAgarro = (i - principio) ? i-principio : tamSubconjunto;
           
         }
       }
@@ -101,21 +106,17 @@ int main(int argc, const char *argv[]) {
         if ( jugadaEnemigo < minActual ) {
           direccion = 1; //Esto significa derecha.
           minActual = jugadaEnemigo;
-          cuantosAgarro = tamSubconjunto - i;
+          cuantosAgarro = final - i;
         }
       }
 
       Jugada miJugada;
       miJugada.mejorPuntaje = sumaParcial - minActual.mejorPuntaje;
       miJugada.turnosHastaAhora = minActual.turnosHastaAhora +1;
-      DirCant ultimoMovimiento;
+      Levante ultimoMovimiento;
       ultimoMovimiento.direccion = direccion;
       ultimoMovimiento.cantidad = cuantosAgarro;
-      miJugada.turnosQuePasaron = minActual.turnosQuePasaron;
-      if (miJugada.turnosQuePasaron == NULL) {
-        miJugada.turnosQuePasaron = new list<DirCant>();
-      }
-      miJugada.turnosQuePasaron->push_front(ultimoMovimiento);
+      miJugada.levanteRealizado = ultimoMovimiento;
       
       mejoresJugadas[principio][final-1] = miJugada;
 
@@ -123,6 +124,9 @@ int main(int argc, const char *argv[]) {
       final++;
     }
   }
+
+
+  /*
   // En este momento ya se tiene toda la tabla calculada.
   for (int i = 0; i < cantCartas; i++) {
     for (int j = 0; j < cantCartas; j++) {
@@ -132,16 +136,47 @@ int main(int argc, const char *argv[]) {
     cout << endl;
     
   }
-  list<DirCant>* mylist = mejoresJugadas[0][cantCartas-1].turnosQuePasaron;
-  for (list<DirCant>::iterator i = mylist -> begin() ; i != mylist->end() ; i++) {
-    cout << (*i).cantidad << " " << (*i).direccion << endl;
+  cout << endl << endl;
+  // En este momento ya se tiene toda la tabla calculada.
+  for (int i = 0; i < cantCartas; i++) {
+    for (int j = 0; j < cantCartas; j++) {
+      Jugada p = mejoresJugadas[i][j];
+      cout << p.levanteRealizado.cantidad << "  ";
+    }
+    cout << endl;
+    
   }
+  cout << endl << endl;
+
+  // En este momento ya se tiene toda la tabla calculada.
+  for (int i = 0; i < cantCartas; i++) {
+    for (int j = 0; j < cantCartas; j++) {
+      Jugada p = mejoresJugadas[i][j];
+      cout << p.levanteRealizado.direccion << "  ";
+    }
+    cout << endl;
+    
+  }
+  */
+
+
+  int fin = cantCartas -1;
+  int init = 0;
+  int t = 0;
+  list<Levante>* listaLev = new list<Levante>();
+  while ( init <= fin ) {
+    Levante l = mejoresJugadas[init][fin].levanteRealizado;
+    listaLev->push_back(l);
+    if (l.direccion) {
+      fin-= l.cantidad;
+    } else {
+      init += l.cantidad;
+    }
+    t++;
+  }
+  cout << t << " " << mejoresJugadas[0][cantCartas-1].mejorPuntaje << " " << sumasParciales[cantCartas] - mejoresJugadas[0][cantCartas-1].mejorPuntaje << endl;
+  for (list<Levante>::iterator i = listaLev->begin() ; i != listaLev->end() ; i++) {
+    cout << ((i->direccion)? ("der") : ("izq")) << " " << i->cantidad << endl;
+  }
+
 }
-  
-
-
-
-
-
-
-  

@@ -58,7 +58,7 @@ for color in range( desde_colores , hasta_colores, paso_colores):
     for m in range( desde_m, hasta_m, paso_m):
       print("n:{},m:{}, c:{}".format(n,m,color))
       params = {"n":n,"m":m,"colores":color}
-      #generador.generarTest(params, "casoAleatorio")
+      generador.generarTest(params, "casoAleatorio")
       generador.generarTest(params, "casoPiezasIncompatibles")
       generador.generarTest(params, "casoTrivial")
 
