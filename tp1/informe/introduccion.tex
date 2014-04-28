@@ -7,19 +7,19 @@
 \subsection{Objetivos}
 Mediante la realización de este trabajo práctico se pretende realizar una introducción a la implementación y el análisis de las técnicas algorítmicas básicas para resolución de problemas. 
 
-Se analizan las técnicas de \textit{algoritmos golosos}, y de \textit{backtracking}.
+Se analizan en particular las técnicas de \textit{algoritmos golosos}, y de \textit{backtracking}.
 
 \subsection{Pautas de trabajo}
-Se brindan tres problemas, escritos en términos coloquiales, en donde para cada uno de ellos se requiere \textbf{encontrar un algoritmo} que brinde una \textbf{solución particular}, acotado por una determinada \textbf{complejidad temporal}. El algoritmo debe ser \textbf{implementado} en un lenguaje de programación a elección. Los datos son proporcionados y deben ser devueltos bajo formatos específicos de \textit{input} y de \textit{output}.
+Se brindan tres problemas, escritos en términos coloquiales, en donde para cada uno de ellos se requiere \textbf{encontrar un algoritmo} que brinde una \textbf{solución particular}, acotado por una determinada \textbf{complejidad temporal}. El algoritmo debe, además, ser \textbf{implementado} en un lenguaje de programación a elección. Los datos son proporcionados, y deben ser devueltos bajo formatos específicos de \textit{input} y de \textit{output}.
 
 Posteriormente se deben realizar análisis teóricos y empíricos tanto de la de \textbf{correctitud} como de la \textbf{complejidad temporal} para cada una de las soluciones propuestas.
 
 \subsection{Metodología utilizada}
-Para cada ejercicio, se brinda primeramente una \textbf{descripción} del problema planteado, a partir de la cual se realiza una \textbf{abstracción} hacia un \textbf{modelo formal}, que permite tener un \textbf{entendimiento preciso} de las pautas requeridas. 
+Para cada ejercicio, se brinda primeramente\footnote{Adverbio de tiempo que complementa a un verbo, cuyo significado puede entenderse como un equivalente a ``en primer lugar'', o ``antes que nada''; http://lema.rae.es/drae/?val=primeramente} una \textbf{descripción} del problema planteado, a partir de la cual se realiza una \textbf{abstracción} hacia un \textbf{modelo formal}, que permite tener un \textbf{entendimiento preciso} de las pautas requeridas. 
 
 Se expone, cuando las hay, una \textbf{enumeración de las características} elementales del problema; estas son aquellas que permiten \textbf{encuadrarlo} dentro de una \textbf{familia de problemas} típicos.
 
-Se desarrolla posteriormente un análisis del conjunto \textbf{universo de posibles soluciones}, caracterizando matemáticamente el concepto de \textbf{solución correcta} y, en los casos en que se solicita optimización, las condiciones que definen a la \textbf{solución particular} (o \textit{mejor solución}) que se encuadra dentro de las pretenciones del problema.
+Se desarrolla posteriormente un análisis del conjunto \textbf{universo de posibles soluciones} (o factibles), caracterizando matemáticamente el concepto de \textbf{solución correcta} y, en los casos en que se solicita \textbf{optimización}\footnote{Es decir, que la solución pertenezca al \textit{subconjunto de soluciones que \textbf{maximicen} o \textbf{minimicen} una determinada función}}, se definen las condiciones que dan forma ya sea a todo el subconjunto de \textbf{soluciones óptimas} que se encuadran dentro de las pretenciones del problema, o a una \textbf{solución particular} dentro del mismo (la cual denominamos \textit{mejor solución}).
 
 Luego de caracterizar para todo conjunto posible de entradas <<\textit{cómo se compone el conjunto solución}>> correspondiente, se desarrolla un \textbf{pseudocódigo} en el que se expone <<\textit{cómo llegar a ese conjunto}>>\footnote{Una explicación coloquial, obviando detalles puramente implementativos: arquitectura, lenguaje, etc.}.
 
@@ -28,31 +28,6 @@ Habiendo planteado la \textbf{hipótesis de resolución} se demuestra, de manera
 Después de demostrar la \textbf{correctitud de la solución}, y su \textbf{optimalidad} en caso de existir varias soluciones correctas, se realiza un análisis teórico de la \textbf{complejidad temporal} en donde se estima el comportamiento del algoritmo en términos de tiempo. Este análisis en particular se realiza con el objetivo de obtener una \textit{cota superior asintótica}\footnote{Aunque se mencionan, sobre todo en el caso del \textit{Algoritmo de Backtracking}, algunas <<familias de entrada>> particulares bajo las cuales el algoritmo propuesto presenta un comportamiento mucho mejor al peor caso.}.
 
 Luego de calcular la \textbf{cota de complejidad temporal}, se realiza una \textbf{verificación} empírica, junto con una \textbf{exposición gráfica} de los resultados obtenidos, mediante la combinación de técnicas básicas de medición y análisis de datos.
-
-\newpage
-\subsection{Herramientas utilizadas}
-Para la realización de este trabajo se utilizaron un conjunto de herramientas, las cuales se enumeran a continuación:
-
-\begin{itemize}
-  \item \texttt{C++} como lenguaje de programación
-    \begin{itemize}
-      \item \texttt{gcc} como compilador de C++
-    \end{itemize}
-  \item \texttt{python} y \texttt{bash} para la realización de scripts
-    \begin{itemize}
-      \item \texttt{python} para generar casos de prueba
-      \item \texttt{bash} para automatizar las mediciones
-      \item \texttt{python/matplotlib} para plotear los gráficos
-    \end{itemize}
-  \item \LaTeX\ para la redacción de este documento
-  \item Se testeó Sistemas Operativos \hfill
-    \begin{itemize}
-      \item \texttt{Debian GNU/Linux}
-      \item \texttt{Ubuntu}
-      \item \texttt{FreeBSD}, compilando a través de \texttt{gmake}
-      \item \texttt{Windows}, a través de \texttt{cygwin}
-    \end{itemize}
-\end{itemize}
 
 
 % -----------------------------------------------

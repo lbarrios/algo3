@@ -40,6 +40,14 @@ fi
 for i in "$@"
 do
 case $i in
+  -i=*|--input-folder=*)
+  INPUT_FOLDER="${i#*=}"
+  shift
+  ;;
+  -o=*|--output-folder=*)
+  OUTPUT_FOLDER="${i#*=}"
+  shift
+  ;;
   -v|--verbose)
   VERBOSE=true
   shift
@@ -113,6 +121,12 @@ Opciones disponibles:
   --time | --tiempo | -t:
     Realiza mediciones de tiempo.
     Los archivos se guardarán con la extension '.time'
+
+  --input-folder=carpeta | -i=carpeta:
+    hace que INPUT_FOLDER=carpeta
+
+  --output-folder=carpeta | -o=carpeta:
+    hace que OUTPUT_FOLDER=carpeta
 "
   exit 0
 fi

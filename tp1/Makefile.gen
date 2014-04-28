@@ -32,13 +32,13 @@ $(EXE).time: $(OBJSTIME) $(COMMON_OBJS_TIME)
 
 ## Objetos
 $(OBJSDIR)/%.o: %.cpp %.h | $(OBJSDIR)
-	$(CC) $(CFLAGS) $< -o $@
+	@$(CC) $(CFLAGS) $< -o $@
 
 $(OBJSDIR)/%.o.debug: %.cpp %.h | $(OBJSDIR)
-	$(CC) $(CFLAGSDEBUG) $< -o $@
+	@$(CC) $(CFLAGSDEBUG) $< -o $@
 
 $(OBJSDIR)/%.o.time: %.cpp %.h | $(OBJSDIR)
-	$(CC) $(CFLAGSTIME) $< -o $@
+	@$(CC) $(CFLAGSTIME) $< -o $@
 
 $(OBJS): | $(OBJSDIR)
 

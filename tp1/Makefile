@@ -3,10 +3,10 @@ USES= gmake
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
-    MAKE := make
+    MAKE := make -j 4
 endif
 ifeq ($(UNAME_S),FreeBSD)
-    MAKE := gmake
+    MAKE := gmake -j 4
 endif
 ifeq (shell hash rar 1 > /dev/null, 1)
   TAR := rar

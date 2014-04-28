@@ -5,17 +5,17 @@
 \begin{document}{}
 % -----------------------------------------------
 
-\subsubsection{Descripción} 
-
-desea contratar a un experto
-por $D$ días consecutivos
-para que éste pueda detectar si algún camión de la
+\subsubsection{Descripción} \label{subsubsec:problema1-descripcion}
+%-
+%- PLANTEO DEL PROBLEMA
+%-
+\centerbf{Planteo del problema}
 
 El inspector \texttt{Rick A. Lapazta}, legendario\footnote{La leyenda dice que
 junto a su compañero Zepas A. Poraki, son invictos en no hacer muy bien su
 trabajo} empleado un puesto de control de camiones, es encomendado por la diosa
 Mor\texttt{fea} durante un revelador sueño a la tarea de investigar si la
-empresa \textit{il Raviolin} está transportando \texttt{sustancias ilegales}.
+empresa \textit{il Ravioli} está transportando \texttt{sustancias ilegales}.
 Luego de meses de investigación, y de arriesgar su pasiva e inspeccionista vida
 intrusionando en el archivo secreto de la empresa descubre que realmente cuenta
 con muy poca información: dispone de una lista en la anotó los datos importantes
@@ -23,7 +23,7 @@ de cada camión, la cantidad de antenas de cada uno de ellos, y el día en que
 atravesarán el control. El inspector deduce posteriormente que la mayor o menor
 cantidad de antenas de un camión no debe ser un factor influyente al momento de
 transportar este tipo de sustancias, y que la mejor solución a sus problemas es
-contratar a un \textit{experto}. 
+contratar a un \textit{experto}.
 
 Como dispone de una cantidad acotada de dinero, y sabe que el tercerizado le
 cobrará una cantidad fija de dinero por cada día de trabajo el inspector busca,
@@ -37,6 +37,11 @@ de otro país, el reino de muy muy lejano, y la legislación de turismo de la zo
 es muy dura, por lo que este sólo dispone de permiso realizar un viaje al puesto
 de inspección.
 
+%-
+%- FORMATO DE LOS DATOS
+%-
+\centerbf{Formato de los datos}
+
 El problema encomienda encontrar una solución al dilema del inspector, en donde
 recibiendo como \textbf{datos de entrada} la cantidad de días ($D$), la cantidad
 de camiones ($n$) y los días en que estos llegarán ($d_1$,$d_2$,...,$d_n$) se
@@ -46,23 +51,33 @@ camiones. El resultado que se deberá obtener es el día inicial $d_i$ en que
 convendría contratar al experto, y el total $c$ de camiones que serán
 inspeccionados por el mismo.
 
-Formato de entrada:
+% primera columna
+\begin{minipage}[t]{0.5\textwidth}
+\centerbf{Formato de entrada}
 \[
-  D\ n\ d1\ d2\ ...\ dn\
+  D\ n\ d_{1}\ d_{2}\ ...\ d_{n}\
 \]
 
-Formato de salida:
+\end{minipage}
+% segunda columna
+\begin{minipage}[t]{0.5\textwidth}
+\centerbf{Formato de salida}
 \[
-  d_i\ c
+  d_{i}\ c
 \]
 
-\vspace{3em}
+\end{minipage}
 
-Si se contrata al experto por $D=3$ días consecutivos y en total hay $n=20$
-camiones sospechosos ($c1,c2,...,c20$) que pasan por el puesto según se muestra
-a continuación:
+%-
+%- INTERPRETACION DEL PROBLEMA
+%-
+\newpage
+\centerbf{Interpretación del problema (ejemplos)}
 
 \begin{ejemplo}\hspace{0em}
+
+Si se contratase al experto por $D=3$ días consecutivos y en total hubiesen $n=20$
+camiones sospechosos ($c1,c2,...,c20$), se podría tener una entrada como la siguiente:
 
   \begin{quote}
     \begin{verbatim}
@@ -70,35 +85,42 @@ a continuación:
     3 20 10 10 9 4 1 1 1 1 1 2 6 6 6 4 5 5 5 5 5 9
     \end{verbatim}
   \end{quote}
-
+  
+  \vspace{-2em}
     \begin{center}
-      \begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|}
-      	\hline
-      	Día          &  $1$  & $2$   & $3$   & $4$   & $5$   & $6$ & $7$ & $8$ & $9$   & $10$  \\
-      	\hline
-      	Camiones     &  $c5$ & $c10$ & $c14$ & $c4$  & $c15$ & $c11$ &   &     & $c3$  & $c1$  \\
-      				 &  $c6$ &       &       &       & $c16$ & $c12$ &   &     & $c20$ & $c2$  \\    
-      				 &	$c7$ &       &       &       & $c17$ & $c13$ &   &     &       &       \\  
-      				 &	$c8$ &       &       &       & $c18$ &       &   &     &       &       \\
-      				 &	$c9$ &       &       &       & $c19$ &       &   &     &       &       \\
-      	\hline
+      La cual se podría visualizar de la siguiente forma:
+      
+      \renewcommand{\arraystretch}{1.2} % Agrego un poco de margen vertical
+      \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+        \hline
+        Día          &  $1$  & $2$   & $3$   & $4$   & $5$   & $6$ & $7$ & $8$ & $9$   & $10$  \\
+        \hline
+                     & $c5$ & $c10$ & $c14$ & $c4$ & $c15$ & $c11$ &   &     & $c3$  & $c1$  \\
+                     & $c6$ &       &       &       & $c16$ & $c12$ &   &     & $c20$ & $c2$  \\    
+        Camiones     & $c7$ &       &       &       & $c17$ & $c13$ &   &     &       &       \\  
+                     & $c8$ &       &       &       & $c18$ &       &   &     &       &       \\
+                     & $c9$ &       &       &       & $c19$ &       &   &     &       &       \\
+        \hline
       \end{tabular}
     \end{center}
 
-    El primer día del período de contratación será $d=4$ y habrán sido
-  inspeccionados, durante los días \texttt{Día4}, \texttt{Día5} y \texttt{Día6},
-  un total de $c=9$ camiones. 
+    En este caso, como el primer día del período de contratación sería $d=4$ y habrían sido
+    inspeccionados un total de $C=9$ camiones durante los días \texttt{Día4}, \texttt{Día5} 
+    y \texttt{Día6} el programa debería devolver la siguiente salida: 
 
   \begin{quote}
-  \begin{verbatim}
-  Salida:
-  4 9
-  \end{verbatim}
+    \begin{verbatim}
+    Salida:
+    4 9
+    \end{verbatim}
   \end{quote}
 
 \end{ejemplo}
 
 \begin{ejemplo}\hspace{0em}
+
+Bajo las mismas condiciones del ejemplo anterior, también 
+se podría tener una entrada como la siguiente:
 
   \begin{quote}
     \begin{verbatim}
@@ -107,28 +129,32 @@ a continuación:
     \end{verbatim}
   \end{quote}
 
+  \vspace{-2em}
   \begin{center}
-    \begin{tabular}{|l|l|l|l|l|l|l|l|}
-    	\hline
-    	Día          &  $1$  & $2$   & $3$   & $4$    & $5$ & $6$ & $7$   \\
-    	\hline
-    	Camiones     &  $c5$ &       &       & $c15$  &     &     & $c11$ \\
-    				 &  $c6$ &       &       & $c16$  &     &     & $c12$ \\    
-    				 &	$c7$ &       &       & $c17$  &     &     & $c13$ \\  
-    				 &	$c8$ &       &       & $c18$  &     &     & $c3$  \\
-    				 &	$c9$ &       &       & $c19$  &     &     & $c20$ \\
-    				 &	$c10$&       &       &        &     &     &       \\
-    				 &	$c14$&       &       &        &     &     &       \\
-    				 &	$c4$ &       &       &        &     &     &       \\
-    				 &	$c1$ &       &       &        &     &     &       \\
-    				 &	$c2$ &       &       &        &     &     &       \\
-    	\hline
+    La cual se podría visualizar de la siguiente forma:
+    
+    \renewcommand{\arraystretch}{1.2} % Agrego un poco de margen vertical
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+      \hline
+      Día          &  $1$  & $2$   & $3$   & $4$    & $5$ & $6$ & $7$   \\
+      \hline
+                     &  $c5$ &       &       & $c15$  &     &     & $c11$ \\
+                     &  $c6$ &       &       & $c16$  &     &     & $c12$ \\    
+                     &  $c7$ &       &       & $c17$  &     &     & $c13$ \\  
+                     &  $c8$ &       &       & $c18$  &     &     & $c3$  \\
+      Camiones     &  $c9$ &       &       & $c19$  &     &     & $c20$ \\
+                     &  $c10$&       &       &        &     &     &       \\
+                     &  $c14$&       &       &        &     &     &       \\
+                     &  $c4$ &       &       &        &     &     &       \\
+                     &  $c1$ &       &       &        &     &     &       \\
+                     &  $c2$ &       &       &        &     &     &       \\
+      \hline
     \end{tabular}
   \end{center}
 
-  Para este caso, el primer día del período de contratación será $d=1$ y habrán
-  sido inspeccionados, durante los días \texttt{Día1}, \texttt{Día2} y
-  \texttt{Día3}, un total de $c=10$ camiones.
+  En este otro caso, el primer día del período de contratación sería $d=1$, en el cual
+  habrían sido inspeccionados, durante los días \texttt{Día1}, \texttt{Día2} y
+  \texttt{Día3}, un total de $c=10$ camiones:
 
   \begin{quote}
     \begin{verbatim}
@@ -139,17 +165,120 @@ a continuación:
 
 \end{ejemplo}
 
-\subsubsection{Hipótesis de resolución}
+\subsubsection{Planteamiento de resolución}\label{subsubsec:problema1-resolucion}
 
-Nos interesa saber cuál es el mejor día entre $d_1$ y $d_n$ para contratar al
-experto. Desde el día elegido hasta el día $D - 1$, buscamos que la cantidad de
-camiones sea máxima. Primero, entonces, ordenamos en forma creciente el conjunto
-{$d_1$,...,$d_n$} dado. Sabemos que la solución pertenece a este conjunto.
-Tenemos a $P(x)$ como la suma de la cantidad de camiones que pasan desde el día
-$x$ hasta el día $x+D-1$. Nuestro algoritmo itera sobre cada elemento $d_i$ del
-conjunto calculando P($d_i$), y guardando el elemento $e$ con P($e$) máximo
-encontrado hasta el momento. Al final de las iteraciones, tenemos guardado el
-elemento $e$ con P($e$) máximo en todo el conjunto. Devolvemos $e$ y P($e$).
+\centerbf{Caracterización de la solución}
+
+\begin{notacion}
+Sean: 
+  \begin{itemize}
+    \item $D \in \nat$ la cantidad de días que trabaja el inspector
+    \item $n \in \nat$ la cantidad total de camiones.
+    \item $t \in \nat$ la diferencia entre el último día y el primer día en que pasan camiones.
+    \item $c_{i} \in \nat$ el día en que pasará el ``camión i''. \textbf{Notar aquí la diferencia de notación con la notación de entrada}.
+  \item $d_{i} \in \Z$ el ``día $i$'', dado por el intervalo determinado por $d_{1} =$ el primer día que pasa un camión, y $d_{t} =$ el último día que pasa un camión. Aclaración: $d_{i}$ puede ser negativo.
+  \end{itemize}
+\end{notacion}
+
+\begin{proposicion}
+Representamos el conjunto \textbf{universo de soluciones} bajo la forma de 
+\textbf{$S \subseteq \nat$} en donde, para cada solución, \textbf{$s \in S$} 
+representa al día en que se contrata al inspector.
+Esta representación es suficiente para generar todo el universo de soluciones únicas.
+\end{proposicion}
+\begin{demostracion}\label{dem:ej1_1}
+\textbf{Bajo las condiciones de una determinada entrada}, asumir que este 
+parámetro \textbf{$s$} basta para definir una \textbf{solución única}
+es equivalente a decir que
+\textbf{existe una función sobreyectiva $\#camiones{:}~S\rightarrow\nat_{0}$}
+que, dado un determinado día \textbf{$s$}, devuelve la cantidad de camiones 
+inspeccionados para esa solución.
+
+Esto es así porque el inspector trabajará una \textbf{cantidad fija y predeterminda
+de días consecutivos} que depende exclusivamente de susodicha entrada, y 
+además la cantidad total de camiones inspeccionados es la sumatoria de la cantidad
+de camiones inspeccionados en cada uno de los días en que el inspector trabaje.
+\end{demostracion}
+
+\begin{definicion}\textbf{Función Objetivo}\label{def:ej1-funcionobjetivo}
+
+Nos interesa elegir cuál es el mejor día entre $d_1$ y $d_{t+1-D}$.Siendo 
+camionesEnElDia una función que dado un día devuelve el conjunto de
+camiones que circulan en el mismo, buscamos maximizar la siguiente 
+\textbf{función objetivo}\ $f:~S~\rightarrow~\nat$:
+\[
+  \red{f(s)} = \sum_{i=k}^{k+D-1}{|~camionesEnElDia(d_{i})~|}
+\]
+la cual, además, resulta ser la función mencionada $\#camiones$ mencionada
+en \ref{dem:ej1_1}.
+\end{definicion}
+
+\begin{proposicion}
+Reducimos el intervalo de análisis al rango \textbf{$[d_{1},~d_{t+1-D}] \subset S$},
+ya que el resto de las soluciones resultan indiferentes a los objetivos del problema.
+\end{proposicion}
+\begin{demostracion}
+Ya que nos interesa obtener la solución que maximice la cantidad de camiones
+inspeccionados (función \ref{def:ej1-funcionobjetivo}), y por el mismo motivo expuesto en la demostración anterior, 
+podemos acotar el análisis del universo de soluciones al rango 
+\textbf{$[d_{1+1-D},~d_{t}]$} debido a que, ya que \textbf{$d_{1}$} es el día en que 
+pasa el primer camión, y \textbf{$d_{t}$} es el día en que pasa el último camión, 
+podemos asegurar que para cualquier solución \textbf{s} fuera de este rango
+\textbf{$\#camiones(s)~=~0$}. 
+
+Más aún, podemos acotar el análisis al intervalo \textbf{$[d_{1},~d_{t+1-D}]$},
+contenido en el intervalo anterior ya que, por las razones antes expuestas, 
+podemos asegurar que: 
+  
+    $\#camiones$ valuada en {$[d_{1+(1-D)},~d_{1})$} es menor o igual
+    a $\#camiones(d_{1})$
+    
+    $\#camiones$ valuada en {$(d_{t+(1-D)},~d_{t}]$} es menor o igual
+    a $\#camiones(d_{t+1-D})$.
+\end{demostracion}
+
+
+\begin{proposicion}
+Dado un intervalo de análisis, nos interesará inspeccionar sólamente los días
+en que haya transcurrido al menos un camión.
+\end{proposicion}
+\begin{demostracion}
+Dado que buscamos maximizar la función objetivo (\ref{def:ej1-funcionobjetivo})
+entonces, abreviando camionesEnElDia como cEED,
+
+\begin{eqnarray}
+\red{f(s)} &=& \sum_{i=s}^{s+D-1}{|cEED(d_{i})|} \nonumber\\
+     &=& |cEED(s)| + \sum_{i=s+1}^{s+D-1}{|cEED(d_{i})|} \nonumber\\
+     &=& |cEED(s)| + \sum_{i=s+1}^{s+D-1}{|cEED(d_{i})|} + |cEED(s+D-1+1)| - |cEED(s+D-1+1)| \nonumber\\
+     &=& |cEED(s)| + \sum_{i=s+1}^{s+D-1+1}{|cEED(d_{i})|} - |cEED(s+D-1+1)| \nonumber\\
+     &=& |cEED(s)| + \red{f(s+1)} - |cEED(s+D-1+1)| \nonumber
+\end{eqnarray}
+
+Pero si $|~cEED(s)=0~|$, y dado que cEED es no negativa, entonces se deduce que
+\begin{eqnarray}
+\red{f(s)} &=& |cEED(s)| + f(s+1) - |cEED(s+D-1+1)| \nonumber \\
+     &=& 0 + \red{f(s+1)} - |cEED(s+D-1+1)| \leq \red{f(s+1)} \nonumber
+\end{eqnarray}
+de lo cual se desprende que 
+\[
+  s=0 \then f(s) \leq f(s+1)
+\]
+y como buscamos maximizar f, podemos obviar las soluciones en que s=0.
+\end{demostracion}
+
+
+
+\centerbf{Pseudocódigo}
+
+Primero, entonces, ordenamos en forma creciente el conjunto
+{$c_1$,...,$c_n$}. Sabemos que la solución pertenece a este conjunto.
+Según (\ref{def:ej1-funcionobjetivo}), tenemos a \red{$f(s)$} como la sumatoria 
+de la cantidad de camiones que pasan desde el día $s$ hasta el día $s+D-1$. 
+Nuestro algoritmo itera sobre cada elemento $c_i$ del conjunto, calculando 
+para cada uno \red{$f(c_i)$}, y guardando en todo momento el elemento $e$ tal que 
+\red{$f(e)$} es el máximo. Al final de las iteraciones, tenemos guardado el
+elemento $e$ tal que \red{$f(e)$} es máximo en todo el conjunto de soluciones. 
+Devolvemos $e$ y \red{$f(e)$}.
 
 
 \subsubsection{Justificación formal de correctitud}
@@ -173,15 +302,15 @@ El algoritmo utilizado es el siguiente:
 \begin{algorithm}[H]
 \caption{Algoritmo Camiones Sospechosos}\label{camionessospechosos}
 \footnotesize\begin{algorithmic}[1]
-	\Require
-		\Statex $intervaloInspector \gets$ \Call{dameIntervaloInspector}{} \Comment{$integer$}
-		\Statex $cantidadDeCamiones \gets$ \Call{dameCantidadCamiones}{} \Comment{$integer$}
-		\Statex $fechasCamiones \gets$ \Call{dameFechasCamiones}{} \Comment{$arreglo\langle integer \rangle$}
-	\Ensure
-		\Statex \Call{Fecha Óptima Inspector}{} \Comment{$integer$}
-		\Statex \Call{Cantidad De Camiones Analizados}{} \Comment{$integer$}
-	\Statex
-	
+  \Require
+    \Statex $intervaloInspector \gets$ \Call{dameIntervaloInspector}{} \Comment{$integer$}
+    \Statex $cantidadDeCamiones \gets$ \Call{dameCantidadCamiones}{} \Comment{$integer$}
+    \Statex $fechasCamiones \gets$ \Call{dameFechasCamiones}{} \Comment{$arreglo\langle integer \rangle$}
+  \Ensure
+    \Statex \Call{Fecha Óptima Inspector}{} \Comment{$integer$}
+    \Statex \Call{Cantidad De Camiones Analizados}{} \Comment{$integer$}
+  \Statex
+  
   \State \Call{ordenar}{fechasCamiones} \Comment{\bigO{n.\log n}}
   \State $inicioInter \gets 0$ \Comment{\bigO{1}}
   \State $finInter \gets 0$ \Comment{\bigO{1}}
@@ -202,17 +331,17 @@ El algoritmo utilizado es el siguiente:
   \State
 
 
-	\Function{CantCamionesEn}{$inicioInter, finInter$}
+  \Function{CantCamionesEn}{$inicioInter, finInter$}
   \State \Return { $finInter - inicioInter$ } \Comment{\bigO{1}}
-	\EndFunction \Comment{\texttt{final} \bigO{1}}
+  \EndFunction \Comment{\texttt{final} \bigO{1}}
   \State
 
-	\Function{DiferenciaMenorAInterInspector}{$inicioInter, finInter$}
+  \Function{DiferenciaMenorAInterInspector}{$inicioInter, finInter$}
     \State $diferencia \gets fechasCamiones_{finInter} - fechasCamiones_{inicioInter}$ \Comment{\bigO{1}}
     \State \Return {$ finInter < cantidadDeCamiones \texttt{ and } diferencia < intervaloInspector $} \Comment{\bigO{1}}
-	\EndFunction \Comment{\texttt{final} \bigO{1}}
+  \EndFunction \Comment{\texttt{final} \bigO{1}}
 
-	\Statex{}
+  \Statex{}
 \end{algorithmic}
 \end{algorithm}
 
@@ -281,23 +410,23 @@ De los datos de entrada y salida sabemos que:
 
 \begin{itemize}
     \item $1$ $\le$ D, n, $d_i$ (con $1$ $\le$ i $\le$ n).
-	\item $1 \le $ c $\le$ n 
-	\item $1 \le $ mín $d_i$ $\le$ d $\le$ máx $d_i$ 
+  \item $1 \le $ c $\le$ n 
+  \item $1 \le $ mín $d_i$ $\le$ d $\le$ máx $d_i$ 
 \end{itemize}
 
 Entonces, podemos separar el conjunto de soluciones en los siguientes casos: \\
 
 \begin{tabular}{|l|l|l|l|}
-	\hline
-	Caso &  Condición  						              & Ej.Input      & Ej.Output \\
-	\hline
-	$1$  &  D$=$L, d$=$mín $d_i$, c$=$n    				  & 3 3 1 2 3     & 1 3 \\	
-	$2$  &	D$>$L, d$=$mín $d_i$, c$=$n     		      & 5 3 1 2 3     & 1 3 \\
-	\hline	
-	$3$  &	D$<$L, d$=$mín $d_i$, c$<$n     			  & 3 4 1 2 5 1   & 1 3 \\
-	$4$  &	D$<$L, mín $d_i$ $<$ d $<$ máx $d_i$, c$<$n   & 2 5 1 3 4 7 4 & 3 3 \\
-	$5$  &	D$=1$, d$=$máx $d_i$, c$<$n     			  & 1 4 1 5 5 5   & 5 3 \\	
-	\hline
+  \hline
+  Caso &  Condición                           & Ej.Input      & Ej.Output \\
+  \hline
+  $1$  &  D$=$L, d$=$mín $d_i$, c$=$n             & 3 3 1 2 3     & 1 3 \\  
+  $2$  &  D$>$L, d$=$mín $d_i$, c$=$n               & 5 3 1 2 3     & 1 3 \\
+  \hline  
+  $3$  &  D$<$L, d$=$mín $d_i$, c$<$n             & 3 4 1 2 5 1   & 1 3 \\
+  $4$  &  D$<$L, mín $d_i$ $<$ d $<$ máx $d_i$, c$<$n   & 2 5 1 3 4 7 4 & 3 3 \\
+  $5$  &  D$=1$, d$=$máx $d_i$, c$<$n             & 1 4 1 5 5 5   & 5 3 \\  
+  \hline
 \end{tabular} \\
 
 Si c$=$n podemos deducir que sólo es posible que d$=$mín $d_i$ y que D$\ge$L
@@ -313,7 +442,7 @@ Por lo tanto, podemos concluir que el comportamiento del programa es correcto.
 
 \subsubsection{Medición empírica de la performance}
 
-Como se mencionó en \secref{sec:ej1cotatemporal}, el algoritmo elegido para la
+Como se mencionó en \secref{ej1cotatemporal}, el algoritmo elegido para la
 resolución del problema, está dividido en dos partes. 
 
 La primera parte del algoritmo corresponde al ordenamiento de un arreglo con las
@@ -357,7 +486,7 @@ Se puede observar que la cota teórica calculada es correcta.
 \clearpage
 \begin{figure}[H]
    \begin{center}
-   \includegraphics[width=1.4\textwidth,angle=90]{../ej1/graficos/test_1.pdf}
+   %\includegraphics[width=1.4\textwidth,angle=90]{../ej1/graficos/test_1.pdf}
    \caption{\textbf{Muestreo general del Ejercicio 1}}
    \label{fig:ej1-1}
    \end{center}
@@ -366,7 +495,7 @@ Se puede observar que la cota teórica calculada es correcta.
 \clearpage
 \begin{figure}[H]
    \begin{center}
-   \includegraphics[width=1.4\textwidth,angle=90]{../ej1/graficos/test_2.pdf}
+   %\includegraphics[width=1.4\textwidth,angle=90]{../ej1/graficos/test_2.pdf}
    \caption{\textbf{Relación contra $n^{2}$}}
    \label{fig:ej1-2}
    \end{center}
@@ -402,7 +531,7 @@ a la parte lineal del algorítmo.
 \clearpage
 \begin{figure}[H]
    \begin{center}
-   \includegraphics[width=1.4\textwidth,angle=90]{../ej1/graficos/test_3.pdf}
+   %\includegraphics[width=1.4\textwidth,angle=90]{../ej1/graficos/test_3.pdf}
    \caption{Tiempo de ejecución contra dispersión de los datos}
    \label{fig:ej1-3}
    \end{center}

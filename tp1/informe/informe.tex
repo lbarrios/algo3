@@ -18,26 +18,30 @@
 %-- Dentro de TP1 redefino ciertos comandos para que se pueda compilar todo individualmente --
 \begin{TP1}
 %-- Introduccion --
-\section{Introducción}
+\section{Introducción}\label{sec:introduccion}
 \input{introduccion}
+\newpage
+%-- Instrucciones --
+\section{Instrucciones de uso}\label{sec:instrucciones}
+\input{instrucciones}
 \newpage
 
 %-- Desarrollo --
-\section{Desarrollo del TP}
+\section{Desarrollo del TP}\label{sec:desarrollo}
 	
 	%-- Problema 1 --
-	\subsection{Problema 1: Camiones sospechosos}
+	\subsection{Problema 1: Camiones sospechosos}\label{subsec:problema1}
 	\input{problema1}
 	\newpage
 	
 	%-- Problema 2 --
-	\subsection{Problema 2: La joya del Río de la Plata}
+	\subsection{Problema 2: La joya del Río de la Plata}\label{subsec:problema2}
 	\input{problema2}
 	\newpage
 	
 	%-- Problema 3 --
 	\subsection{Problema 3: Rompecolores}
-	\input{problema3}
+	\input{problema3}\label{subsec:problema3}
 	\newpage
 
 %-- Apéndices --
@@ -50,13 +54,13 @@
 	%
     % - Para la reentrega -
     %
-    %\subsection{Informe de Modificaciones}
-	%\input{modificaciones}
-	%\clearpage
+    \subsection{Informe de Modificaciones}
+	\input{modificaciones}
+	\clearpage
 	
 	%-- Bibliografia --
-	\subsection{Bibliografía}
-	\begin{thebibliography}{99}
+	%\subsection{Bibliografía}
+	%\begin{thebibliography}{99}
 %	
 %		\bibitem{lib:brassard} G. Brassard, P. Bratley, \textit{Fundamental of Algorithmics}, Prentice Hall,  1996, Chapter 6.2, \enquote{General characteristics of greedy algoritmhs}, Chapter 9.6, \enquote{Backtracking}, 
 %		\bibitem{lib:cormen} Cormen, Leiserson, Rivest \textit{Introduction to Algorithms}, 2001, Chapter 16 \enquote{Greedy Algorithms}.
@@ -67,9 +71,7 @@
 %		\bibitem{wiki:greedy} \texttt{http://en.wikipedia.org/wiki/Greedy\_algorithm\#Specifics}
 %		\bibitem{wiki:back} \texttt{http://en.wikipedia.org/wiki/Backtracking\#Usage\_considerations}
 
-	\end{thebibliography}
-	
-	\clearpage{\pagestyle{empty}\input{instrucciones}\clearpage} % el triangulito
+	%\end{thebibliography}
 
 \end{TP1}
 \end{document}
