@@ -1,70 +1,23 @@
 % ------ headers globales y begin ---------------
 \documentclass[11pt, a4paper, twoside]{article}
-\usepackage{header_tp1}
+\usepackage{header_tp2}
 
 \begin{document}{}
 % -----------------------------------------------
 
-\subsubsection{Descripción} 
+\subsubsection{Descripción}\label{subsubsec:ej3-descripcion}
+\input{ej3-descripcion}
 
-\subsubsection{Hipótesis de resolución}
-Para una mayor claridad, vamos a describir nuestro algoritmo reduciendo el problema a encontrar la distancia hasta la casilla destino.\\
-Encontrar la secuencia de saltos es algo secundario y está detallado en el código fuente.
-Vamos a pensar el problema como un grafo, siendo cada nodo una posición del tablero con una cantidad de unidades de potencia extra \\
-restantes. Los adyacentes a cada nodo son las casillas (y las unidades extra que quedan para cada caso) a las que puedo llegar usando \\
-mi resorte y mis unidades extra. Se implementó un Breadth-first search. Recorremos primero los nodos a distancia 0, luego a distancia 1, y \\
-así sucesivamente.
-Para cada nodo vamos guardando su distancia desde la posicion de origen. \\
-Inicializamos la distancia hasta la posicion de origen, contando con k unidades extra de potencia, con 0, y el resto de las distancias en INF.\\
-Para cada nodo 'v' que recorremos, sabemos que podemos llegar a sus adyacentes saltando hasta v en v.distancia pasos, y luego saltando al \\
-adyacente 'a' en un paso mas. Luego, podemos decir que a.distancia <= v.distancia + 1. Si no habia recorrido a previamente, \\
-v.distancia + 1 refleja la distancia del camino más corto hasta a. Si ya habia recorrido 'a', su distancia ya está calculada y es menor o \\
-o igual a la de v.\\
-En algun momento llegamos a la casilla destino, ya que el grafo es conexo, y podemos devolver su distancia.
-\nota{Esto de que es conexo, es decir, que cualquier casillero podes llegar a cualquier otro, se puede mencionar en la descripcion del
-problema}
+\subsubsection{Planteamiento de resolución}\label{subsubsec:ej3-resolucion}
+\input{ej3-resolucion}
 
+\subsubsection{Justificación formal de correctitud}\label{subsubsec:ej3-correctitud}
+\input{ej3-correctitud}
 
-Pseudocódigo:
+\subsubsection{Cota de complejidad temporal}\label{subsubsec:ej3-cotatemporal}
+\input{ej3-cotatemporal}
 
-for i=1..n, j=1..n, l=0..k :
-    distancia desde el casillero[i][j], sobrando l unidades extra de potencia = infinito
-
-distancia hasta el casillero origen, sobrando k unidades extra de potencia = 0
-
-cola<(int, int, int)> colaBFS
-
-colaBFS.push(origen, k)
-
-while ! colaBFS.empty():
-    actual = colaBFS.pop()
-    para cada casillero (x, y) al que puedo llegar desde actual
-        l = unidades extra que quedan tras ir a (x, y)
-        // si no recorri ya ese casillero, quedando esas unidades extra
-        if distancia al casillero (x, y), quedando l unidades extra es menor a infinito :
-            la pongo en 'distancia desde actual' + 1
-            if (es el casillero de destino) break
-            colaBFS.push((x,y), unidades extra que quedan)
-
-return distancia al destino
-
-
-
-
-\subsubsection{Justificación formal de correctitud}
-
-\subsubsection{Cota de complejidad temporal}
-Inicializar las distancias lleva O(n^2 * k)\\
-En el ciclo while recorremos a lo sumo n^2 * k nodos, ya que no recorremos dos veces el mismo nodo.\\
-Para cada nodo miramos todos sus adyacentes, que son a lo sumo todas las casillas en la misma fila, o todas las casillas en la misma\\
-columna, cada casilla con una cantidad de unidades de potencia extra única. En peor caso miramos 2*n nodos, es decir O(n) nodos.\\
-Luego la complejidad del ciclo es O(n^2 * k) * O(n) = O(n^3 * k).\\
-
-
-
-
-\subsubsection{Verificación mediante casos de prueba}
-
-
+\subsubsection{Verificación mediante casos de prueba}\label{subsubsec:ej3-casosdeprueba}
+\input{ej3-casosdeprueba}
 
 \end{document}

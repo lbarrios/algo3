@@ -1,0 +1,52 @@
+% ------ headers globales y begin ---------------
+\documentclass[11pt, a4paper, twoside]{article}
+\usepackage{header_tp2}
+
+\begin{document}{}
+% -----------------------------------------------
+
+% Pseudocódigo: \\
+
+% ComponenteConexa componentesConexas[n] \\
+
+% estructura ComponenteConexa {
+%     float distancias[n]
+%     list<arista> aristas
+%     arista aristaMasCortaHacia[n]
+%     float distanciaMasCorta
+%     int indiceCCMasCerca
+% }
+
+% for i in 1 to n: comentario: O(n^2) \\
+%     componentesConexas[i] = i-esimo pueblo  comentario: O(1)\\
+%     for j in 1 to n:  comentario: O(n)\\
+%         aristaMasCorta entre la CC i y la CC j = (i, j) comentario: O(1) \\
+%         distancia entre componentesConexas[i] y la componente conexa j = distanciaEuclidea(pueblo i, pueblo j) comentario: O(1) \\
+%         me voy fijando cual de estas distancias es mas corta y la guardo junto con el indice j  comentario: O(1)\\
+
+% for i in 1 to n - k: comentario: O(n * (n-k)) = O(n^2)\\
+%     comentario: me fijo la distancia mas corta entre dos componentes \\
+%     for i in 1 to n:  comentario: O(n) \\ 
+%         observacion: si componentes[i] ya no representa mas una componente continuo \\
+%         me voy fijando que componente tiene la menor 'menor distancia hacia otra componente' y la guardo en CCAUnir1,\\
+%         su componente mas cercana en CCAUnir2 comentario: O(1) \\
+
+%     comentario: uno CCAUnir1 y CCAUnir2 \\
+%     CCAUnir1.aristas = CCAUnir1.aristas \union CCAUnir2.aristas + aristaMasCorta entre CCAUnir1 y CCAUnir2 comentario: O(1)\\
+%     marco CCAUnir2 como que ya no representa una componente conexa. toda su información pasa a CCAUnir1  comentario: O(1)\\
+    
+%     comentario: actualizo distancias \\
+%     for i in 1 to n:  comentario: O(n)\\
+%         si componentesConexas[i] ya no representa una componente conexa, continuo comentario: O(1) \\
+%         distancia entre componentesConexas[i] y CCAUnir1 = min (distancia a CCAUnir1, distancia a CCAUnir2) comentario: O(1) \\
+%         si CCAUnir2 esta mas cerca que CCAUnir1, aristaMasCortaHacia CCAUnir1 = aristaMasCortaHacia CCAUnir2 comentario: O(1) \\
+%         y lo mismo actualizo para la distancia y arista mas corta desde CCAUnir1 hacia la CC i comentario: O(1) \\
+%         voy guardando la distanciaMasCorta e indiceCCMasCerca de CCAUnir1 comentario: O(1) \\
+%         voy viendo si tengo que actualizar la distanciaMasCorta e indiceCCMasCerca de la CC i comentario: O(1)\\
+
+% al final recorro componentesConexas fijandome que indices representan componentes conexas, en estos indices de pueblo coloco una centra \\
+% y las tuberías son las aristas de la CC representada por estos indices comentario: O(n) \\
+    
+% Total O(n ^ 2) \\
+
+\end{document}

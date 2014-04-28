@@ -1,7 +1,7 @@
 % ------ headers globales -------------
 \documentclass[11pt, a4paper, twoside]{article}
-\usepackage{header_tp1}
-\includeonly{instrucciones, codigo-fuente, conclusiones, introduccion, ej1, ej2, ej3} %arreglar y agregar ej3
+\usepackage{header_tp2}
+\includeonly{instrucciones, codigo-fuente, conclusiones, introduccion, problema1, problema2, problema3} %arreglar y agregar problema3
 \begin{document}{}
 % -------------------------------------
 % -- Carátula --
@@ -15,61 +15,63 @@
 %-- Índice --
 \newpage{\pagestyle{empty}\tableofcontents\cleardoublepage}
 
-%-- Dentro de TP1 redefino ciertos comandos para que se pueda compilar todo individualmente --
-\begin{TP1}
+%-- Dentro de TP2 redefino ciertos comandos para que se pueda compilar todo individualmente --
+\begin{TP2}
 %-- Introduccion --
-\section{Introducción}
+\section{Introducción}\label{sec:introduccion}
 \input{introduccion}
+\newpage
+%-- Instrucciones --
+\section{Instrucciones de uso}\label{sec:instrucciones}
+\input{instrucciones}
 \newpage
 
 %-- Desarrollo --
-\section{Desarrollo del TP}
-	
-	%-- Problema 1 --
-	\subsection{Problema 1: Camiones sospechosos}
-	\input{ej1}
-	\newpage
-	
-	%-- Problema 2 --
-	\subsection{Problema 2: La joya del Río de la Plata}
-	\input{ej2}
-	\newpage
-	
-	%-- Problema 3 --
-	\subsection{Problema 3: Rompecolores}
-	\input{ej3}
-	\newpage
+\section{Desarrollo del TP}\label{sec:desarrollo}
+  
+  %-- Problema 1 --
+  \subsection{Problema 1: Robanúmeros}\label{subsec:ej1}
+  \input{ej1}
+  \newpage
+  
+  %-- Problema 2 --
+  \subsection{Problema 2: La centralita (de gas)}\label{subsec:ej2}
+  \input{ej2}
+  \newpage
+  
+  %-- Problema 3 --
+  \subsection{Problema 3: Saltos en La Matrix}
+  \input{ej3}\label{subsec:ej3}
+  \newpage
 
 %-- Apéndices --
 \section{Apéndices}
-	
-	\subsection{Código Fuente (resumen)}
-	\input{codigo-fuente}
-	\clearpage
-	
-	%
-    % - Para la reentrega -
-    %
-    %\subsection{Informe de Modificaciones}
-	%\input{modificaciones}
-	%\clearpage
-	
-	%-- Bibliografia --
-	\subsection{Bibliografía}
-	\begin{thebibliography}{99}
-%	
-%		\bibitem{lib:brassard} G. Brassard, P. Bratley, \textit{Fundamental of Algorithmics}, Prentice Hall,  1996, Chapter 6.2, \enquote{General characteristics of greedy algoritmhs}, Chapter 9.6, \enquote{Backtracking}, 
-%		\bibitem{lib:cormen} Cormen, Leiserson, Rivest \textit{Introduction to Algorithms}, 2001, Chapter 16 \enquote{Greedy Algorithms}.
-%		\bibitem{stl:stl} \texttt{http://www.cplusplus.com/reference/stl/}
-%		\bibitem{stl:set} \texttt{http://www.cplusplus.com/reference/set/set/}
-%		\bibitem{stl:vector} \texttt{http://www.cplusplus.com/reference/vector/vector/}
-%		\bibitem{stl:pqueue} \texttt{http://www.cplusplus.com/reference/queue/priority\_queue/}
-%		\bibitem{wiki:greedy} \texttt{http://en.wikipedia.org/wiki/Greedy\_algorithm\#Specifics}
-%		\bibitem{wiki:back} \texttt{http://en.wikipedia.org/wiki/Backtracking\#Usage\_considerations}
+  
+  \subsection{Código Fuente (resumen)}\label{subsec:codigo-fuente}
+  \input{codigo-fuente}
+  \clearpage
+  
+  %
+  % - Para la reentrega -
+  %
+  %\subsection{Informe de Modificaciones}
+  %\input{modificaciones}
+  %\clearpage
+  
+  %-- Bibliografia --
+  %\subsection{Bibliografía}
+  %\begin{thebibliography}{99}
+% 
+%   \bibitem{lib:brassard} G. Brassard, P. Bratley, \textit{Fundamental of Algorithmics}, Prentice Hall,  1996, Chapter 6.2, \enquote{General characteristics of greedy algoritmhs}, Chapter 9.6, \enquote{Backtracking}, 
+%   \bibitem{lib:cormen} Cormen, Leiserson, Rivest \textit{Introduction to Algorithms}, 2001, Chapter 16 \enquote{Greedy Algorithms}.
+%   \bibitem{stl:stl} \texttt{http://www.cplusplus.com/reference/stl/}
+%   \bibitem{stl:set} \texttt{http://www.cplusplus.com/reference/set/set/}
+%   \bibitem{stl:vector} \texttt{http://www.cplusplus.com/reference/vector/vector/}
+%   \bibitem{stl:pqueue} \texttt{http://www.cplusplus.com/reference/queue/priority\_queue/}
+%   \bibitem{wiki:greedy} \texttt{http://en.wikipedia.org/wiki/Greedy\_algorithm\#Specifics}
+%   \bibitem{wiki:back} \texttt{http://en.wikipedia.org/wiki/Backtracking\#Usage\_considerations}
 
-	\end{thebibliography}
-	
-	\clearpage{\pagestyle{empty}\input{instrucciones}\clearpage} % el triangulito
+  %\end{thebibliography}
 
-\end{TP1}
+\end{TP2}
 \end{document}

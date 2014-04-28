@@ -1,0 +1,18 @@
+% ------ headers globales y begin ---------------
+\documentclass[11pt, a4paper, twoside]{article}
+\usepackage{header_tp2}
+
+\begin{document}{}
+% -----------------------------------------------
+
+Para una mayor claridad, vamos a reducir el problema a encontrar la mayor cantidad de puntos que se pueden sacar con el juego de cartas dado.\\
+Sea f(i,j) = "maxima cantidad de puntos que se pueden sacar en el juego que consiste en las cartas que estaban desde la posición i \\
+hasta la j en el juego de cartas original".\\
+Sea suma(i,j) la suma de las cartas que estaban entre la posición i y j en el juego de cartas original.\\
+Nuestro algoritmo se basa en que f(i,j) =   | valor de la carta i      si i=j\\
+                                            | suma(i, j) - min(f(i', j')) para todo i' j' que representen un juego que le dejo al oponente\\
+                                              usando una movida válida        sino\\
+\\
+\nota{habra que justificar esto?}
+
+\end{document}

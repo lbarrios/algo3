@@ -1,0 +1,187 @@
+% ------ headers globales y begin ---------------
+\documentclass[11pt, a4paper, twoside]{article}
+\usepackage{header_tp2}
+
+\begin{document}{}
+% -----------------------------------------------
+
+A continuación presentamos distintas instancias que sirven para verificar que el programa funciona correctamente.\\
+
+\begin{minipage}{0.4\textwidth}
+      \begin{tabular}{cccc}
+         Input \\
+         \hline
+         n & $c_1$ & \dots & $c_n$ \\
+         \\
+         \\
+         \\
+      \end{tabular}
+\end{minipage} 
+\begin{minipage}{0.3\textwidth}
+      \begin{tabular}{cccc}
+        Output\\
+        \hline
+        & t   & p1  & p2 \\
+        & $e_1$ & $c_1$  & \\
+        & \vdots & \vdots & \\
+        & $e_t$  & $c_t$ & 
+      \end{tabular}
+\end{minipage} \\
+
+\begin{itemize}
+  \item n: \#cartas iniciales. 
+  \item $c_i$ con $1 \le i \le n$: $c_i$ valor de la carta $i$. 
+  \item t: \#turnos del juego. 
+  \item p1: puntaje total Jug1.
+  \item p2: puntaje total Jug2.
+  \item $e_i$ con $1 \le i \le t$: $e_i$ extremo elegido por el jugador en el turno i (izq o der). 
+  \item $c_i$ con $1 \le i \le t$: $c_i$ \#cartas tomadas por el jugador en el turno i.   
+\end{itemize}
+        
+Según los valores de p1 y p2, podemos separar en 3 casos posibles: 
+        
+\begin{enumerate}
+  \item Caso Empate entre Jug1 y Jug2:
+
+    \begin{itemize}
+      \item Cartas con valor cero \\
+      \\
+        \begin{minipage}{0.4\textwidth}
+            \begin{tabular}{cccc}
+               Input \\
+               \hline
+               3 & 0 & 0 & 0 \\
+               \\
+            \end{tabular}
+        \end{minipage} 
+        \begin{minipage}{0.3\textwidth}
+            \begin{tabular}{cccc}
+              Output\\
+              \hline
+              & 1   & 0  & 0 \\
+              & izq & 3  & \\
+            \end{tabular}
+        \end{minipage} 
+        
+      \item Cartas con valores negativos \\
+      \\
+        \begin{minipage}{0.4\textwidth}
+            \begin{tabular}{cccc}
+               Input\\
+               \hline
+               3 & -1 & -2 & -3 \\
+               \\
+               \\
+            \end{tabular}
+        \end{minipage} 
+        \begin{minipage}{0.3\textwidth}
+            \begin{tabular}{cccc}
+              Output \\
+                          \hline
+                 & 2   & -3  & -3 \\
+               & izq & 2  & \\
+               & izq & 1  & \\
+            \end{tabular}
+        \end{minipage}
+    \end{itemize}
+    
+  \item Caso Perdedor Jug1: 
+    \begin{itemize}
+      \item Cartas con valores negativos \\
+      \\
+        \begin{minipage}{0.4\textwidth}
+            \begin{tabular}{cccc}
+               Input \\
+                           \hline
+               3 & -2 & -3 & -1 \\
+               \\
+               \\
+            \end{tabular}
+        \end{minipage} 
+        \begin{minipage}{0.3\textwidth}
+            \begin{tabular}{cccc}
+              Output\\
+                \hline
+               & 2   & -4  & -2 \\
+               & der & 2  & \\
+               & izq & 1  & \\
+            \end{tabular}
+        \end{minipage} 
+    \end{itemize}
+
+  \item Caso Ganador Jug1: 
+  
+    \begin{itemize}
+      \item Cartas con valores positivos \\
+      \\
+        \begin{minipage}{0.4\textwidth}
+            \begin{tabular}{cccc}
+               Input \\
+                           \hline   
+               3 & 1 & 2 & 3 \\
+               \\
+            \end{tabular}
+        \end{minipage} 
+        \begin{minipage}{0.3\textwidth}
+            \begin{tabular}{cccc}
+              Output\\
+                          \hline
+                       & 1   & 6  & 0 \\
+               & izq & 3  & \\
+            \end{tabular}
+        \end{minipage} 
+        
+      \item Cartas con valores negativos \\ 
+      \\
+        \begin{minipage}{0.4\textwidth}
+            \begin{tabular}{cccc}
+               Input \\
+                           \hline
+                          3 & -5 & -1 & -3 \\
+               \\
+               \\
+            \end{tabular}
+        \end{minipage} 
+        \begin{minipage}{0.3\textwidth}
+            \begin{tabular}{cccc}
+              Output \\
+                          \hline
+                           & 2   & -4  & -5 \\
+               & der & 2  & \\
+               & izq & 1  & \\
+            \end{tabular}
+        \end{minipage}
+      
+            \item Cartas con valores positivos y negativos \\
+      \\
+        \begin{minipage}{0.4\textwidth}
+            \begin{tabular}{ccccc}
+               Input\\
+                           \hline
+               4 & 2 & -8 & -8 & 3 \\
+               \\
+               \\
+               \\
+               \\
+            \end{tabular}
+        \end{minipage} 
+        \begin{minipage}{0.3\textwidth}
+            \begin{tabular}{cccc}
+               Output \\
+             \hline 
+               & 4   & -5  & -6 \\
+               & der & 1  & \\
+               & izq & 1  & \\
+               & izq & 1  & \\
+               & izq & 1  & \\
+            \end{tabular}
+        \end{minipage}        
+        
+    \end{itemize}
+  
+Ejecutamos el programa con los distintos ejemplos y se llegó a la solución esperada. 
+Por lo tanto, podemos concluir que el comportamiento del programa es correcto. 
+  
+\end{enumerate}
+
+\end{document}

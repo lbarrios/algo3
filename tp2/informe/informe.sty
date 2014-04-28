@@ -5,6 +5,9 @@
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
 
+% -- colors macros --
+\newcommand{\red}[1]{\textcolor{red3}{#1}}
+
 % -- commands --
 % notes
 %~ \newcommand{\com}[1]{\hspace{0.5em}\textcolor{lightskyblue4}{\texttt{/* #1 */}}}
@@ -13,6 +16,7 @@
 
 % notation
 \newcommand{\nat}{\ensuremath{\mathbb{N}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
 \newcommand{\real}{\ensuremath{\mathbb{R}}}
 \newcommand{\grad}{\hspace{-2mm}$\phantom{a}^{\circ}$}
 \newcommand{\bigO}[1]{\ensuremath{\mathop{}\mathopen{}\mathcal{O}\mathopen{}\left(#1\right)}}
@@ -30,7 +34,9 @@
 \newcommand{\fig}[1]{\textit{Figura \ref{#1}}}
 \newcommand{\bib}[1]{\cite{#1}}
 \newcommand{\bibext}[2]{\cite[#1]{#2}}
-\newcommand{\secref}[1]{\texttt{Sección \textbf{\titleref{#1}} (página \pageref{#1})}}
+\newcommand{\secref}[1]{\texttt{Sección \textbf{\ref{sec:#1}:\titleref{sec:#1}} (página \pageref{sec:#1})}}
+\newcommand{\subsecref}[1]{\texttt{Subsección \textbf{\ref{subsec:#1}:\titleref{subsec:#1}} (página \pageref{subsec:#1})}}
+\newcommand{\subsubsecref}[2]{\texttt{\textbf{\ref{subsubsec:#1-#2}:\titleref{subsubsec:#1-#2}}} (página \pageref{subsubsec:#1-#2})}
 
 % -- condifigure code styles
 \lstset{ %
@@ -56,7 +62,7 @@
 \fancyhead{} % clear all header fields
 \fancyhead[LE,RO]{} % Left-Even, Right-Odd
 \fancyhead[RE,LO]{} % Right-Even, Left-Odd
-\fancyhead[CE,CO]{\textsf{\textsc{TP1: Técnicas Algoritmicas}}} % Center-Even, Center-Odd
+\fancyhead[CE,CO]{\textsf{\textsc{TP2: Técnicas Algoritmicas Avanzadas}}} % Center-Even, Center-Odd
 \fancyfoot{} % clear all footer fields
 \fancyfoot[LE,RO]{\textbf{\thepage}} % Left-Even, Right-Odd
 \fancyfoot[RE,LO]{} % Right-Even, Left-Odd
@@ -95,10 +101,10 @@
 \theoremstyle{plain}
 \newtheorem{proposicion}{Proposición}[subsubsection]
 \newtheorem{teorema}[proposicion]{Teorema}
-\newtheorem{demostracion}[proposicion]{Demostracion}
 \newtheorem{corolario}[proposicion]{Corolario}
 \newtheorem{lema}[proposicion]{Lema}
 \theoremstyle{definition}
+\newtheorem{demostracion}[proposicion]{Demostracion}
 \newtheorem{definicion}{Definición}[subsubsection]
 \newtheorem{ejemplo}{Ejemplo}[subsubsection]
 \newtheorem{ejercicio}{Ejercicio}
@@ -107,7 +113,7 @@
 \newtheorem*{notacion}{Notación}
 
 % -------------------------------------------------------------------------------------------
-\newenvironment{TP1}{%
+\newenvironment{TP2}{%
 \renewcommand{\documentclass}[2][]{}%
 \renewcommand{\usepackage}[2][]{}%
 \renewenvironment{document}{\begingroup}{\endgroup}
@@ -135,3 +141,5 @@
             }
     }
 }
+
+\newcommand{\centerbf}[1]{\begin{center}\textbf{#1}\end{center}}

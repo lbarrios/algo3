@@ -1,0 +1,162 @@
+% ------ headers globales y begin ---------------
+\documentclass[11pt, a4paper, twoside]{article}
+\usepackage{header_tp2}
+
+\begin{document}{}
+% -----------------------------------------------
+
+
+
+En este problema se tiene que crear un algoritmo que juegue al \textit{Robanúmeros} de forma tal 
+que el jugador1 logre el mejor juego posible, y el jugador2 juegue de manera óptina durante cadu turno que le toque.
+El algoritmo tiene que tener una complejidad temporal de peor caso de \bigO{n^3}, con n la cantidad de cartas
+iniciales.\\
+\\
+Reglas del \textit{Robanúmeros}: 
+\begin{itemize}
+  \item Comienzo del juego: \\
+  Se tiene una cantidad n ($n \in \mathbb{N}$) de cartas con valores enteros alineadas
+  horizontalmente (c1, c2, ..., cn) sobre la mesa. Las cartas tienen que estar boca arriba. 
+  \item Turnos: \\
+  Participan 2 jugadores, cada uno va alternando un turno.(Total de turnos t: 1,..,n).  
+  \item Elección de cartas: \\
+  En cada turno el jugador tiene que elegir un extremo, el izquierdo (izq) o el derecho (der), de 
+  la secuencia de cartas desde el que irá tomando de 1 a n de las cartas adyacentes que están en la mesa. 
+  La cantidad de cartas elegidas variará según le sea conveniente al jugador, pero por lo menos tiene que tomar una 
+  carta en su turno. 
+  \item Fin del juego: \\
+  El juego finaliza cuando no hay más cartas sobre la mesa. Se suman las cartas de cada 
+  jugador (p1: Ptos. Jug1, p2: Ptos. Jug2). Gana el que obtiene el mayor puntaje.
+\end{itemize}
+
+\begin{ejemplo}\hspace{0em}
+
+  \begin{itemize}
+    \item Cartas iniciales:
+      \begin{center}
+          \begin{tabular}{|c|c|c|c|c|}
+            \hline
+             2 & -3 & -2 & 5 & 5 \\
+            \hline
+          \end{tabular}
+      \end{center} 
+     
+    \item   Turno1 (Jug1): Elige el extremo derecho y toma las 2 últimas cartas. 
+      \begin{tabular}{|c|c|}
+          \hline
+           5 & 5 \\
+          \hline
+      \end{tabular} \\
+
+    \item Quedan sobre la mesa:   
+      \begin{center}
+          \begin{tabular}{|c|c|c|}
+            \hline
+             2 & -3 & -2 \\
+            \hline
+          \end{tabular}
+      \end{center}  
+
+    \item Turno2 (Jug2): Elige el extremo izquierdo y toma 1 carta. 
+      \begin{tabular}{|c|}
+          \hline
+           2\\
+          \hline
+      \end{tabular} \\
+
+    \item Quedan sobre la mesa:   
+      \begin{center}
+        \begin{tabular}{|c|c|}
+          \hline
+           -3 & -2 \\
+          \hline
+        \end{tabular}
+      \end{center}    
+      
+    \item Turno3 (Jug1): Elige el extremo derecho y toma 1 carta. 
+        \begin{tabular}{|c|}
+          \hline
+           -2 \\
+          \hline
+        \end{tabular} \\
+
+    \item Quedan sobre la mesa:   
+      \begin{center}
+        \begin{tabular}{|c|}
+          \hline
+           -3 \\
+          \hline
+        \end{tabular}
+      \end{center}    
+
+    \item Turno4 (Jug2): Sólo queda una carta, por lo que elige ésta. Es indistinto para este caso 
+        si el extremo elegido es el izquierdo o el derecho. 
+        \begin{tabular}{|c|}
+          \hline
+           -3 \\
+          \hline
+        \end{tabular} \\
+
+    \item Finaliza el juego porque no hay más cartas. Se suman los puntajes de cada jugador.\\
+      \begin{center}
+        \begin{tabular}{|c|c|}
+          \hline
+          Ptos. Jug1 & Ptos. Jug2 \\
+          \hline
+          5 + 5 + (-2) = 8 & 2 + (-3) = -1 \\
+          \hline
+        \end{tabular} \\ 
+      \end{center}  
+      
+    \item Formato de entrada y salida: 
+      
+      \begin{minipage}{0.5\textwidth}
+          \begin{tabular}{ccccccc}
+             Input: 5 & 2 & -3 & -2 & 5 & 5 \\
+             \\
+             \\
+             \\
+             \\
+          \end{tabular}
+      \end{minipage} 
+      \begin{minipage}{0.3\textwidth}
+          \begin{tabular}{cccc}
+            Output:  & 4   & 8  & -1 \\
+                 & der & 2  & \\
+                 & izq & 1  & \\
+                 & der & 1  & \\
+                 & izq & 1  & \\
+          \end{tabular}
+      \end{minipage}
+  
+  \end{itemize}   
+    
+\end{ejemplo}
+
+\begin{ejemplo}\hspace{0em}
+
+  \begin{center}
+    \begin{tabular}{|c|c|c|}
+      \hline
+       2 & -1 & 6 \\
+      \hline
+    \end{tabular} 
+  \end{center} 
+
+El Jug1 toma todas las cartas porque de esta manera obtiene el mayor puntaje. \\
+Finaliza el juego en 1 turno porque no hay más cartas. Se suman los puntajes de cada jugador.\\
+Este tipo de caso también se daría si todas las cartas tuvieran números positivos, sólo llegaría a jugar el Jug1.\\
+
+  \begin{center}
+    \begin{tabular}{|c|c|}
+      \hline
+      Ptos. Jug1 & Ptos. Jug2 \\
+      \hline
+      2 + (-1) + 6 = 7 & 0 \\
+      \hline
+    \end{tabular}
+  \end{center}  
+  
+\end{ejemplo}
+
+\end{document}
