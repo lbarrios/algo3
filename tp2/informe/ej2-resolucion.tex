@@ -40,10 +40,10 @@ decir, el módulo del vector que resulta de la resta de ambos:
   p(e) = dist(e.inicio, e.fin) =~\parallel inicio - fin \parallel ~=~ \sqrt[2]{(x_{fin}-x_{inicio})^{2}+(y_{fin}-y_{inicio})^{2}}
 \]
 
-%- 
-%- FUNCION OBJETIVO 
-%- 
-\centerbf{Función objetivo} 
+%-
+%- FUNCION OBJETIVO
+%-
+\centerbf{Función objetivo}\label{ej2-funcionobjetivo}
 
 Se pide seleccionar una \textbf{solución óptima} a partir de un \textbf{conjunto de soluciones
 factibles}, estableciendo la \textbf{función objetivo} $f: S \rightarrow \real$ como aquella que
@@ -91,7 +91,7 @@ factibles por el de \textbf{todas las soluciones de exactamente $k$ componentes 
 %-
 \centerbf{Idea de resolución}
 
-Se utilizará de forma parcial el \textbf{Algoritmo de Kruskal}, es decir que partiendo de un grafo
+Se utilizará de forma parcial el \textbf{Algoritmo de Kruskal}, es decir que partiendo de un grafo solución
 inicial $S_{n}$, conformado por $n$ subgrafos triviales, y siendo $k$ el número de centralitas, el
 ciclo será frenado al llegar a la <<$``n-k''~iteracion$>> o, dicho de otro modo, al formar un
 subgrafo de $k$ componentes conexas. Decimos, entonces, que el bosque resultante pertenece al
@@ -101,10 +101,27 @@ conjunto de soluciones óptimas.
 %- Pseudocódigo
 %-
 \centerbf{Pseudocódigo}
+\begin{algorithm}[H]
+\caption{Kruskal}\label{alg:ej2-kruskal}
+\footnotesize\begin{algorithmic}[1]
+  \Require
+    %\Statex $intervaloInspector \gets$ \Call{dameIntervaloInspector}{} \Comment{$integer$}
+    %\Statex $cantidadDeCamiones \gets$ \Call{dameCantidadCamiones}{} \Comment{$integer$}
+    %\Statex $fechasCamiones \gets$ \Call{dameFechasCamiones}{} \Comment{$arreglo\langle integer \rangle$}
+    \fixme{ARREGLAR}
+  \Ensure
+    %\Statex \Call{Fecha Óptima Inspector}{} \Comment{$integer$}
+    %\Statex \Call{Cantidad De Camiones Analizados}{} \Comment{$integer$}
+    \fixme{ARREGLAME}
+  \ForAll{i en [1...n]}
+    \Statex componentesConexas[i] = i-esimo pueblo
+    \fixme{Creo que le falta algo, después te pregunto}
+  \EndFor
+\end{algorithmic}
+\end{algorithm}
+
 \fixme{Está comentado el pseudocódigo porque no compilaba}.
 \begin{comment}
-
-Pseudocódigo: \\
 
 ComponenteConexa componentesConexas[n] \\
 

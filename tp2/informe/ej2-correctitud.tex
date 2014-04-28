@@ -5,4 +5,34 @@
 \begin{document}{}
 % -----------------------------------------------
 
+Queremos demostrar que, partiendo de un grafo inicial $S_{n}$, compuesto por $n$ componentes
+triviales, el resultante de aplicar $k$ iteraciones de Kruskal es una solución óptima. 
+Para ello, aplicaremos inducción.
+
+\textbf{Aviso:} Se cometerá un abuso de notación al indicar que se
+``suma/resta una arista a una solución''; lo que se está efectuando es
+realmente agregar o quitar la arista del conjunto de aristas de la solución.
+
+\centerbf{Hipótesis Inductiva}
+\texttt{P(i):} La solución $S_{n-i}$, obtenida a luego de aplicar $i$ veces Kruskal,
+minimiza la \textbf{función objetivo} $f$
+(\ref{ej2-funcionobjetivo}, pág. \pageref{ej2-funcionobjetivo})
+frente a cualquier otra solución compuesta por $i$ componentes conexas.
+
+\centerbf{Caso Inicial}
+\texttt{P(1):} Es trivial, ya que cualquier grafo de $n$ nodos que contiene
+${n-1}$ componentes conexas, contiene a lo sumo una sola arista. \nota{No sé si es tan trivial eso..}
+Y ya que Kruskal elige en cada iteración la menor arista,
+denotémosla $e_{1}$, el grafo $S_{n-1} = S{n} + e_{1}$ resultante es mínimo.
+
+\centerbf{Paso Inductivo}
+\texttt{P(i) $\rightarrow$ P(i+1):}
+Sea $S_{n-(i+1)}$ la solución obtenida en el paso $(i+1)$ de \textbf{Kruskal},
+podemos reescribir la misma de la forma $S_{n-(i+1)} = S_{n-i} + e_{i+1}$, en
+donde $e_{i+1}$ es la arista agregada en este paso, y en donde \red{$S_{n-i}$ es
+una solución óptima} según la \textbf{Hipótesis Inductiva}.
+
+\nota{Después sigo...}
+
+
 \end{document}
