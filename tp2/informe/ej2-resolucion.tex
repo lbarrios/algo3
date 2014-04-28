@@ -5,48 +5,149 @@
 \begin{document}{}
 % -----------------------------------------------
 
-% Pseudocódigo: \\
+%-
+%- MODELADO DEL PROBLEMA
+%-
+\centerbf{Modelado del problema}
 
-% ComponenteConexa componentesConexas[n] \\
+Este es un problema típico en que una \textbf{estructura de grafos} permite fácilmente realizar una visualización simple y práctica del escenario, como así también encaminar el análisis del universo de soluciones hacia un posible recorrido, construcción o \emph{deconstrucción}\footnote{<<Deshacer analíticamente los elementos que constituyen una estructura conceptual>>, es decir: desarmar, analizar, modificar y/o reconstruir una estructura, en este caso un grafo, la cual se encuentra ya previamente armada, ya sea de forma explícita o implícita.} de grafos.
 
-% estructura ComponenteConexa {
-%     float distancias[n]
-%     list<arista> aristas
-%     arista aristaMasCortaHacia[n]
-%     float distanciaMasCorta
-%     int indiceCCMasCerca
-% }
+En este caso en particular, representamos una \textbf{solución a una instancia} determinada del
+problema como un \textbf{subgrafo generador ponderado no dirigido}, en donde cada pueblo está
+representado por un vértice $v \in V$, y en donde cada cañería es una arista $e \in E_{S}$, siendo
+$E_{S}$ subconjunto del conjunto de aristas del grafo completo de $n$ vértices. Refiriendonos a este
+último detalle, y en un \emph{abuso de notación}, afirmamos que $S$ es subconjunto de $K_{n}$:
+%
+    \[
+    S = (V,E_{S}) \subseteq K_{n} = (V,E_{K})
+    \]
+%
 
-% for i in 1 to n: comentario: O(n^2) \\
-%     componentesConexas[i] = i-esimo pueblo  comentario: O(1)\\
-%     for j in 1 to n:  comentario: O(n)\\
-%         aristaMasCorta entre la CC i y la CC j = (i, j) comentario: O(1) \\
-%         distancia entre componentesConexas[i] y la componente conexa j = distanciaEuclidea(pueblo i, pueblo j) comentario: O(1) \\
-%         me voy fijando cual de estas distancias es mas corta y la guardo junto con el indice j  comentario: O(1)\\
+\textbf{Aclaración}: De aquí en adelante se utilizará la letra K para referirse tanto al grafo
+completo como a la cantidad de centralitas. Interpretar según el contexto.
 
-% for i in 1 to n - k: comentario: O(n * (n-k)) = O(n^2)\\
-%     comentario: me fijo la distancia mas corta entre dos componentes \\
-%     for i in 1 to n:  comentario: O(n) \\ 
-%         observacion: si componentes[i] ya no representa mas una componente continuo \\
-%         me voy fijando que componente tiene la menor 'menor distancia hacia otra componente' y la guardo en CCAUnir1,\\
-%         su componente mas cercana en CCAUnir2 comentario: O(1) \\
+%-
+%- FUNCION PESO
+%-
+\centerbf{Función peso}
 
-%     comentario: uno CCAUnir1 y CCAUnir2 \\
-%     CCAUnir1.aristas = CCAUnir1.aristas \union CCAUnir2.aristas + aristaMasCorta entre CCAUnir1 y CCAUnir2 comentario: O(1)\\
-%     marco CCAUnir2 como que ya no representa una componente conexa. toda su información pasa a CCAUnir1  comentario: O(1)\\
+Establecemos además la \textbf{función peso}, $p: E \rightarrow \real$, siendo $e \in E$ una tupla
+($inicio$,$fin$), en donde $inicio$ y $fin$ son dos vértices, como la distancia euclídea entre el
+pueblo representado por el vértice de inicio y el pueblo representado por el vértice de fin, es
+decir, el módulo del vector que resulta de la resta de ambos:
+%
+\[
+  p(e) = dist(e.inicio, e.fin) =~\parallel inicio - fin \parallel ~=~ \sqrt[2]{(x_{fin}-x_{inicio})^{2}+(y_{fin}-y_{inicio})^{2}}
+\]
+
+%- 
+%- FUNCION OBJETIVO 
+%- 
+\centerbf{Función objetivo} 
+
+Se pide seleccionar una \textbf{solución óptima} a partir de un \textbf{conjunto de soluciones
+factibles}, estableciendo la \textbf{función objetivo} $f: S \rightarrow \real$ como aquella que
+dada una solución devuelve el peso de la mayor arista, la cual deberá ser minimizada:
+%
+\[
+f(s) = max(\{p(e) : e \in E_{s}\})
+\]
+
+%-
+%- CARACTERIZACIÓN DE LA SOLUCIÓN
+%-
+\centerbf{Caracterización de la solución}
+
+Dado un conjunto de \textbf{soluciones factibles}, es evidente que las \textbf{soluciones óptimas}
+son un subconjunto del mismo. Dada cualquier solución, sin importar si esta es factible o no, y
+debido a que cada solución es un subgrafo generador de $K_{n}$, es posible determinar que la misma
+contendrá una cantidad de componentes conexas mayor o igual a 1, y menor o igual a n.
+
+Dado que \textbf{se disponen de a lo sumo $k$ centralitas}, diremos que una solución es factible
+cuando la misma se compone de \textbf{a lo sumo $k$ componentes conexas}.
+
+\textbf{Abuso de notación}: Representamos $S_{i}$ como ``una solución de \emph{i} componentes conexas''.
+
+Dada una solución factible $S_{x} = (V, E_{x}) \subseteq K_{n}$ (sin importar si esta es o no
+óptima), si la misma está compuesta por una cantidad $x$ de \textbf{componentes conexas,
+estrictamente menor a $k$}, entonces podemos afirmar que existe una solución factible $S_{k} (V,
+E_{k}) \subseteq S_{x} \subseteq K_{n}$, de tal forma que el conjunto $E_{k}$ se forma a partir de
+quitarle, ya sea una o sucesivas veces, la arista de mayor tamaño al conjunto $E_{x}$, repitiendo el
+proceso siempre y cuando la solución resultante de cada eliminación de arista esté compuesta por a
+lo sumo $k$ componentes conexas.
+
+En otras palabras, \textbf{dada una solución de menos de $k$ componentes conexas}, siempre es
+posible encontrar a partir de la misma \textbf{otra solución de exactamente $k$ componentes
+conexas}. \darkred{\textbf{Decimos entonces que $f(s_{k}) <= f(s_{x})$}}, y la demostración de esto
+es trivial ya que al depender f del peso de la máxima arista, es imposible que la valuación de la
+misma aumente al retirar una o más aristas.
+
+De esta forma, y a efectos de simplificar el análisis, podemos acotar el conjunto de soluciones
+factibles por el de \textbf{todas las soluciones de exactamente $k$ componentes conexas}.
+
+
+%-
+%- IDEA DE RESOLUCIÓN
+%-
+\centerbf{Idea de resolución}
+
+Se utilizará de forma parcial el \textbf{Algoritmo de Kruskal}, es decir que partiendo de un grafo
+inicial $S_{n}$, conformado por $n$ subgrafos triviales, y siendo $k$ el número de centralitas, el
+ciclo será frenado al llegar a la <<$``n-k''~iteracion$>> o, dicho de otro modo, al formar un
+subgrafo de $k$ componentes conexas. Decimos, entonces, que el bosque resultante pertenece al
+conjunto de soluciones óptimas.
+
+%-
+%- Pseudocódigo
+%-
+\centerbf{Pseudocódigo}
+\fixme{Está comentado el pseudocódigo porque no compilaba}.
+\begin{comment}
+
+Pseudocódigo: \\
+
+ComponenteConexa componentesConexas[n] \\
+
+estructura ComponenteConexa {
+    float distancias[n]
+    list<arista> aristas
+    arista aristaMasCortaHacia[n]
+    float distanciaMasCorta
+    int indiceCCMasCerca
+}
+
+for i in 1 to n: comentario: O(n^2) \\
+    componentesConexas[i] = i-esimo pueblo  comentario: O(1)\\
+    for j in 1 to n:  comentario: O(n)\\
+        aristaMasCorta entre la CC i y la CC j = (i, j) comentario: O(1) \\
+        distancia entre componentesConexas[i] y la componente conexa j = distanciaEuclidea(pueblo i, pueblo j) comentario: O(1) \\
+        me voy fijando cual de estas distancias es mas corta y la guardo junto con el indice j  comentario: O(1)\\
+
+for i in 1 to n - k: comentario: O(n * (n-k)) = O(n^2)\\
+    comentario: me fijo la distancia mas corta entre dos componentes \\
+    for i in 1 to n:  comentario: O(n) \\ 
+        observacion: si componentes[i] ya no representa mas una componente continuo \\
+        me voy fijando que componente tiene la menor 'menor distancia hacia otra componente' y la guardo en CCAUnir1,\\
+        su componente mas cercana en CCAUnir2 comentario: O(1) \\
+
+    comentario: uno CCAUnir1 y CCAUnir2 \\
+    CCAUnir1.aristas = CCAUnir1.aristas \union CCAUnir2.aristas + aristaMasCorta entre CCAUnir1 y CCAUnir2 comentario: O(1)\\
+    marco CCAUnir2 como que ya no representa una componente conexa. toda su información pasa a CCAUnir1  comentario: O(1)\\
     
-%     comentario: actualizo distancias \\
-%     for i in 1 to n:  comentario: O(n)\\
-%         si componentesConexas[i] ya no representa una componente conexa, continuo comentario: O(1) \\
-%         distancia entre componentesConexas[i] y CCAUnir1 = min (distancia a CCAUnir1, distancia a CCAUnir2) comentario: O(1) \\
-%         si CCAUnir2 esta mas cerca que CCAUnir1, aristaMasCortaHacia CCAUnir1 = aristaMasCortaHacia CCAUnir2 comentario: O(1) \\
-%         y lo mismo actualizo para la distancia y arista mas corta desde CCAUnir1 hacia la CC i comentario: O(1) \\
-%         voy guardando la distanciaMasCorta e indiceCCMasCerca de CCAUnir1 comentario: O(1) \\
-%         voy viendo si tengo que actualizar la distanciaMasCorta e indiceCCMasCerca de la CC i comentario: O(1)\\
+    comentario: actualizo distancias \\
+    for i in 1 to n:  comentario: O(n)\\
+        si componentesConexas[i] ya no representa una componente conexa, continuo comentario: O(1) \\
+        distancia entre componentesConexas[i] y CCAUnir1 = min (distancia a CCAUnir1, distancia a CCAUnir2) comentario: O(1) \\
+        si CCAUnir2 esta mas cerca que CCAUnir1, aristaMasCortaHacia CCAUnir1 = aristaMasCortaHacia CCAUnir2 comentario: O(1) \\
+        y lo mismo actualizo para la distancia y arista mas corta desde CCAUnir1 hacia la CC i comentario: O(1) \\
+        voy guardando la distanciaMasCorta e indiceCCMasCerca de CCAUnir1 comentario: O(1) \\
+        voy viendo si tengo que actualizar la distanciaMasCorta e indiceCCMasCerca de la CC i comentario: O(1)\\
 
-% al final recorro componentesConexas fijandome que indices representan componentes conexas, en estos indices de pueblo coloco una centra \\
-% y las tuberías son las aristas de la CC representada por estos indices comentario: O(n) \\
+al final recorro componentesConexas fijandome que indices representan componentes conexas, en estos indices de pueblo coloco una centra \\
+y las tuberías son las aristas de la CC representada por estos indices comentario: O(n) \\
     
-% Total O(n ^ 2) \\
+Total O(n ^ 2) \\
+
+\end{comment}
 
 \end{document}

@@ -4,6 +4,82 @@
 
 \begin{document}{}
 % -----------------------------------------------
+%-
+%- PLANTEO DEL PROBLEMA
+%-
+\centerbf{Planteo del Problema}
 
+Existe una región del país en la que \emph{un grupo de pueblos no cuenta con red de gas natural}.
+Luego de una fuerte campaña política se lograron recaudar los fondos necesarios para \emph{emprender
+una obra que provea del servicio a todos los pueblos de la región}.
+
+El sistema consistirá en \textbf{una red de \underline{tuberías interconectadas} de un pueblo al
+otro}, de forma tal que \emph{la distribución de la misma asegure el abastecimiento} de cada uno de
+los pueblos, y en donde además \textbf{se seleccionarán determinados pueblos para establecer
+\underline{centralitas}}, que serán las encargadas de \emph{proveer gas hacia todo pueblo con el que
+cuenten con conexión}, ya sea mediante una tubería o a través de un camino de tuberías.
+
+Debido a que el costo de las cañerías es significativamente menor que el de las centralitas,
+\textbf{el presupuesto final estará regido por la cantidad de centralitas} que se construyan (y
+viceversa, según quién lo mire). Por lo antes expuesto se conoce el cálculo que permite predecir,
+habiendo reunido una cantidad determinada de presupuesto, cual es la \textbf{cantidad máxima de
+centralitas} correspondientes que el mismo permite construir.
+
+Se entiende como ``\underline{\textbf{riesgo}}'' de una determinada distribución de tuberías a la
+\textbf{máxima de sus longitudes}.
+
+El codicioso Fontanero Jefe, Mario Toti Segale\footnote{``No es más que un italojaponés americano...
+gordo y bigotudo'' - descripción anónima de un empleado.}, desea conocer, dado un determinado
+``presupuesto máximo'', es decir, una ``cantidad máxima de centralitas'', cuál es la distribución
+óptima de tuberías y centralitas de forma tal que el gasto sea menor al presupuestado. Para ello
+encomendó la tarea a su tímido hermano Luigi. Dado que Luigi es precavido y miedoso por naturaleza,
+decidió que el gasto no importaba realmente, siempre que fuera menor al presupuestado, y que una
+distribución óptima era más bien aquella en la que el riesgo resultase mínimo.
+
+%-
+%- REQUERIMIENTOS TÉCNICOS
+%-
+\centerbf{Requerimientos técnicos}
+
+El problema requiere encontrar una distribución insuperable de gaseoductos, recibiendo como
+\textbf{datos de entrada} la cantidad de ciudades ($n$), la cantidad máxima de núcleos gaseosos
+($k$), y $n$ pares de números enteros ($x$,$y$) representando las coordenadas euclídeas de cada una
+de las borneras (hay una por pueblo), y devolviendo como \textbf{datos de salida} la cantidad de
+núcleos gaseosos ($q$) y caños ($m$) construídos, junto con un listado en donde se detallen cada uno
+de los $q$ pueblos ($p$) en donde se emplazará una central, y un segundo listado en donde a través
+de $m$ pares de números enteros ($v$,$w$) se detallen cada una de las tuberías a construir. El
+algoritmo implementado debe respetar una complejidad temporal de peor caso de \bigO{n^{2}}.
+
+%-
+%- FORMATO DE LOS DATOS
+%-
+\centerbf{Formato de los datos}
+% primera columna
+\begin{minipage}[t]{0.5\textwidth}
+  \centerbf{Formato de entrada}
+  \setlength{\leftmargini}{6.5em}
+  \begin{quote}
+  \texttt{n k}\\
+  \texttt{x$_{1}$ y$_{1}$}\\
+  \texttt{.}\\
+  \texttt{.}\\
+  \texttt{.}\\
+  \texttt{x$_{n}$ y$_{n}$}
+  \end{quote}
+\end{minipage}%
+% segunda columna
+\begin{minipage}[t]{0.5\textwidth}
+  \centerbf{Formato de salida}
+  \setlength{\leftmargini}{6.5em}
+  \begin{quote}
+  \texttt{q m}\\
+  \texttt{p$_{1}$ ... p$_{q}$}\\
+  \texttt{v$_{1}$ w$_{1}$}\\
+  \texttt{.}\\
+  \texttt{.}\\
+  \texttt{.}\\
+  \texttt{v$_{m}$ w$_{m}$}
+  \end{quote}
+\end{minipage}
 
 \end{document}
