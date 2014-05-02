@@ -12,7 +12,7 @@ struct ComponenteConexa {
     float distancias[1024]; //dejarlo fijo, o vector, u otra cosa
     arista aristaMasCortaTotalHacia[1024];
     float menorDistancia;
-    arista aristaMasCortaTotal;
+    arista aristaMasCortaTotalGeneral;
     int ccMasCercana;
     list<arista> aristas;
 };
@@ -57,7 +57,7 @@ void inicializarComponentes() {
             c.aristaMasCortaTotalHacia[j] = make_pair(i, j);
             if (c.distancias[j] < c.menorDistancia) {
                 c.menorDistancia = c.distancias[j];
-                c.aristaMasCortaTotal = c.aristaMasCortaTotalHacia[j];
+                c.aristaMasCortaTotalGeneral = c.aristaMasCortaTotalHacia[j];
                 c.ccMasCercana = j;
             }
         }
@@ -93,7 +93,7 @@ void kruskal_parcial() {
         // me olvido de cc2
         cc2.esComponente = false;
         // concateno las listas de aristas
-        cc1.aristas.push_back(cc1.aristaMasCortaTotal);
+        cc1.aristas.push_back(cc1.aristaMasCortaTotalGeneral);
         cc1.aristas.insert(cc1.aristas.end(), cc2.aristas.begin(), cc2.aristas.end());
         cc1.menorDistancia = INF;
         for (int j = 1; j <= n; j++) {
@@ -108,14 +108,14 @@ void kruskal_parcial() {
             if (actual.distancias[ind_cc1] <= actual.menorDistancia) {
                 actual.menorDistancia = actual.distancias[ind_cc1];
                 actual.ccMasCercana = ind_cc1;
-                actual.aristaMasCortaTotal = actual.aristaMasCortaTotalHacia[ind_cc1];
+                actual.aristaMasCortaTotalGeneral = actual.aristaMasCortaTotalHacia[ind_cc1];
             }
             cc1.distancias[j] = actual.distancias[ind_cc1];
             cc1.aristaMasCortaTotalHacia[j] = actual.aristaMasCortaTotalHacia[ind_cc1];
             if (cc1.distancias[j] < cc1.menorDistancia) {
                 cc1.menorDistancia = cc1.distancias[j];
                 cc1.ccMasCercana = j;
-                cc1.aristaMasCortaTotal = cc1.aristaMasCortaTotalHacia[j];
+                cc1.aristaMasCortaTotalGeneral = cc1.aristaMasCortaTotalHacia[j];
             }
         }
         
