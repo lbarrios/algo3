@@ -21,19 +21,17 @@ posibles siguiendo ciertas reglas.
 
 	\item Las piezas no se pueden rotar.
 
-	\item Colores posibles: $1,...,c$ ($c$ entero positivo). Como una pieza 
-	puede tener como mucho $4$ colores distintos y son $n \times m$ 
-	piezas en total, $ 1 \le c \le (4 \times n \times m)$.  
+	\item Colores posibles: $1,...,c$ ($c$ entero positivo).
 
 	\item 2 piezas pueden ubicarse en casilleros adyacentes sólo si sus lados 
 	adyacentes tienen el mismo color. Podría ocurrir que no sea posible 
 	llenar completamente el tablero con las piezas existentes. 
 
-	\item El contenido final de una casilla podría ser $1,...,n \times m$, 
-	si se pudo colocar alguna ficha, o $0$ si quedara vacía. 
+	%\item El contenido final de una casilla podría ser $1,...,n \times m$, 
+	%si se pudo colocar alguna ficha, o $0$ si quedara vacía.
 
-	\item Cantidad mínima de piezas que se pueden colocar en el tablero: 
-	$(n \times m)/ 2$. (Se intercalan las piezas en el tablero).
+	%\item Cantidad mínima de piezas que se pueden colocar en el tablero: 
+	%$(n \times m)/ 2$. (Se intercalan las piezas en el tablero).
 
 	Para un tablero de $3\times 3$ y uno de $2\times 2$, suponiendo un caso 
 	donde ninguna ficha puede colocarse adyacente a otra, una de las posibles 
@@ -64,7 +62,7 @@ posibles siguiendo ciertas reglas.
           \end{tabular}
       \end{minipage}
 	\end{center}
-\end{itemize} 
+	\end{itemize} 
 
 
 \begin{center} 
@@ -176,7 +174,7 @@ mejor que otra>>. Para este algoritmo en particular, el problema planteado es de
 ciertos requisitos) que maximice la función objetivo, definiéndola como la
 sumatoria de los casilleros completos de un tablero determinado.
 
-\begin{center}
+\begin{center}n lo posible t
 \textbf{Formalizando}
 \end{center}
 
@@ -256,13 +254,15 @@ La función objetivo es, dado un tablero $T$, $f: \theta \rightarrow \nat$, de l
 f(T) := \nsum_{i=1}^{i\leq casilleros}{ t.lleno \bigg( {\large T\left(i\right)} \bigg) }
 \]
 
+\nota{aca poner el pseudocodigo}\\
+
 La idea base es ir llenando el tablero en cierto orden, probando colocar en cada
 casillero piezas que no rompan las reglas, y analizando la cantidad total de
 piezas del tablero que hayan sido cubiertas. Se debe guardar de alguna forma la
-combinación de piezas que haya cubierto más casilleros. Consideramos dejar un
+combinación de piezas que haya cubierto más casilleros.\\ Consideramos dejar un
 casillero libre como colocar la pieza representada por el 0. En este problema
 una solución candidata o rama es una sucesión de piezas (que puede o no incluir
-el 0), que van cubriendo el tablero. Una primera decisión que se tomo fue
+el 0), que van cubriendo el tablero.\\ Una primera decisión que se tomó fue
 guardar una estructura piezasPorColores que para cada par de colores (x, y)
 guarda una lista con todos las piezas que tienen como color superior e izquierdo
 x e y, respectivamente. Vamos recorriendo el tablero en cada fila de izquierda a
@@ -270,19 +270,23 @@ derecha, desde la fila superior hasta la inferior. De este modo una pieza es
 legal en una posición si su color izquierdo es igual al color derecho de la
 pieza a su izquierda (de existir), y su color superior es igual al color
 inferior de la pieza ubicada arriba (de existir). Podemos obtener las piezas
-candidatas que cumplen con esa restricción de colores en piezasDeColores. De
+candidatas que cumplen con esa restricción de colores en piezasPorColores. De
 este modo nos aseguramos que todas las piezas por las que nos vamos ramificando
-mantienen las restricciones del tablero. Evitamos asi tener que iterar sobre
-todas las piezas verificando si cumplen la restricción. Una poda trivial que se
+mantienen las restricciones del tablero. Evitamos así tener que iterar sobre
+todas las piezas verificando si cumplen la restricción.\\
+Una poda muy sencilla pero muy útil que se 
 implementó fue dejar de buscar soluciones cuando encontramos una solución que
-cubre todo el tablero. Al comenzar la búsqueda sabemos que por lo menos vamos a
-poder llenar la mitad de los casilleros del tablero. Ésto siempre se puede
-conseguir si visualizamos nuestro tablero como uno de ajedrez y ponemos las
-piezas en los casilleros negros. Ningun par de piezas compartiría lado. Vamos
+cubre todo el tablero. \\
+A continuación se detalla otra poda. Vamos
 llevando cuenta de los huecos que dejamos en el tablero. Si hemos dejado tantos
 huecos como para que, aun llenando correctamente lo que queda del tablero, no
 alcanza para superar la mejor solución encontrada hasta el momento, abandonamos
-la rama.
+la rama.\\
+
+Al comenzar la búsqueda sabemos que por lo menos vamos a
+poder llenar la mitad de los casilleros del tablero. Ésto siempre se puede
+conseguir si visualizamos nuestro tablero como uno de ajedrez y ponemos las
+piezas en los casilleros negros. Ningún par de piezas compartiría lado. 
 
 
 
