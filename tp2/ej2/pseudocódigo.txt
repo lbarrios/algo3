@@ -1,3 +1,6 @@
+observacion: esto esta desactualizado. la version mas reciente esta en problema2.tex
+
+
 n : Cantidad de pueblos
 k : Cantidad máxima de cetrales de gas
 v : vector de coordenadas de los pueblos
