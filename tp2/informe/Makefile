@@ -15,12 +15,12 @@ informe:
 
 introduccion: introduccion.tex
 	$(LATEX) $(OPTS) introduccion.tex
-problema1: problema1.tex
-	$(LATEX) $(OPTS) problema1.tex
-problema2: problema2.tex
-	$(LATEX) $(OPTS) problema2.tex
-problema3: problema3.tex
-	$(LATEX) $(OPTS) problema3.tex
+problema1: ej1.tex
+	$(LATEX) $(OPTS) ej1*.tex
+problema2: ej2.tex
+	$(LATEX) $(OPTS) ej2*.tex
+problema3: ej3.tex
+	$(LATEX) $(OPTS) ej3*.tex
 codigo: codigo-fuente.tex
 	$(LATEX) $(OPTS) codigo-fuente.tex
 
