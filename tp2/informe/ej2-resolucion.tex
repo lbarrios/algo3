@@ -148,7 +148,7 @@ for i in 1 to n - k: comentario: O(n * (n-k)) = O(n^2)\\
         su componente mas cercana en CCAUnir2 comentario: O(1) \\
 
     comentario: uno CCAUnir1 y CCAUnir2 \\
-    CCAUnir1.aristas = CCAUnir1.aristas \union CCAUnir2.aristas + aristaMasCorta entre CCAUnir1 y CCAUnir2 comentario: O(1)\\
+    CCAUnir1.aristas = CCAUnir1.aristas union CCAUnir2.aristas + aristaMasCorta entre CCAUnir1 y CCAUnir2 comentario: O(1)\\
     marco CCAUnir2 como que ya no representa una componente conexa. toda su información pasa a CCAUnir1  comentario: O(1)\\
     
     comentario: actualizo distancias \\
@@ -160,8 +160,8 @@ for i in 1 to n - k: comentario: O(n * (n-k)) = O(n^2)\\
         voy guardando la distanciaMasCorta e indiceCCMasCerca de CCAUnir1 comentario: O(1) \\
         voy viendo si tengo que actualizar la distanciaMasCorta e indiceCCMasCerca de la CC i comentario: O(1)\\
 
-al final recorro componentesConexas fijandome que indices representan componentes conexas, en estos indices de pueblo coloco una centra \\
-y las tuberías son las aristas de la CC representada por estos indices comentario: O(n) \\
+al final recorro componentesConexas fijandome que indices representan componentes conexas, en estos indices de pueblo coloco una central \\
+y las tuberías son la unión de las las aristas de las CC representadas por estos indices comentario: O(n) \\
     
 Total O(n ^ 2) \\
 

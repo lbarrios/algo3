@@ -3,8 +3,10 @@
 \usepackage{header_tp2}
 \begin{document}{}
 % -----------------------------------------------
-%á
+La cota temporal según anotado en el pseudocódigo es $O(n^2)$. Todos los ciclos, excepto el último, son del estilo $for$, con la cantidad de iteraciones bien definida.
 
+Faltaría nomás ver la cantidad de iteraciones que hace el ciclo que reconstruye de las componentes conexas, el grafo resultante con sus centrales y tuberías. Se recorre el arreglo de ComponentesConexas de tamaño n. Para cada componente conexa representada por una posición del arreglo, voy agregando las aristas de la componente a las aristas del grafo. Son exactamente n - k aristas. Luego entre todas las a lo sumo n componentes conexas que recorro, agrego n - k aristas en O(1). Luego la complejidad de este ciclo es $O(n)$.
+%á
 
 
 \end{document}
