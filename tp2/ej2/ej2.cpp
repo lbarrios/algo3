@@ -12,7 +12,7 @@ struct ComponenteConexa {
     float distancias[1024]; //dejarlo fijo, o vector, u otra cosa
     arista aristaMasCortaTotalHacia[1024];
     float menorDistancia;
-    arista aristaMasCortaTotalTotal;
+    arista aristaMasCortaTotal;
     int ccMasCercana;
     list<arista> aristas;
 };
