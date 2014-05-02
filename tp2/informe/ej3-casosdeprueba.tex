@@ -4,6 +4,204 @@
 
 \begin{document}{}
 % -----------------------------------------------
- asdfasdfasd
+A continuaci\'on presentamos distintas instancias que sirven para verificar que el programa funciona correctamente.\\
+
+\begin{itemize}
+\item Caso celda origen = celda destino \\
+	 \begin{minipage}{0.4\textwidth}
+		\begin{tabular}{cccccc}
+		   Input \\
+		   \hline
+		   2 & 1 & 1& 1 & 1 & 0\\
+		   1 & 1 &  &   &   &  \\
+		   1 & 1 &  &   &   &  \\
+		\end{tabular}
+	\end{minipage} 
+		\begin{minipage}{0.2\textwidth}
+			\begin{tabular}{c}
+			   Output \\
+			   \hline
+			   0 \\
+				 \\
+				 \\
+		\end{tabular}
+	\end{minipage} 
+
+\item Caso celda origen $\ne$ celda destino 
+	\begin{itemize}
+		\item Potencia extra = 0 \\
+			\begin{itemize}
+				\item Potencia m\'axima del resorte igual para todas las celdas: \\
+				\\
+					\begin{minipage}{0.4\textwidth}
+							\begin{tabular}{cccccc}
+							 & Input \\
+							   \hline
+							   3 & 1 & 1 & 3 & 3 & 0\\
+							   1 & 1 & 1 &   &   &  \\
+							   1 & 1 & 1 &   &   &  \\
+							   1 & 1 & 1 &   &   &  \\
+							   \\
+							\end{tabular}
+						\end{minipage} 
+							\begin{minipage}{0.3\textwidth}
+								\begin{tabular}{ccc}
+								  & Output \\
+								   \hline
+								   4 &   &   \\
+								   2 & 1 & 0 \\
+								   3 & 1 & 0 \\
+								   3 & 2 & 0 \\
+								   3 & 3 & 0 \\
+							\end{tabular}
+					\end{minipage} 	\\
+					\\ \\
+					\begin{minipage}{0.4\textwidth}
+							\begin{tabular}{cccccc}
+							   & Input  \\
+							   \hline
+							   3 & 1 & 1 & 3 & 3 & 0\\
+							   5 & 5 & 5 &   &   &  \\
+							   5 & 5 & 5 &   &   &  \\
+							   5 & 5 & 5 &   &   &  \\
+							\end{tabular}
+					\end{minipage} 
+					\begin{minipage}{0.3\textwidth}
+							\begin{tabular}{ccc}
+								   & Output \\
+								   \hline
+								   2 &   &   \\
+								   3 & 1 & 0 \\
+								   3 & 3 & 0 \\
+								   \\
+							\end{tabular}
+					\end{minipage} 	\\
+
+				\item Potencia m\'axima del resorte distinta para las celdas: \\
+				\\
+				    \begin{minipage}{0.4\textwidth}
+							\begin{tabular}{cccccc}
+							 & Input \\
+							   \hline
+							   3 & 1 & 1 & 3 & 3 & 0\\
+							   1 & 1 & 2 &   &   &  \\
+							   1 & 3 & 1 &   &   &  \\
+							   1 & 1 & 1 &   &   &  \\
+							   \\
+							\end{tabular}
+						\end{minipage} 
+							\begin{minipage}{0.3\textwidth}
+								\begin{tabular}{ccc}
+								  & Output \\
+								   \hline
+								   3 &   &   \\
+								   1 & 2 & 0 \\
+								   1 & 3 & 0 \\
+								   3 & 3 & 0 \\
+								    \\
+							\end{tabular}
+					\end{minipage} 	\\
+					\\
+					
+					\begin{minipage}{0.4\textwidth}
+							\begin{tabular}{cccccc}
+							 & Input \\
+							   \hline
+							   4 & 1 & 1 & 4 & 4 & 0\\
+							   1 & 1 & 3 & 1 &   &  \\
+							   3 & 1 & 1 & 2 &   &  \\
+							   1 & 1 & 1 & 1 &   &  \\
+							   2 & 1 & 1 & 1 &   &  \\
+							\end{tabular}
+						\end{minipage} 
+							\begin{minipage}{0.3\textwidth}
+								\begin{tabular}{ccc}
+								  & Output \\
+								   \hline
+								   3 &   &   \\
+								   2 & 1 & 0 \\
+								   2 & 4 & 0 \\
+								   4 & 4 & 0 \\
+								    \\
+							\end{tabular}
+					\end{minipage} 	\\
+			\end{itemize} 
+		\item Potencia extra $\ne$ 0 \\
+			\begin{itemize}
+				\item Potencia m\'axima del resorte igual para todas las celdas:\\
+				\\
+					\begin{minipage}{0.4\textwidth}
+							\begin{tabular}{cccccc}
+							 & Input \\
+							   \hline
+							   3 & 1 & 1 & 3 & 3 & 5\\
+							   1 & 1 & 1 &   &   &  \\
+							   1 & 1 & 1 &   &   &  \\
+							   1 & 1 & 1 &   &   &  \\
+							\end{tabular}
+						\end{minipage} 
+						\begin{minipage}{0.3\textwidth}
+							\begin{tabular}{ccc}
+								   & Output \\
+								   \hline
+								   2 &   &   \\
+								   3 & 1 & 1 \\
+								   3 & 3 & 1 \\
+								   \\
+							\end{tabular}
+					    \end{minipage} 	\\
+				\item Potencia m\'axima del resorte distinta para las celdas: \\
+				\\
+					\begin{minipage}{0.4\textwidth}
+								\begin{tabular}{cccccc}
+								 & Input \\
+								   \hline
+								   3 & 1 & 1 & 3 & 3 & 1\\
+								   1 & 1 & 2 &   &   &  \\
+								   1 & 3 & 1 &   &   &  \\
+								   1 & 1 & 1 &   &   &  \\
+								\end{tabular}
+							\end{minipage} 
+								\begin{minipage}{0.3\textwidth}
+									\begin{tabular}{ccc}
+									  & Output \\
+									   \hline
+									   2 &   &   \\
+									   1 & 3 & 1 \\
+									   3 & 3 & 0 \\
+									   \\
+								\end{tabular}
+					\end{minipage} \\
+					\\
+					
+					\begin{minipage}{0.4\textwidth}
+							\begin{tabular}{cccccc}
+							 & Input \\
+							   \hline
+							   4 & 1 & 1 & 4 & 4 & 3\\
+							   1 & 1 & 3 & 1 &   &  \\
+							   3 & 1 & 1 & 2 &   &  \\
+							   1 & 1 & 1 & 1 &   &  \\
+							   2 & 1 & 1 & 1 &   &  \\
+							\end{tabular}
+						\end{minipage} 
+							\begin{minipage}{0.3\textwidth}
+								\begin{tabular}{ccc}
+								  & Output \\
+								   \hline
+								   2 &   &   \\
+								   4 & 1 & 2 \\
+								   4 & 4 & 1 \\
+								    \\
+								    \\
+							\end{tabular}
+					\end{minipage} 						
+				
+			\end{itemize}
+	\end{itemize}
+\end{itemize}
+
+Ejecutamos el programa con los distintos ejemplos y se lleg\'o a la soluci\'on esperada. 
+Por lo tanto, podemos concluir que el comportamiento del programa es correcto. 
 
 \end{document}
