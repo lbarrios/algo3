@@ -12,6 +12,7 @@ private:
 protected:
   vector<bool>& _indicePiezasDisponibles;
   vector<uint32_t>& _indiceSecuencial;
+  vector<uint32_t>* _indiceColores;
   IndiceDePiezas::listaDePiezas* _v;
   IndiceDePiezas::listaDePiezas::iterator _v_it;
   //IteradorIndiceDePiezas ( IteradorIndiceDePiezas::*avanzar )( int );
@@ -27,6 +28,7 @@ public:
 };
 
 #include "IteradorSecuencial.h"
+#include "IteradorColores.h"
 #endif
 
 

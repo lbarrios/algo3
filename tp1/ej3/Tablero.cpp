@@ -4,7 +4,7 @@ Tablero::Tablero( uint32_t p_filas, uint32_t p_columnas, vector<TestCaseEj3::Pie
   :
   _listaDePiezas( listaDePiezas ),
   _cantidadDePosicionesVacias( p_filas* p_columnas ),
-  _mejorCantidadDePosicionesVacias( _cantidadDePosicionesVacias ),
+  _mejorCantidadDePosicionesVacias( _cantidadDePosicionesVacias/2 + 1 ),
   cantidadDeFilas( p_filas ),
   cantidadDeColumnas( p_columnas ),
   cantidadDePosiciones( p_filas* p_columnas )
@@ -20,7 +20,7 @@ const uint32_t Tablero::dameLaPiezaDeArribaDePosicion( uint32_t posicion )
   if ( noEsPrimeraFila )
   {
     _C( "La pieza arriba de la posición " << posicion + 1 << " es: " <<
-        this->_piezasEnElTablero[posicion - 1] );
+        this->_piezasEnElTablero[posicion - this->cantidadDeColumnas] );
     return this->_piezasEnElTablero[posicion - this->cantidadDeColumnas];
   }
   else
@@ -116,6 +116,7 @@ void Tablero::ponerPiezaEnPosicion( uint32_t pieza, uint32_t posicion )
   cerr << endl;
   */
 #endif
+  this->_ultimaPosicionAgregada = posicion;
 }
 /*uint32_t Tablero::mejorTableroHastaElMomento( void )
 {
@@ -124,6 +125,16 @@ void Tablero::ponerPiezaEnPosicion( uint32_t pieza, uint32_t posicion )
 bool Tablero::yaEncontreElMejorTableroPosible( void )
 {
   return _mejorCantidadDePosicionesVacias <= this->_mejorCantidadDePosicionesVaciasPosible;
+}
+bool Tablero::yaEncontreUnTableroMejor ( uint32_t posicion )
+{
+  DEBUG_INT(this->_mejorCantidadDePosicionesVacias);
+  DEBUG_INT(this->cantidadDePosiciones);
+  DEBUG_INT(posicion);
+  DEBUG_INT(this->_mejorCantidadDePosicionesVacias + this->cantidadDePosiciones - posicion);
+  DEBUG_INT(_cantidadDePosicionesVacias);
+  return this->_mejorCantidadDePosicionesVacias + this->cantidadDePosiciones - posicion
+  <= _cantidadDePosicionesVacias;
 }
 void Tablero::imprimeTablero()
 {
@@ -140,6 +151,9 @@ void Tablero::imprimeTablero()
 }
 void Tablero::_calcularMejorCantidadDePiezasPosible()
 {
+  _mejorCantidadDePosicionesVaciasPosible = 0;
+  return;
+
   multiset<uint32_t> coloresIzquierda;
   multiset<uint32_t> coloresDerecha;
   multiset<uint32_t> coloresArriba;
@@ -198,6 +212,7 @@ void Tablero::_calcularMejorCantidadDePiezasPosible()
   uint32_t piezasInfumables = max( coloresDerecha.size(), max( coloresIzquierda.size(), max( coloresArriba.size(), coloresAbajo.size() ) ) );
   _C( "Atención: Hay como mínimo " << piezasInfumables << " piezas incompatibles en este tablero" );
   this->_mejorCantidadDePosicionesVaciasPosible = piezasInfumables / 2;
+  this->_mejorCantidadDePosicionesVaciasPosible = 0;
   _C( "Atención: Se estima un mínimo de " << this->_mejorCantidadDePosicionesVaciasPosible << " posiciones en blanco para este tablero." );
   //this->_mejorCantidadDePosicionesVaciasPosible = 0;
 }

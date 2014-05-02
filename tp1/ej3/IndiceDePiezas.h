@@ -13,9 +13,10 @@ private:
   vector<IteradorIndiceDePiezas*> _iteradores;
   typedef vector<uint32_t> listaDePiezas;
   vector< vector< stack< listaDePiezas > > > _indiceDeDosColores;
-  //stack < listaDePiezas > _indiceSecuencial;
   vector<bool> _indicePiezasDisponibles;
-  vector<uint32_t> _indiceSecuencial;
+  stack< listaDePiezas > _indiceSecuencial;
+  void _imprimirIndiceDeDosColores();
+  //listaDePiezas _indiceSecuencial;
   //IteradorIndiceDePiezas* _it;
   //
 public:
@@ -31,7 +32,6 @@ public:
 };
 
 #include "IteradorIndiceDePiezas.h"
-
 //#include "IteradorMedio.h"
 
 #endif

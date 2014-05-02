@@ -13,6 +13,7 @@ private:
   // Poda
   uint32_t _mejorCantidadDePosicionesVaciasPosible;
   void _calcularMejorCantidadDePiezasPosible();
+  uint32_t _ultimaPosicionAgregada;
 public:
   Tablero( uint32_t p_filas, uint32_t p_columnas, vector<TestCaseEj3::Pieza>& );
   /**
@@ -57,6 +58,7 @@ public:
   };
   //uint32_t mejorTableroHastaElMomento( void );
   bool yaEncontreElMejorTableroPosible( void );
+  bool yaEncontreUnTableroMejor( uint32_t );
   void imprimeTablero();
 private:
 

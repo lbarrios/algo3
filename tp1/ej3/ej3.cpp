@@ -59,16 +59,26 @@ Tablero& backtrack( Tablero& t, IndiceDePiezas& ip, uint32_t posicion )
   DEBUG_ENTER; _C( "Entrando a recursión en posición: " << posicion + 1 );
   Tablero* mejorTablero = NULL;
 
+  /*
   // Poda
   if ( t.yaEncontreElMejorTableroPosible() )
   {
-    _C( "PODANDO CON TABLERO NULO" );
+    _C( "PODANDO CON MEJOR TABLERO POSIBLE" );
     // Si ya encontré el mejor tablero posible,
     // corto todas las recursiones retornando nulo
     return *mejorTablero;
   }
+  */
+
+  if ( t.yaEncontreUnTableroMejor( posicion ) )
+  {
+    _C( "PODANDO EN POS " << posicion <<" PORQUE EXISTE UN TABLERO mejor QUE CUALQUIERA DE ESTA RAMA" );
+    return *mejorTablero;
+  }
+  
 
   IteradorIndiceDePiezas& it = ip.dameIterador( posicion );
+  _C("Obtenido iterador al indice de piezas");
 
   // Me fijo si estoy antes de la última posición
   if ( posicion < t.cantidadDePosiciones - 1 )
@@ -82,6 +92,7 @@ Tablero& backtrack( Tablero& t, IndiceDePiezas& ip, uint32_t posicion )
       // Hago recursión en el backtracking
       Tablero* otroTablero = NULL;
       otroTablero = &( backtrack( t, ip, posicion + 1 ) );
+      _C( "VOLVIENDO A POSICION " << posicion );
 
       if ( !mejorTablero )
       {
@@ -91,6 +102,7 @@ Tablero& backtrack( Tablero& t, IndiceDePiezas& ip, uint32_t posicion )
       {
         if ( !otroTablero )
         {
+          ip.marcarPiezaDisponible ( it );
           // Si la recursión me devolvió un puntero a nulo termino el BT
           break;
         }
@@ -127,6 +139,7 @@ Tablero& backtrack( Tablero& t, IndiceDePiezas& ip, uint32_t posicion )
     t.ponerPiezaEnPosicion( TestCaseEj3::PIEZA_VACIA, posicion );
   }
 
+  delete (&it);
   _C( "Saliendo de recursión en posición: " << posicion + 1 ); DEBUG_ENTER;
   return *mejorTablero;
 }

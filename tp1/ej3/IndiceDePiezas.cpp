@@ -14,32 +14,48 @@ IndiceDePiezas::IndiceDePiezas( uint32_t p_cantidadDeColores, vector<TestCaseEj3
   ),
   _indicePiezasDisponibles(
     p_listaDePiezas.size(), true
+  ),
+  _indiceSecuencial(
+    deque<listaDePiezas>( 1, listaDePiezas( 0 ) )
   )
 {
   for ( uint32_t i = 1; i < this->_listaDePiezas.size(); i++ )
   {
     TestCaseEj3::Pieza pieza = this->_listaDePiezas[i];
-    uint32_t colorDerecha = pieza.colorDerecha;
-    uint32_t colorAbajo = pieza.colorAbajo;
-    _indiceDeDosColores[colorDerecha][colorAbajo].top().push_back( i );
-    _indiceSecuencial.push_back( i );
+    uint32_t colorIzquierda = pieza.colorIzquierda;
+    uint32_t colorArriba = pieza.colorArriba;
+    _indiceDeDosColores[colorIzquierda][colorArriba].top().push_back( i );
+    _indiceSecuencial.top().push_back( i );
+  }
+  _imprimirIndiceDeDosColores();
+}
+
+void IndiceDePiezas::_imprimirIndiceDeDosColores(){
+  for ( uint32_t i = 1; i<_indiceDeDosColores.size(); i++){
+    for ( uint32_t j = 1; j<_indiceDeDosColores.size(); j++){
+      //_C("i="<<i<<", j="<<j<<" .size = "<< _indiceDeDosColores[i][j].top().size());
+      for ( vector<uint32_t>::iterator it = _indiceDeDosColores[i][j].top().begin(); it!=_indiceDeDosColores[i][j].top().end(); it++ )
+        _C("IC["<<i<<"]["<<j<<"] = "<<*it);
+    }
   }
 }
 
 IndiceDePiezas::~IndiceDePiezas( )
 {
+  /*
   for ( vector<IteradorIndiceDePiezas*>::iterator it = this->_iteradores.begin(); it != this->_iteradores.end(); ++it )
   {
     delete *it;
   }
+  */
 }
 
 IteradorIndiceDePiezas& IndiceDePiezas::dameIterador( uint32_t posicion )
 {
   IteradorIndiceDePiezas* it = NULL;
   // Obtengo las piezas de la izquierda y de arriba
-  //uint32_t piezaIzquierda = _t.dameLaPiezaDeIzquierdaDePosicion( posicion );
-  //uint32_t piezaArriba = _t.dameLaPiezaDeArribaDePosicion( posicion );
+  uint32_t piezaIzquierda = _t.dameLaPiezaDeIzquierdaDePosicion( posicion );
+  uint32_t piezaArriba = _t.dameLaPiezaDeArribaDePosicion( posicion );
   /*
   // Si es primera columna pero no primera fila
   if ( this->_primeraColumna && !this->_primeraFila )
@@ -84,8 +100,19 @@ IteradorIndiceDePiezas& IndiceDePiezas::dameIterador( uint32_t posicion )
   }
   */
   //it = new IteradorIndiceDePiezas( posicion );
-  it = new IteradorSecuencial( *this, posicion );
-  this->_iteradores.push_back( it );
+  bool arribaVacio = (piezaArriba == TestCaseEj3::PIEZA_VACIA);
+  bool izquierdaVacio = (piezaIzquierda == TestCaseEj3::PIEZA_VACIA);
+  if ( arribaVacio || izquierdaVacio )
+  {
+    _C("Creando iterador secuencial");
+    it = new IteradorSecuencial( *this, posicion );
+  }
+  else
+  {
+    _C("Creando iterador por colores");
+    it = new IteradorColores( *this, posicion );
+  }
+  //this->_iteradores.push_back( it );
   return *it;
 }
 void IndiceDePiezas::marcarPiezaUtilizada( IteradorIndiceDePiezas& it )
@@ -94,23 +121,37 @@ void IndiceDePiezas::marcarPiezaUtilizada( IteradorIndiceDePiezas& it )
 
   if ( *it == TestCaseEj3::PIEZA_VACIA )
   {
+    _C( "La pieza es vacía" );
     it.utilizarPiezaTransparente();
   }
   else
   {
+
+  _imprimirIndiceDeDosColores();
+
     // Marco la pieza como no disponible
     this->_indicePiezasDisponibles[*it] = false;
     // Obtengo la pieza del listado de piezas
     TestCaseEj3::Pieza pieza = this->_listaDePiezas[*it];
-    // Pusheo una copia del índice para esos dos colores
-    this->_indiceDeDosColores[pieza.colorDerecha][pieza.colorAbajo].push(
-      this->_indiceDeDosColores[pieza.colorDerecha][pieza.colorAbajo].top()
+    _C("Pusheo una copia del índice para esos dos colores");
+    this->_indiceDeDosColores[pieza.colorIzquierda][pieza.colorArriba].push(
+      this->_indiceDeDosColores[pieza.colorIzquierda][pieza.colorArriba].top()
     );
-    // Borro el elemento de la nueva lista
-    this->_indiceDeDosColores[pieza.colorDerecha][pieza.colorAbajo].top().erase(
-      lower_bound( this->_indiceDeDosColores[pieza.colorDerecha][pieza.colorAbajo].top().begin(),
-                   this->_indiceDeDosColores[pieza.colorDerecha][pieza.colorAbajo].top().end(), *it )
+    _C("Borro el elemento de la nueva lista");
+    this->_indiceDeDosColores[pieza.colorIzquierda][pieza.colorArriba].top().erase(
+      lower_bound( this->_indiceDeDosColores[pieza.colorIzquierda][pieza.colorArriba].top().begin(),
+                   this->_indiceDeDosColores[pieza.colorIzquierda][pieza.colorArriba].top().end(), *it )
     );
+    _C("Pusheo una copia del índice secuencial");
+    this->_indiceSecuencial.push(
+      this->_indiceSecuencial.top()
+    );
+    _C("Borro el elemento del índice secuencial");
+    this->_indiceSecuencial.top().erase(
+      lower_bound( this->_indiceSecuencial.top().begin(),
+        this->_indiceSecuencial.top().end(), *it)
+    );
+    DEBUG_INT(this->_indiceSecuencial.top().size());
   }
 }
 void IndiceDePiezas::marcarPiezaDisponible( IteradorIndiceDePiezas& it )
@@ -122,7 +163,8 @@ void IndiceDePiezas::marcarPiezaDisponible( IteradorIndiceDePiezas& it )
     this->_indicePiezasDisponibles[*it] = true;
     // Obtengo la pieza del listado de piezas
     TestCaseEj3::Pieza pieza = this->_listaDePiezas[*it];
-    this->_indiceDeDosColores[pieza.colorDerecha][pieza.colorAbajo].pop();
+    this->_indiceDeDosColores[pieza.colorIzquierda][pieza.colorArriba].pop();
+    this->_indiceSecuencial.pop();
   }
 }
 
