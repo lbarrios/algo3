@@ -4,7 +4,22 @@
 \begin{document}{}
 % -----------------------------------------------
 
-\nota{GONZA}
+Problema 3:
+
+1. ¿Cómo debería modificarse el algoritmo implementado para que el mismo funcione en el RompeColores 2.0?
+
+No se debería modificar de manera sustancial. Ahora hay que chequear que al poner una ficha en la última columna, su color derecho concuerde con el color izquierdo de la primera ficha de la fila. Además, al poner una ficha en la última fila, su color inferior debe concordar con el color superior de la primera ficha de la columna.
+Nuestro algoritmo determinaba las fichas posibles para éstas posiciones solamente de acuerdo a su color superior e izquierdo. Ahora, antes de colocar la ficha, hay que satisfacer unas condiciones extra. Podemos iterar sobre la lista de piezas que ibamos a colocar ahi en Rompecolores1.0, y preguntar si satisfacen o no la condición.
+
+2. ¿Cómo afecta el nuevo esquema a las podas implementadas en la primera versión?
+
+Con respecto a nuestra optimización de utilizar PiezasPorColores, se podrían mantener otras estructuras que de acuerdo a 3 colores 'izquierda, arriba, derecha', o 'izquierda, arriba, abajo', nos devuelva todas las piezas que tienen esos colores en tales bordes. De esta forma podemos saber rápidamente que fichas se pueden poner cuando estamos en una posición de la última columna o última fila. Implicaría un mayor costo temporal y espacial, pero asintóticamente seríá el mismo costo que la versión anterior.
+La poda de cortar la rama cuando, aún llenando todas las posiciones que me quedan por recorrer, no llegamos a superar al mejor cubrimiento de tablero que encontramos, seguría exactamente igual. Lo mismo ocurre con la poda de terminar la ejecución cuando ya encontramos una solución que cubre todo el tablero.
+
+3. ¿Pueden proponer nuevas podas para este nuevo esquema que no podrían implementarse en el esquema anterior?
+
+Hay ciertas podas que resultan mucho más intuitivas con el nuevo esquema. Intentemos acotar la cantidad de casillas que cubre la solución óptima, y de esta forma parar la ejecución cuando encontramos una solución que llega a la cota.
+Por ejemplo, para cada ficha que tiene el color azul arriba, si queremos colocarla en el tablero debería existir una ficha con el color azul abajo.La idea es contar, para cada color x de 1 a c, la diferencia entre la cantidad de fichas que tienen arriba x y la cantidad de fichas que tienen abajo x, lo mismo con la diferencia de fichas que lo tienen a la izquierda y a la derecha. Si tomamos 'p' la mayor de estas diferencias entre todos los colores, sabemos que hay por lo menos p fichas que no vamos a poder colocar. Luego si llegamos a una solución que coloque n - p fichas, ya podemos parar la ejecución.
 
 % -----------------------------------------------
 \end{document}
