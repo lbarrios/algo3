@@ -15,4 +15,123 @@ Nuestro algoritmo se basa en que f(i,j) =   | valor de la carta i      si i=j\\
 \\
 \nota{habra que justificar esto?}
 
+% Comienza el pseudocódigo.
+
+\centerbf{Pseudocódigo}
+\begin{algorithm}[H]
+\caption{Roba Cartas}
+\footnotesize\begin{algorithmic}[1]
+  \Require
+    \Statex $cantCartas \gets$ \Call{dameCantCartas}{} \Comment{$integer$}
+    \Statex $cartas \gets$ \Call{dameArregloCartas}{} \Comment{$arreglo(integer)$}
+    
+  \Ensure
+    \Statex \Call{Mejor puntaje primer jugador}{} \Comment{$integer$}
+    \Statex \Call{Mejor puntaje segundo jugador}{} \Comment{$integer$}
+    \Statex \Call{Cantidad de turnos que dura el partido}{} \Comment{$integer$}
+    \Statex \Call{Lista de levantes}{} \Comment{$lista<integer>$}    
+	\Statex
+	
+	\Statex Estructura Levante:
+	\Statex \hspace{0.15cm} $direcci \acute{o}n$ 	\Comment {Bool}
+	\Statex \hspace{0.15cm} $cantidad$				\Comment {integer}
+	
+	\Statex
+	
+	\Statex Estructura Jugada:
+	\Statex \hspace{0.15cm} $mejorPuntaje$			\Comment {Integer}
+	\Statex \hspace{0.15cm} $turnosHastaAhora$		\Comment {Integer}
+	\Statex \hspace{0.15cm} $levanteRealizado$		\Comment {Levante}
+
+	\Statex 
+	\Statex Variables Globales
+	\Statex \hspace{0.15cm} $matrizJugadas$			\Comment {$Matriz <Jugada> tama \tilde{n}o: cantCartas+1,cantCartas+1$}
+	\Statex \hspace{0.15cm} $sumasParciales$		\Comment {$Arreglo <Integer> tama \tilde{n}o: cantCartas+1$}
+	
+	\Statex
+	\Statex	
+	
+	\Statex \texttt{Se generan las sumas parciales}
+	\State $sumasParciales_0 \gets 0$
+	\ForAll {$i$ en [$0$, $cantCartas -1$]}
+		\State $sumasParciales_{i+1} \gets cartas_i + sumasParciales_{i}$
+	\EndFor
+	\Statex
+	\Statex \texttt{Se inicializa la matriz de jugadas con cero en todas sus posiciones.}
+	
+	\ForAll {$posici \acute{o}n$ \textbf{en} $matrizJugadas$}
+		\State $matrizJugadas_{posici \acute{o}n} \gets 0$
+	\EndFor
+	
+	\Statex
+	\Statex \texttt{Se guardan primero la solución trivial. La de los subjuegos de tamaño 1}
+	\For {$i$ \textbf{en} $[0, cantCartas - 1]$}
+		\State $matrizJugadas_{i,i}.mejorPuntaje \gets cartas_i$
+		\State $matrizJugadas_{i,i}.turnosHastaAhora \gets 1$
+		\State $matrizJugadas_{i,i}.levanteRealizado.direcci \acute{o}n \gets \Call{True}{}$
+		\State $matrizJugadas_{i,i}.levanteRealizado.cantidad \gets 1$
+	\EndFor
+
+	\Statex
+	\Statex \texttt{Se rellena el resto de la matriz}
+	\For {$tamSubConj$ \textbf{en} $[2, cantCartas]$}
+		\State $principio \gets 0$
+		\State $final \gets tamSubConj$
+		\Statex \hspace{0.37cm} \texttt{Se miran todos los subjuegoss posibles de cada tamaño.}
+		\While {$final <= cantCartas$}
+			\State $sumaParcial \gets sumasParciales_{final} - sumasParciales_{principio}$
+			\State $peorJugada$
+			\State $peorJugada.mejorPuntaje \gets infinito$
+			\State $levanteCorrecto$
+			\For {subjuego en [subjuego posibles]}
+				\If {$matrizJugadas_{\Call{principio}{subjuego}, \Call{final}{subconunto}} < peorJugada $}
+					\State $peorJugada \gets matrizJugadas_{\Call{principio}{subjuego}, \Call{final}{subconunto}}$
+					\State $levanteCorrecto \gets \Call{levanteParaLlegarA}{subjuego}$
+				\EndIf
+			\EndFor
+			\State $nuevaJugada$
+			\State $nuevaJugada.mejorPuntajePosible \gets sumaParcial - peorJugada.mejorPuntaje$
+			\State $nuevaJugada.turnosHastaAhora \gets peorJugada.turnosHastaAhora +1$
+			\State $nuevaJugada.levanteRealizado \gets levanteCorrecto$
+			\State $matrizJugadas_{principio,final-1} \gets nuevaJugada$
+			
+			\State $principio++$
+			\State $final++$
+		\EndWhile
+	\EndFor
+\algstore {ej1-alg}
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}[H]
+\footnotesize\begin{algorithmic}[1]
+\algrestore{ej1-alg}
+	\Statex \texttt{La mejor jugada del juego total está en la posición 0, cantCartas-1}
+	\State $mejorPuntaje \gets matrizJugadas_{0, cantCartas -1}$
+	\State $puntajeEnemigo \gets sumasParciales_{cantCartas} - mejorPuntaje$
+	\Statex
+	\Statex \texttt{Ahora se revisan las jugadas realizadas}
+	\State $fin \gets cantCartas -1$
+	\State $init \gets 0$
+	\State $turnos \gets 0$
+	\State $ levantes \gets \Call{nuevaLista}$
+	\While {$init <= fin$}
+		\State $levanteActual \gets matrizJugadas_{init,fin}.levanteRealizado$
+		\State $\Call{agregar}{levantes, levanteActual}$
+		\If {$levanteActual.direcci \acute{o}n = \Call{IZQ}{}$}
+			\State $fin \gets fin - levanteActual.cantidad $
+		\Else
+			\State $init \gets init + levanteActual.cantidad $
+		\EndIf
+		\State $turnos++$;
+	\EndWhile
+	\State \Return mejorPuntaje
+	\State \Return puntajeEnemigo
+	\State \Return turnos
+	\State \Return levantes
+\end{algorithmic}
+\end{algorithm}
+
+
 \end{document}
