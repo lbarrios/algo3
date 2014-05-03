@@ -52,51 +52,51 @@ Nuestro algoritmo se basa en que f(i,j) =   | valor de la carta i      si i=j\\
 	\Statex	
 	
 	\Statex \texttt{Se generan las sumas parciales}
-	\State $sumasParciales_0 \gets 0$
-	\ForAll {$i$ en [$0$, $cantCartas -1$]}
-		\State $sumasParciales_{i+1} \gets cartas_i + sumasParciales_{i}$
+	\State $sumasParciales_0 \gets 0$ 										\Comment{ \bigO{1}}
+	\ForAll {$i$ en [$0$, $cantCartas -1$]}									\Comment{ \bigO{n}}
+		\State $sumasParciales_{i+1} \gets cartas_i + sumasParciales_{i}$	\Comment{ \bigO{1}}
 	\EndFor
 	\Statex
 	\Statex \texttt{Se inicializa la matriz de jugadas con cero en todas sus posiciones.}
 	
-	\ForAll {$posici \acute{o}n$ \textbf{en} $matrizJugadas$}
-		\State $matrizJugadas_{posici \acute{o}n} \gets 0$
+	\ForAll {$posici \acute{o}n$ \textbf{en} $matrizJugadas$}				\Comment{ \bigO{n^2}}
+		\State $matrizJugadas_{posici \acute{o}n} \gets 0$					\Comment{ \bigO{1}}
 	\EndFor
 	
 	\Statex
 	\Statex \texttt{Se guardan primero la solución trivial. La de los subjuegos de tamaño 1}
-	\For {$i$ \textbf{en} $[0, cantCartas - 1]$}
-		\State $matrizJugadas_{i,i}.mejorPuntaje \gets cartas_i$
-		\State $matrizJugadas_{i,i}.turnosHastaAhora \gets 1$
-		\State $matrizJugadas_{i,i}.levanteRealizado.direcci \acute{o}n \gets \Call{True}{}$
-		\State $matrizJugadas_{i,i}.levanteRealizado.cantidad \gets 1$
+	\For {$i$ \textbf{en} $[0, cantCartas - 1]$}							\Comment{ \bigO{n}}
+		\State $matrizJugadas_{i,i}.mejorPuntaje \gets cartas_i$			\Comment{ \bigO{1}}
+		\State $matrizJugadas_{i,i}.turnosHastaAhora \gets 1$				\Comment{ \bigO{1}}
+		\State $matrizJugadas_{i,i}.levanteRealizado.direcci \acute{o}n \gets \Call{True}{}$ \Comment{ \bigO{1}}
+		\State $matrizJugadas_{i,i}.levanteRealizado.cantidad \gets 1$ 		\Comment{ \bigO{1}}
 	\EndFor
 
 	\Statex
 	\Statex \texttt{Se rellena el resto de la matriz}
-	\For {$tamSubConj$ \textbf{en} $[2, cantCartas]$}
-		\State $principio \gets 0$
-		\State $final \gets tamSubConj$
-		\Statex \hspace{0.37cm} \texttt{Se miran todos los subjuegoss posibles de cada tamaño.}
-		\While {$final <= cantCartas$}
-			\State $sumaParcial \gets sumasParciales_{final} - sumasParciales_{principio}$
-			\State $peorJugada$
-			\State $peorJugada.mejorPuntaje \gets infinito$
-			\State $levanteCorrecto$
+	\For {$tamSubConj$ \textbf{en} $[2, cantCartas]$}						\Comment{ \bigO{n^2}}
+		\State $principio \gets 0$											\Comment{ \bigO{1}}
+		\State $final \gets tamSubConj$										\Comment{ \bigO{1}}
+		\Statex \hspace{0.37cm} \texttt{Se miran todos los subjuegoss posibles de cada tamaño.} 
+		\While {$final <= cantCartas$}										\Comment{ \bigO{n}}
+			\State $sumaParcial \gets sumasParciales_{final} - sumasParciales_{principio}$ \Comment{ \bigO{1}}
+			\State $peorJugada$												\Comment{Jugada, \bigO{1}}
+			\State $peorJugada.mejorPuntaje \gets infinito$					\Comment{ \bigO{1}}
+			\State $levanteCorrecto$										\Comment{Levante,  \bigO{1}}
 			\For {subjuego en [subjuego posibles]}
-				\If {$matrizJugadas_{\Call{principio}{subjuego}, \Call{final}{subconunto}} < peorJugada $}
-					\State $peorJugada \gets matrizJugadas_{\Call{principio}{subjuego}, \Call{final}{subconunto}}$
-					\State $levanteCorrecto \gets \Call{levanteParaLlegarA}{subjuego}$
+				\If {$matrizJugadas_{\Call{principio}{subjuego}, \Call{final}{subconunto}} < peorJugada $} \Comment{ \bigO{1}}
+					\State $peorJugada \gets matrizJugadas_{\Call{principio}{subjuego}, \Call{final}{subconunto}}$ \Comment{ \bigO{1}}
+					\State $levanteCorrecto \gets \Call{levanteParaLlegarA}{subjuego}$ \Comment{ \bigO{1}}
 				\EndIf
 			\EndFor
-			\State $nuevaJugada$
-			\State $nuevaJugada.mejorPuntajePosible \gets sumaParcial - peorJugada.mejorPuntaje$
-			\State $nuevaJugada.turnosHastaAhora \gets peorJugada.turnosHastaAhora +1$
-			\State $nuevaJugada.levanteRealizado \gets levanteCorrecto$
-			\State $matrizJugadas_{principio,final-1} \gets nuevaJugada$
+			\State $nuevaJugada$											\Comment{ \bigO{1}}
+			\State $nuevaJugada.mejorPuntajePosible \gets sumaParcial - peorJugada.mejorPuntaje$   \Comment{ \bigO{1}}
+			\State $nuevaJugada.turnosHastaAhora \gets peorJugada.turnosHastaAhora +1$   \Comment{ \bigO{1}}
+			\State $nuevaJugada.levanteRealizado \gets levanteCorrecto$		\Comment{ \bigO{1}}
+			\State $matrizJugadas_{principio,final-1} \gets nuevaJugada$	\Comment{ \bigO{1}}
 			
-			\State $principio++$
-			\State $final++$
+			\State $principio++$											\Comment{ \bigO{1}}
+			\State $final++$												\Comment{ \bigO{1}}
 		\EndWhile
 	\EndFor
 \algstore {ej1-alg}
@@ -108,28 +108,28 @@ Nuestro algoritmo se basa en que f(i,j) =   | valor de la carta i      si i=j\\
 \footnotesize\begin{algorithmic}[1]
 \algrestore{ej1-alg}
 	\Statex \texttt{La mejor jugada del juego total está en la posición 0, cantCartas-1}
-	\State $mejorPuntaje \gets matrizJugadas_{0, cantCartas -1}$
-	\State $puntajeEnemigo \gets sumasParciales_{cantCartas} - mejorPuntaje$
+	\State $mejorPuntaje \gets matrizJugadas_{0, cantCartas -1}$			\Comment{ \bigO{1}}
+	\State $puntajeEnemigo \gets sumasParciales_{cantCartas} - mejorPuntaje$   \Comment{ \bigO{1}}
 	\Statex
 	\Statex \texttt{Ahora se revisan las jugadas realizadas}
-	\State $fin \gets cantCartas -1$
-	\State $init \gets 0$
-	\State $turnos \gets 0$
-	\State $ levantes \gets \Call{nuevaLista}$
-	\While {$init <= fin$}
-		\State $levanteActual \gets matrizJugadas_{init,fin}.levanteRealizado$
-		\State $\Call{agregar}{levantes, levanteActual}$
-		\If {$levanteActual.direcci \acute{o}n = \Call{IZQ}{}$}
-			\State $fin \gets fin - levanteActual.cantidad $
+	\State $fin \gets cantCartas -1$										\Comment{ \bigO{1}}
+	\State $init \gets 0$													\Comment{ \bigO{1}}
+	\State $turnos \gets 0$													\Comment{ \bigO{1}}
+	\State $ levantes \gets \Call{nuevaLista}$								\Comment{$Lista<Levante>$ \bigO{1}}
+	\While {$init <= fin$}													\Comment{ \bigO{n}}
+		\State $levanteActual \gets matrizJugadas_{init,fin}.levanteRealizado$	\Comment{ \bigO{1}}
+		\State $\Call{agregar}{levantes, levanteActual}$						\Comment{ \bigO{1}}
+		\If {$levanteActual.direcci \acute{o}n = \Call{IZQ}{}$}					\Comment{ \bigO{1}}
+			\State $fin \gets fin - levanteActual.cantidad $					\Comment{ \bigO{1}}
 		\Else
-			\State $init \gets init + levanteActual.cantidad $
+			\State $init \gets init + levanteActual.cantidad $					\Comment{ \bigO{1}}
 		\EndIf
-		\State $turnos++$;
+		\State $turnos++$;														\Comment{ \bigO{1}}
 	\EndWhile
-	\State \Return mejorPuntaje
-	\State \Return puntajeEnemigo
-	\State \Return turnos
-	\State \Return levantes
+	\State \Return mejorPuntaje													\Comment{ \bigO{1}}
+	\State \Return puntajeEnemigo												\Comment{ \bigO{1}}
+	\State \Return turnos														\Comment{ \bigO{1}}
+	\State \Return levantes														\Comment{ \bigO{1}}
 \end{algorithmic}
 \end{algorithm}
 
