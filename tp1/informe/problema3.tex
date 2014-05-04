@@ -230,7 +230,7 @@ recrearlo en el momento mismo en que se realiza el recorrido del grafo.
 Para este algoritmo en particular, el problema planteado es de
 \textbf{optimización}, ya que se desea obtener una solución válida (debe cumplir
 ciertos requisitos, como que cada pieza coincida en sus colores con sus
-aledañas), pero que además maximice la \red{\textbf{función objetivo}},
+aledañas), pero que además maximice la \blue{\textbf{función objetivo}},
 definiendo a esta última como, dado un tablero determinado, la sumatoria de los
 casilleros que contienen ficha.
 
@@ -307,7 +307,7 @@ casilleros que contienen ficha.
 %   \right.
 % \]
 % \end{definicion}
-\begin{definicion}
+\begin{definicion}\label{def:ej3-objetivo}
 Sean T el conjunto de todos los posibles tableros, 
 definimos la función auxiliar 
 $t.lleno: \nat_{\geq 1} \rightarrow [0,1]$, tal que
@@ -319,9 +319,9 @@ $t.lleno: \nat_{\geq 1} \rightarrow [0,1]$, tal que
   \end{array}
   \right.
 \]
-La \red{\textbf{función objetivo}} es, dado un tablero $t \in T$,
+La \blue{\textbf{función objetivo}} es, dado un tablero $t \in T$,
 $f: T \rightarrow \nat$, de la forma
-\red{
+\blue{
 \[
 f(T) := \nsum_{i=1}^{\#casilleros}{ t.lleno \bigg( {\large T\left(i\right)} \bigg) }
 \]
@@ -335,15 +335,25 @@ f(T) := \nsum_{i=1}^{\#casilleros}{ t.lleno \bigg( {\large T\left(i\right)} \big
 
 La idea es aplicar el algoritmo de backtracking según las consideraciones expuestas anteriormente. Para ello, recorreremos el tablero en un orden determinado (de izquierda a derecha, de arriba a abajo), evaluando en cada paso la ficha correspondiente a la posición donde se encuentra el recorrido: de tal forma que en cada paso se evalúe la posición siguiente a la que se evaluó en el paso anterior.
 
-En cada paso del algoritmo se colocará una ficha, y luego se continuará hacia el siguiente paso. Es fácil ver que, en su versión más básica, este comportamiento lleva a tener una complejidad del orden de \bigO{N^N}, siendo $N=n*m$ la cantidad de posiciones del tablero, que también es la cantidad de piezas, ya que se realizan N iteraciones (una por cada posición del tablero), y en cada iteración se prueban N piezas, lo cual resulta en $N*N*N*...*N = N^N$. Hay que tener en cuenta que esta forma de recorrer el universo de soluciones está analizando también las soluciones no factibles, es decir las que resultan imposibles, tal como ``colocar la misma pieza en todos los casilleros''.
+En cada paso del algoritmo se colocará una ficha, y luego se llamará recursivamente a la función, probando así las fichas posteriores. Es importante tener en cuenta que en cada llamada recursiva el algoritmo probará con $M$ fichas, y se llamará recursivamente para cada una de ellas.
+
+Es fácil ver que, \emph{en su versión más básica}, este comportamiento lleva a tener una complejidad del orden de \bigO{M^N}, siendo $N=n*m$ la cantidad de posiciones del tablero, y $M$ la cantidad de piezas, ya que se realizan $N$ iteraciones (una por cada posición del tablero), y en cada iteración se prueban $M$ piezas, lo cual resulta en $\overbrace{M*M*M*...*M}^{N~veces} = M^N$. Hay que tener en cuenta que esta forma de recorrer el universo de soluciones está analizando también las soluciones no factibles, es decir las que resultan imposibles, tal como ``colocar la misma pieza en todos los casilleros''.
 
 \centerbf{Poda: Función de Selección}
 
-La primer poda posible resulta totalmente trivial, ya que se trata de probar en cada iteración sólamente las piezas que no se hayan colocado ya en el tablero. De esta forma, se reduce la complejidad a \bigO{(N)*(N-1)*...*(2)*(1)}, es decir al orden factorial \bigO{N!}.
+La primer poda posible resulta totalmente trivial, ya que se trata de probar en cada iteración sólamente las piezas que no se hayan colocado ya en el tablero. Aunque esta poda es simple, y no es más que una aplicación incompleta de las restricciones impuestas por la función de selección, se la menciona, ya que de esta forma se reduce la complejidad a \bigO{\overbrace{(M)*(M-1)*...*(M-(N-1))*(M-(N))}^{\text{N multiplicaciones, restando una pieza en cada una}}}, es decir \bigO{\frac{M!}{(N-1)!}} $\subseteq$ \bigO{M!}. Simplificando, diremos que esta cota reduce la complejidad del orden exponencial \bigO{M^N} al orden factorial \bigO{M!}.
 
-Sobre la misma poda anterior, se puede implementar una mejora, que es probar en cada iteración sólamente las piezas cuyos colores sean coherentes con los colores de las piezas que ya se encuentren colocadas en el tablero. Así, si una posición tiene una pieza a la izquierda cuyo color derecho es verde, yo debería poder colocar en esa posición sólamente las piezas cuyo color izquierdo es verde. Esta última poda en realidad se trata básicamente de reducir el recorrido del universo de soluciones a ``las soluciones factibles'', es decir, las que generan un tablero final válido. Esta última poda en realidad no es distinta a la poda mencionada en el párrafo anterior, sino que es más bien una extensión de la misma, ya que las dos se encargan de analizar en cada iteración la correctitud del tablero en términos de la \textbf{función de selección}.
+Sobre la misma poda anterior, se puede implementar una mejora, que es probar en cada iteración sólamente las piezas cuyos colores sean coherentes con los colores de las piezas que ya se encuentren colocadas en el tablero. Así, si una posición tiene una pieza a la izquierda cuyo color derecho es verde, yo debería poder colocar en esa posición sólamente las piezas cuyo color izquierdo es verde. Esta última poda, tal y como está planteada, en realidad se trata básicamente de \textbf{\red{reducir el recorrido del universo de soluciones a ``las soluciones factibles''}}, es decir, las que generan un tablero final válido. Conceptualmente no es distinta a la poda mencionada en el párrafo anterior, sino que es más bien una extensión de la misma, ya que las dos se encargan de \red{analizar en cada iteración la correctitud del tablero en términos de la \textbf{función de selección}}. De hecho, esta poda se encarga de \textbf{seleccionar sólamente las fichas que cumplan \emph{estrictamente} con la función de selección}, mientras que la anterior sólo aplica la restricción de forma parcial. 
 
-De esta forma, por lo antes expuesto, podemos asegurar que al final del recorrido (luego de evaluar todas las hojas del árbol) se habrán evaluado todas las soluciones factibles, ya que el algoritmo habrá recorrido cada posición del tablero, evaluando en cada una las piezas que cumplan con el criterio de selección.
+Es imposible, sin embargo, establecer \emph{a priori} una caracterización precisa del orden de complejidad del algoritmo bajo las condiciones de esta nueva poda, ya que la misma depende no solo del tamaño de entrada, sino del contenido de la entrada. Puede darse, por ejemplo, el caso de una entrada en la que todas las piezas tengan el mismo color en todos sus lados, lo cual significaría que habría que probar todas las piezas en todas las posiciones, lo cual conllevaría una complejidad de \bigO{M^N}. También puede darse el caso en que la disposición de la entrada sea de forma tal que luego de colocar la primer pieza, sólo exista en cada paso una pieza posible, con lo cual la complejidad sería del orden de \bigO{M * 1^N}, es decir \bigO{M} lineal sobre la cantidad de piezas. Por la razón expuesta en este párrafo, diremos que la complejidad está acotada por \bigO{M^N}, a pesar de que según la disposición de la entrada la misma puede ser mucho menor.
+
+Por todo lo antes expuesto, además, podemos asegurar que al final del recorrido (es decir, luego de evaluar todas las hojas del árbol) se habrán evaluado \emph{estrictamente} todas las \textbf{\red{soluciones factibles}}, ya que el algoritmo habrá recorrido en cada paso cada posición del tablero, \textbf{\red{evaluando las piezas que cumplan estrictamente con el criterio de selección}}.
+
+\centerbf{Poda: Función Objetivo}
+
+Como se expuso en párrafos anteriores, la solución brindada por el algoritmo debe no solo cumplir con las condiciones de una determinada \red{función de selección}, sino también maximizar cierta \blue{función objetivo (\emph{ref: \ref{def:ej3-objetivo}})}, la cual depende de la cantidad de piezas dispuestas en el tablero o, inversamente, de la cantidad de ``agujeros'', es decir, posiciones en que no exista ninguna pieza.
+
+Dado que las soluciones comparten una subestructura, en donde dado un determinado nodo $d$ podemos asegurar que <<para todas las hojas para las que exista un camino simple hacia ese nodo que contenga a los hijos de ese nodo>>\footnote{Muy coloquialmente, que exista una ``relación de parentezco'' con ese nodo}, la solución representada por esas hojas contiene a todas las piezas que ya se encuentran determinadas en el nodo $d$.
 
 \nota{aca poner el pseudocodigo}\\
 
