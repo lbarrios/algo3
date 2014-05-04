@@ -77,16 +77,16 @@ MaxPuntajePosible(CARTAS')
 
 	\Statex
 	\Statex \texttt{Se rellena el resto de la matriz}
-	\For {$tamSubConj$ \textbf{en} $[2, cantCartas]$}						\Comment{ \bigO{n^2}}\nota{n cubo no es?}
+	\For {$tamSubConj$ \textbf{en} $[2, cantCartas]$}						\Comment{ \bigO{n^3}}
 		\State $principio \gets 0$											\Comment{ \bigO{1}}
 		\State $final \gets tamSubConj$										\Comment{ \bigO{1}}
-		\Statex \hspace{0.37cm} \texttt{Se miran todos los subjuegoss posibles de cada tamaño.} 
-		\While {$final <= cantCartas$}										\Comment{ \bigO{n}}
+		\Statex \hspace{0.37cm} \texttt{Se miran todos los subjuegos posibles de cada tamaño.} 
+		\While {$final <= cantCartas$}										\Comment{ \bigO{n^2}}
 			\State $sumaParcial \gets sumasParciales_{final} - sumasParciales_{principio}$ \Comment{ \bigO{1}}
 			\State $peorJugada$												\Comment{Jugada, \bigO{1}}
 			\State $peorJugada.mejorPuntaje \gets infinito$					\Comment{ \bigO{1}}
 			\State $levanteCorrecto$										\Comment{Levante,  \bigO{1}}
-			\For {subjuego en [subjuego posibles]}\nota{habra que poner aca un n cuadrado?}
+			\For {subjuego en [subjuego posibles]}\Comment{\bigO{n}}
 				\If {$matrizJugadas_{\Call{principio}{subjuego}, \Call{final}{subconunto}} < peorJugada $} \Comment{ \bigO{1}}
 					\State $peorJugada \gets matrizJugadas_{\Call{principio}{subjuego}, \Call{final}{subjuego}}$ \Comment{ \bigO{1}}
 					\State $levanteCorrecto \gets \Call{levanteParaLlegarA}{subjuego}$ \Comment{ \bigO{1}}
