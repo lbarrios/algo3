@@ -3,6 +3,7 @@
 #include <list>
 #include <vector>
 #include <cstdio>
+#include "../common/Timer.h"
 
 using namespace std;
 
@@ -21,12 +22,7 @@ struct Jugada {
   }
 };
 
-
-void imprimeTabla(Jugada* tabla) {
-
-}
-
-
+Timer timer(cout);
 
 int main(int argc, const char *argv[]) {
     
@@ -38,33 +34,33 @@ int main(int argc, const char *argv[]) {
 
   //Se reciben los datos.
   cin >> cantCartas;
+
+	if (cantCartas == 0) {
+		return 0;
+	}
+
   for (int i = 0; i < cantCartas; i++) {
     int nuevaCarta;
     cin >> nuevaCarta;
     cartas.push_back(nuevaCarta);
   }
- 
+
+	timer.setInitialTime("cicloEntero");
+
   //Se calculan las sumas parciales para cada elemento.
   int sumasParciales[cantCartas+1]; // Necesito un espacio extra para poner 0 al principio.
   sumasParciales[0] = 0;
-  for (int i = 1; i < cantCartas+1; i++)
-  {
+  for (int i = 1; i < cantCartas+1; i++) {
     sumasParciales[i] = sumasParciales[i-1] + cartas[i-1];
-
   }
 
   //Se crea la matriz para guardar los datos;
   Jugada mejoresJugadas[cantCartas][cantCartas];
 
   // Se inicializa la matriz en cero para simplificar código.
-  for (int i = 0; i < cantCartas; i++)
-  {
-    for (int j = 0; j < cantCartas; j++)
-    {
+  for (int i = 0; i < cantCartas; i++) {
+    for (int j = 0; j < cantCartas; j++) {
       mejoresJugadas[i][j].mejorPuntaje = 0;
-      mejoresJugadas[i][j].turnosHastaAhora = 0;
-      mejoresJugadas[i][j].levanteRealizado.cantidad = 0;
-      mejoresJugadas[i][j].levanteRealizado.direccion = 0;
     }
   }
 
@@ -75,6 +71,7 @@ int main(int argc, const char *argv[]) {
   // Tengo que hacer un arreglo acá. El caso de tamaño 1 se tiene
   // que calcular a parte. A patín viejo, a patín.
   
+
   for (int i = 0; i < cantCartas; i++) {
     Jugada& unaJugadaTamUno = mejoresJugadas[i][i];
     unaJugadaTamUno.mejorPuntaje = cartas[i];
@@ -82,6 +79,7 @@ int main(int argc, const char *argv[]) {
     unaJugadaTamUno.levanteRealizado.direccion = 0;
     unaJugadaTamUno.levanteRealizado.cantidad = 1;
   }
+
 
   for (int tamSubconjunto = 2; tamSubconjunto <= cantCartas; tamSubconjunto++) {
     int principio = 0;
@@ -126,40 +124,6 @@ int main(int argc, const char *argv[]) {
   }
 
 
-  /*
-  // En este momento ya se tiene toda la tabla calculada.
-  for (int i = 0; i < cantCartas; i++) {
-    for (int j = 0; j < cantCartas; j++) {
-      Jugada p = mejoresJugadas[i][j];
-      cout << p.mejorPuntaje << "  ";
-    }
-    cout << endl;
-    
-  }
-  cout << endl << endl;
-  // En este momento ya se tiene toda la tabla calculada.
-  for (int i = 0; i < cantCartas; i++) {
-    for (int j = 0; j < cantCartas; j++) {
-      Jugada p = mejoresJugadas[i][j];
-      cout << p.levanteRealizado.cantidad << "  ";
-    }
-    cout << endl;
-    
-  }
-  cout << endl << endl;
-
-  // En este momento ya se tiene toda la tabla calculada.
-  for (int i = 0; i < cantCartas; i++) {
-    for (int j = 0; j < cantCartas; j++) {
-      Jugada p = mejoresJugadas[i][j];
-      cout << p.levanteRealizado.direccion << "  ";
-    }
-    cout << endl;
-    
-  }
-  */
-
-
   int fin = cantCartas -1;
   int init = 0;
   int t = 0;
@@ -174,9 +138,16 @@ int main(int argc, const char *argv[]) {
     }
     t++;
   }
+
+	timer.setFinalTime("cicloEntero");
+
+	#ifndef TIME
   cout << t << " " << mejoresJugadas[0][cantCartas-1].mejorPuntaje << " " << sumasParciales[cantCartas] - mejoresJugadas[0][cantCartas-1].mejorPuntaje << endl;
   for (list<Levante>::iterator i = listaLev->begin() ; i != listaLev->end() ; i++) {
     cout << ((i->direccion)? ("der") : ("izq")) << " " << i->cantidad << endl;
   }
+	#else
+	timer.saveAllTimes();
+	#endif
 
 }

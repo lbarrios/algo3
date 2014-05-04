@@ -4,10 +4,10 @@ import sys
 
 generador = generadorDeTestsEj3()
 desde_n = 1
-hasta_n = 10
+hasta_n = 7
 paso_n = 1
 desde_m = 1
-hasta_m = 10
+hasta_m = 7
 paso_m = 1
 paso_colores = 1
 desde_colores = 1

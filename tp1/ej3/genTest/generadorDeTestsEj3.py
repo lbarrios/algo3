@@ -58,7 +58,7 @@ class generadorDeTestsEj3 (generadorDeTests):
     primeraLinea = "{} {} {}".format(n,m, colores)
     listaPiezas = []
     for i in range(n*m):
-      valor = lambda: random.randint(1,colores+1)
+      valor = lambda: random.randint(1,colores)
       listaPiezas.append( "{} {} {} {}".format( valor(), valor(), valor(), valor()))
 
     return "{}\n{}".format( primeraLinea, "\n".join(listaPiezas))
