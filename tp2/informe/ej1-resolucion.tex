@@ -5,15 +5,17 @@
 \begin{document}{}
 % -----------------------------------------------
 
-Para una mayor claridad, vamos a reducir el problema a encontrar la mayor cantidad de puntos que se pueden sacar con el juego de cartas dado.\\
-Sea f(i,j) = "maxima cantidad de puntos que se pueden sacar en el juego que consiste en las cartas que estaban desde la posición i \\
-hasta la j en el juego de cartas original".\\
-Sea suma(i,j) la suma de las cartas que estaban entre la posición i y j en el juego de cartas original.\\
-Nuestro algoritmo se basa en que f(i,j) =   | valor de la carta i      si i=j\\
-                                            | suma(i, j) - min(f(i', j')) para todo i' j' que representen un juego que le dejo al oponente\\
-                                              usando una movida válida        sino\\
-\\
-\nota{habra que justificar esto?}
+Veamos las ideas desarrolladas en nuestra resolución. En un juego cualquiera de Robanúmeros, $Puntaje_{mio}$ + $Puntaje_{oponente}$ = $sumaTotalCartas$
+
+Luego, maximizar la diferencia entre mi puntaje y el del oponente es lo mismo que maximizar mi puntaje. Si agudizamos el análisis, nos damos cuenta de que el puntaje que yo saco con ciertas cartas sobre la mesa es igual a la suma de las cartas sobre la mesa menos el puntaje que saca el oponente con las cartas que dejo sobre la mesa tras mi jugada. Es decir,
+$Puntaje_{mio}$(CARTAS) = suma(CARTAS) - $Puntaje_{oponente}$(cartas que quedan)
+
+Como suma(CARTAS) está fijo, queremos minimizar el puntaje del oponente con las cartas que le quedan. Como la cantidad de subconjuntos de CARTAS que le puedo dejar es finita (es $O(n)$), los podemos recorrer y quedarnos con el que haga que el oponente saque la mínima cantidad de puntos. 
+
+La cantidad de puntos que saca el oponente con las cartas que le dejo debe calcularse con la misma función con que yo calculo mi puntaje, ya que asumimos que el oponente juega de manera óptima, es decir, tan bien como yo. Luego obtenemos el siguiente resultado:
+MaxPuntajePosible(CARTAS) = Suma(CARTAS) - $\min\limits_{CARTAS' \in \theta}$ 
+MaxPuntajePosible(CARTAS')
+\\con $\theta$ todos los subconjuntos de CARTAS que pueden quedar en la mesa tras una jugada.
 
 % Comienza el pseudocódigo.
 
