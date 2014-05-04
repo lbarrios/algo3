@@ -74,7 +74,7 @@ Nuestro algoritmo se basa en que f(i,j) =   | valor de la carta i      si i=j\\
 
 	\Statex
 	\Statex \texttt{Se rellena el resto de la matriz}
-	\For {$tamSubConj$ \textbf{en} $[2, cantCartas]$}						\Comment{ \bigO{n^2}}
+	\For {$tamSubConj$ \textbf{en} $[2, cantCartas]$}						\Comment{ \bigO{n^2}}\nota{n cubo no es?}
 		\State $principio \gets 0$											\Comment{ \bigO{1}}
 		\State $final \gets tamSubConj$										\Comment{ \bigO{1}}
 		\Statex \hspace{0.37cm} \texttt{Se miran todos los subjuegoss posibles de cada tamaño.} 
@@ -83,7 +83,7 @@ Nuestro algoritmo se basa en que f(i,j) =   | valor de la carta i      si i=j\\
 			\State $peorJugada$												\Comment{Jugada, \bigO{1}}
 			\State $peorJugada.mejorPuntaje \gets infinito$					\Comment{ \bigO{1}}
 			\State $levanteCorrecto$										\Comment{Levante,  \bigO{1}}
-			\For {subjuego en [subjuego posibles]}
+			\For {subjuego en [subjuego posibles]}\nota{habra que poner aca un n cuadrado?}
 				\If {$matrizJugadas_{\Call{principio}{subjuego}, \Call{final}{subconunto}} < peorJugada $} \Comment{ \bigO{1}}
 					\State $peorJugada \gets matrizJugadas_{\Call{principio}{subjuego}, \Call{final}{subconunto}}$ \Comment{ \bigO{1}}
 					\State $levanteCorrecto \gets \Call{levanteParaLlegarA}{subjuego}$ \Comment{ \bigO{1}}
