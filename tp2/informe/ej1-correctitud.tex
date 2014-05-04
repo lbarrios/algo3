@@ -5,6 +5,22 @@
 \begin{document}{}
 % -----------------------------------------------
 
-á
+Se procede a demostrar que nustro algoritmo es correcto. Vamos a concentrarnos en probar que devuelve un puntaje máximo correcto, que obtenemos de matrizJugadas[1][n].
+
+Hipótesis inductiva: P(k): En la iteración k del ciclo principal matrizJugadas[i][j] = MaxPuntajePosible(cartas que venían en el orden de i a j) para todo (i, j) tal que j - i $\leq$ k. 
+\\Hagamos inducción en k, necesitamos probar P(n).
+Nos vamos a apoyar en el resultado 1.1. \nota{linkear}
+\\Caso base: P(1)
+\\Se corresponde al caso base del resultado 1.1. matrizJugadas[i][i] vale el valor de la carta i, según la operación en la linea 9 del pseudocódigo.
+\\Paso inductivo: Sup P(k - 1) quiero ver que vale P(k) $\forall$ $2 \leq k \leq n$.
+\\Ahora, los subconjuntos que le puedo dejar al oponente de las cartas que venian en el orden de i a j son:
+\begin{itemize}
+\item ninguna carta (OBS*)
+\item las cartas de i a j - 1, las cartas de i a j - 2, ... , las cartas de i a i (corresponde a sacar cartas del extremo derecho) 
+\item las cartas de i + 1 a j, las cartas de i + 2 a j, ... , las cartas de j a j (corresponde a sacar cartas del extremo izquierdo)
+\end{itemize}
+Ahora, todos estos subconjuntos de cartas cumplen que su extremo derecho - su extremo izquierdo $\leq$ k, luego por HI su puntajeMáximo ya está calculado en matrizJugadas[extremo izquierdo][extremo derecho].
+\\Nuestro algoritmo recorre la matriz en todas esas posiciones, quedándonse con el puntaje más bajo (el que saca el oponente), y guardandolo en matrizJugadas[i][j]. Luego por el resultado 1.1 contiene MaxPuntajePosible(cartas de i a j). En la k-esima iteración del ciclo principal, lo hace para todos los (i, j) tales que i - j = k. Luego se cumple P(k).
+\\\\OBS*: Este caso está representado en matrizJugadas[x][y] con y $<$ x, inicializado al comienzo del algoritmo con 0, que representa el puntaje máximo que se puede sacar sin cartas sobre la mesa.
 
 \end{document}

@@ -12,10 +12,11 @@ $Puntaje_{mio}$(CARTAS) = suma(CARTAS) - $Puntaje_{oponente}$(cartas que quedan)
 
 Como suma(CARTAS) está fijo, queremos minimizar el puntaje del oponente con las cartas que le quedan. Como la cantidad de subconjuntos de CARTAS que le puedo dejar es finita (es $O(n)$), los podemos recorrer y quedarnos con el que haga que el oponente saque la mínima cantidad de puntos. 
 
-La cantidad de puntos que saca el oponente con las cartas que le dejo debe calcularse con la misma función con que yo calculo mi puntaje, ya que asumimos que el oponente juega de manera óptima, es decir, tan bien como yo. Luego obtenemos el siguiente resultado:
-MaxPuntajePosible(CARTAS) = Suma(CARTAS) - $\min\limits_{CARTAS' \in \theta}$ 
+La cantidad de puntos que saca el oponente con las cartas que le dejo debe calcularse con la misma función con que yo calculo mi puntaje, ya que asumimos que el oponente juega de manera óptima, es decir, tan bien como yo. Luego obtenemos el siguiente resultado 1.1:
+\\\\MaxPuntajePosible(CARTAS) = Suma(CARTAS) - $\min\limits_{CARTAS' \in \theta}$ 
 MaxPuntajePosible(CARTAS')
-\\con $\theta$ todos los subconjuntos de CARTAS que pueden quedar en la mesa tras una jugada.
+\\\\con $\theta$ todos los subconjuntos de CARTAS que pueden quedar en la mesa tras una jugada.
+\\Como caso base, MaxPuntajePosible(solo la carta c sobre la mesa) = valor(c), pues la única jugada posible es tomar la carta.
 
 % Comienza el pseudocódigo.
 
@@ -87,7 +88,7 @@ MaxPuntajePosible(CARTAS')
 			\State $levanteCorrecto$										\Comment{Levante,  \bigO{1}}
 			\For {subjuego en [subjuego posibles]}\nota{habra que poner aca un n cuadrado?}
 				\If {$matrizJugadas_{\Call{principio}{subjuego}, \Call{final}{subconunto}} < peorJugada $} \Comment{ \bigO{1}}
-					\State $peorJugada \gets matrizJugadas_{\Call{principio}{subjuego}, \Call{final}{subconunto}}$ \Comment{ \bigO{1}}
+					\State $peorJugada \gets matrizJugadas_{\Call{principio}{subjuego}, \Call{final}{subjuego}}$ \Comment{ \bigO{1}}
 					\State $levanteCorrecto \gets \Call{levanteParaLlegarA}{subjuego}$ \Comment{ \bigO{1}}
 				\EndIf
 			\EndFor
