@@ -331,7 +331,19 @@ f(T) := \nsum_{i=1}^{\#casilleros}{ t.lleno \bigg( {\large T\left(i\right)} \big
 
 \subsubsection{Planteamiento de resolución} 
 
-La idea es aplicar el algoritmo de backtracking según las consideraciones expuestas anteriormente. Para ello, recorreremos el tablero en un orden determinado, evaluando en cada paso la ficha correspondiente a la posición donde se encuentra el recorrido: de tal forma que en cada paso se evalúe la posición siguiente a la que se evaluó en el paso anterior. De esta forma, podemos asegurar que al final del recorrido (luego de evaluar todas las hojas del árbol) se habrán evaluado las distintas soluciones, ya que se habrán evaluado
+\centerbf{Idea general}
+
+La idea es aplicar el algoritmo de backtracking según las consideraciones expuestas anteriormente. Para ello, recorreremos el tablero en un orden determinado (de izquierda a derecha, de arriba a abajo), evaluando en cada paso la ficha correspondiente a la posición donde se encuentra el recorrido: de tal forma que en cada paso se evalúe la posición siguiente a la que se evaluó en el paso anterior.
+
+En cada paso del algoritmo se colocará una ficha, y luego se continuará hacia el siguiente paso. Es fácil ver que, en su versión más básica, este comportamiento lleva a tener una complejidad del orden de \bigO{N^N}, siendo $N=n*m$ la cantidad de posiciones del tablero, que también es la cantidad de piezas, ya que se realizan N iteraciones (una por cada posición del tablero), y en cada iteración se prueban N piezas, lo cual resulta en $N*N*N*...*N = N^N$. Hay que tener en cuenta que esta forma de recorrer el universo de soluciones está analizando también las soluciones no factibles, es decir las que resultan imposibles, tal como ``colocar la misma pieza en todos los casilleros''.
+
+\centerbf{Poda: Función de Selección}
+
+La primer poda posible resulta totalmente trivial, ya que se trata de probar en cada iteración sólamente las piezas que no se hayan colocado ya en el tablero. De esta forma, se reduce la complejidad a \bigO{(N)*(N-1)*...*(2)*(1)}, es decir al orden factorial \bigO{N!}.
+
+Sobre la misma poda anterior, se puede implementar una mejora, que es probar en cada iteración sólamente las piezas cuyos colores sean coherentes con los colores de las piezas que ya se encuentren colocadas en el tablero. Así, si una posición tiene una pieza a la izquierda cuyo color derecho es verde, yo debería poder colocar en esa posición sólamente las piezas cuyo color izquierdo es verde. Esta última poda en realidad se trata básicamente de reducir el recorrido del universo de soluciones a ``las soluciones factibles'', es decir, las que generan un tablero final válido. Esta última poda en realidad no es distinta a la poda mencionada en el párrafo anterior, sino que es más bien una extensión de la misma, ya que las dos se encargan de analizar en cada iteración la correctitud del tablero en términos de la \textbf{función de selección}.
+
+De esta forma, por lo antes expuesto, podemos asegurar que al final del recorrido (luego de evaluar todas las hojas del árbol) se habrán evaluado todas las soluciones factibles, ya que el algoritmo habrá recorrido cada posición del tablero, evaluando en cada una las piezas que cumplan con el criterio de selección.
 
 \nota{aca poner el pseudocodigo}\\
 
