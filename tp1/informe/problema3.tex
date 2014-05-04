@@ -33,14 +33,23 @@ posibles siguiendo ciertas reglas.
 	%\item Cantidad mínima de piezas que se pueden colocar en el tablero: 
 	%$(n \times m)/ 2$. (Se intercalan las piezas en el tablero).
 
-	Para un tablero de $3\times 3$ y uno de $2\times 2$, suponiendo un caso 
-	donde ninguna ficha puede colocarse adyacente a otra, una de las posibles 
-	soluciones sería la siguiente:
+\end{itemize} 
 
-	En el tablero de $3\times 3$ se podrían colocar las fichas $1,2,3,4$ 
-	y $5$, y en el de $2\times 2$, las fichas $1$ y $2$.
+El problema se deberá resolver utilizando la técnica de $Backtracking$
+eligiendo algunas podas para mejorar los tiempos de ejecución del programa.
 
-	\begin{center}
+\centerbf{Ejemplos}
+
+\begin{ejemplo}
+
+  Para un tablero de $3\times 3$ y uno de $2\times 2$, suponiendo un caso  donde
+  ninguna ficha puede colocarse adyacente a otra, una de las posibles  soluciones
+  sería la siguiente:
+
+  En el tablero de $3\times 3$ se podrían colocar las fichas $1,2,3,4$  y $5$, y
+  en el de $2\times 2$, las fichas $1$ y $2$.
+
+  \begin{center}
       \begin{minipage}{0.2\textwidth}
           \begin{tabular}{|c|c|c|}
               \hline
@@ -61,16 +70,9 @@ posibles siguiendo ciertas reglas.
               \hline
           \end{tabular}
       \end{minipage}
-	\end{center}
-	\end{itemize} 
+  \end{center}
 
-
-\begin{center} 
-
-El problema se deberá resolver utilizando la técnica de $Backtracking$ eligiendo
-algunas podas para mejorar los tiempos de ejecución del programa.
-
-\end{center}
+\end{ejemplo}
 
 \begin{ejemplo}
 
@@ -141,118 +143,195 @@ algunas podas para mejorar los tiempos de ejecución del programa.
   \end{center}
 \end{ejemplo}
 
-\subsubsection{Hipótesis de resolución} 
+\centerbf{Algoritmos de backtracking (ideas y análisis general)}
 
 El objetivo del problema es diseñar un algoritmo utilizando la técnica de
 \textbf{backtracking}. El algoritmo de \textbf{backtracking} se puede concebir
-como una técnica recursiva de recorrido de grafos. En este caso, establecemos un
-paralelismo entre <<el universo de soluciones>>, y los nodos de un \textbf{grafo
-arbol} $n-ario$, en donde cada nodo representa una solución posible, y $n$
-representa la cantidad máxima de soluciones distintas que pueden desprenderse a
-partir de realizar un cambio determinado en la solución anterior
-(\emph{vecindad}).
+como una técnica recursiva de recorrido de grafos\footnote{Quizás la oración no
+está expresada de la mejor forma; al decir ``se puede concebir como...'' se
+quiere dar a entender que no se está dando la definición estricta de
+backtracking, sino una \emph{interpretación}. Se dio por entendido el hecho de
+que en su sentido más básico es ``una técnica de resolución de problemas'';
+representando al ``universo de soluciones'' como un grafo, \textbf{y en el
+contexto del párrafo}, creemos que la idea que se intenta exponer es válida.},
+estableciendo un paralelismo entre <<el universo de soluciones>>, y los nodos de
+un \textbf{grafo arbol n-ario}, en donde cada nodo representa una solución
+posible, y $n$ representa la cantidad máxima de soluciones distintas que pueden
+desprenderse a partir de realizar un cambio determinado en la solución anterior
+(\emph{vecindad}). Además puede, según el caso, ser interpretado como un árbol
+en donde cada nodo representa \textbf{una solución no necesariamente ``válida''}
+(o ``bien formada''), y en donde sólamente \textbf{las hojas del árbol} son
+\emph{soluciones correctamente formadas} (no necesariamente factibles).
 
-Calcular todo el gráfo tendría una complejidad de \bigO{n^n}, \emph{o incluso
-infinita} si no se estableciese una asbtracción correcta al momento de
-transformar el universo de soluciones en un grafo. Por esa razón, para realizar
-esta tarea, se utiliza el concepto de \emph{grafo implícito}, mediante el cual
-se establece formalmente la composición del mismo, sin la necesidad de expresar
-cada una de sus componentes, \textbf{a través de una descripción matemática de
-sus nodos y aristas}, en donde \textbf{cada nodo es una solución}, y
-\textbf{cada arista es la transformación de una solución a una solución distinta
-dentro de su \emph{vecindad}} de manera que, dado un caso de prueba particular,
-sea posible recrearlo en el momento mismo en que se realiza el recorrido del
-grafo.
+Podemos separar también el tipo de problema en dos casos: los
+\darkgreen{\textbf{problemas de decisión}}, para los que es necesario que la
+solución cumpla \darkgreen{ciertas condiciones particulares} determinados por la
+denominada \darkgreen{\textbf{función de selección}}, y los
+\blue{\textbf{problemas de optimización}}, los cuales son derivados de los
+anteriores, y en donde se desea obtener \blue{la \textbf{``mejor''}} de las
+soluciones válidas\footnote{ Es decir, las que cumplan con el criterio de
+selección. Tener en cuenta que esto último no implica necesariamente la
+existencia de funciones inválidas, sino que puede darse el caso en que el
+criterio de selección admita que todas las soluciones a un problema determinado
+son válidas, y por consiguiente simplemente se esté buscando obtener la mejor de
+ellas.} en base a una \blue{\textbf{función objetivo}}, entendiendo a esta
+última como <<\emph{la función que establece cuándo una solución es mejor que
+otra}>>.
 
-Podemos separar el tipo de problema en dos casos: \textbf{problemas de
-decisión}, para los que es necesario que la solución cumpla ciertas condiciones
-particulares, y \textbf{problemas de optimización}, en donde se desea obtener la
-mejor de las soluciones válidas en base a una \textbf{función objetivo},
-entendiendo a esta última como <<la función que establece cuándo una solución es
-mejor que otra>>. Para este algoritmo en particular, el problema planteado es de
-\textbf{optimización}, ya que se desea obtener la solución válida (debe cumplir
-ciertos requisitos) que maximice la función objetivo, definiéndola como la
-sumatoria de los casilleros completos de un tablero determinado.
+\centerbf{Pequeño ejemplo sobre las ideas anteriores}
 
-\begin{center}n lo posible t
-\textbf{Formalizando}
-\end{center}
+Un ejemplo concreto de los párrafos anteriores sería un problema en el que se
+nos pidiese encontrar una lista de 10 números del 1 al 20, tal que la lista sea
+estrictamente creciente. Tendríamos entonces un \darkgreen{problema de
+decisión}, en el que la \darkgreen{función de selección} estaría determinada por
+las condiciones ``que la lista sea estrictamente creciente'', ``que el número
+esté entre 1 y 20'', y ``que el largo de la lista sea 10'' es decir, en donde
+tomaríamos como soluciones factibles a todas aquellas en que <<lista[i] $<$
+lista[i+1] y además $1 \leq $ lista[i] $ \leq 20$, y además $|$lista$|=
+20$>>\footnote{Abusos varios de notación para no ahondar en detalles
+innecesarios}. Si se agregara, además, la condición ``quiero de todas las listas
+posibles la que maximice la sumatoria de cada uno de sus componentes'', me
+encontraría entonces con un \red{problema de optimización}. 
 
-% - -
-% Definición de pieza
+En este ejemplo, entonces, una \textbf{solución factible} sería cualquiera que
+cumpla con los criterios de selección, mientras que una \textbf{solución
+correctamente formada}, es decir, aquellas que podrían pertenecer a las hojas de
+un posible arbol ``universo de soluciones'' (tal y como se menciona en el primer
+párrafo), sería simplemente ``una lista de 10 números''\footnote{Esto último es
+debatible; habría que formalizar aún más y no viene al caso.}. 
 
-\begin{notacion}
-Sea $\pi$ el conjunto formado por todas las 4-uplas de la forma
-\[
-p \in \pi \Leftrightarrow \{(\forall~{a, b, c, d} \in \nat)~\exists p = [a, b, c, d]\}
-\]
-\begin{flushright}
-decimos que $p \in \pi$ es una pieza.
-\end{flushright}
-\end{notacion}
+De esta forma, para el ejemplo anterior, se podría establecer un algoritmo en
+que cada nodo interno del árbol de soluciones representase la
+\textbf{subestructura} de una o más soluciones, sin llegar a ser una solución,
+más concretamente, se podría asumir que el nodo raíz del arbol es una lista
+vacía, y que cada hijo es una lista que contiene a los elementos de su padre, y
+cuyo tamaño es superior en 1, de forma tal que es simple ver que: cada nodo
+comparte una subestructura con sus nodos-hermanos heredada desde su nodo-padre,
+y sólamente las hojas del arbol son soluciones.
+
+\centerbf{Análisis general}
+
+Siguiendo la línea de pensamiento anterior al ejemplo, teniendo en cuenta todas
+las ideas ya expuestas, calcular el gráfo completo del universo de soluciones
+(factibles y no factibles) para este problema tendría una complejidad de
+\bigO{n^n}, \emph{o incluso infinita} si no se estableciese una asbtracción
+idónea al momento de transformar el universo de soluciones en un grafo. Además,
+incluso luego de establecer una abstracción en la que el grafo no considerase,
+por ejemplo, soluciones imposibles, el tamaño del grafo sigue siendo muy grande
+(de orden factorial). Por esta razón, para realizar esta tarea, se utiliza el
+concepto de \emph{grafo implícito}, mediante el cual se establece formalmente la
+composición del mismo, sin la necesidad de expresar cada una de sus componentes,
+\textbf{sino a través de una descripción formal de sus nodos y aristas}, en
+donde \textbf{cada nodo es una solución}, y \textbf{cada arista es la
+transformación de una solución a una solución distinta dentro de su
+\emph{vecindad}} de manera que, dado un caso de prueba particular, sea posible
+recrearlo en el momento mismo en que se realiza el recorrido del grafo.
+
+Para este algoritmo en particular, el problema planteado es de
+\textbf{optimización}, ya que se desea obtener una solución válida (debe cumplir
+ciertos requisitos, como que cada pieza coincida en sus colores con sus
+aledañas), pero que además maximice la \red{\textbf{función objetivo}},
+definiendo a esta última como, dado un tablero determinado, la sumatoria de los
+casilleros que contienen ficha.
+
+% \begin{center}
+% \textbf{Formalizando}
+% \end{center}
+
+% % - -
+% % Definición de pieza
+
+% \begin{notacion}
+% Sea $\pi$ el conjunto formado por todas las 4-uplas de la forma
+% \[
+% p \in \pi \Leftrightarrow \{(\forall~{a, b, c, d} \in \nat)~\exists p = [a, b, c, d]\}
+% \]
+% \begin{flushright}
+% decimos que $p \in \pi$ es una pieza.
+% \end{flushright}
+% \end{notacion}
 
 
-% - -
-% Definición del conjunto de piezas
+% % - -
+% % Definición del conjunto de piezas
 
+% \begin{definicion}
+
+% Dado el orden de piezas relativo a la entrada del problema, definimos el
+% conjunto ordenado
+% \[
+% P = \{p_1, ..., p_n\}
+% \]
+% \begin{center}
+% como el conjunto de todas las piezas posibles, de forma tal que 
+% \end{center}
+% \[
+% \{i\geq 1\} \land \{(\forall{i<n})\ p_i < p_{i+1} \Leftrightarrow ``\textbf{pieza~i}"~es~anterior~a~``\textbf{pieza~i+1}"\}
+% \]
+
+% \end{definicion}
+% \begin{notacion}
+
+% $P[i]$ = $P_i$
+
+% \end{notacion}
+
+
+% % - -
+% % Definición del tablero
+
+% \begin{definicion}
+
+% Sea $T \in \theta$ la sucesión finita de la forma 
+% \[
+% T = \{p_1, ..., p_n : \{i_{\geq 1}\in\nat\} \land \{(p_i \in \pi) \lor (p_i = ``\texttt{vacio}")\}\},
+% \]
+
+% $T$ representa a un tablero, y definimos a cada $T_i = p_i$ como <<el valor de
+% la pieza ubicada en la posición $i$ del tablero, o ``\texttt{vacío}'' en el caso de que
+% no hubiese ninguna>>
+
+% \end{definicion}
+
+% \begin{notacion}
+% $T[i]$ = $T_i$, $\theta$ = <<conjunto de todos los posibles tableros>>
+% \end{notacion}
+% \begin{definicion}
+% sea $t.lleno: \nat_{\geq 1} \rightarrow \nat$, tal que
+% \[
+%   \left\lbrace
+%   \begin{array}{l}
+%      t.lleno(i) = verdadero \text{ si } T[i] \neq \texttt{vacio} \\
+%      t.lleno(i) = falso \text{ de lo contario} \\
+%   \end{array}
+%   \right.
+% \]
+% \end{definicion}
 \begin{definicion}
-
-Dado el orden de piezas relativo a la entrada del problema, definimos el
-conjunto ordenado
-\[
-P = \{p_1, ..., p_n\}
-\]
-\begin{center}
-como el conjunto de todas las piezas posibles, de forma tal que 
-\end{center}
-\[
-\{i\geq 1\} \land \{(\forall{i<n})\ p_i < p_{i+1} \Leftrightarrow ``\textbf{pieza~i}"~es~anterior~a~``\textbf{pieza~i+1}"\}
-\]
-
-\end{definicion}
-\begin{notacion}
-
-$P[i]$ = $P_i$
-
-\end{notacion}
-
-
-% - -
-% Definición del tablero
-
-\begin{definicion}
-
-Sea $T \in \theta$ la sucesión finita de la forma 
-\[
-T = \{p_1, ..., p_n : \{i_{\geq 1}\in\nat\} \land \{(p_i \in \pi) \lor (p_i = ``\texttt{vacio}")\}\},
-\]
-
-$T$ representa a un tablero, y definimos a cada $T_i = p_i$ como <<el valor de
-la pieza ubicada en la posición $i$ del tablero, o ``\texttt{vacío}'' en el caso de que
-no hubiese ninguna>>
-
-\end{definicion}
-
-\begin{notacion}
-$T[i]$ = $T_i$, $\theta$ = <<conjunto de todos los posibles tableros>>
-\end{notacion}
-\begin{definicion}
-sea $t.lleno: \nat_{\geq 1} \rightarrow \nat$, tal que
+Sean T el conjunto de todos los posibles tableros, 
+definimos la función auxiliar 
+$t.lleno: \nat_{\geq 1} \rightarrow [0,1]$, tal que
 \[
   \left\lbrace
   \begin{array}{l}
-     t.lleno(i) = verdadero \text{ si } T[i] \neq \texttt{vacio} \\
-     t.lleno(i) = falso \text{ de lo contario} \\
+     t.lleno(i) = 1 ~~~~~~~~ \text{ si T[i] contiene una pieza} \\
+     t.lleno(i) = 0 ~~~~~~~~ \text{ de lo contario} \\
   \end{array}
   \right.
 \]
-\end{definicion}
-\begin{definicion}
-La función objetivo es, dado un tablero $T$, $f: \theta \rightarrow \nat$, de la forma
-\end{definicion}
+La \red{\textbf{función objetivo}} es, dado un tablero $t \in T$,
+$f: T \rightarrow \nat$, de la forma
+\red{
 \[
-f(T) := \nsum_{i=1}^{i\leq casilleros}{ t.lleno \bigg( {\large T\left(i\right)} \bigg) }
+f(T) := \nsum_{i=1}^{\#casilleros}{ t.lleno \bigg( {\large T\left(i\right)} \bigg) }
 \]
+}
+\end{definicion}
+
+
+\subsubsection{Planteamiento de resolución} 
+
+La idea es aplicar el algoritmo de backtracking según las consideraciones expuestas anteriormente. Para ello, recorreremos el tablero en un orden determinado, evaluando en cada paso la ficha correspondiente a la posición donde se encuentra el recorrido: de tal forma que en cada paso se evalúe la posición siguiente a la que se evaluó en el paso anterior. De esta forma, podemos asegurar que al final del recorrido (luego de evaluar todas las hojas del árbol) se habrán evaluado las distintas soluciones, ya que se habrán evaluado
 
 \nota{aca poner el pseudocodigo}\\
 
