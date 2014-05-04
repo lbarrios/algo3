@@ -24,5 +24,38 @@ ya que el grafo es conexo, y podemos devolver su distancia. \\
 %\nota{Esto de que es conexo, es decir, que cualquier casillero podes llegar a cualquier otro, se puede mencionar 
 %en la descripcion del problema}
 
+\centerbf{Pseudocódigo}
+\begin{algorithm}[H]
+\caption{La Centralita}\label{alg:ej3-centralita}
+\begin{algorithmic}[1]
+
+\Statex \texttt{Inicializo}
+	\For{$(i=1..n, j=1..n, l=0..k)$}  \Comment{\bigO{n^2 * k}}
+		\State distancia desde el casillero[i][j], sobrando l unidades extra de potencia = INF
+	\EndFor \\
+
+\State distancia hasta el casillero origen, sobrando k unidades extra de potencia = 0 \\
+\State cola$<(int, int, int)>$ colaBFS
+\State colaBFS.push(origen, k) \\
+
+\While{(colaBFS no esté vacía)}  \Comment{\bigO{n^3 * k}} 
+\State actual = colaBFS.pop()
+	\For{cada casillero (x,y) al que puedo llegar desde actual}
+		    \State l = unidades extra que quedan tras ir a (x,y) \\
+			\Statex \hspace{1cm} \texttt{si no recorrí ya ese casillero, quedando esas unidades extra}
+			\If{distancia a (x, y), quedando l unidades extra es menor a INF}
+				\State   la pongo en 'distancia desde actual' + 1
+				\If {es el casillero de destino} 
+					\State break
+				\EndIf
+				\State colaBFS.push((x,y), unidades extra que quedan)
+			\EndIf	
+	\EndFor		
+\EndWhile
+\\
+\State \Return distancia al destino
+
+\end{algorithmic}
+\end{algorithm}
 
 \end{document}
