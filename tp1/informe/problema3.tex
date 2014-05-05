@@ -9,34 +9,37 @@
 Este problema consiste en ubicar en un tablero la mayor cantidad de piezas
 posibles siguiendo ciertas reglas.
 
+\centerbf{Consideraciones}
+
 \begin{itemize}   
 	\item El tablero contiene $n \times m$ casilleros cuadrados, $n$ filas y $m$
 	columnas.
 
-	\item Piezas existentes: $1,...,n \times m$. (Cantidad total de 
+	\item Piezas existentes: $1,...,n \times m$. (Cantidad total de
 	piezas: $n \times m$).
 
-	\item Una pieza es cuadrada y puede tener de $1$ a $4$ colores distintos. 
-	A cada lado $(sup, izq, der, inf)$ le corresponde un color. 
+	\item Una pieza es cuadrada y puede tener de $1$ a $4$ colores distintos.
+	A cada lado $(sup, izq, der, inf)$ le corresponde un color.
 
 	\item Las piezas no se pueden rotar.
 
 	\item Colores posibles: $1,...,c$ ($c$ entero positivo).
 
-	\item 2 piezas pueden ubicarse en casilleros adyacentes sólo si sus lados 
-	adyacentes tienen el mismo color. Podría ocurrir que no sea posible 
-	llenar completamente el tablero con las piezas existentes. 
+	\item 2 piezas pueden ubicarse en casilleros adyacentes sólo si sus lados
+	adyacentes tienen el mismo color. Podría ocurrir que no sea posible
+	llenar completamente el tablero con las piezas existentes.
 
-	%\item El contenido final de una casilla podría ser $1,...,n \times m$, 
+	%\item El contenido final de una casilla podría ser $1,...,n \times m$,
 	%si se pudo colocar alguna ficha, o $0$ si quedara vacía.
 
-	%\item Cantidad mínima de piezas que se pueden colocar en el tablero: 
+	%\item Cantidad mínima de piezas que se pueden colocar en el tablero:
 	%$(n \times m)/ 2$. (Se intercalan las piezas en el tablero).
 
-\end{itemize} 
+  \item \textbf{El problema se deberá resolver utilizando la técnica de
+    \red{\emph{Backtracking}} eligiendo algunas podas para mejorar los tiempos de
+    ejecución del programa.}
 
-El problema se deberá resolver utilizando la técnica de $Backtracking$
-eligiendo algunas podas para mejorar los tiempos de ejecución del programa.
+\end{itemize}
 
 \centerbf{Ejemplos}
 
@@ -56,7 +59,7 @@ eligiendo algunas podas para mejorar los tiempos de ejecución del programa.
                $1$ & $0$ & $2$ \\
               \hline
                $0$ & $3$ & $0$  \\
-              \hline 
+              \hline
                $4$ & $0$ & $5$ \\
               \hline
           \end{tabular}
@@ -76,7 +79,7 @@ eligiendo algunas podas para mejorar los tiempos de ejecución del programa.
 
 \begin{ejemplo}
 
-	Se tiene un tablero de $2\times 2$, los colores $1,2,3$ 
+	Se tiene un tablero de $2\times 2$, los colores $1,2,3$
     y las piezas \textbf{1},\textbf{2},\textbf{3},\textbf{4} $:$
 
   \begin{center}
@@ -84,7 +87,7 @@ eligiendo algunas podas para mejorar los tiempos de ejecución del programa.
         \begin{tabular}{ |l l l|}
             \hline
                  & $1$     &       \\
-            $3$  & \textbf{1} &   $2$ \\ 
+            $3$  & \textbf{1} &   $2$ \\
                  & $2$     &       \\
             \hline
         \end{tabular}
@@ -93,7 +96,7 @@ eligiendo algunas podas para mejorar los tiempos de ejecución del programa.
         \begin{tabular}{ |l l l|}
             \hline
                  & $3$     &       \\
-            $2$  & \textbf{2} & $2$ \\ 
+            $2$  & \textbf{2} & $2$ \\
                  & $1$     &       \\
             \hline
         \end{tabular}
@@ -102,7 +105,7 @@ eligiendo algunas podas para mejorar los tiempos de ejecución del programa.
         \begin{tabular}{ |l l l|}
             \hline
                  & $3$      &       \\
-            $1$  & \textbf{2}  & $3$ \\ 
+            $1$  & \textbf{2}  & $3$ \\
                  & $2$      &       \\
             \hline
         \end{tabular}
@@ -111,37 +114,39 @@ eligiendo algunas podas para mejorar los tiempos de ejecución del programa.
         \begin{tabular}{ |l l l|}
             \hline
                  & $1$      &       \\
-            $1$  & \textbf{4}  & $2$   \\ 
+            $1$  & \textbf{4}  & $2$   \\
                  & $2$      &       \\
             \hline
-        \end{tabular} 
+        \end{tabular}
     \end{minipage}
    \end{center}
-   
+
   En este caso, la cantidad máxima de piezas que se pueden colocar en el tablero es $3$. Entonces las posibles soluciones serían:
-  
+
   \begin{center}
-    \begin{minipage}{0.5\textwidth}
+    \begin{minipage}{0.45\textwidth}
         \centering
         \begin{tabular}{ | l | l |}
-            \hline 
-            \textbf{1}  & \textbf{2} \\ 
-            \hline 
-            $0$  & \textbf{4} \\ 
+            \hline
+            \textbf{1}  & \textbf{2} \\
+            \hline
+            $0$  & \textbf{4} \\
             \hline
         \end{tabular}  \\
     \end{minipage}
-    \begin{minipage}{0.5\textwidth}
+    \begin{minipage}{0.45\textwidth}
         \begin{tabular}{ | l | l |}
-            \hline 
-            $0$     & \textbf{2} \\ 
-            \hline 
-            \textbf{3}  & \textbf{1} \\ 
+            \hline
+            $0$     & \textbf{2} \\
+            \hline
+            \textbf{3}  & \textbf{1} \\
             \hline
         \end{tabular} \\
     \end{minipage}
   \end{center}
 \end{ejemplo}
+
+\begin{paragraph}\
 
 \centerbf{Algoritmos de backtracking (ideas y análisis general)}
 
@@ -178,6 +183,10 @@ ellas.} en base a una \blue{\textbf{función objetivo}}, entendiendo a esta
 última como <<\emph{la función que establece cuándo una solución es mejor que
 otra}>>.
 
+\end{paragraph}
+
+\begin{paragraph}\
+
 \centerbf{Pequeño ejemplo sobre las ideas anteriores}
 
 Un ejemplo concreto de los párrafos anteriores sería un problema en el que se
@@ -191,14 +200,14 @@ lista[i+1] y además $1 \leq $ lista[i] $ \leq 20$, y además $|$lista$|=
 20$>>\footnote{Abusos varios de notación para no ahondar en detalles
 innecesarios}. Si se agregara, además, la condición ``quiero de todas las listas
 posibles la que maximice la sumatoria de cada uno de sus componentes'', me
-encontraría entonces con un \red{problema de optimización}. 
+encontraría entonces con un \red{problema de optimización}.
 
 En este ejemplo, entonces, una \textbf{solución factible} sería cualquiera que
 cumpla con los criterios de selección, mientras que una \textbf{solución
 correctamente formada}, es decir, aquellas que podrían pertenecer a las hojas de
 un posible arbol ``universo de soluciones'' (tal y como se menciona en el primer
 párrafo), sería simplemente ``una lista de 10 números''\footnote{Esto último es
-debatible; habría que formalizar aún más y no viene al caso.}. 
+debatible; habría que formalizar aún más y no viene al caso.}.
 
 De esta forma, para el ejemplo anterior, se podría establecer un algoritmo en
 que cada nodo interno del árbol de soluciones representase la
@@ -208,6 +217,11 @@ vacía, y que cada hijo es una lista que contiene a los elementos de su padre, y
 cuyo tamaño es superior en 1, de forma tal que es simple ver que: cada nodo
 comparte una subestructura con sus nodos-hermanos heredada desde su nodo-padre,
 y sólamente las hojas del arbol son soluciones.
+
+
+\end{paragraph}
+
+\begin{paragraph}\
 
 \centerbf{Análisis general}
 
@@ -307,6 +321,7 @@ casilleros que contienen ficha.
 %   \right.
 % \]
 % \end{definicion}
+
 \begin{definicion}\label{def:ej3-objetivo}
 Sean T el conjunto de todos los posibles tableros, 
 definimos la función auxiliar 
@@ -328,66 +343,230 @@ f(T) := \nsum_{i=1}^{\#casilleros}{ t.lleno \bigg( {\large T\left(i\right)} \big
 }
 \end{definicion}
 
+\end{paragraph}
 
 \subsubsection{Planteamiento de resolución} 
 
+\begin{paragraph}\
+
 \centerbf{Idea general}
 
-La idea es aplicar el algoritmo de backtracking según las consideraciones expuestas anteriormente. Para ello, recorreremos el tablero en un orden determinado (de izquierda a derecha, de arriba a abajo), evaluando en cada paso la ficha correspondiente a la posición donde se encuentra el recorrido: de tal forma que en cada paso se evalúe la posición siguiente a la que se evaluó en el paso anterior.
+La idea es aplicar el algoritmo de backtracking según las consideraciones
+expuestas anteriormente. Para ello, recorreremos el tablero en un orden
+determinado (de izquierda a derecha, de arriba a abajo), evaluando en cada
+paso la ficha correspondiente a la posición donde se encuentra el recorrido:
+de tal forma que en cada paso se evalúe la posición siguiente a la que se
+evaluó en el paso anterior.
 
-En cada paso del algoritmo se colocará una ficha, y luego se llamará recursivamente a la función, probando así las fichas posteriores. Es importante tener en cuenta que en cada llamada recursiva el algoritmo probará con $M$ fichas, y se llamará recursivamente para cada una de ellas.
+En cada paso del algoritmo se colocará una ficha, y luego se llamará
+recursivamente a la función, probando así las fichas posteriores. Es
+importante tener en cuenta que en cada llamada recursiva el algoritmo probará
+con $M$ fichas, y se llamará recursivamente para cada una de ellas.
 
-Es fácil ver que, \emph{en su versión más básica}, este comportamiento lleva a tener una complejidad del orden de \bigO{M^N}, siendo $N=n*m$ la cantidad de posiciones del tablero, y $M$ la cantidad de piezas, ya que se realizan $N$ iteraciones (una por cada posición del tablero), y en cada iteración se prueban $M$ piezas, lo cual resulta en $\overbrace{M*M*M*...*M}^{N~veces} = M^N$. Hay que tener en cuenta que esta forma de recorrer el universo de soluciones está analizando también las soluciones no factibles, es decir las que resultan imposibles, tal como ``colocar la misma pieza en todos los casilleros''.
+Es fácil ver que, \emph{en su versión más básica}, este comportamiento lleva a
+tener una complejidad del orden de \bigO{M^N}, siendo $N=n*m$ la cantidad de
+posiciones del tablero, y $M$ la cantidad de piezas, ya que se realizan $N$
+iteraciones (una por cada posición del tablero), y en cada iteración se
+prueban $M$ piezas, lo cual resulta en $\overbrace{M*M*M*...*M}^{N~veces} =
+M^N$. Hay que tener en cuenta que esta forma de recorrer el universo de
+soluciones está analizando también las soluciones no factibles, es decir las
+que resultan imposibles, tal como ``colocar la misma pieza en todos los
+casilleros''.
+
+\end{paragraph}
+
+\begin{paragraph}\
 
 \centerbf{Poda: Función de Selección}
 
-La primer poda posible resulta totalmente trivial, ya que se trata de probar en cada iteración sólamente las piezas que no se hayan colocado ya en el tablero. Aunque esta poda es simple, y no es más que una aplicación incompleta de las restricciones impuestas por la función de selección, se la menciona, ya que de esta forma se reduce la complejidad a \bigO{\overbrace{(M)*(M-1)*...*(M-(N-1))*(M-(N))}^{\text{N multiplicaciones, restando una pieza en cada una}}}, es decir \bigO{\frac{M!}{(N-1)!}} $\subseteq$ \bigO{M!}. Simplificando, diremos que esta cota reduce la complejidad del orden exponencial \bigO{M^N} al orden factorial \bigO{M!}.
+La primer poda posible resulta totalmente trivial, ya que se trata de probar
+en cada iteración sólamente las piezas que no se hayan colocado ya en el
+tablero. Aunque esta poda es simple, y no es más que una aplicación incompleta
+de las restricciones impuestas por la función de selección, se la menciona, ya
+que de esta forma se reduce la complejidad a
+\bigO{\overbrace{(M)*(M-1)*...*(M-(N-1))*(M-(N))}^{\text{N multiplicaciones,
+restando una pieza en cada una}}}, es decir \bigO{\frac{M!}{(N-1)!}}
+$\subseteq$ \bigO{M!}. Simplificando, diremos que esta cota reduce la
+complejidad del orden exponencial \bigO{M^N} al orden factorial \bigO{M!}.
 
-Sobre la misma poda anterior, se puede implementar una mejora, que es probar en cada iteración sólamente las piezas cuyos colores sean coherentes con los colores de las piezas que ya se encuentren colocadas en el tablero. Así, si una posición tiene una pieza a la izquierda cuyo color derecho es verde, yo debería poder colocar en esa posición sólamente las piezas cuyo color izquierdo es verde. Esta última poda, tal y como está planteada, en realidad se trata básicamente de \textbf{\red{reducir el recorrido del universo de soluciones a ``las soluciones factibles''}}, es decir, las que generan un tablero final válido. Conceptualmente no es distinta a la poda mencionada en el párrafo anterior, sino que es más bien una extensión de la misma, ya que las dos se encargan de \red{analizar en cada iteración la correctitud del tablero en términos de la \textbf{función de selección}}. De hecho, esta poda se encarga de \textbf{seleccionar sólamente las fichas que cumplan \emph{estrictamente} con la función de selección}, mientras que la anterior sólo aplica la restricción de forma parcial. 
+Sobre la misma poda anterior, se puede implementar una mejora, que es probar
+en cada iteración sólamente las piezas cuyos colores sean coherentes con los
+colores de las piezas que ya se encuentren colocadas en el tablero. Así, si
+una posición tiene una pieza a la izquierda cuyo color derecho es verde, yo
+debería poder colocar en esa posición sólamente las piezas cuyo color
+izquierdo es verde. Esta última poda, tal y como está planteada, en realidad
+se trata básicamente de \textbf{\red{reducir el recorrido del universo de
+soluciones a ``las soluciones factibles''}}, es decir, las que generan un
+tablero final válido. Conceptualmente no es distinta a la poda mencionada en
+el párrafo anterior, sino que es más bien una extensión de la misma, ya que
+las dos se encargan de \red{analizar en cada iteración la correctitud del
+tablero en términos de la \textbf{función de selección}}. De hecho, esta poda
+se encarga de \textbf{seleccionar sólamente las fichas que cumplan
+\emph{estrictamente} con la función de selección}, mientras que la anterior
+sólo aplica la restricción de forma parcial.
 
-Es imposible, sin embargo, establecer \emph{a priori} una caracterización precisa del orden de complejidad del algoritmo bajo las condiciones de esta nueva poda, ya que la misma depende no solo del tamaño de entrada, sino del contenido de la entrada. Puede darse, por ejemplo, el caso de una entrada en la que todas las piezas tengan el mismo color en todos sus lados, lo cual significaría que habría que probar todas las piezas en todas las posiciones, lo cual conllevaría una complejidad de \bigO{M^N}. También puede darse el caso en que la disposición de la entrada sea de forma tal que luego de colocar la primer pieza, sólo exista en cada paso una pieza posible, con lo cual la complejidad sería del orden de \bigO{M * 1^N}, es decir \bigO{M} lineal sobre la cantidad de piezas. Por la razón expuesta en este párrafo, diremos que la complejidad está acotada por \bigO{M^N}, a pesar de que según la disposición de la entrada la misma puede ser mucho menor.
+Es imposible, sin embargo, establecer \emph{a priori} una caracterización
+precisa del orden de complejidad del algoritmo bajo las condiciones de esta
+nueva poda, ya que la misma depende no solo del tamaño de entrada, sino del
+contenido de la entrada. Puede darse, por ejemplo, el caso de una entrada en
+la que todas las piezas tengan el mismo color en todos sus lados, lo cual
+significaría que habría que probar todas las piezas en todas las posiciones,
+lo cual conllevaría una complejidad de \bigO{M^N}. También puede darse el caso
+en que la disposición de la entrada sea de forma tal que luego de colocar la
+primer pieza, sólo exista en cada paso una pieza posible, con lo cual la
+complejidad sería del orden de \bigO{M * 1^N}, es decir \bigO{M} lineal sobre
+la cantidad de piezas. Por la razón expuesta en este párrafo, diremos que la
+complejidad está acotada por \bigO{M^N}, a pesar de que según la disposición
+de la entrada la misma puede ser mucho menor.
 
-Por todo lo antes expuesto, además, podemos asegurar que al final del recorrido (es decir, luego de evaluar todas las hojas del árbol) se habrán evaluado \emph{estrictamente} todas las \textbf{\red{soluciones factibles}}, ya que el algoritmo habrá recorrido en cada paso cada posición del tablero, \textbf{\red{evaluando las piezas que cumplan estrictamente con el criterio de selección}}.
+Por todo lo antes expuesto, además, podemos asegurar que al final del
+recorrido (es decir, luego de evaluar todas las hojas del árbol) se habrán
+evaluado \emph{estrictamente} todas las \textbf{\red{soluciones factibles}},
+ya que el algoritmo habrá recorrido en cada paso cada posición del tablero,
+\textbf{\red{evaluando las piezas que cumplan estrictamente con el criterio de
+selección}}.
+
+\end{paragraph}
+
+\begin{paragraph}\
 
 \centerbf{Poda: Función Objetivo}
 
-Como se expuso en párrafos anteriores, la solución brindada por el algoritmo debe no solo cumplir con las condiciones de una determinada \red{función de selección}, sino también maximizar cierta \blue{función objetivo (\emph{ref: \ref{def:ej3-objetivo}})}, la cual depende de la cantidad de piezas dispuestas en el tablero o, inversamente, de la cantidad de ``agujeros'', es decir, posiciones en que no exista ninguna pieza.
+Como se expuso en párrafos anteriores, la solución brindada por el algoritmo
+debe no solo cumplir con las condiciones de una determinada \red{función de
+selección}, sino también maximizar cierta \blue{función objetivo (\emph{ref:
+\ref{def:ej3-objetivo}})}, la cual depende de la cantidad de piezas dispuestas
+en el tablero o, inversamente, de la cantidad de ``agujeros'', es decir,
+posiciones en que no exista ninguna pieza.
 
-Dado que las soluciones comparten una subestructura, en donde dado un determinado nodo $d$ podemos asegurar que <<para todas las hojas para las que exista un camino simple hacia ese nodo que contenga a los hijos de ese nodo>>\footnote{Muy coloquialmente, que exista una ``relación de parentezco'' con ese nodo}, la solución representada por esas hojas contiene a todas las piezas que ya se encuentran determinadas en el nodo $d$.
+Dado que las soluciones comparten una subestructura, en donde tomando un
+determinado nodo $d$\footnote{Notación: llamémoslo <<subsolución>>} del arbol
+de soluciones podemos asegurar que <<para todas las hojas para las que exista
+un camino simple hacia ese nodo que contenga a los hijos de ese
+nodo>>\footnote{O coloquialmente: que exista una ``relación de parentezco''
+con ese nodo} la solución representada por esas hojas contiene a todas las
+piezas que ya se encuentran determinadas en el nodo $d$, es válido afirmar que
+si una deteriminada subsolución contiene cierta cantidad de ``agujeros'',
+entonces todas sus soluciones derivadas también van a contener esos mismos
+``agujeros''. Así, podemos decir que \emph{\red{la cantidad de agujeros de una hoja
+es siempre mayor o igual a la cantidad de agujeros de su padre}}.
 
-\nota{aca poner el pseudocodigo}\\
+\begin{aclaracion}
 
-La idea base es ir llenando el tablero en cierto orden, probando colocar en cada
-casillero piezas que no rompan las reglas, y analizando la cantidad total de
-piezas del tablero que hayan sido cubiertas. Se debe guardar de alguna forma la
-combinación de piezas que haya cubierto más casilleros.\\ Consideramos dejar un
-casillero libre como colocar la pieza representada por el 0. En este problema
-una solución candidata o rama es una sucesión de piezas (que puede o no incluir
-el 0), que van cubriendo el tablero.\\ Una primera decisión que se tomó fue
-guardar una estructura piezasPorColores que para cada par de colores (x, y)
-guarda una lista con todos las piezas que tienen como color superior e izquierdo
-x e y, respectivamente. Vamos recorriendo el tablero en cada fila de izquierda a
-derecha, desde la fila superior hasta la inferior. De este modo una pieza es
-legal en una posición si su color izquierdo es igual al color derecho de la
-pieza a su izquierda (de existir), y su color superior es igual al color
-inferior de la pieza ubicada arriba (de existir). Podemos obtener las piezas
-candidatas que cumplen con esa restricción de colores en piezasPorColores. De
-este modo nos aseguramos que todas las piezas por las que nos vamos ramificando
-mantienen las restricciones del tablero. Evitamos así tener que iterar sobre
-todas las piezas verificando si cumplen la restricción.\\
-Una poda muy sencilla pero muy útil que se 
-implementó fue dejar de buscar soluciones cuando encontramos una solución que
-cubre todo el tablero. \\
-A continuación se detalla otra poda. Vamos
-llevando cuenta de los huecos que dejamos en el tablero. Si hemos dejado tantos
-huecos como para que, aun llenando correctamente lo que queda del tablero, no
-alcanza para superar la mejor solución encontrada hasta el momento, abandonamos
-la rama.\\
+Antes de continuar, vale hacer una aclaración ligada a la implementación, y es
+que a efectos de abstraer este concepto, y mejorar la claridad del algoritmo
+se consideró al ``agujero'' o ``casillero libre'' como otra pieza,
+representada por la constante \texttt{PIEZA\_VACÍA} (es decir,
+independientemente del \emph{tipo} con el que se elija representar a la pieza,
+nos referiremos a esta pieza como \texttt{PIEZA\_VACÍA}).
 
-Al comenzar la búsqueda sabemos que por lo menos vamos a
-poder llenar la mitad de los casilleros del tablero. Ésto siempre se puede
-conseguir si visualizamos nuestro tablero como uno de ajedrez y ponemos las
-piezas en los casilleros negros. Ningún par de piezas compartiría lado. 
+\end{aclaracion}
+
+A la luz de las consideraciones anteriores surge esta poda: el objetivo es
+\red{\textbf{cortar una \emph{rama}\footnote{Es decir, una subsolución junto
+con todas sus soluciones derivadas}}} en el momento en que se encuentra una
+subsolución que, por su cantidad de piezas vacías, \red{\textbf{no es candidata a maximizar
+la función objetivo}} (y ya que no lo es la subsolución, por las consideraciones
+ya expuestas, se puede asumir que tampoco lo serán las soluciones derivadas de
+ella).
+
+\begin{definicion}
+
+Dada una determinada subsolución $T_n$, en donde $n$ representa a la posición
+sobre la cual se encuentra la recursión, decimos que la misma contiene una
+<<\emph{cantidad máxima posible de piezas vacías}>>, y esta es la cantidad de
+piezas vacías que el tablero tendría en el peor caso. En otras palabras, \textbf{la
+\red{cantidad máxima de piezas vacías} de un tablero $T_n$ es la cantidad de piezas
+vacías que ya contiene la subsolución $T_n$ sumada a todas las piezas que aún
+le faltan por poner en las sucesivas $T_{n+\dots}$}. Se asume para ello que el
+peor caso posible es un tablero en donde todas las piezas $\in \{n+1,...,N\}$,
+siguientes a la posición actual resulten incompatibles y, por lo tanto,
+vacías. La cantidad de piezas de ese intervalo es, entonces, $N-n$.
+
+\[
+cantidadMaximaAgujeros(T_n) = cantidadAgujeros(T_n) + (N-n)
+\]
+
+\end{definicion}
+
+\end{paragraph}
+
+\begin{paragraph}{Implementación de la poda\\}
+
+En un principio, podemos asumir que toda combinación posible de fichas es
+\textbf{candidata a ser mejor solución}.
+
+En cada paso recursivo, podemos analizar cuánto es el valor de
+\texttt{cantidadMaximaAgujeros($T_n$)} para el tablero $T_n$ actual de ese
+paso, y contrastarlo contra la \red{\textbf{menor cantidad máxima de agujeros
+encontrada hasta el momento}}, la cual desde el punto de vista implementativo
+es una variable ajena a la recursión (por ejemplo, una variable global, o un
+parámetro de la propia recursión). Siempre que se encuentre una <<cantidad
+máxima de agujeros>> menor a la global, se actualizará el valor de la segunda.
+Para ello, se inicializará esta última variable con el valor del peor caso
+posible ($N \times M$), es decir el de un tablero en donde todas las piezas
+sean vacías.
+
+Como dijimos anteriormente, \textbf{dada una subsolución \redbf{$S$}}, podemos
+asegurar que todas sus soluciones derivadas tendrán al menos la misma cantidad
+de piezas vacías. Utilizando esta última consideración, dada una subsolución
+con \redbf{$k_{S}$} piezas vacías, y sea \darkgreenbf{$X_{min}$} la
+\texttt{menor cantidad máxima de agujeros encontrada hasta el momento}, de tal
+forma que \darkgreenbf{$X_{min}$} $<=$ \redbf{$k_{S}$}, podemos afirmar que la
+cantidad de \texttt{piezas no vacías} de cualquier solución derivada de esa
+\redbf{subsolución $k_{S}$} no es en particular \textbf{mayor} a la cantidad
+de \texttt{piezas no vacías} del resto de las soluciones, ya que por lo antes
+expuesto sabemos que dada la existencia de \darkgreenbf{$X_{min}$} existe al
+menos una subsolución \darkgreenbf{$T$} tal que su cantidad máxima de piezas
+vacías es exactamente \darkgreenbf{$k_{T} = X_{min}$} $<=$ \redbf{$k_{S}$}, lo
+cual es equivalente a afirmar que la \darkgreenbf{\emph{cantidad mínima de
+piezas no vacías de cualquier solución derivada de T}} es \darkgreenbf{$N -
+k_{T} = N - X_{min}$}, y dado que \darkgreenbf{$k_{T}$} $<=$ \redbf{$k_{S}$}
+se deduce que \darkgreenbf{$(-K_{T})$} $>=$ \redbf{$(-k{S})$}, de lo que
+finalmente se desprende que $T - K_{T} >= T - k_{S}$ es decir \blue{la
+\emph{cantidad mínima de piezas no vacías de cualquier solución derivada} de
+\darkgreenbf{$T$} es mayor o igual a la \emph{cantidad mínima de piezas no
+vacías de cualquier solución derivada} de \redbf{$S$}}.
+
+De todo lo anterior surge que mediante esta poda se logra descartar ciertas
+soluciones, cuando se está seguro de que las mismas no maximizan la función
+objetivo o, en caso de hacerlo, de que ya se encontró\footnote{o al menos,
+implícitamente, se tiene certeza de su existencia} al menos una solución que
+la maximice de igual o mejor forma.
+
+\end{paragraph}
+
+%La idea base es ir llenando el tablero en cierto orden, probando colocar en cada
+%casillero piezas que no rompan las reglas, y analizando la cantidad total de
+%piezas del tablero que hayan sido cubiertas. Se debe guardar de alguna forma la
+%combinación de piezas que haya cubierto más casilleros.\\ Consideramos dejar un
+%casillero libre como colocar la pieza representada por el 0. En este problema
+%una solución candidata o rama es una sucesión de piezas (que puede o no incluir
+%el 0), que van cubriendo el tablero.\\ Una primera decisión que se tomó fue
+%guardar una estructura piezasPorColores que para cada par de colores (x, y)
+%guarda una lista con todos las piezas que tienen como color superior e izquierdo
+%x e y, respectivamente. Vamos recorriendo el tablero en cada fila de izquierda a
+%derecha, desde la fila superior hasta la inferior. De este modo una pieza es
+%legal en una posición si su color izquierdo es igual al color derecho de la
+%pieza a su izquierda (de existir), y su color superior es igual al color
+%inferior de la pieza ubicada arriba (de existir). Podemos obtener las piezas
+%candidatas que cumplen con esa restricción de colores en piezasPorColores. De
+%este modo nos aseguramos que todas las piezas por las que nos vamos ramificando
+%mantienen las restricciones del tablero. Evitamos así tener que iterar sobre
+%todas las piezas verificando si cumplen la restricción.\\
+%Una poda muy sencilla pero muy útil que se 
+%implementó fue dejar de buscar soluciones cuando encontramos una solución que
+%cubre todo el tablero. \\
+%A continuación se detalla otra poda. Vamos
+%llevando cuenta de los huecos que dejamos en el tablero. Si hemos dejado tantos
+%huecos como para que, aun llenando correctamente lo que queda del tablero, no
+%alcanza para superar la mejor solución encontrada hasta el momento, abandonamos
+%la rama.\\
+
+%Al comenzar la búsqueda sabemos que por lo menos vamos a
+%poder llenar la mitad de los casilleros del tablero. Ésto siempre se puede
+%conseguir si visualizamos nuestro tablero como uno de ajedrez y ponemos las
+%piezas en los casilleros negros. Ningún par de piezas compartiría lado. 
 
 
 

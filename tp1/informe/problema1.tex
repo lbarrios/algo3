@@ -85,19 +85,19 @@ camiones sospechosos ($c1,c2,...,c20$), se podría tener una entrada como la sig
     3 20 10 10 9 4 1 1 1 1 1 2 6 6 6 4 5 5 5 5 5 9
     \end{verbatim}
   \end{quote}
-  
+
   \vspace{-2em}
     \begin{center}
       La cual se podría visualizar de la siguiente forma:
-      
+
       \renewcommand{\arraystretch}{1.2} % Agrego un poco de margen vertical
       \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
         \hline
         Día          &  $1$  & $2$   & $3$   & $4$   & $5$   & $6$ & $7$ & $8$ & $9$   & $10$  \\
         \hline
                      & $c5$ & $c10$ & $c14$ & $c4$ & $c15$ & $c11$ &   &     & $c3$  & $c1$  \\
-                     & $c6$ &       &       &       & $c16$ & $c12$ &   &     & $c20$ & $c2$  \\    
-        Camiones     & $c7$ &       &       &       & $c17$ & $c13$ &   &     &       &       \\  
+                     & $c6$ &       &       &       & $c16$ & $c12$ &   &     & $c20$ & $c2$  \\
+        Camiones     & $c7$ &       &       &       & $c17$ & $c13$ &   &     &       &       \\
                      & $c8$ &       &       &       & $c18$ &       &   &     &       &       \\
                      & $c9$ &       &       &       & $c19$ &       &   &     &       &       \\
         \hline
@@ -105,8 +105,8 @@ camiones sospechosos ($c1,c2,...,c20$), se podría tener una entrada como la sig
     \end{center}
 
     En este caso, como el primer día del período de contratación sería $d=4$ y habrían sido
-    inspeccionados un total de $C=9$ camiones durante los días \texttt{Día4}, \texttt{Día5} 
-    y \texttt{Día6} el programa debería devolver la siguiente salida: 
+    inspeccionados un total de $C=9$ camiones durante los días \texttt{Día4}, \texttt{Día5}
+    y \texttt{Día6} el programa debería devolver la siguiente salida:
 
   \begin{quote}
     \begin{verbatim}
@@ -119,7 +119,7 @@ camiones sospechosos ($c1,c2,...,c20$), se podría tener una entrada como la sig
 
 \begin{ejemplo}\hspace{0em}
 
-Bajo las mismas condiciones del ejemplo anterior, también 
+Bajo las mismas condiciones del ejemplo anterior, también
 se podría tener una entrada como la siguiente:
 
   \begin{quote}
@@ -132,15 +132,15 @@ se podría tener una entrada como la siguiente:
   \vspace{-2em}
   \begin{center}
     La cual se podría visualizar de la siguiente forma:
-    
+
     \renewcommand{\arraystretch}{1.2} % Agrego un poco de margen vertical
     \begin{tabular}{|c|c|c|c|c|c|c|c|}
       \hline
       Día          &  $1$  & $2$   & $3$   & $4$    & $5$ & $6$ & $7$   \\
       \hline
                      &  $c5$ &       &       & $c15$  &     &     & $c11$ \\
-                     &  $c6$ &       &       & $c16$  &     &     & $c12$ \\    
-                     &  $c7$ &       &       & $c17$  &     &     & $c13$ \\  
+                     &  $c6$ &       &       & $c16$  &     &     & $c12$ \\
+                     &  $c7$ &       &       & $c17$  &     &     & $c13$ \\
                      &  $c8$ &       &       & $c18$  &     &     & $c3$  \\
       Camiones     &  $c9$ &       &       & $c19$  &     &     & $c20$ \\
                      &  $c10$&       &       &        &     &     &       \\
