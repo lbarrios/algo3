@@ -7,7 +7,7 @@ OBJS := $(addprefix ${OBJSDIR}/,${OBJS})
 OBJSDEBUG := $(addsuffix .debug,${OBJS})
 OBJSTIME := $(addsuffix .time,${OBJS})
 COMMON_DIR=../common
-COMMON_OBJS=$(COMMON_DIR)/ParserDeParametros.o $(COMMON_DIR)/TestCase.o $(COMMON_DIR)/Timer.o
+COMMON_OBJS= $(COMMON_DIR)/Timer.o
 COMMON_OBJS_DEBUG := $(addsuffix .debug,${COMMON_OBJS})
 COMMON_OBJS_TIME := $(addsuffix .time,${COMMON_OBJS})
 
@@ -32,13 +32,13 @@ $(EXE).time: $(OBJSTIME) $(COMMON_OBJS_TIME)
 
 ## Objetos
 $(OBJSDIR)/%.o: %.cpp %.h | $(OBJSDIR)
-	$(CC) $(CFLAGS) $< -o $@
+	@$(CC) $(CFLAGS) $< -o $@
 
 $(OBJSDIR)/%.o.debug: %.cpp %.h | $(OBJSDIR)
-	$(CC) $(CFLAGSDEBUG) $< -o $@
+	@$(CC) $(CFLAGSDEBUG) $< -o $@
 
 $(OBJSDIR)/%.o.time: %.cpp %.h | $(OBJSDIR)
-	$(CC) $(CFLAGSTIME) $< -o $@
+	@$(CC) $(CFLAGSTIME) $< -o $@
 
 $(OBJS): | $(OBJSDIR)
 
