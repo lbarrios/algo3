@@ -10,7 +10,14 @@
 %-
 \centerbf{Modelado del problema}
 
-Este es un problema típico en que una \textbf{estructura de grafos} permite fácilmente realizar una visualización simple y práctica del escenario, como así también encaminar el análisis del universo de soluciones hacia un posible recorrido, construcción o \emph{deconstrucción}\footnote{<<Deshacer analíticamente los elementos que constituyen una estructura conceptual>>, es decir: desarmar, analizar, modificar y/o reconstruir una estructura, en este caso un grafo, la cual se encuentra ya previamente armada, ya sea de forma explícita o implícita.} de grafos.
+Este es un problema típico en que una \textbf{estructura de grafos} permite
+fácilmente realizar una visualización simple y práctica del escenario, como
+así también encaminar el análisis del universo de soluciones hacia un posible
+recorrido, construcción o \emph{deconstrucción}\footnote{<<Deshacer
+analíticamente los elementos que constituyen una estructura conceptual>>, es
+decir: desarmar, analizar, modificar y/o reconstruir una estructura, en este
+caso un grafo, la cual se encuentra ya previamente armada, ya sea de forma
+explícita o implícita.} de grafos.
 
 En este caso en particular, representamos una \textbf{solución a una instancia} determinada del
 problema como un \textbf{subgrafo generador ponderado no dirigido}, en donde cada pueblo está
@@ -23,8 +30,12 @@ $E_{S}$ subconjunto del conjunto de aristas del grafo completo de $n$ vértices.
     \]
 %
 
-\textbf{Aclaración}: De aquí en adelante se utilizará la letra K para referirse tanto al grafo
+\begin{aclaracion}
+
+De aquí en adelante se utilizará la letra K para referirse tanto al grafo
 completo como a la cantidad de centralitas. Interpretar según el contexto.
+
+\end{aclaracion}
 
 %-
 %- FUNCION PESO
@@ -94,8 +105,8 @@ factibles por el de \textbf{todas las soluciones de exactamente $k$ componentes 
 Se utilizará de forma parcial el \textbf{Algoritmo de Kruskal}, es decir que partiendo de un grafo solución
 inicial $S_{n}$, conformado por $n$ subgrafos triviales, y siendo $k$ el número de centralitas, el
 ciclo será frenado al llegar a la <<$``n-k''~iteracion$>> o, dicho de otro modo, al formar un
-subgrafo de $k$ componentes conexas. Decimos, entonces, que el bosque resultante pertenece al
-conjunto de soluciones óptimas.
+subgrafo de $k$ componentes conexas. Decimos, entonces, que \textbf{el bosque resultante pertenece al
+conjunto de soluciones óptimas}.
 
 %-
 %- Pseudocódigo

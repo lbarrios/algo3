@@ -152,21 +152,23 @@ posibles siguiendo ciertas reglas.
 
 El objetivo del problema es diseñar un algoritmo utilizando la técnica de
 \textbf{backtracking}. El algoritmo de \textbf{backtracking} se puede concebir
-como una técnica recursiva de recorrido de grafos\footnote{Quizás la oración no
-está expresada de la mejor forma; al decir ``se puede concebir como...'' se
-quiere dar a entender que no se está dando la definición estricta de
-backtracking, sino una \emph{interpretación}. Se dio por entendido el hecho de
-que en su sentido más básico es ``una técnica de resolución de problemas'';
-representando al ``universo de soluciones'' como un grafo, \textbf{y en el
-contexto del párrafo}, creemos que la idea que se intenta exponer es válida.},
-estableciendo un paralelismo entre <<el universo de soluciones>>, y los nodos de
-un \textbf{grafo arbol n-ario}, en donde cada nodo representa una solución
-posible, y $n$ representa la cantidad máxima de soluciones distintas que pueden
-desprenderse a partir de realizar un cambio determinado en la solución anterior
-(\emph{vecindad}). Además puede, según el caso, ser interpretado como un árbol
-en donde cada nodo representa \textbf{una solución no necesariamente ``válida''}
-(o ``bien formada''), y en donde sólamente \textbf{las hojas del árbol} son
-\emph{soluciones correctamente formadas} (no necesariamente factibles).
+como una técnica recursiva de recorrido de grafos\footnote{Quizás la oración
+no está expresada de la mejor forma; al decir ``se puede concebir como...'' se
+quiere dar a entender que no se está dando la \emph{definición estricta} de
+backtracking, sino más bien una \emph{interpretación} de la misma. Se dio por
+sobreentendido el hecho de que en su sentido más básico es ``una técnica de
+resolución de problemas''; así, representando al ``universo de soluciones''
+como un grafo, \textbf{y en el contexto del párrafo}, creemos que la idea que
+se intenta exponer es válida.}, estableciendo un paralelismo entre <<el
+universo de soluciones>>, y los nodos de un \textbf{grafo arbol n-ario}\footnote{
+O incluso un grafo conexo con ciclos, en el caso de un problema muy mal modelado.}, en
+donde cada nodo representa una solución posible, y $n$ representa la cantidad
+máxima de soluciones distintas que pueden desprenderse a partir de realizar un
+cambio determinado en la solución anterior (\emph{vecindad}). Además puede,
+según el caso, ser interpretado como un árbol en donde cada nodo representa
+\textbf{una solución o sub-solución no necesariamente ``válida''} (o \red{``bien formada''}), y en
+donde sólamente \textbf{las hojas del árbol} serían
+\red{\emph{soluciones ``correctamente formadas''}} (aunque no necesariamente factibles).
 
 Podemos separar también el tipo de problema en dos casos: los
 \darkgreen{\textbf{problemas de decisión}}, para los que es necesario que la
@@ -193,30 +195,31 @@ Un ejemplo concreto de los párrafos anteriores sería un problema en el que se
 nos pidiese encontrar una lista de 10 números del 1 al 20, tal que la lista sea
 estrictamente creciente. Tendríamos entonces un \darkgreen{problema de
 decisión}, en el que la \darkgreen{función de selección} estaría determinada por
-las condiciones ``que la lista sea estrictamente creciente'', ``que el número
-esté entre 1 y 20'', y ``que el largo de la lista sea 10'' es decir, en donde
-tomaríamos como soluciones factibles a todas aquellas en que <<lista[i] $<$
+las condiciones \emph{``que la lista sea estrictamente creciente''}, \emph{``que el número
+esté entre 1 y 20''}, y \emph{``que el largo de la lista sea 10''}, es decir, en donde
+tomaríamos como soluciones factibles a todas aquellas en que <<\textbf{lista[i] $<$
 lista[i+1] y además $1 \leq $ lista[i] $ \leq 20$, y además $|$lista$|=
-20$>>\footnote{Abusos varios de notación para no ahondar en detalles
-innecesarios}. Si se agregara, además, la condición ``quiero de todas las listas
+20$}>>\footnote{Se cometen abusos varios de notación para no ahondar en detalles
+innecesarios.}. Si se agregara, además, la condición ``quiero de todas las listas
 posibles la que maximice la sumatoria de cada uno de sus componentes'', me
-encontraría entonces con un \red{problema de optimización}.
+encontraría entonces con un \bluebf{problema de optimización}.
 
-En este ejemplo, entonces, una \textbf{solución factible} sería cualquiera que
-cumpla con los criterios de selección, mientras que una \textbf{solución
+En este ejemplo, entonces, una \darkgreenbf{solución factible} sería cualquiera que
+cumpla con los \darkgreen{criterios de selección}, mientras que una \redbf{solución
 correctamente formada}, es decir, aquellas que podrían pertenecer a las hojas de
-un posible arbol ``universo de soluciones'' (tal y como se menciona en el primer
-párrafo), sería simplemente ``una lista de 10 números''\footnote{Esto último es
-debatible; habría que formalizar aún más y no viene al caso.}.
+un posible arbol / ``universo de soluciones'' (tal y como se menciona en el párrafo
+introductorio), sería simplemente ``una lista de 10 números''\footnote{Esto último es
+debatible si se considera el tamaño como un criterio de selección; en todo caso habría
+que formalizar aún más y no viene al caso.}.
 
 De esta forma, para el ejemplo anterior, se podría establecer un algoritmo en
 que cada nodo interno del árbol de soluciones representase la
 \textbf{subestructura} de una o más soluciones, sin llegar a ser una solución,
 más concretamente, se podría asumir que el nodo raíz del arbol es una lista
 vacía, y que cada hijo es una lista que contiene a los elementos de su padre, y
-cuyo tamaño es superior en 1, de forma tal que es simple ver que: cada nodo
+cuyo tamaño es superior al anterior en 1, de forma tal que es simple ver que: \emph{cada nodo
 comparte una subestructura con sus nodos-hermanos heredada desde su nodo-padre,
-y sólamente las hojas del arbol son soluciones.
+y sólamente las hojas del arbol son soluciones}.
 
 
 \end{paragraph}
@@ -231,15 +234,17 @@ las ideas ya expuestas, calcular el gráfo completo del universo de soluciones
 \bigO{n^n}, \emph{o incluso infinita} si no se estableciese una asbtracción
 idónea al momento de transformar el universo de soluciones en un grafo. Además,
 incluso luego de establecer una abstracción en la que el grafo no considerase,
-por ejemplo, soluciones imposibles, el tamaño del grafo sigue siendo muy grande
-(de orden factorial). Por esta razón, para realizar esta tarea, se utiliza el
-concepto de \emph{grafo implícito}, mediante el cual se establece formalmente la
+por ejemplo, soluciones imposibles, el tamaño del grafo sigue siendo muy grande\footnote{
+De orden factorial, como se expone luego.}. Por esta razón, para realizar esta tarea, se utiliza el
+concepto de \emph{grafo implícito}, mediante el cual se establece matemáticamente la
 composición del mismo, sin la necesidad de expresar cada una de sus componentes,
 \textbf{sino a través de una descripción formal de sus nodos y aristas}, en
 donde \textbf{cada nodo es una solución}, y \textbf{cada arista es la
 transformación de una solución a una solución distinta dentro de su
 \emph{vecindad}} de manera que, dado un caso de prueba particular, sea posible
 recrearlo en el momento mismo en que se realiza el recorrido del grafo.
+
+Es importante establecer una \emph{vecindad} tal que
 
 Para este algoritmo en particular, el problema planteado es de
 \textbf{optimización}, ya que se desea obtener una solución válida (debe cumplir
