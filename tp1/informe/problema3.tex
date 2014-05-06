@@ -575,6 +575,25 @@ objetivo o, en caso de hacerlo, de que ya se encontró\footnote{o al menos,
 implícitamente, se tiene certeza de su existencia} al menos una solución que
 la maximice de igual o mejor forma.
 
+\begin{corolario}
+
+Dado un tablero de \textbf{$T$ posiciones}, y \textbf{$T$ piezas cualesquiera},
+sin tomar a consideración sus colores, podemos asegurar que la \textbf{cantidad
+mínima de piezas} que podemos colocar en el mismo es de $T/2$, de forma tal que
+las piezas se distribuyan tal y como los casilleros de un mismo color en un
+\texttt{Tablero de Ajedrez}. Esto es así debido a que esta distribución nos
+asegura que en las posiciones indicadas ninguna pieza tiene contacto inmediato
+con cualquier otra pieza, por lo que no existe riesgo de incompatibilidad. De
+forma recíproca, podemos también asegurar que la \textbf{menor cantidad máxima
+de agujeros} que el tablero puede llegar a contener es de a lo sumo $T/2$. Estos
+valores pueden ser utilizados, entonces, como inicialización de las variables
+globales mencionadas en la explicación de la poda.
+
+Esta misma observación nos permite, también, afirmar que dado un tablero
+cualquiera existe al menos una solución factible.
+
+\end{corolario}
+
 \end{paragraph}
 
 %La idea base es ir llenando el tablero en cierto orden, probando colocar en cada
