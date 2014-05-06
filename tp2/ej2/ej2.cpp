@@ -18,7 +18,7 @@ struct ComponenteConexa {
     list<arista> aristas;
 };
 
-void tomarInput();
+bool tomarInput();
 void inicializarComponentes();
 void kruskal_parcial();
 void imprimir();
@@ -31,24 +31,36 @@ ComponenteConexa componentes[1024];
 Timer timer = Timer( cout );
 
 int main() {
-		timer.setInitialTime("cicloEntero");
-    tomarInput();
-    inicializarComponentes();
-    kruskal_parcial();
-		timer.setFinalTime("cicloEntero");
-		#ifndef TIME
-    imprimir();
-		#else
-    timer.saveAllTimes();
-    #endif
+    while(tomarInput()){
+			timer.setInitialTime("cicloEntero");
+    	inicializarComponentes();
+    	kruskal_parcial();
+			timer.setFinalTime("cicloEntero");
+			#ifndef TIME
+    	imprimir();
+			#else
+    	timer.saveAllTimes();
+    	#endif
+    }
     return 0;
 }
 
-void tomarInput() {
-    cin >> n >> k;
+bool tomarInput() {
+    cin >> n;
+    #ifdef DEBUG
+    cerr << "n: " << n;
+    #endif
+    if(!n) return false;
+    cin >> k;
+    #ifdef DEBUG
+    cerr << ", k: " << k << endl;
+    #endif
     for(int i = 1; i <= n; i++) {
         pair<int, int> agrego;
         cin >> agrego.first >> agrego.second;
+		    #ifdef DEBUG
+		    cerr << "<" << agrego.first << "," << agrego.second << ">" << endl;
+		    #endif
         posiciones[i] = agrego;
     }
 }
