@@ -487,6 +487,30 @@ la función objetivo}} (y ya que no lo es la subsolución, por las consideracion
 ya expuestas, se puede asumir que tampoco lo serán las soluciones derivadas de
 ella).
 
+\begin{center}
+\begin{minipage}[h]{0.8\textwidth}
+\begin{aclaracion}
+
+A efectos de simplificar la explicación, procedemos a mencionar primero una
+versión alternativa de esta poda, la cual quizás resulte más intuitiva. Dada la
+recursión una determinada posición $n$, la cual define una subsolución $T_n$, es
+fácil ver que si $T_n$ contiene $p$ \texttt{piezas no-vacías}, siendo $N$ la
+cantidad de posiciones, se cumple que:
+
+\begin{itemize}
+  \item Las soluciones derivadas de $T_n$ contienen al menos $p$ piezas.
+  \item Las soluciones derivadas de $T_n$ contienen a lo sumo $p + (N - n)$ piezas.
+\end{itemize}
+
+De esta forma, si uno va guardando la cantidad máxima de piezas encontradas, uno
+puede cortar una rama cuando sabe que cualquier solución derivada de la misma
+contendrá una cantidad menor.
+
+\end{aclaracion}
+\vspace{1em}
+\end{minipage}
+\end{center}
+
 \begin{definicion}
 
 Dada una determinada subsolución $T_n$, en donde $n$ representa a la posición
