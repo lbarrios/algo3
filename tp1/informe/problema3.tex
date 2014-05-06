@@ -244,7 +244,19 @@ transformación de una solución a una solución distinta dentro de su
 \emph{vecindad}} de manera que, dado un caso de prueba particular, sea posible
 recrearlo en el momento mismo en que se realiza el recorrido del grafo.
 
-Es importante establecer una \emph{vecindad} tal que
+Para asegurar la correctitud según los criterios expuestos en el párrafo
+anterior, es importante establecer una \emph{vecindad} tal que el universo de
+soluciones tenga una subestructura adecuada para la realización de ``podas'', es
+decir, que dados dos $nodos-hijos$ derivados de un mismo $nodo-padre$, se puedan
+encontrar en estos características en común derivadas directamente de su padre;
+más concretamente, el nodo padre debe representar una solución o subsolución
+para la cual las funciones de selección y objetivo valúen de una forma idónea
+con relación a sus hijos. Por ejemplo, si en un ejercicio de optimización se
+lograse establecer un grafo de soluciones de tal forma que dado un nodo padre
+sus nodos derivados tengan una valuación menor o igual en la función objetivo, y
+se buscase la solución que la maximizara, sería fácil implementar entonces una
+poda que, en el momento en que una subsolución alcance un valor menor al
+deseado, \emph{corte} la rama de soluciones determinada por el susodicho nodo.
 
 Para este algoritmo en particular, el problema planteado es de
 \textbf{optimización}, ya que se desea obtener una solución válida (debe cumplir
@@ -576,7 +588,20 @@ la maximice de igual o mejor forma.
 
 
 \subsubsection{Justificación formal de correctitud}
-\nota{Vale por una demostración}
+
+Se demostró la correctitud de este algoritmo y sus podas en la propia descripión
+del mismo: por un lado afirmamos que la \textbf{correctitud de un algoritmo
+genérico de Backtracking}, en su sentido más básico, \textbf{resulta trivial},
+amparandonos en la propia definición de \textbf{Backtracking}, siendo que el
+algoritmo ``\emph{analiza el universo de soluciones}''. Luego, durante la
+descripción de las dos podas implementadas, se demostró que, en el caso de la
+poda relacionada con la <<Función de Selección>> se estaban eliminando las
+soluciones no factibles, las cuales iban a ser de todas formas descartadas por
+el algoritmo durante el recorrido de las soluciones, y que en el caso de la poda
+relacionada con la <<Función Objetivo>> se estaban eliminando todas aquellas
+soluciones para las que dadas las condiciones de la subestructura implementada
+se podía preveer que no iban a cumplir con el objetivo de maximizar la función
+requerida.
 
 \subsubsection{Cota de complejidad temporal}
 \nota{Vale por un análisis teórico}
