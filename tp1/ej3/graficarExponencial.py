@@ -73,7 +73,7 @@ plt.grid(True)
 plt.title("Ejercicio 3")
 plt.ylabel('Tiempo (segundos - logaritmica)')
 plt.yscale('log')
-plt.xlabel(u'Tamaño de entrada (camiones)')
+plt.xlabel(u'Tamaño de entrada (n*m)')
 
 
 """
@@ -93,6 +93,8 @@ for test_number in range(0,t_names):
 
 #subplot.plot(x, ((np.math.factorial(x))*10)/float(1e9),    '--', color='black', linewidth=2, label="c.x.log2(x)")
 #plt.legend(loc=2)
+
+plt.xlim(xmin=1)
 
 plt.show()
 #if not os.path.exists('./graficos/') or not os.path.isdir('./graficos/'):
