@@ -5,13 +5,12 @@
 using namespace std;
 
 typedef pair<int, int> arista ;
-// habia puesto 1<<31 y me daba todo mal porque habia overflow jaja
 #define INF 1<<30;
 
 struct ComponenteConexa {
     bool esComponente;
-    float distancias[1024]; //dejarlo fijo, o vector, u otra cosa
-    arista aristaMasCortaTotalHacia[1024];
+    float distancias[2048]; //dejarlo fijo, o vector, u otra cosa
+    arista aristaMasCortaTotalHacia[2048];
     float menorDistancia;
     arista aristaMasCortaTotalGeneral;
     int ccMasCercana;
@@ -25,8 +24,8 @@ void imprimir();
 float distancia(int, int);
 
 int n, k;
-pair<int, int> posiciones[1024];
-ComponenteConexa componentes[1024];
+pair<int, int> posiciones[2048];
+ComponenteConexa componentes[2048];
 
 Timer timer = Timer( cout );
 
@@ -34,13 +33,12 @@ int main() {
     while(tomarInput()){
 			timer.setInitialTime("cicloEntero");
     	inicializarComponentes();
+    	//cerr << "Componentes inicializadas";
     	kruskal_parcial();
-			timer.setFinalTime("cicloEntero");
-			#ifndef TIME
+    	//cerr << "Kruskal OK";
+    	timer.setFinalTime("cicloEntero");
     	imprimir();
-			#else
-    	timer.saveAllTimes();
-    	#endif
+      timer.saveAllTimes();
     }
     return 0;
 }
@@ -67,9 +65,10 @@ bool tomarInput() {
 
 void inicializarComponentes() {
     for (int i = 1; i <= n; i++) {
+//cerr << " i=" << i;
         ComponenteConexa c;
         c.esComponente = true;
-        list<arista> inicial; 
+        list<arista> inicial;
         c.aristas = inicial;
         c.menorDistancia = INF;
         for (int j = 1; j <= n; j++) {
@@ -83,7 +82,7 @@ void inicializarComponentes() {
             }
         }
         componentes[i] = c;
-    }    
+    }
 }
 
 float distancia(int i, int j) {
@@ -109,8 +108,8 @@ void kruskal_parcial() {
             }
         }
         // uno cc1 y cc2
-        ComponenteConexa &cc1 = componentes[ind_cc1]; 
-        ComponenteConexa &cc2 = componentes[ind_cc2]; 
+        ComponenteConexa &cc1 = componentes[ind_cc1];
+        ComponenteConexa &cc2 = componentes[ind_cc2];
         // me olvido de cc2
         cc2.esComponente = false;
         // concateno las listas de aristas
@@ -139,11 +138,11 @@ void kruskal_parcial() {
                 cc1.aristaMasCortaTotalGeneral = cc1.aristaMasCortaTotalHacia[j];
             }
         }
-        
     }
 }
 
 void imprimir() {
+		#ifndef TIME
     int q = 0, m = 0;
     list<int> compFinales;
     for (int i = 1; i <= n; i++) {
@@ -163,4 +162,5 @@ void imprimir() {
             cout << it_arista->first << " " << it_arista->second << endl;
         }
     }
+   	#endif
 }
