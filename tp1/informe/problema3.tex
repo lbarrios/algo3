@@ -425,16 +425,16 @@ sólo aplica la restricción de forma parcial.
 Es imposible, sin embargo, establecer \emph{a priori} una caracterización
 precisa del orden de complejidad del algoritmo bajo las condiciones de esta
 nueva poda, ya que la misma depende no solo del tamaño de entrada, sino del
-contenido de la entrada. Puede darse, por ejemplo, el caso de una entrada en
-la que todas las piezas tengan el mismo color en todos sus lados, lo cual
-significaría que habría que probar todas las piezas en todas las posiciones,
-lo cual conllevaría una complejidad de \bigO{M^N}. También puede darse el caso
-en que la disposición de la entrada sea de forma tal que luego de colocar la
-primer pieza, sólo exista en cada paso una pieza posible, con lo cual la
-complejidad sería del orden de \bigO{M * 1^N}, es decir \bigO{M} lineal sobre
-la cantidad de piezas. Por la razón expuesta en este párrafo, diremos que la
-complejidad está acotada por \bigO{M^N}, a pesar de que según la disposición
-de la entrada la misma puede ser mucho menor.
+contenido de la entrada. Puede darse, por ejemplo, el caso de una entrada en la
+que todas las piezas tengan el mismo color en todos sus lados, lo cual
+significaría que habría que probar todas las piezas en todas las posiciones, lo
+cual conllevaría una complejidad de \bigO{M!}. También puede darse el caso en
+que la disposición de la entrada sea de forma tal que luego de colocar la primer
+pieza, sólo exista en cada paso una pieza posible, con lo cual la complejidad
+sería del orden de \bigO{M * 1^{N-1}}, es decir \bigO{M}, lineal sobre la
+cantidad de piezas. Por la razón expuesta en este párrafo diremos que, a pesar
+de que según la disposición de la entrada la misma puede ser mucho menor, la
+complejidad en el peor caso está igualmente acotada por \bigO{M!}.
 
 Por todo lo antes expuesto, además, podemos asegurar que al final del
 recorrido (es decir, luego de evaluar todas las hojas del árbol) se habrán
