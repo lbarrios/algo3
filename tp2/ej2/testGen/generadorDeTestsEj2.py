@@ -53,7 +53,7 @@ class GeneradorDeTestsEj2 (GeneradorDeTests):
 
     n = params["n"]
     k = random.randint(0, n)
-    pueblos = [ "{:f} {:f}".format( random.uniform(0, self.tamMapa ), random.uniform(0, self.tamMapa )) for i in range(n) ]
+    pueblos = [ "{:d} {:d}".format( random.randint(0, self.tamMapa ), random.randint(0, self.tamMapa )) for i in range(n) ]
     return "{} {}\n{}".format(n,k, "\n".join(pueblos))
     
 
