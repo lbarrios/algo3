@@ -8,7 +8,7 @@ inputDir = "input"
 limInf = 1
 limSup = 1001
 paso = 10
-casosPorTest = 50
+casosPorTest = 100
 
 
 
