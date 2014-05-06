@@ -57,6 +57,23 @@ formalidad, en lenguaje coloquial.}. Además, se trasladó todo el contenido de
 estos párrafos a \subsubsecref{problema1}{descripcion}, ya que consideramos que
 el análisis realizado en esos párrafos es más propio del modelado/descripción
 del problema; es decir que es independiente de la resolución que hayamos ideado.
+    
+    \item El texto que figuraba en la segunda parte del contenido de la sección
+``Hipótesis de Resolución'' se eliminó/reformuló por completo, haciendo un
+análisis y descripción más detallados de los objetivos del algoritmo y las podas
+implementadas. No se hizo demasiado hincapié en los detalles estrictamente
+implementativos, sino en las nociones o ideas generales que inspiraron el
+código.
+
+    \item El código del problema 3 fue reescrito por completo, utilizando una
+versión con clases, permitiendo así realizar diversas abstracciones que
+permitieron (a nuestro gusto) una mejor organización y comprensión del
+algoritmo. Por ejemplo, se implementó la clase IndiceDePiezas, la cual contiene
+todo el comportamiento relativo al índice con el que se eligen las piezas que
+serán utilizadas, y la clase abstracta IteradorIndiceDePiezas, cuyas clases
+heredadas (IteradorSecuencial, IteradorColores) son instanciadas por el Índice
+de Piezas, y contienen un comportamiento común a ambas, y un comportamiento
+propio que depende de la posición del tablero en que se encuentre el iterador.
 
 \end{itemize}
 
