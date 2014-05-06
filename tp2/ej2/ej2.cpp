@@ -1,6 +1,7 @@
 #include <iostream>
 #include <list>
 #include <math.h>
+#include "../common/Timer.h"
 using namespace std;
 
 typedef pair<int, int> arista ;
@@ -27,11 +28,19 @@ int n, k;
 pair<int, int> posiciones[1024];
 ComponenteConexa componentes[1024];
 
+Timer timer = Timer( cout );
+
 int main() {
+		timer.setInitialTime("cicloEntero");
     tomarInput();
     inicializarComponentes();
     kruskal_parcial();
+		timer.setFinalTime("cicloEntero");
+		#ifndef TIME
     imprimir();
+		#else
+    timer.saveAllTimes();
+    #endif
     return 0;
 }
 
