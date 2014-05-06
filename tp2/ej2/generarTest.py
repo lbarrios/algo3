@@ -6,8 +6,8 @@ from testGen.generadorDeTestsEj2 import GeneradorDeTestsEj2
 # Parámetros gráfico de comparación"
 inputDir = "input"
 limInf = 1
-limSup = 10001
-paso = 50
+limSup = 1001
+paso = 10
 casosPorTest = 50
 
 
