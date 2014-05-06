@@ -1,13 +1,13 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.2
 from genTest.generadorDeTestsEj3 import generadorDeTestsEj3
 import sys
 
 generador = generadorDeTestsEj3()
 desde_n = 1
-hasta_n = 7
+hasta_n = 5
 paso_n = 1
 desde_m = 1
-hasta_m = 7
+hasta_m = 5
 paso_m = 1
 paso_colores = 1
 desde_colores = 1
