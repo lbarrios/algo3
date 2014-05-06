@@ -362,7 +362,7 @@ f(T) := \nsum_{i=1}^{\#casilleros}{ t.lleno \bigg( {\large T\left(i\right)} \big
 
 \end{paragraph}
 
-\subsubsection{Planteamiento de resolución} 
+\subsubsection{Planteamiento de resolución}\label{subsubsec:ej3-resolucion}
 
 \begin{paragraph}\
 
@@ -394,7 +394,7 @@ casilleros''.
 
 \begin{paragraph}\
 
-\centerbf{Poda: Función de Selección}
+\centerbf{Poda: Función de Selección}\label{poda:ej3-seleccion}
 
 La primer poda posible resulta totalmente trivial, ya que se trata de probar
 en cada iteración sólamente las piezas que no se hayan colocado ya en el
@@ -588,7 +588,6 @@ la maximice de igual o mejor forma.
 
 
 \subsubsection{Justificación formal de correctitud}
-
 Se demostró la correctitud de este algoritmo y sus podas en la propia descripión
 del mismo: por un lado afirmamos que la \textbf{correctitud de un algoritmo
 genérico de Backtracking}, en su sentido más básico, \textbf{resulta trivial},
@@ -604,11 +603,16 @@ se podía preveer que no iban a cumplir con el objetivo de maximizar la función
 requerida.
 
 \subsubsection{Cota de complejidad temporal}
-\nota{Vale por un análisis teórico}
+
+La complejidad de este algoritmo pertenece a la familia de \bigO{M!}, en donde M
+es la cantidad de piezas (contando la pieza vacía). Esto está demostrado en la
+sección \subsubsecref{ej3}{resolucion}, en el apartado de la poda relacionada
+con la función de selección.
 
 \subsubsection{Verificación mediante casos de prueba}
 
-A continuación presentamos distintas instancias que sirven para verificar que el programa funciona correctamente.\\
+A continuación presentamos distintas instancias que sirven para verificar que el
+programa funciona correctamente.
 
 \begin{center}
 \begin{minipage}{0.5\textwidth}
