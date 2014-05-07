@@ -126,37 +126,37 @@ conjunto de soluciones óptimas}.
 \State \hspace{0.15cm} int indiceCCMasCerca
 \\
 
-\ForAll{i in 1 to n}  \Comment{$\bigO{n^2}$}
+\ForAll{i de 1 a n}  \Comment{$\bigO{n^2}$}
 	\Statex \hspace{0.5cm} componentesConexas[i] = i-esimo pueblo \Comment{ \bigO{1}}
-    \ForAll{j in 1 to n}    \Comment{ \bigO{n}}
+    \ForAll{j de 1 a n}    \Comment{ \bigO{n}}
         \State aristaMasCorta entre la CC i y la CC j = (i, j) \Comment{ \bigO{1}}
-        \State distancia entre componentesConexas[i] y la componente conexa j = distanciaEuclidea(pueblo i, pueblo j) \Comment{ \bigO{1}} 
+        \State distancia entre componentesConexas[i] y la componente conexa j = distanciaEuclídea(pueblo i, pueblo j) \Comment{ \bigO{1}} 
         \State me voy fijando cual de estas distancias es mas corta y la guardo junto con el indice j  \Comment{ \bigO{1}}
 	\EndFor
 \EndFor
 \\
 
-\ForAll{i in 1 to n - k} \Comment{ \bigO{(n * (n-k)) = \bigO{(n^2)}}} 
+\ForAll{i de 1 a n - k} \Comment{ \bigO{(n * (n-k)) = \bigO{(n^2)}}} 
 
-	\Statex \hspace{0.5cm} \texttt{me fijo la distancia mas corta entre dos componentes}
+	\Statex \hspace{0.5cm} \texttt{// me fijo la distancia mas corta entre dos componentes}
     \ForAll{i in 1 to n}  \Comment{ \bigO{n}} 
-        \Statex \hspace{0.9cm} \texttt{observacion: si componentes[i] ya no representa más una componente continúo}
+        \Statex \hspace{0.9cm}si componentes[i] ya no representa más una componente \texttt{continúo}
         \State me voy fijando qué componente tiene la menor 'menor distancia hacia otra componente' 
 		y la guardo en CCAUnir1, su componente mas cercana en CCAUnir2 \Comment{ \bigO{1}}
 	\EndFor	
 	\\
 	
-	\Statex \hspace{0.5cm} \texttt{uno CCAUnir1 y CCAUnir2}
-	\State CCAUnir1.aristas = CCAUnir1.aristas union CCAUnir2.aristas + aristaMasCorta entre CCAUnir1 y CCAUnir2 \Comment{ \bigO{1}}
-    \State marco CCAUnir2 como que ya no representa una componente conexa. toda su información pasa a CCAUnir1  \Comment{ \bigO{1}}
+	\Statex \hspace{0.5cm} \texttt{// uno CCAUnir1 y CCAUnir2}
+	\State CCAUnir1.aristas = CCAUnir1.aristas $\cup$ CCAUnir2.aristas + aristaMasCorta entre CCAUnir1 y CCAUnir2 \Comment{ \bigO{1}}
+    \State marco CCAUnir2 como que ya no representa una componente conexa. (toda su información pasa a CCAUnir1)  \Comment{ \bigO{1}}
 	\\
 	
-	\Statex \hspace{0.5cm} \texttt{actualizo distancias}
-	\ForAll{i in 1 to n} \Comment{ \bigO{n}} 
-		\State si componentesConexas[i] ya no representa una componente conexa, continúo \Comment{ \bigO{1}} 
+	\Statex \hspace{0.5cm} \texttt{// actualizo distancias}
+	\ForAll{i de 1 a n} \Comment{ \bigO{n}} 
+		\State si componentesConexas[i] ya no representa una componente conexa, \texttt{continúo} \Comment{ \bigO{1}} 
 		\State distancia entre componentesConexas[i] y CCAUnir1 = min (distancia a CCAUnir1, distancia a CCAUnir2) \Comment{ \bigO{1}} 
         \State si CCAUnir2 esta mas cerca que CCAUnir1, aristaMasCortaHacia CCAUnir1 = aristaMasCortaHacia CCAUnir2 \Comment{ \bigO{1}} 
-        \State y lo mismo actualizo para la distancia y arista mas corta desde CCAUnir1 hacia la CC i \Comment{ \bigO{1}} 
+        \State con los mismos valores actualizo la distancia y arista mas corta desde CCAUnir1 hacia la CC i \Comment{ \bigO{1}} 
         \State voy guardando la distanciaMasCorta e indiceCCMasCerca de CCAUnir1 \Comment{ \bigO{1}} 
         \State voy viendo si tengo que actualizar la distanciaMasCorta e indiceCCMasCerca de la CC i \Comment{ \bigO{1}} 
 	\EndFor
@@ -165,7 +165,8 @@ conjunto de soluciones óptimas}.
 \State al final recorro componentesConexas fijandome qué índices representan componentes conexas, 
 	   en estos índices de pueblo coloco una central y las tuberías son la unión de las las aristas 
 	   de las CC representadas por estos índices \Comment{ \bigO{n}} 
-\\	   
+
+
 \Comment{Total \bigO{(n^2)}}
 	
 \end{algorithmic}
