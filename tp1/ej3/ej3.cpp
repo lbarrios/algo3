@@ -70,11 +70,13 @@ Tablero& backtrack( Tablero& t, IndiceDePiezas& ip, uint32_t posicion )
   }
   */
 
+	#ifndef SINPODAOBJETIVO
   if ( t.yaEncontreUnTableroMejor( posicion ) )
   {
     _C( "PODANDO EN POS " << posicion <<" PORQUE EXISTE UN TABLERO mejor QUE CUALQUIERA DE ESTA RAMA" );
     return *mejorTablero;
   }
+  #endif
   
 
   IteradorIndiceDePiezas& it = ip.dameIterador( posicion );
