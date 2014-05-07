@@ -68,7 +68,6 @@ f(s) = max(\{p(e) : e \in E_{s}\})
 %- CARACTERIZACIÓN DE LA SOLUCIÓN
 %-
 \centerbf{Caracterización de la solución}
-
 Dado un conjunto de \textbf{soluciones factibles}, es evidente que las \textbf{soluciones óptimas}
 son un subconjunto del mismo. Dada cualquier solución, sin importar si esta es factible o no, y
 debido a que cada solución es un subgrafo generador de $K_{n}$, es posible determinar que la misma
@@ -96,10 +95,10 @@ misma aumente al retirar una o más aristas.
 De esta forma, y a efectos de simplificar el análisis, podemos acotar el conjunto de soluciones
 factibles por el de \textbf{todas las soluciones de exactamente $k$ componentes conexas}.
 
-
 %-
 %- IDEA DE RESOLUCIÓN
 %-
+\begin{paragraph}\
 \centerbf{Idea de resolución}
 
 Se utilizará de forma parcial el \textbf{Algoritmo de Kruskal}, es decir que partiendo de un grafo solución
@@ -107,10 +106,12 @@ inicial $S_{n}$, conformado por $n$ subgrafos triviales, y siendo $k$ el número
 ciclo será frenado al llegar a la <<$``n-k''~iteracion$>> o, dicho de otro modo, al formar un
 subgrafo de $k$ componentes conexas. Decimos, entonces, que \textbf{el bosque resultante pertenece al
 conjunto de soluciones óptimas}.
+\end{paragraph}
 
 %-
 %- Pseudocódigo
 %-
+\begin{figure}
 \centerbf{Pseudocódigo}
 \begin{algorithm}[H]
 \caption{Kruskal}\label{alg:ej2-kruskal}
@@ -171,5 +172,6 @@ conjunto de soluciones óptimas}.
 	
 \end{algorithmic}
 \end{algorithm}
+\end{figure}
 
 \end{document}
