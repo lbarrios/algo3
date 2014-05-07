@@ -14,7 +14,7 @@ COMMON_OBJS_TIME := $(addsuffix .time,${COMMON_OBJS})
 .PHONY: all debug time clean $(OBJSDIR) # upload_input upload_output
 
 ## Targets virtuales
-all: $(EXE) $(EXE).debug $(EXE).time
+all: $(EXE) $(EXE).debug $(EXE).time $(TARGETS)
 debug: $(EXE).debug
 time: $(EXE).time
 $(OBJSDIR):
@@ -29,6 +29,10 @@ $(EXE).debug: $(OBJSDEBUG) $(COMMON_OBJS_DEBUG)
 
 $(EXE).time: $(OBJSTIME) $(COMMON_OBJS_TIME)
 	$(CC) -lrt $(OBJSTIME) $(COMMON_OBJS_TIME) -o $@ -lrt
+$(EXE).time.sinPodaObjetivo: $(OBJSTIME) $(COMMON_OBJS_TIME)
+	$(CC) -DSINPODAOBJETIVO -lrt $(OBJSTIME) $(COMMON_OBJS_TIME) -o $@ -lrt
+$(EXE).time.sinPodaSeleccion: $(OBJSTIME) $(COMMON_OBJS_TIME)
+	$(CC) -DSINPODASELECCION -lrt $(OBJSTIME) $(COMMON_OBJS_TIME) -o $@ -lrt
 
 ## Objetos
 $(OBJSDIR)/%.o: %.cpp %.h | $(OBJSDIR)
