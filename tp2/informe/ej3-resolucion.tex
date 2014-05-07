@@ -9,16 +9,16 @@ hasta la casilla destino. Encontrar la secuencia de saltos es algo secundario y 
 Vamos a pensar el problema como un grafo, siendo cada nodo una posición del tablero con una cantidad de unidades 
 de potencia extra restantes. Los adyacentes a cada nodo son las casillas (y las unidades extra que quedan para 
 cada caso) a las que puedo llegar usando mi resorte y mis unidades extra. \\
-Se implementó un Breadth-first search. \\
+Se implementó un algoritmo utilizando la técnica de Breadth-First Search. \\
 
 \centerbf{Pseudocódigo}
 \begin{algorithm}[H]
 \caption{La Centralita}\label{alg:ej3-centralita}
 \begin{algorithmic}[1]
 
-\Statex \texttt{Inicializo}
+\Statex \texttt{// Inicializo}
 	\For{$(i=1..n, j=1..n, l=0..k)$}  \Comment{\bigO{n^2 * k}}
-		\State distancia desde el casillero[i][j], sobrando l unidades extra de potencia = INF
+		\State distancia hasta el casillero[i][j], sobrando l unidades extra de potencia = $\infty$
 	\EndFor \\
 
 \State distancia hasta el casillero origen, sobrando k unidades extra de potencia = 0 \\
@@ -29,9 +29,9 @@ Se implementó un Breadth-first search. \\
 \State actual = colaBFS.pop()
 	\For{cada casillero (x,y) al que puedo llegar desde actual}
 		    \State l = unidades extra que quedan tras ir a (x,y) \\
-			\Statex \hspace{1cm} \texttt{si no recorrí ya ese casillero, quedando esas unidades extra}
-			\If{distancia a (x, y), quedando l unidades extra es menor a INF}
-				\State   la pongo en 'distancia desde actual' + 1
+			\Statex \hspace{1cm} \texttt{// si no recorrí ya ese casillero, quedando esas unidades extra}
+			\If{distancia a (x, y), quedando l unidades extra es menor a $\infty$}
+				\State   la sobreescribo como: 'distancia desde actual' + 1
 				\If {es el casillero de destino} 
 					\State break
 				\EndIf
