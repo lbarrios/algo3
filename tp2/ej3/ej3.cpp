@@ -49,7 +49,7 @@ void inicializar() {
             for(int l=0; l<=k; l++){
                 //seria INF
                 distancias[i][j][l].distancia = n * n;
-            }  
+            }
         }
     }
 }
@@ -138,8 +138,8 @@ void pushea_hijo (Nodo &hijo, int &fila_hijo, int &columna_hijo, int &distancia_
 }
 
 void imprimir() {
-    Nodo fin = distancias[destino.columna][destino.fila][potenciaDeLlegada];
-    cout << fin.distancia << endl; 
+    Nodo fin = distancias[destino.fila][destino.columna][potenciaDeLlegada];
+    cout << fin.distancia << endl;
     list<Nodo> camino;
     Nodo recorro = fin;
     //fijate +- indice
