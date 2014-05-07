@@ -10,19 +10,6 @@ Vamos a pensar el problema como un grafo, siendo cada nodo una posición del tab
 de potencia extra restantes. Los adyacentes a cada nodo son las casillas (y las unidades extra que quedan para 
 cada caso) a las que puedo llegar usando mi resorte y mis unidades extra. \\
 Se implementó un Breadth-first search. \\
-Recorremos primero los nodos a distancia 0, luego a distancia 1, y así sucesivamente.
-Para cada nodo vamos guardando su distancia desde la posicion de origen. \\
-Inicializamos la distancia hasta la posicion de origen, contando con k unidades extra de potencia, con 0, y el 
-resto de las distancias en INF.\\
-Para cada nodo $'v'$ que recorremos, sabemos que podemos llegar a sus adyacentes saltando hasta $v$ en $v$.distancia 
-pasos, y luego saltando al adyacente $'a'$ en un paso más. \\
-Luego, podemos decir que $a$.distancia $\le$ $v$.distancia + 1. Si no habia recorrido $a$ previamente, 
-$v$.distancia + 1 refleja la distancia del camino más corto hasta $a$. Si ya habia recorrido $'a'$, su 
-distancia ya está calculada y es menor o igual a la de $v$. En algún momento llegamos a la casilla destino, 
-ya que el grafo es conexo, y podemos devolver su distancia. \\
-
-%\nota{Esto de que es conexo, es decir, que cualquier casillero podes llegar a cualquier otro, se puede mencionar 
-%en la descripcion del problema}
 
 \centerbf{Pseudocódigo}
 \begin{algorithm}[H]
