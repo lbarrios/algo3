@@ -3,16 +3,18 @@
 \usepackage{header_tp2}
 \begin{document}{}
 % -----------------------------------------------
+\nota{no se puede asumir que el lector conozca bfs}
 En nuestro algoritmo recorremos primero los nodos a distancia 0, luego a distancia 1, y así sucesivamente.
-Para cada nodo vamos guardando su distancia desde la posicion de origen. \\
+Para cada nodo vamos guardando su distancia desde la posicion de origen.
 Inicializamos la distancia hasta la posicion de origen, contando con k unidades extra de potencia, con 0, y el 
-resto de las distancias en INF.\\
+resto de las distancias en INF.
+
 Para cada nodo $'v'$ que recorremos, sabemos que podemos llegar a sus adyacentes saltando hasta $v$ en $v$.distancia 
 pasos, y luego saltando al adyacente $'a'$ en un paso más. \\
-Luego, podemos decir que $a$.distancia $\le$ $v$.distancia + 1. Si no habia recorrido $a$ previamente, 
-$v$.distancia + 1 refleja la distancia del camino más corto hasta $a$. Si ya habia recorrido $'a'$, su 
+Luego, podemos decir que $a$.distancia $\le$ $v$.distancia + 1. Si no había recorrido $a$ previamente, 
+$v$.distancia + 1 refleja la distancia del camino más corto hasta $a$. Si ya había recorrido $'a'$, su 
 distancia ya está calculada y es menor o igual a la de $v$. En algún momento llegamos a la casilla destino, 
-ya que el grafo es conexo, y podemos devolver su distancia. \\
+ya que el grafo es conexo, y podemos devolver su distancia. \\ \nota{no es conexo, no podes llegar de k=3 a k=5}
 
 
 \end{document}

@@ -27,11 +27,11 @@ pertenezcan a distintas componentes conexas.
 
 Veamos que nuestro algoritmo elige la misma arista que Kruskal. Iteramos sobre
 todas las componentes y elegimos las dos que tienen la menor distancia hacia
-otra componente. Ahora veamos que las distancias de una componente hacia otra
-están bien calculadas.
+otra componente. Ahora, ésto depende de que las distancias de una componente hacia otra
+estén bien calculadas.
 
 En la etapa de inicialización, cuando tenemos n componentes conexas triviales,
-la distancia entre cualquier par de ellas es la distancia euclidea entre sus
+la distancia entre cualquier par de ellas es la distancia euclídea entre sus
 únicos nodos. Ahora la distancia entre dos componentes conexas no triviales,
 es, afín a la noción de distancia en conjuntos, la distancia más corta entre
 un nodo de una componente conexa y un nodo de la otra. Supongamos que
@@ -39,7 +39,7 @@ conocemos la distancia de la componte conexa A hacia la B y la C. Luego la
 distancia entre A y $B \cup C$ es la distancia entre un nodo de A y un nodo de
 B o C, es decir el mínimo de la distancia mínima entre un nodo de A y un nodo
 de B, y la distancia mínima entre un nodo de B y un nodo de C. Se concluye
-esta relación: distancia entre A y $B \cup C$ = min(distancia entre A y B,
+esta relación: distancia entre A y $B \cup C$ = mín(distancia entre A y B,
 distancia entre A y C).
 
 \end{paragraph}
