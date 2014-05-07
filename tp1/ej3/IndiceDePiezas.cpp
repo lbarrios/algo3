@@ -100,6 +100,7 @@ IteradorIndiceDePiezas& IndiceDePiezas::dameIterador( uint32_t posicion )
   }
   */
   //it = new IteradorIndiceDePiezas( posicion );
+  #ifndef SINPODAOBJETIVO
   bool arribaVacio = (piezaArriba == TestCaseEj3::PIEZA_VACIA);
   bool izquierdaVacio = (piezaIzquierda == TestCaseEj3::PIEZA_VACIA);
   if ( arribaVacio || izquierdaVacio )
@@ -112,6 +113,10 @@ IteradorIndiceDePiezas& IndiceDePiezas::dameIterador( uint32_t posicion )
     _C("Creando iterador por colores");
     it = new IteradorColores( *this, posicion );
   }
+  #else
+  _C("Creando iterador secuencial");
+  it = new IteradorSecuencial( *this, posicion );
+  #endif
   //this->_iteradores.push_back( it );
   return *it;
 }
