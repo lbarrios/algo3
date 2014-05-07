@@ -5,11 +5,17 @@
 \begin{document}{}
 % -----------------------------------------------
 
+\begin{paragraph}\
+
 Para demostrar la correctitud dividiremos el proceso en dos subprocesos
 independientes. Por un lado, demostraremos que el algoritmo expuesto cumple
 con los parámetros de un ``Algoritmo de Kruskal''. Por otro lado,
 demostraremos que un ``Algoritmo de Kruskal'', mediante su invariante de
 ciclo, cumple con las condiciones de nuestro problema.
+
+\end{paragraph}
+
+\begin{paragraph}\
 
 \centerbf{Veamos que cumple Kruskal}
 
@@ -36,6 +42,10 @@ de B, y la distancia mínima entre un nodo de B y un nodo de C. Se concluye
 esta relación: distancia entre A y $B \cup C$ = min(distancia entre A y B,
 distancia entre A y C).
 
+\end{paragraph}
+
+\begin{paragraph}\
+
 \centerbf{Veamos que Kruskal soluciona nuestro problema}
 
 \begin{aclaracion}
@@ -51,12 +61,14 @@ Queremos demostrar que, partiendo de un grafo inicial $S_{n}$, compuesto por
 $n$ componentes triviales, el resultante de aplicar $k$ iteraciones de
 Kruskal, $S_{n-k}$, es una solución óptima. Para ello, aplicaremos inducción.
 
+\end{paragraph}
+
 \begin{paragraph}\
 %
 %- Hipótesis Inductiva
 %
 \begin{center}
-\textbf{HIPÓTESIS INDUCTIVA}\\
+\textbf{PREMISA INDUCTIVA}\\
 <<\texttt{P(i)}>>
 \end{center}
 
@@ -95,10 +107,12 @@ $S_{n-1} = S_{n} + e_{1}$ resultante es mínimo.
 \begin{lema}\label{lema:ej3-1}
 Dada una solución <<$A$>> cualquiera, de ``$x$'' componentes conexas, existe
 una solución <<$A'$>> con ``$y$'' componentes conexas tal que se cumple
-``$y>x$'', la cual además es subgrafo generador\footnote{es decir que contiene
-a todos sus nodos y a un subconjunto de sus aristas} de <<$A$>>, y surge de
+``$y>x$'', la cual además es subgrafo generador\footnote{Es decir, que contiene
+a todos sus nodos y a un subconjunto de sus aristas.} de <<$A$>>, y surge de
 realizar una o más operaciones de ``sacar una arista'' sobre el conjunto de
-aristas de <<$A$>>. Entonces, dada $f$ (\ref{ej2-funcionobjetivo}, pág.
+aristas de <<$A$>>. 
+
+Entonces, dada $f$ (\ref{ej2-funcionobjetivo}, pág.
 \pageref{ej2-funcionobjetivo}), se cumple
 \[
 f(A) >= f(A')
@@ -114,7 +128,9 @@ f(A) >= f(A')
 <<\texttt{P(i) $\rightarrow$ P(i+1)}>>
 \end{center}
 
-Sea \bluebf{$S_{n-(i+1)} = (V, E_{n-(i+1)}$} la solución obtenida en el \blue{paso <<$i+1$>> de
+\red{\textbf{Hipótesis Inductiva}: Suponemos que la premisa inductiva es válida para i.}
+
+Sea \bluebf{$S_{n-(i+1)} = (V, E_{n-(i+1)})$} la solución obtenida en el \blue{paso <<$i+1$>> de
 \textbf{Kruskal}}, podemos reescribir la misma de la forma \bluebf{$S_{n-(i+1)}$} =
 \redbf{$S_{n-i}$} + \darkgreenbf{$e_{i+1}$}, en donde \darkgreen{\textbf{$e_{i+1}$}
 es la arista agregada en este paso}, y en donde \redbf{$S_{n-i}$ es una
@@ -122,9 +138,9 @@ solución óptima} según la \redbf{Hipótesis Inductiva}.
 
 \textbf{\emph{Vamos a demostrar por absurdo}}. Para ello, asumimos que
 \textbf{no} se cumple \texttt{p(i+1)}. Decir que no se cumple la
-\redbf{Hipótesis Inductiva} para \texttt{p(i+1)} es equivalente a asumir
+\redbf{Premisa Inductiva} para \texttt{(i+1)} es equivalente a asumir
 que en este paso existe \violet{$S^{*}$} \violetbf{una solución estrictamente
-mejor a la nuestra}. En particular, a efectos de negar la \redbf{Hipótesis
+mejor a la nuestra}. En particular, a efectos de negar la \redbf{Premisa
 Inductiva}, podemos afirmar que esta otra solución contiene a lo sumo
 $n-(i+1)$ componentes conexas.
 
