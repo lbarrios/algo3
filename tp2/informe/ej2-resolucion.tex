@@ -1,3 +1,12 @@
+%
+%
+%
+% ESTA SECCION SE ENCUENTRA LEÍDA, CORREGIDA Y "CERRADA".
+% PARA EVITAR INCONVENIENTES, POR FAVOR, 
+% NO MODIFICAR A ULTIMO MOMENTO SIN AVISAR AL RESTO DEL GRUPO.
+%
+%
+%
 % ------ headers globales y begin ---------------
 \documentclass[11pt, a4paper, twoside]{article}
 \usepackage{header_tp2}
@@ -51,6 +60,8 @@ decir, el módulo del vector que resulta de la resta de ambos:
   p(e) = dist(e.inicio, e.fin) =~\parallel inicio - fin \parallel ~=~ \sqrt[2]{(x_{fin}-x_{inicio})^{2}+(y_{fin}-y_{inicio})^{2}}
 \]
 
+\begin{paragraph}{}
+
 %-
 %- FUNCION OBJETIVO
 %-
@@ -64,6 +75,10 @@ dada una solución devuelve el peso de la mayor arista, la cual deberá ser mini
 f(s) = max(\{p(e) : e \in E_{s}\})
 \]
 
+\end{paragraph}
+
+\begin{samepage}
+
 %-
 %- CARACTERIZACIÓN DE LA SOLUCIÓN
 %-
@@ -71,12 +86,12 @@ f(s) = max(\{p(e) : e \in E_{s}\})
 Dado un conjunto de \textbf{soluciones factibles}, es evidente que las \textbf{soluciones óptimas}
 son un subconjunto del mismo. Dada cualquier solución, sin importar si esta es factible o no, y
 debido a que cada solución es un subgrafo generador de $K_{n}$, es posible determinar que la misma
-contendrá una cantidad de componentes conexas mayor o igual a 1, y menor o igual a n.
+contendrá una cantidad de componentes conexas mayor o igual a 1, y menor o igual a n. \nopagebreak
 
 Dado que \textbf{se disponen de a lo sumo $k$ centralitas}, diremos que una solución es factible
-cuando la misma se compone de \textbf{a lo sumo $k$ componentes conexas}.
+cuando la misma se compone de \textbf{a lo sumo $k$ componentes conexas}.\nopagebreak
 
-\textbf{Abuso de notación}: Representamos $S_{i}$ como ``una solución de \emph{i} componentes conexas''.
+\textbf{Abuso de notación}: Representamos $S_{i}$ como ``una solución de \emph{i} componentes conexas''.\nopagebreak
 
 Dada una solución factible $S_{x} = (V, E_{x}) \subseteq K_{n}$ (sin importar si esta es o no
 óptima), si la misma está compuesta por una cantidad $x$ de \textbf{componentes conexas,
@@ -94,6 +109,8 @@ misma aumente al retirar una o más aristas.
 
 De esta forma, y a efectos de simplificar el análisis, podemos acotar el conjunto de soluciones
 factibles por el de \textbf{todas las soluciones de exactamente $k$ componentes conexas}.
+
+\end{samepage}
 
 %-
 %- IDEA DE RESOLUCIÓN

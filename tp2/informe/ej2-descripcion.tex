@@ -1,15 +1,28 @@
+%
+%
+%
+% ESTA SECCION SE ENCUENTRA LEÍDA, CORREGIDA Y "CERRADA".
+% PARA EVITAR INCONVENIENTES, POR FAVOR, 
+% NO MODIFICAR A ULTIMO MOMENTO SIN AVISAR AL RESTO DEL GRUPO.
+%
+%
+%
+
 % ------ headers globales y begin ---------------
 \documentclass[11pt, a4paper, twoside]{article}
 \usepackage{header_tp2}
 
 \begin{document}{}
+
+\begin{paragraph}{}
+
 % -----------------------------------------------
 %-
 %- PLANTEO DEL PROBLEMA
 %-
 \centerbf{Planteo del Problema}
 
-Existe una región del país en la que \emph{un grupo de pueblos no cuenta con red de gas natural}.
+Existe una región del país (Italia) en la que \emph{un grupo de pueblos no cuenta con red de gas natural}.
 Luego de una fuerte campaña política se lograron recaudar los fondos necesarios para \emph{emprender
 una obra que provea del servicio a todos los pueblos de la región}.
 
@@ -28,13 +41,17 @@ centralitas} correspondientes que el mismo permite construir.
 Se entiende como ``\underline{\textbf{riesgo}}'' de una determinada distribución de tuberías a la
 \textbf{máxima de sus longitudes}.
 
-El codicioso Fontanero Jefe, Mario Toti Segale\footnote{``No es más que un italojaponés americano...
-gordo y bigotudo'' - descripción anónima de un empleado.}, desea conocer, dado un determinado
+El codicioso \emph{Fontanero} Jefe, \textbf{Mario Toti Segale}\footnote{``No es más que un italojaponés americano...
+gordo y bigotudo'' - descripción anónima de un empleado ofuscado.}, desea conocer, dado un determinado
 ``presupuesto máximo'', es decir, una ``cantidad máxima de centralitas'', cuál es la distribución
 óptima de tuberías y centralitas de forma tal que el gasto sea menor al presupuestado. Para ello
-encomendó la tarea a su tímido hermano Luigi. Dado que Luigi es precavido y miedoso por naturaleza,
+encomendó la tarea a su tímido hermano \emph{Luigi}. Dado que Luigi es precavido y miedoso por naturaleza,
 decidió que el gasto no importaba realmente, siempre que fuera menor al presupuestado, y que una
-distribución óptima era más bien aquella en la que el riesgo resultase mínimo.
+distribución óptima era más bien aquella en la que \textbf{el riesgo resultase mínimo}.
+
+\end{paragraph}
+
+\begin{figure}
 
 %-
 %- REQUERIMIENTOS TÉCNICOS
@@ -55,8 +72,10 @@ algoritmo implementado debe respetar una complejidad temporal de peor caso de \b
 %-
 \centerbf{Formato de los datos}
 % primera columna
+\fbox{
 \begin{minipage}[t]{0.5\textwidth}
-  \centerbf{Formato de entrada}
+\vspace{1em}
+  \centerbf{\underline{Formato de entrada}}
   \setlength{\leftmargini}{6.5em}
   \begin{quote}
   \texttt{n k}\\
@@ -66,10 +85,16 @@ algoritmo implementado debe respetar una complejidad temporal de peor caso de \b
   \texttt{.}\\
   \texttt{x$_{n}$ y$_{n}$}
   \end{quote}
+\vspace{1em}
 \end{minipage}%
+% línea separadora ~ (quedó re linda :D)
+\hfill
+\vline
+\hfill
 % segunda columna
 \begin{minipage}[t]{0.5\textwidth}
-  \centerbf{Formato de salida}
+\vspace{1em}
+  \centerbf{\underline{Formato de salida}}
   \setlength{\leftmargini}{6.5em}
   \begin{quote}
   \texttt{q m}\\
@@ -80,6 +105,9 @@ algoritmo implementado debe respetar una complejidad temporal de peor caso de \b
   \texttt{.}\\
   \texttt{v$_{m}$ w$_{m}$}
   \end{quote}
+\vspace{1em}
 \end{minipage}
+}
+\end{figure}
 
 \end{document}

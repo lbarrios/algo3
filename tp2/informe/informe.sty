@@ -53,6 +53,7 @@
 \newcommand{\secref}[1]{\texttt{Sección \textbf{\ref{sec:#1}:\titleref{sec:#1}} (página \pageref{sec:#1})}}
 \newcommand{\subsecref}[1]{\texttt{Subsección \textbf{\ref{subsec:#1}:\titleref{subsec:#1}} (página \pageref{subsec:#1})}}
 \newcommand{\subsubsecref}[2]{\texttt{\textbf{\ref{subsubsec:#1-#2}:\titleref{subsubsec:#1-#2}}} (página \pageref{subsubsec:#1-#2})}
+\newcommand{\propref}[1]{\texttt{Proposición \textbf{\ref{prop:#1}}} (página \pageref{prop:#1})}
 
 % -- condifigure code styles
 \lstset{ %
@@ -159,3 +160,36 @@
 }
 
 \newcommand{\centerbf}[1]{\begin{center}\textbf{#1}\end{center}}
+
+
+
+
+
+
+
+
+
+
+\usetikzlibrary{calc,decorations.pathmorphing,patterns}
+\pgfdeclaredecoration{penciline}{initial}{
+    \state{initial}[width=+\pgfdecoratedinputsegmentremainingdistance,
+    auto corner on length=1mm,]{
+        \pgfpathcurveto%
+        {% From
+            \pgfqpoint{\pgfdecoratedinputsegmentremainingdistance}
+                      {\pgfdecorationsegmentamplitude}
+        }
+        {%  Control 1
+        \pgfmathrand
+        \pgfpointadd{\pgfqpoint{\pgfdecoratedinputsegmentremainingdistance}{0pt}}
+                    {\pgfqpoint{-\pgfdecorationsegmentaspect
+                     \pgfdecoratedinputsegmentremainingdistance}%
+                               {\pgfmathresult\pgfdecorationsegmentamplitude}
+                    }
+        }
+        {%TO 
+        \pgfpointadd{\pgfpointdecoratedinputsegmentlast}{\pgfpoint{1pt}{1pt}}
+        }
+    }
+    \state{final}{}
+}

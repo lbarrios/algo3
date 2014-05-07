@@ -1,3 +1,13 @@
+%
+%
+%
+% ESTA SECCION SE ENCUENTRA LEÍDA, CORREGIDA Y "CERRADA".
+% PARA EVITAR INCONVENIENTES, POR FAVOR, 
+% NO MODIFICAR A ULTIMO MOMENTO SIN AVISAR AL RESTO DEL GRUPO.
+%
+%
+%
+
 % ------ headers globales y begin ---------------
 \documentclass[11pt, a4paper, twoside]{article}
 \usepackage{header_tp2}
@@ -95,7 +105,8 @@ dado cualquier grafo que cumpla las condiciones anteriores, al intentar
 agregar una segunda arista resulta inevitable unir dos de las <<$n-1$>>
 componentes conexas restantes, ya que todas son trivialmente
 maximales\footnote{Dado que son componentes triviales, excepto una, la cual
-contiene exactamente dos nodos y una arista.}, lo cual implica que el grafo
+contiene exactamente dos nodos y una arista.} en su cantidad de aristas internas, 
+lo cual implica que el grafo
 dejaría de tener <<$n-1$>> componentes conexas. Y ya que Kruskal elige en cada
 iteración la menor arista, denotémosla particularmente
 $e_{1}$\footnote{Notación: $e_{i}$ representa la arista agregada en la
@@ -104,31 +115,41 @@ $S_{n-1} = S_{n} + e_{1}$ resultante es mínimo.
 
 \end{paragraph}
 
-\begin{lema}\label{lema:ej3-1}
-Dada una solución <<$A$>> cualquiera, de ``$x$'' componentes conexas, existe
-una solución <<$A'$>> con ``$y$'' componentes conexas tal que se cumple
-``$y>x$'', la cual además es subgrafo generador\footnote{Es decir, que contiene
-a todos sus nodos y a un subconjunto de sus aristas.} de <<$A$>>, y surge de
-realizar una o más operaciones de ``sacar una arista'' sobre el conjunto de
-aristas de <<$A$>>. 
-
-Entonces, dada $f$ (\ref{ej2-funcionobjetivo}, pág.
-\pageref{ej2-funcionobjetivo}), se cumple
-\[
-f(A) >= f(A')
-\]
-\end{lema}
-
 \begin{paragraph}\
+
+
+
+\begin{center}\fbox{\parbox{0.90\linewidth}{
+\begin{center}\parbox{0.85\linewidth}{
+  \begin{lema}\label{lema:ej3-1}
+  Dada una solución <<$A$>> cualquiera, de ``$x$'' componentes conexas, existe
+  una solución <<$A'$>> con ``$y$'' componentes conexas tal que se cumple
+  ``$y>x$'', la cual además es subgrafo generador\footnote{Es decir, que contiene
+  a todos sus nodos y a un subconjunto de sus aristas.} de <<$A$>>, y surge de
+  realizar una o más operaciones de ``sacar una arista'' sobre el conjunto de
+  aristas de <<$A$>>. 
+
+  Entonces, dada $f$ (\ref{ej2-funcionobjetivo}, pág.
+  \pageref{ej2-funcionobjetivo}), se cumple
+  \[
+  f(A) >= f(A')
+  \]
+  \end{lema}
+  }\end{center}
+}}\end{center}
+
+
+\end{paragraph}
+
+\begin{samepage}\
 %
 %- Paso Inductivo
 %
 \begin{center}
-\textbf{PASO INDUCTIVO}\\
-<<\texttt{P(i) $\rightarrow$ P(i+1)}>>
-\end{center}
-
+\textbf{PASO INDUCTIVO} \nopagebreak\\
+<<\texttt{P(i) $\rightarrow$ P(i+1)}>> \nopagebreak\\
 \red{\textbf{Hipótesis Inductiva}: Suponemos que la premisa inductiva es válida para i.}
+\end{center}
 
 Sea \bluebf{$S_{n-(i+1)} = (V, E_{n-(i+1)})$} la solución obtenida en el \blue{paso <<$i+1$>> de
 \textbf{Kruskal}}, podemos reescribir la misma de la forma \bluebf{$S_{n-(i+1)}$} =
@@ -178,14 +199,22 @@ ello me voy a valer de que \redbf{$S_{n-i}$} tiene exactamente \redbf{$n-i$}
 componentes conexas, mientras que \violet{$S^{*}$} tiene \violet{$n-(i+1)$},
 es decir, una menos. Se demostrará por absurdo en el párrafo siguiente.
 
-\begin{proposicion}
+\end{samepage}
 
-Decir que \emph{``no pueden existir en \violet{$S^{*}$} aristas tales que en
-\red{$S_{n-i}$} conecten dos componentes distintas''} es equivalente a admitir
-que por cada componente conexa en \violet{$S^{*}$} debe existir una en
-\redbf{$S_{n-i}$} de forma tal que la misma contenga a todos sus nodos. 
+\begin{center}\fbox{\parbox{0.90\linewidth}{
+\begin{center}\parbox{0.85\linewidth}{
+  \begin{proposicion}
 
-\end{proposicion}
+  Decir que \emph{``no pueden existir en \violet{$S^{*}$} aristas tales que en
+  \red{$S_{n-i}$} conecten dos componentes distintas''} es equivalente a admitir
+  que por cada componente conexa en \violet{$S^{*}$} debe existir una en
+  \redbf{$S_{n-i}$} de forma tal que la misma contenga a todos sus nodos. 
+
+  \end{proposicion}
+  }\end{center}
+}}\end{center}
+
+\begin{samepage}
 
 \begin{demostracion}
 
@@ -212,14 +241,17 @@ nodo \violet{$v_B \in C^*_B$},
 \violet{$C^*_A$} hacia todo nodo de \violet{$C^*_B$}, y en particular existe
 una arista de frontera, es decir, una arista \violet{$e^{*} = (v^*_A, v^*_B)$}
 en donde un extremo pertenezca a un nodo \violet{$v^*_A \in C^*_A$} y el otro
-a un nodo \violet{$v^*_B \in C^*_B$}. Dado que los nodos de \violet{$C^*_B$}
+a un nodo \violet{$v^*_B \in C^*_B$}. 
+
+Dado que los nodos de \violet{$C^*_B$}
 no pertenecen a \violet{$C^*_A$}, y siendo que \violet{$C^*_A$} \textbf{es
-maximal}, podemos afirmar que los nodos de \violet{$C^*_B$} \textbf{no}
+maximal}, pudimos afirmar que los nodos de \violet{$C^*_B$} \textbf{no}
 pertenecen a la componente conexa \redbf{$SC_A$} o, lo que es igual, que
 pertenecen a otra componente conexa en \redbf{$S_{n-i}$}. En particular,
-\violet{$v^*_B$} no pertenece a \redbf{$SC_A$}. En este caso, la arista
-\violet{$e^{*}$} mencionada anteriormente estaría conectando dos componentes
-disjuntas, en donde específicamente una de ellas sería \redbf{$SC_A$},
+entonces, \violet{$v^*_B$} tampoco pertenece a \redbf{$SC_A$}. Finalmente, 
+la arista \violet{$e^{*}$} mencionada anteriormente estaría conectando 
+dos componentes disjuntas si se la agregase a \redbf{$S_{n-i}$}, 
+en donde específicamente una de ellas sería \redbf{$SC_A$},
 y la otra sería la componente de \redbf{$S_{n-i}$} tal que contiene
 al nodo \violet{$v^*_b$}.
 
@@ -227,22 +259,27 @@ al nodo \violet{$v^*_b$}.
    \begin{center}
    %\includegraphics[width=1.4\textwidth,angle=90]{diagrama_ej2.pdf}
    \includegraphics[width=1\textwidth]{diagrama_ej2.pdf}
-   \caption{\textbf{Ejemplo gráfico del párrafo anterior}}
+   \caption{\textbf{Ejemplo visual de la demostración anterior}}
    \label{fig:ej2-1}
    \end{center}
 \end{figure}
 
 En el gráfico se puede apreciar el fenómeno expuesto en el párrafo anterior,
-en donde a modo de ejemplo se están obviando los nodos que no son
-imprescindibles a la demostración (se asume que adentro de las ``nubes'' hay
-una cantidad indefinida de nodos, y se sabe que dentro de cada ``nube'' los
-nodos son conexos).
+en donde a modo de ejemplo se están obviando nodos y componentes que no son
+imprescindibles a la demostración (se asume que adentro de las ``nubes'', 
+cada una de las cuales representa una componente conexa, hay
+una cantidad \textbf{indefinida} de nodos, no reflejada en el gráfico, 
+y se asume que dentro de cada ``nube'' todos sus nodos son conexos).
 
 \end{demostracion}
 
+\end{samepage}
+
+\centerbf{Finalmente...}
+
 Dado que todas las soluciones de este problema tienen la misma cantidad de
 nodos, ya que son subgrafos generadores de $K_n$, ya que la cantidad de nodos
-contenidos en las \violet{$n-(i+1)$} componentes de \violet{$S^{*}$} suma $n$,
+contenidos en las \violet{$n-(i+1)$} componentes de \violet{$S^{*}$} suman $n$,
 y teniendo en cuenta la proposición anterior, se deduce que las
 \violet{$n-(i+1)$} componentes de \violet{$S^{*}$} están contenidas en
 \redbf{a lo sumo $n-(i+1)$} componentes de \redbf{$S_{n-i}$} o, lo que es lo
@@ -252,6 +289,10 @@ de $S_{n-i}$ \emph{\textbf{cuyos nodos suman n}}}, y puesto que existen
 todas ellas sumarían como mínimo \redbf{$n + [ (n-i) - (n-(i+1)) ] = n+1$} nodos, lo cual es
 \textbf{ABSURDO}.
 
-\end{paragraph}
+Entonces, ya que derivado de suponer que no se cumplía $p(i) \rightarrow p(i+1)$
+llegamos a un absurdo, esto en conjunto con la validez del $caso~base$ implica
+que la premisa vale para todo $i$, en particular para el caso $i=n-k$ y, por
+todo lo ya expuesto, esto último demuestra que \texttt{Kruskal} es solución al
+problema.
 
 \end{document}

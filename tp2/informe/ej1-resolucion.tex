@@ -5,24 +5,52 @@
 \begin{document}{}
 % -----------------------------------------------
 
-Veamos las ideas desarrolladas en nuestra resolución. En un juego cualquiera de Robanúmeros, $Puntaje_{mio}$ + $Puntaje_{oponente}$ = $sumaTotalCartas$
+Veamos las ideas desarrolladas en nuestra resolución. En un juego cualquiera de
+Robanúmeros se cumple que, siendo P el puntaje:
+\[
+P_{mio} + P_{oponente} = \sum_{c \in CARTAS}{c}
+\]
 
-Luego, maximizar la diferencia entre mi puntaje y el del oponente es lo mismo que maximizar mi puntaje. Si agudizamos el análisis, nos damos cuenta de que el puntaje que yo saco con ciertas cartas sobre la mesa es igual a la suma de las cartas sobre la mesa menos el puntaje que saca el oponente con las cartas que dejo sobre la mesa tras mi jugada. Es decir,
-$Puntaje_{mio}$(CARTAS) = suma(CARTAS) - $Puntaje_{oponente}$(cartas que quedan)
+Es decir que la suma de mi puntaje y el de mi oponente equivale a la suma total
+de cartas del juego.
 
-Como suma(CARTAS) está fijo, queremos minimizar el puntaje del oponente con las cartas que le quedan. Como la cantidad de subconjuntos de CARTAS que le puedo dejar es finita (es $O(n)$), los podemos recorrer y quedarnos con el que haga que el oponente saque la mínima cantidad de puntos. 
+Luego, maximizar la diferencia entre mi puntaje y el del oponente es lo mismo
+que maximizar mi puntaje. Si agudizamos el análisis, nos damos cuenta de que el
+puntaje que yo saco con ciertas cartas sobre la mesa es igual a la suma de las
+cartas sobre la mesa menos el puntaje que saca el oponente con las cartas que
+dejo sobre la mesa tras mi jugada. Es decir, 
+\[
+P_{mio}(CARTAS) = suma(CARTAS) - P_{oponente}(\text{cartas que quedan})
+\]
 
-La cantidad de puntos que saca el oponente con las cartas que le dejo debe calcularse con la misma función con que yo calculo mi puntaje, ya que asumimos que el oponente juega de manera óptima, es decir, tan bien como yo. Luego obtenemos el siguiente resultado 1.1:
-\\\\MaxPuntajePosible(CARTAS) = Suma(CARTAS) - $\min\limits_{CARTAS' \in \theta}$ 
-MaxPuntajePosible(CARTAS')
-\\\\con $\theta$ todos los subconjuntos de CARTAS que pueden quedar en la mesa tras una jugada.
-\\Como caso base, MaxPuntajePosible(solo la carta c sobre la mesa) = valor(c), pues la única jugada posible es tomar la carta.
+Como suma(CARTAS) está fijo, queremos minimizar el puntaje del oponente con las
+cartas que le quedan. Como la cantidad de subconjuntos de CARTAS que le puedo
+dejar es finita (es $O(n)$), los podemos recorrer y quedarnos con el que haga
+que el oponente saque la mínima cantidad de puntos.
+
+La cantidad de puntos que saca el oponente con las cartas que le dejo debe calcularse con la misma función con que yo calculo mi puntaje, ya que asumimos que el oponente juega de manera óptima, es decir, tan bien como yo. 
+
+Luego obtenemos:
+\begin{proposicion}\label{prop:ej1-mpp}
+
+siendo \texttt{MPP} el Máximo Puntaje Posible, $\theta$ los subconjuntos de
+CARTAS que pueden quedar en la mesa tras una jugada:
+
+\[
+\texttt{MPP}(CARTAS) = Suma(CARTAS) - \min\limits_{CARTAS' \in \theta} \texttt{MPP}(CARTAS')
+\]
+\end{proposicion}
+
+Como caso base, $MaxPuntajePosible(\text{solo la carta c sobre la mesa}) = valor(c)$,
+pues la única jugada posible es tomar la carta.
+
+\begin{figure}
 
 % Comienza el pseudocódigo.
-
 \centerbf{Pseudocódigo}
 \begin{algorithm}[H]
 \caption{Roba Cartas}
+\label{alg:ej1}
 \footnotesize\begin{algorithmic}[1]
   \Require
     \Statex $cantCartas \gets$ \Call{dameCantCartas}{} \Comment{$integer$}
@@ -33,26 +61,41 @@ MaxPuntajePosible(CARTAS')
     \Statex \Call{Mejor puntaje segundo jugador}{} \Comment{$integer$}
     \Statex \Call{Cantidad de turnos que dura el partido}{} \Comment{$integer$}
     \Statex \Call{Lista de levantes}{} \Comment{$lista<integer>$}    
-	\Statex
 	
-	\Statex Estructura Levante:
+%------------------------------------------------------------------------------------------------------
+
+  \bigskip
+	\hrule height 0.4pt
+	\bigskip
+
+	\noindent \textbf{Estructura Levante}:
 	\Statex \hspace{0.15cm} $direcci \acute{o}n$ 	\Comment {Bool}
 	\Statex \hspace{0.15cm} $cantidad$				\Comment {integer}
 	
-	\Statex
-	
-	\Statex Estructura Jugada:
+  \bigskip
+	\hrule height 0.2pt
+%----------------------------------------------------------------------------------------------------
+	\bigskip
+
+	\noindent \textbf{Estructura Jugada}:
 	\Statex \hspace{0.15cm} $mejorPuntaje$			\Comment {Integer}
 	\Statex \hspace{0.15cm} $turnosHastaAhora$		\Comment {Integer}
 	\Statex \hspace{0.15cm} $levanteRealizado$		\Comment {Levante}
 
-	\Statex 
-	\Statex Variables Globales
+  \bigskip
+	\hrule height 0.2pt
+%----------------------------------------------------------------------------------------------------
+	\bigskip
+
+	\noindent \textbf{Variables Globales}:
 	\Statex \hspace{0.15cm} $matrizJugadas$			\Comment {$Matriz <Jugada> tama \tilde{n}o: cantCartas+1,cantCartas+1$}
 	\Statex \hspace{0.15cm} $sumasParciales$		\Comment {$Arreglo <Integer> tama \tilde{n}o: cantCartas+1$}
 	
-	\Statex
-	\Statex	
+	\bigskip
+	\hrule height 0.4pt
+	\bigskip
+
+%------------------------------------------------------------------------------------------------------
 	
 	\Statex \texttt{Se generan las sumas parciales}
 	\State $sumasParciales_0 \gets 0$ 										\Comment{ \bigO{1}}
@@ -69,13 +112,21 @@ MaxPuntajePosible(CARTAS')
 	\Statex
 	\Statex \texttt{Se guardan primero la solución trivial. La de los subjuegos de tamaño 1}
 	\For {$i$ \textbf{en} $[0, cantCartas - 1]$}							\Comment{ \bigO{n}}
-		\State $matrizJugadas_{i,i}.mejorPuntaje \gets cartas_i$			\Comment{ \bigO{1}}
+		\State $matrizJugadas_{i,i}.mejorPuntaje \gets cartas_i$			\Comment{ \bigO{1}} \label{alg:ej1-trivial}
 		\State $matrizJugadas_{i,i}.turnosHastaAhora \gets 1$				\Comment{ \bigO{1}}
 		\State $matrizJugadas_{i,i}.levanteRealizado.direcci \acute{o}n \gets \Call{True}{}$ \Comment{ \bigO{1}}
 		\State $matrizJugadas_{i,i}.levanteRealizado.cantidad \gets 1$ 		\Comment{ \bigO{1}}
 	\EndFor
+	\algstore {ej1-alg}
+\end{algorithmic}
+\end{algorithm}
 
-	\Statex
+\end{figure}
+
+\begin{algorithm}[H]
+\ContinuedFloat
+\footnotesize\begin{algorithmic}
+\algrestore{ej1-alg}
 	\Statex \texttt{Se rellena el resto de la matriz}
 	\For {$tamSubConj$ \textbf{en} $[2, cantCartas]$}						\Comment{ \bigO{n^3}}
 		\State $principio \gets 0$											\Comment{ \bigO{1}}
@@ -102,18 +153,15 @@ MaxPuntajePosible(CARTAS')
 			\State $final++$												\Comment{ \bigO{1}}
 		\EndWhile
 	\EndFor
-\algstore {ej1-alg}
-\end{algorithmic}
-\end{algorithm}
 
+	\bigskip
 
-\begin{algorithm}[H]
-\footnotesize\begin{algorithmic}[1]
-\algrestore{ej1-alg}
 	\Statex \texttt{La mejor jugada del juego total está en la posición 0, cantCartas-1}
 	\State $mejorPuntaje \gets matrizJugadas_{0, cantCartas -1}$			\Comment{ \bigO{1}}
 	\State $puntajeEnemigo \gets sumasParciales_{cantCartas} - mejorPuntaje$   \Comment{ \bigO{1}}
-	\Statex
+	
+	\bigskip
+
 	\Statex \texttt{Ahora se revisan las jugadas realizadas}
 	\State $fin \gets cantCartas -1$										\Comment{ \bigO{1}}
 	\State $init \gets 0$													\Comment{ \bigO{1}}

@@ -1,137 +1,150 @@
+%
+%
+%
+% ESTA SECCION SE ENCUENTRA LEÍDA, CORREGIDA Y "CERRADA".
+% PARA EVITAR INCONVENIENTES, POR FAVOR, 
+% NO MODIFICAR A ULTIMO MOMENTO SIN AVISAR AL RESTO DEL GRUPO.
+%
+%
+%
 % ------ headers globales y begin ---------------
 \documentclass[11pt, a4paper, twoside]{article}
 \usepackage{header_tp2}
 
 \begin{document}{}
 % -----------------------------------------------
-A continuación presentamos distintas instancias que sirven para 
-verificar que el programa funciona correctamente.
 
-Según la distribución de los pueblos en el mapa, y la relación entre cantidad total de pueblos y la cantidad 
-máxima de centrales, podemos separar el conjunto de soluciones en 2 grandes casos: 
+A continuación presentamos distintas instancias que sirven para  verificar que
+el programa funciona correctamente.
 
+\begin{paragraph}{}
+Según la distribución de los pueblos en el mapa, y la relación entre cantidad
+total de pueblos y la cantidad  máxima de centrales, podemos separar el conjunto
+de soluciones en 2 grandes casos:
+\end{paragraph}
+
+\centerbf{Todas las tuberías tienen la misma longitud}
 \begin{itemize}
-	\item Todas las tuberías tienen la misma longitud: 
-			\begin{itemize}
-				\item Caso \#pueblos $\le$ \#centrales: \\
-					En estos casos se coloca en todos los pueblos una central y se va a tener un riesgo mínimo 
-					porque no hay tuberías (longitud de tuberías: 0). \\
-					
-					 \begin{minipage}{0.2\textwidth}
-						\begin{tabular}{cc}
-						   Input \\
-						   \hline
-						   3 & 4 \\
-						   1 & 1 \\
-						   2 & 2 \\
-						   3 & 3 \\
-						\end{tabular}
-					\end{minipage} 
-					\begin{minipage}{0.2\textwidth}
-						\begin{tabular}{cc}
-						   Output \\
-						   \hline
-						   3 & 0 \\
-						   1 &  \\
-						   2 &  \\
-						   3 &  \\
-						\end{tabular}
-					\end{minipage} 
-					
-				\item Caso \#pueblos  $>$ \#centrales: \\
-					Todas las tuberías tienen longitud 1 en este ejemplo. \\
-					
-					\begin{minipage}{0.2\textwidth}
-						\begin{tabular}{cc}
-						   Input \\
-						   \hline
-						   6 & 2 \\
-						   1 & 1 \\
-						   2 & 1 \\
-						   1 & 2 \\
-						   3 & 3 \\
-						   3 & 2 \\
-						   4 & 2 \\
-						\end{tabular}
-					\end{minipage} 
-					\begin{minipage}{0.2\textwidth}
-						\begin{tabular}{cc}
-						   Output \\
-						   \hline
-						   2 & 4 \\
-						   1 &  \\
-						   4 &  \\
-						   1 & 2 \\
-						   3 & 1 \\
-						   4 & 5 \\
-						   6 & 5 \\
-						\end{tabular}
-					\end{minipage} 
-					
-			\end{itemize}
+	\item Caso \#pueblos $\le$ \#centrales: \\
+		En estos casos se coloca en todos los pueblos una central y se va a tener un riesgo mínimo 
+		porque no hay tuberías (longitud de tuberías: 0). \\
 		
-	\item Las tuberías tienen longitudes diferentes: 
-		    \begin{itemize}
-				\item Caso \#pueblos $>$ \#centrales: \\
-				   Longitudes de las tuberías: 0, 1, 2. \\
-				   \begin{minipage}{0.2\textwidth}
-						\begin{tabular}{cc}
-							   Input \\
-							   \hline
-							   6 & 2 \\
-							   1 & 1 \\
-							   1 & 2 \\
-							   2 & 5 \\
-							   3 & 1 \\
-							   3 & 3 \\
-							   4 & 1 \\
-						\end{tabular}
-					\end{minipage} 
-					\begin{minipage}{0.2\textwidth}
-						\begin{tabular}{cc}
-						   Output \\
-						   \hline
-						   2 & 4 \\
-						   1 &  \\
-						   3 &  \\
-						   1 & 2 \\
-						   4 & 1 \\
-						   4 & 6 \\
-						   5 & 4 \\
-						\end{tabular}
-				   \end{minipage}  \\
-			
-				Misma distribución de los pueblos pero sólo teniendo una central: \\
-				Longitudes de las tuberías: 1, 2, $\sqrt[] {5}$. \\
-				   \begin{minipage}{0.2\textwidth}
-						\begin{tabular}{cc}
-						   Input \\
-						   \hline
-						   6 & 1 \\
-						   1 & 1 \\
-						   1 & 2 \\
-						   2 & 5 \\
-						   3 & 1 \\
-						   3 & 3 \\
-						   4 & 1 \\
-						\end{tabular}
-				   \end{minipage} 
-				   \begin{minipage}{0.2\textwidth}
-						\begin{tabular}{cc}
-						   Output \\
-						   \hline
-						   1 & 5 \\
-						   1 &   \\
-						   1 & 2 \\
-						   4 & 1 \\
-						   4 & 6 \\
-						   5 & 4 \\
-						   3 & 5 \\
-						\end{tabular}
-				   \end{minipage} 
-			\end{itemize}
+		 \begin{minipage}{0.2\textwidth}
+			\begin{tabular}{cc}
+			   Input \\
+			   \hline
+			   3 & 4 \\
+			   1 & 1 \\
+			   2 & 2 \\
+			   3 & 3 \\
+			\end{tabular}
+		\end{minipage} 
+		\begin{minipage}{0.2\textwidth}
+			\begin{tabular}{cc}
+			   Output \\
+			   \hline
+			   3 & 0 \\
+			   1 &  \\
+			   2 &  \\
+			   3 &  \\
+			\end{tabular}
+		\end{minipage} 
+		
+	\item Caso \#pueblos  $>$ \#centrales: \\
+		Todas las tuberías tienen longitud 1 en este ejemplo. \\
+		
+		\begin{minipage}{0.2\textwidth}
+			\begin{tabular}{cc}
+			   Input \\
+			   \hline
+			   6 & 2 \\
+			   1 & 1 \\
+			   2 & 1 \\
+			   1 & 2 \\
+			   3 & 3 \\
+			   3 & 2 \\
+			   4 & 2 \\
+			\end{tabular}
+		\end{minipage} 
+		\begin{minipage}{0.2\textwidth}
+			\begin{tabular}{cc}
+			   Output \\
+			   \hline
+			   2 & 4 \\
+			   1 &  \\
+			   4 &  \\
+			   1 & 2 \\
+			   3 & 1 \\
+			   4 & 5 \\
+			   6 & 5 \\
+			\end{tabular}
+		\end{minipage} 
 		
 \end{itemize}
+	
+\begin{figure}[H]
+\centerbf{Las tuberías tienen longitudes diferentes}
+  \begin{itemize}
+	\item Caso \#pueblos $>$ \#centrales: \\
+	   Longitudes de las tuberías: 0, 1, 2. \\
+	   \begin{minipage}{0.2\textwidth}
+			\begin{tabular}{cc}
+				   Input \\
+				   \hline
+				   6 & 2 \\
+				   1 & 1 \\
+				   1 & 2 \\
+				   2 & 5 \\
+				   3 & 1 \\
+				   3 & 3 \\
+				   4 & 1 \\
+			\end{tabular}
+		\end{minipage} 
+		\begin{minipage}{0.2\textwidth}
+			\begin{tabular}{cc}
+			   Output \\
+			   \hline
+			   2 & 4 \\
+			   1 &  \\
+			   3 &  \\
+			   1 & 2 \\
+			   4 & 1 \\
+			   4 & 6 \\
+			   5 & 4 \\
+			\end{tabular}
+	   \end{minipage}  \\
+
+	Misma distribución de los pueblos pero sólo teniendo una central: \\
+	Longitudes de las tuberías: 1, 2, $\sqrt[] {5}$. \\
+	   \begin{minipage}{0.2\textwidth}
+			\begin{tabular}{cc}
+			   Input \\
+			   \hline
+			   6 & 1 \\
+			   1 & 1 \\
+			   1 & 2 \\
+			   2 & 5 \\
+			   3 & 1 \\
+			   3 & 3 \\
+			   4 & 1 \\
+			\end{tabular}
+	   \end{minipage} 
+	   \begin{minipage}{0.2\textwidth}
+			\begin{tabular}{cc}
+			   Output \\
+			   \hline
+			   1 & 5 \\
+			   1 &   \\
+			   1 & 2 \\
+			   4 & 1 \\
+			   4 & 6 \\
+			   5 & 4 \\
+			   3 & 5 \\
+			\end{tabular}
+	   \end{minipage} 
+\end{itemize}
+\end{figure}
+
 
 Ejecutamos el programa con los distintos ejemplos y se llegó a la solución esperada. 
 Por lo tanto, podemos concluir que el comportamiento del programa es correcto. 

@@ -1,3 +1,13 @@
+%
+%
+%
+% ESTA SECCION SE ENCUENTRA LEÍDA, CORREGIDA Y "CERRADA".
+% PARA EVITAR INCONVENIENTES, POR FAVOR, 
+% NO MODIFICAR A ULTIMO MOMENTO SIN AVISAR AL RESTO DEL GRUPO.
+%
+%
+%
+
 % ------ headers globales y begin ---------------
 \documentclass[11pt, a4paper, twoside]{article}
 \usepackage{header_tp2}
@@ -5,22 +15,65 @@
 \begin{document}{}
 % -----------------------------------------------
 
-Se procede a demostrar que nustro algoritmo es correcto. Vamos a concentrarnos en probar que devuelve un puntaje máximo correcto, que obtenemos de matrizJugadas[1][n].
+Se procede a demostrar que nustro algoritmo es correcto. Vamos a concentrarnos
+en probar que devuelve un puntaje máximo correcto, que obtenemos de
+$matrizJugadas[1][n]$.
 
-Hipótesis inductiva: P(k): En la iteración k del ciclo principal matrizJugadas[i][j] = MaxPuntajePosible(cartas que venían en el orden de i a j) para todo (i, j) tal que j - i $\leq$ k. 
-\\Hagamos inducción en k, necesitamos probar P(n).
-Nos vamos a apoyar en el resultado 1.1. \nota{linkear}
-\\Caso base: P(1)
-\\Se corresponde al caso base del resultado 1.1. matrizJugadas[i][i] vale el valor de la carta i, según la operación en la linea 9 del pseudocódigo.
-\\Paso inductivo: Sup P(k - 1) quiero ver que vale P(k) $\forall$ $2 \leq k \leq n$.
-\\Ahora, los subconjuntos que le puedo dejar al oponente de las cartas que venian en el orden de i a j son:
+\centerbf{Premisa inductiva}
+
+P(k): En la iteración k del ciclo principal se cumple
+\begin{align*}
+\forall (i, j) : j - i \leq k \text{, sea C} = \text{cartas que venían en el orden de i a j} \\
+matrizJugadas[i][j] = MaxPuntajePosible( C ) 
+\end{align*}
+
+Hagamos inducción en k, necesitamos probar P(n).
+
+Nos vamos a apoyar en la \propref{ej1-mpp}
+\centerbf{Caso base} 
+
+P(1): Se corresponde al caso base de la proposición. $matrizJugadas[i][i]$ vale
+el valor de la carta $i$, según la operación en \algline{alg:ej1}{alg:ej1-trivial}
+
+\centerbf{Paso inductivo} 
+
+Supongo que vale P(k - 1), y quiero ver que vale P(k) $\forall$ $2 \leq k \leq n$.
+
+Ahora, los subconjuntos de las cartas que venian en el orden de i a j que le
+puedo dejar al oponente son:
+
 \begin{itemize}
-\item ninguna carta (OBS*)
-\item las cartas de i a j - 1, las cartas de i a j - 2, ... , las cartas de i a i (corresponde a sacar cartas del extremo derecho) 
-\item las cartas de i + 1 a j, las cartas de i + 2 a j, ... , las cartas de j a j (corresponde a sacar cartas del extremo izquierdo)
+
+  \item Ninguna carta\footnote{Este caso está representado en
+$matrizJugadas[x][y]$ con $y < x$, inicializado al comienzo del algoritmo con 0,
+que representa el puntaje máximo que se puede sacar sin cartas sobre la mesa.}
+
+  \item Las cartas 
+    de <<$i$ a $j-1$>>, 
+    de <<$i$ a $j-2$>>,
+    <<$\dots$>>, 
+    de <<$i$ a $i$>>
+    \footnote{Corresponde a sacar cartas del extremo derecho.}
+
+  \item Las cartas 
+    de <<$i+1$ a $j$>>, 
+    de <<$i+2$ a $j$>>,
+    <<$\dots$>>,
+    de <<$j$ a $j$>>
+    \footnote{Corresponde a sacar cartas del extremo izquierdo.}
+
 \end{itemize}
-Ahora, todos estos subconjuntos de cartas cumplen que su extremo derecho - su extremo izquierdo $\leq$ k, luego por HI su puntajeMáximo ya está calculado en matrizJugadas[extremo izquierdo][extremo derecho].
-\\Nuestro algoritmo recorre la matriz en todas esas posiciones, quedándonse con el puntaje más bajo (el que saca el oponente), y guardandolo en matrizJugadas[i][j]. Luego por el resultado 1.1 contiene MaxPuntajePosible(cartas de i a j). En la k-esima iteración del ciclo principal, lo hace para todos los (i, j) tales que i - j = k. Luego se cumple P(k).
-\\\\OBS*: Este caso está representado en matrizJugadas[x][y] con y $<$ x, inicializado al comienzo del algoritmo con 0, que representa el puntaje máximo que se puede sacar sin cartas sobre la mesa.
+
+Ahora, todos estos subconjuntos de cartas cumplen que:\\
+\mbox{\texttt{su extremo derecho} - \texttt{su extremo izquierdo} $\leq k$},
+luego por HI su $puntajeMaximo$ ya está calculado en
+$matrizJugadas[extremo izquierdo][extremo derecho]$.
+
+Nuestro algoritmo recorre la matriz en todas esas posiciones, quedándonse con el
+puntaje más bajo (el que saca el oponente), y guardandolo en
+$matrizJugadas[i][j]$. Luego por el resultado 1.1 contiene
+$MaxPuntajePosible(\text{cartas de i a j})$. En la <<k-esima>> iteración del
+ciclo principal, lo hace para todos los $(i, j)$ tales que $i - j = k$. Luego se
+cumple P(k).
 
 \end{document}
