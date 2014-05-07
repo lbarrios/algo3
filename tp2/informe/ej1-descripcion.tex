@@ -108,55 +108,56 @@ Reglas del \textit{Robanúmeros}:
         \end{tabular} \\ 
       \end{center}  
       
-    \item Formato de entrada y salida: 
-      
+    \item Formato de entrada y salida: \\
+     \begin{center} 
       \begin{minipage}{0.5\textwidth}
           \begin{tabular}{ccccccc}
-             Input: 5 & 2 & -3 & -2 & 5 & 5 \\
-             \\
-             \\
-             \\
-             \\
+             &Input \\
+			 \hline 
+			 5 & 2 & -3 & -2 & 5 & 5 \\
           \end{tabular}
-      \end{minipage} 
+      \end{minipage}  	
+    \end{center}
+	
+Algunas soluciones posibles para este ejemplo (la primera es una óptima): 
+    \begin{center}	
       \begin{minipage}{0.3\textwidth}
           \begin{tabular}{cccc}
-            Output:  & 4   & 8  & -1 \\
+            & Output \\
+			\hline
+			& 4   & 8  & -1 \\
                  & der & 2  & \\
                  & izq & 1  & \\
                  & der & 1  & \\
                  & izq & 1  & \\
           \end{tabular}
-      \end{minipage}
-  
+      \end{minipage} 
+      \begin{minipage}{0.3\textwidth}
+          \begin{tabular}{cccc}
+            & Output \\
+			\hline
+			& 1   & 7  & 0 \\
+                 & izq & 5  & \\
+                 \\
+                 \\
+                 \\
+          \end{tabular}
+      \end{minipage}	
+      \begin{minipage}{0.3\textwidth}
+          \begin{tabular}{cccc}
+            & Output \\
+			\hline
+			& 3   & 2  & 5 \\
+                 & izq & 2 & \\
+                  & der & 2 &\\
+                 & izq & 2 &\\
+                 \\
+          \end{tabular}
+      \end{minipage}	  	  
+    \end{center}
+	
   \end{itemize}   
     
-\end{ejemplo}
-
-\begin{ejemplo}\hspace{0em}
-
-  \begin{center}
-    \begin{tabular}{|c|c|c|}
-      \hline
-       2 & -1 & 6 \\
-      \hline
-    \end{tabular} 
-  \end{center} 
-
-El Jug1 toma todas las cartas porque de esta manera obtiene el mayor puntaje. \\
-Finaliza el juego en 1 turno porque no hay más cartas. Se suman los puntajes de cada jugador.\\
-Este tipo de caso también se daría si todas las cartas tuvieran números positivos, sólo llegaría a jugar el Jug1.\\
-
-  \begin{center}
-    \begin{tabular}{|c|c|}
-      \hline
-      Ptos. Jug1 & Ptos. Jug2 \\
-      \hline
-      2 + (-1) + 6 = 7 & 0 \\
-      \hline
-    \end{tabular}
-  \end{center}  
-  
 \end{ejemplo}
 
 \end{document}
