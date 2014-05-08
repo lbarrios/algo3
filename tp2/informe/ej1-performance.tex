@@ -4,12 +4,32 @@
 
 \begin{document}{}
 
-\fixme{}
+Para la medición de la performance del programa comparamos los tiempos en un caso aleatorio, un peor caso y 
+un mejor caso, variando el tamaño de entrada ($n$ cantidad inicial de cartas). Además, quisimos comprobar que se 
+cumpliera la cota teórica $\bigO{n^3}$ calculada. 
 
-%%%
-%%Cosás
-%%%
+\begin{itemize}
+\item El caso $aleatorio$ se armó tomando valores random para cada una de las $n$ cartas iniciales. 
+\item El caso $mejor$ se produce cuando el juego dura sólo 1 turno. Esta situación se daría cuando las cartas son 
+todas positivas. Esto se debe a que para lograr el mejor juego, sólo basta tomar todas las cartas en el primer y 
+único turno. La suma de los valores de estas cartas siempre será el mejor puntaje que podrá obtener 
+el Jugador1, frente a los 0 puntos que obtendrá el Jugador2. 
+\item El caso $peor$ se produce cuando la cantidad de turnos totales durante el juego es máximo. 
+Por lo que para los valores de las $n$ cartas iniciales se eligieron números negativos y todos iguales. 
+En cada turno lo mejor que se puede hacer es tomar sólo una carta. Al finalizar el juego habrán pasado $n$ turnos, 
+siendo este el mayor número de turnos posibles.
+\end{itemize}
 
+%grafico1 tiempo vs n (caso aleatorio, peor, mejor)
+
+Por otro lado, para confirmar que el algoritmo tiene una complejidad de peor caso de $\bigO{n^3}$, decidimos 
+realizar un gráfico tomando el cociente $\frac{tiempoDeEjecuci\acute{o}n}{n^3}$ y variando el tamaño de entrada $n$. 
+Nuevamente elegimos valores negativos iguales para todas las cartas iniciales y medimos el tiempo de ejecución. \\
+Se puede apreciar que a medida que crece $n$ la curva se estabiliza muy cerca de una constante, con lo cual 
+concluímos que la cota temporal calculada fue correcta. 
+
+%gráfico2  cociente vs n (caso peor)  
+  
 
 \end{document}
 % -----------------------------------------------
