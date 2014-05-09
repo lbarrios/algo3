@@ -91,4 +91,4 @@ plt.legend(loc=2)
 #plt.show()
 if not os.path.exists('./graficos/') or not os.path.isdir('./graficos/'):
   os.makedirs('./graficos/')
-plt.savefig("graficos/test_3.pdf")
+plt.savefig("graficos/test_Division.pdf")
