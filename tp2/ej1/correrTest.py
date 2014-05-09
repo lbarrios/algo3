@@ -4,7 +4,7 @@ import os
 import sys
 
 # Parámetros:
-inputDirList = ["input/graficoComparacion", "input/graficoDivision"]
+inputDirList = ["input/graficoDivision"]
 
 try:
     arg = sys.argv[1]

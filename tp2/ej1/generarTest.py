@@ -13,9 +13,9 @@ casosPorTest_c = 45
 # Parámetros para gráfico de división
 inputDir_d = "input/graficoDivision"
 limInf_d = 0
-limSup_d = 1001
+limSup_d = 1000
 paso_d = 10
-casosPorTest_d = 45
+casosPorTest_d = 100
 
 
 
@@ -23,9 +23,9 @@ casosPorTest_d = 45
 
 testGen = GeneradorDeTestsEj1(inputDir_c)
 
-for n in range(limInf_c, limSup_c, paso_c):
-  print(n)
-  testGen.generarTest({"n":n}, "casoAleatorio", casosPorTest_c )
+#for n in range(limInf_c, limSup_c, paso_c):
+  #print(n)
+  #testGen.generarTest({"n":n}, "casoAleatorio", casosPorTest_c )
   #testGen.generarTest({"n":n}, "mejorCaso", casosPorTest_c )
   #testGen.generarTest({"n":n}, "peorCaso", casosPorTest_c )
 
