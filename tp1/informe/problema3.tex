@@ -983,23 +983,9 @@ Ejecutamos el programa con los distintos ejemplos y se llegó a la solución esp
 
 \subsubsection{Medición empírica de la performance}
 
-Para resolver este problema utilizamos la técnica de $Backtracking$. Nos interesa encontrar la forma en que se podrían
-colocar las piezas dadas, tal que se llegue a cubrir la mayor parte del tablero siguiendo ciertas reglas. \\
-Con esta técnica se estarían probando todas las combinaciones posibles hasta encontrar una solución. Sin embargo, 
-esto podría demorar muchísimo, por lo que agregamos algunas podas para no tener que recorrer todas las ramas 
-y poder mejorar así, la performance del programa. \\
-Una de las podas a analizar es la que lleva cuenta de las casillas que quedaron libres en el tablero, y verifica 
-que si aún llenando las casillas restantes, no se llega a una solución mejor que la que ya se tenía, no continúa
-por esa rama. \\
-Para comprobar que esta poda realmente funciona, medimos los tiempos ejecutando el algoritmo con ella y lo 
-comparamos con los tiempos del mismo sin la poda. Durante la medición se fue variando la cantidad de 
-piezas totales pasadas como input. Con esto adémas, se quiso observar que la complejidad exponencial calculada era correcta.\\
-Otro de los tests a realizar fue comparar la performance del programa, según la distribución de los colores de las
-fichas. Es decir, casos con todas las fichas del mismo color o con colores diferentes. \\
+Para realizar las pruebas de tiempo se nos presentaron varias complicaciones. Dado que la complejidad del algoritmo implementado es exponencial, el tiempo de ejecución se vuelve inmenso ante tamaños de entrada relativamente pequeños. Por ejemplo, dado un tamaño de entrada de $n=4$, $m=4$, $c=10$, tenemos una cantidad de fichas $M=(n*m)+1=17$, y dado que la complejidad del algoritmo es \bigO{M!}, esto es equivalente a afirmar que existe una constante $k$ para la cual a partir de un $n_0$ nuestro algoritmo está acotado superiormente por $k*(M!)$. Puesto que decimos que este $M!$ en realidad surge de la cantidad de soluciones analizadas, si imaginásemos que el procesador demorase un ciclo de clock en calcular una solución\footnote{Es el mínimo valor que le podemos asignar sin involucrarnos demasiado con la arquitectura/microarquitectura del procesador}, averiguar todo el universo de soluciones bajo las condiciones expuestas en este ejemplo tardaría a lo sumo $17!$ ciclos de clock o, suponiendo un procesador de 3GHz\footnote{Es decir, $3*2^30 ciclos por segundo.$}, unos 110419 segundos (aproximadamente media hora).
 
-
-%En el gráfico se pueden observar los distintos tiempos obtenidos según se haya utilizado la poda o no. Además, 
-%se ve que la complejidad exponencial calculada se cumple. \\
+Debido a lo expuesto anteriormente, nos resultó casi imposible medir el comportamiento del algoritmo para tamaños de tablero muy grandes.
 
 
 
