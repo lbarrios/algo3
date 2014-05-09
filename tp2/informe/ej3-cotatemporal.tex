@@ -6,11 +6,14 @@
 % -----------------------------------------------
 
 Como se pudo observar en el pseudocódigo (sección Planteamiento de Resolución), inicializar las distancias 
-lleva $\bigO{n^2 * k}$.\\
-En el ciclo \texttt{mientras} recorremos a lo sumo $n^2 * k$ nodos, ya que no recorremos dos veces el mismo nodo.\\
+lleva $\bigO{n^2 * k}$.
+
+En el ciclo \texttt{mientras} recorremos a lo sumo $n^2 * k$ nodos, ya que sólo agregamos a la cola nodos que no hayan sido recorridos previamente. Luego en cada iteración miramos un nodo distinto.
+
 Para cada nodo miramos todos sus adyacentes, que son a lo sumo todas las casillas en la misma fila, o todas
-las casillas en la misma columna, cada casilla con una cantidad de unidades de potencia extra única. \\
-En peor caso miramos $2*n$ nodos, es decir $\bigO{n}$ nodos.\\
-Luego la complejidad del ciclo es $\bigO{n^2 * k} * \bigO{n} = \bigO{n^3 * k}$.\\
+las casillas en la misma columna. Y cada casilla a la que me muevo determina una única cantidad de potencia extra que me va a quedar, las que tenía menos las que usé en el salto.
+En peor caso miramos $2*n$ nodos, es decir $\bigO{n}$ nodos.
+
+Luego la complejidad del ciclo es $\bigO{n^2 * k} * \bigO{n} = \bigO{n^3 * k}$. La complejidad final queda en $\bigO{n^3 * k}$.
 
 \end{document}

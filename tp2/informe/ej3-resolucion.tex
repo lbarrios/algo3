@@ -5,15 +5,21 @@
 \begin{document}{}
 % -----------------------------------------------
 Para una mayor claridad, vamos a describir nuestro algoritmo reduciendo el problema a encontrar la distancia
-hasta la casilla destino. Encontrar la secuencia de saltos es algo secundario y está detallado en el código fuente.\\
+hasta la casilla destino. Encontrar la secuencia de saltos es algo secundario y está detallado en el código fuente.
+
 Vamos a pensar el problema como un grafo, siendo cada nodo una posición del tablero con una cantidad de unidades 
 de potencia extra restantes. Los adyacentes a cada nodo son las casillas (y las unidades extra que quedan para 
-cada caso) a las que puedo llegar usando mi resorte y mis unidades extra. \\
+cada caso) a las que puedo llegar usando mi resorte y mis unidades extra. Es importante destacar que desde cualquier casilla puedo ir a cualquier otra casilla de la matriz, ya que las potencias de los resortes son positivas, es decir, siempre me puedo mover hacia las casillas vecinas, y así hacia la siguiente, sucesivamente hasta llegar a cualquier posición del tablero. Más explicitamente, desde la posición (a, b) hasta la (c, d) un camino es el siguiente. Supongamos que a $<$ c y b $<$ d, se puede extender a los otros casos muy facilmente.
+
+
+(a, b) $->$ (a+1, b) $->$ ... $->$ (c, b) $->$ (c, b+1) $->$ (c, b+2) $->$ ... $->$ (c, d)
+\\\\es un camino que no itiliza ninguna unidad extra de potencia. 
+
 Se implementó un algoritmo utilizando la técnica de Breadth-First Search. \\
 
 \centerbf{Pseudocódigo}
 \begin{algorithm}[H]
-\caption{La Centralita}\label{alg:ej3-centralita}
+\caption{Saltos en la Matrix}\label{alg:ej3-matrix}
 \begin{algorithmic}[1]
 
 \Statex \texttt{// Inicializo}

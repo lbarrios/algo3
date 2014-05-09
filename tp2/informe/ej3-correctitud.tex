@@ -3,18 +3,58 @@
 \usepackage{header_tp2}
 \begin{document}{}
 % -----------------------------------------------
-\nota{no se puede asumir que el lector conozca bfs}
-En nuestro algoritmo recorremos primero los nodos a distancia 0, luego a distancia 1, y así sucesivamente.
-Para cada nodo vamos guardando su distancia desde la posicion de origen.
-Inicializamos la distancia hasta la posicion de origen, contando con k unidades extra de potencia, con 0, y el 
-resto de las distancias en INF.
+Veamos que la búsqueda en anchura o BFS que realiza nuestro algoritmo determina la distancia mínima desde el nodo inicial hasta el nodo final.
+Para proceder con la demostración, vamos a hacer un renombre de nuestros conceptos.
+\\ Sea G = \{V, E\} nuestro grafo y $v$ $\in$ V.
+\\ $r$: nodo de inicio.
+\\ $d[v]$: distancia de $r$ a $v$ en G, es decir, la minima cantidad de aristas de todo camino de $r$ a $v$.
+\\ $\pi[v]$: valor de una matriz que al final del algoritmo suponemos guarda la distancia de $r$ a $v$, es lo que en el pseudocódigo designábamos como 'distancia'
+\\$o[v]$: orden en que agregamos a $v$ a $colaBFS$
+\\\\Queremos ver que al final del algoritmo, para todo v, $\pi[v]$ = $d[v]$
+\\Vamos a hacer inducción en $l$, con $o[v]$ = l para algún v, es decir, l se mueve de 1 a n. Vamos a utilizar una hipótesis inductiva más fuerte.
+\\\\H1(i): $\pi[v]$ = $d[v]$
+\\H2(i): $\forall$ w $\in$ V, $d[w]$ $<$ $d[v]$ $\implies$ $p[w]$ $<$ $p[v]$
+\\\\Caso base(i = 1): 
 
-Para cada nodo $'v'$ que recorremos, sabemos que podemos llegar a sus adyacentes saltando hasta $v$ en $v$.distancia 
-pasos, y luego saltando al adyacente $'a'$ en un paso más. \\
-Luego, podemos decir que $a$.distancia $\le$ $v$.distancia + 1. Si no había recorrido $a$ previamente, 
-$v$.distancia + 1 refleja la distancia del camino más corto hasta $a$. Si ya había recorrido $'a'$, su 
-distancia ya está calculada y es menor o igual a la de $v$. En algún momento llegamos a la casilla destino, 
-ya que el grafo es conexo, y podemos devolver su distancia. \\ \nota{no es conexo, no podes llegar de k=3 a k=5}
+H1: El primer nodo en agregar es $r$. $\pi[r]$ se marca en 0, luego se corresponde con su distancia.
 
+H2: No se cumple el antecedente para ningún nodo, luego la implicación es cierta.
+\\\\Paso inductivo: Vamos a asumir que se cumplen H1(i') y H2(i') para todo i' $<$ i, quiero ver que se cumplen H1(i) y H2(i)
+
+H1: Sea i = $o[v]$ y $v'$ el $padre$ de v, es decir, el nodo $actual$ desde el que se agregó a v a la cola.
+
+Supongamos que existe un camino r $\rightsquigarrow$ w $\rightarrow$ v
+de longitud h $<$ $\pi[v]$.
+
+Luego $d[w]$ $<$ $\pi[v]$ - 1, pues de otra forma no se podría llegar por ese camino en menos de $\pi[v]$ pasos.
+Como, por como escribe $\pi$ nuestro algoritmo, $\pi[v']$ = $\pi[v]$ - 1, concluimos que
+
+$d[w]$ $<$ $\pi[v']$ \hfill\emph{(1)}
+
+Tenemos que $o[v']$ $<$ $o[v]$, ya que v se mete en la cola cuando saco a v'. \hfill\emph{(2)}
+\\\\Asumiendo H1 para $o[v']$, podemos decir que $d[v']$ = $\pi[v']$, luego por \emph{(1)} y H2 en $o[v']$
+
+$o[w]$ $<$ $o[v']$ \hfill\emph{(3)}	
+
+Concluimos que $o[w]$ $<$ $o[v]$, y como existe la arista w $\rightarrow$ v, w es el padre de v. Absurdo! w $\neq$ v' por \emph{(1)}
+\\\\H2:
+
+Supongamos, para algún w, $d[w]$ $<$ $d[v]$, \hfill\emph{(4)}
+\\y que $o[w]$ $>$ $o[v]$.
+\\\\Sea $v'$ el padre de v y 
+
+r $\rightsquigarrow$ w' $\rightarrow$ w
+\\\\el camino mínimo de r a w. Ésto implica que $r$ $\rightsquigarrow$ $w'$ es el camino mínimo de r a w'. Luego $d[w']$ = $d[w]$ - 1 \hfill\emph{(5)}
+
+Similar a \emph{(2)}, $o[v']$ $<$ $o[v]$.
+
+Por H1 en $o[v]$ probada recién, r $\rightsquigarrow$ v' $\rightarrow$ v, que es el camino de padre a hijo que va formando el algoritmo, es el camino mínimo de r a v. Entonces $r$ $\rightsquigarrow$ $v'$ es un camino mínimo de r a v'. Luego $d[v']$ = $d[v]$ - 1 \hfill\emph{(6)}
+\\\\Por \emph{(4)}, \emph{(5)} y \emph{(6)},
+
+$d[w']$ $<$ $d[v']$
+\\\\Aplicando H2 en $o[v']$, obtenemos que
+
+$o[w']$ $<$ $o[v']$
+\\Como $w'$ ingresó a la cola antes que $v'$, se recorre $w'$ antes que $v'$. $w$ ingresa a la cola cuando se recorre $w'$, si no antes. $v$ se ingresa a la cola exactamente cuando se recorre $v'$, su padre. Luego $o[w]$ $<$ $o[v]$. Absurdo!
 
 \end{document}
