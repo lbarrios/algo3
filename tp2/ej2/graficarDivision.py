@@ -39,8 +39,8 @@ for testname in tests:
       y_p_values = [yp for yp in y_values if yp < np.percentile(y_values,75) and yp > np.percentile(y_values,25) ]
       # -
       x = testsize
-      y = float( np.mean( y_values ) / float(1e9) )
-      y_p = float( np.mean( y_p_values ) / float(1e9) )
+      y = float( np.mean( y_values )   )
+      y_p = float( np.mean( y_p_values ) )
       # -
       tests_mean_xy[testname][testtype].append( (x,y) )
       tests_mean_p_xy[testname][testtype].append( (x,y_p) )
@@ -57,17 +57,17 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as tck
 from time import strftime
 # - Arreglo la columna tiempo
-formatter = tck.EngFormatter(unit='s', places=1) # Formato "segundos"
-formatter.ENG_PREFIXES[-6] = 'u' # Arreglo el símbolo "mu"
+#formatter = tck.EngFormatter(unit='s', places=1) # Formato "segundos"
+#formatter.ENG_PREFIXES[-6] = 'u' # Arreglo el símbolo "mu"
 # - Creo los subplot
 #fig, subplot = plt.subplots(nrows=t_types, ncols=1, sharex=True, sharey=False)
 fig,subplot = plt.subplots()
-subplot.yaxis.set_major_formatter(formatter)
+#subplot.yaxis.set_major_formatter(formatter)
 
 # Aplico formato
 plt.grid(True)
 plt.title("Ejercicio 2")
-plt.ylabel('Tiempo (segundos)')
+plt.ylabel('Cociente (segundos/sapos)')
 plt.xlabel(u'Tamaño de entrada (sapos)')
 
 """
