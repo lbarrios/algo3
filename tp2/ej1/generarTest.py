@@ -8,14 +8,14 @@ inputDir_c = "input/graficoComparacion"
 limInf_c = 0
 limSup_c = 1001
 paso_c = 50
-casosPorTest_c = 30
+casosPorTest_c = 45
 
 # Parámetros para gráfico de división
 inputDir_d = "input/graficoDivision"
 limInf_d = 0
 limSup_d = 1001
 paso_d = 50
-casosPorTest_d = 30
+casosPorTest_d = 45
 
 
 
