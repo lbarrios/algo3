@@ -29,23 +29,6 @@ testGen = GeneradorDeTestsEj3(inputDir)
 
 for n in range(limInf, limSup, paso):
   print(n)
-  testGen.generarTest({"n":n}, "casoAleatorio", casosPorTest )
+  testGen.generarTest({"n":n, "k":10}, "casoAleatorio", casosPorTest )
 
-
-
-
-# n fijo, varía k
-testGen = GeneradorDeTestsEj3(inputDir_fijo)
-
-for k in range( cantTest ):
-    print( k )
-    testGen.generarTest( {"n": n_fijo, "k" : k}, "casoAleatorio", 100)
-    
-
-testGen = GeneradorDeTestsEj3("input/graficoOrdenadoPorSalida")
-
-# Test ordenados por salida.
-testGen = GeneradorDeTestsEj3( inputDir_s )
-
-testGen.generarTest( {"n":150, "k":5}, "casoLargo" , 1000)
 
