@@ -15,7 +15,7 @@ inputDir_fijo = "input/graficoCentrales"
 limSup_k = 1000
 n_fijo = 1000
 paso_fijo = 10
-casosPorTest_fijo = 30
+casosPorTest_fijo = 100
 
 
 # Gráfico tiempo liso
@@ -32,6 +32,6 @@ for n in range(limInf, limSup, paso):
 
 testGen = GeneradorDeTestsEj2( inputDir_fijo )
 
-for i in range( limSup_k, step = paso_fijo ):
-    print(n)
+for i in range(1, limSup_k, 10 ):
+    print(i)
     testGen.generarTest( {"n": n_fijo , "k": i}, "casoAleatorio", casosPorTest_fijo )
