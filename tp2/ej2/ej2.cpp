@@ -61,6 +61,7 @@ bool tomarInput() {
 		    #endif
         posiciones[i] = agrego;
     }
+    return true;
 }
 
 void inicializarComponentes() {

@@ -45,6 +45,7 @@ class GeneradorDeTestsEj3 (GeneradorDeTests):
     super(GeneradorDeTestsEj3, self).__init__(inputDir)
     self.nombresFuncionesGeneradoras =  {
                                           "casoAleatorio": self.nuevoCasoAleatorio,
+                                          "casoLargo": self.nuevoCasoAleatorioChico,
                                         }
 
   def nuevoCasoAleatorio (self, params):
@@ -56,9 +57,22 @@ class GeneradorDeTestsEj3 (GeneradorDeTests):
     n = params["n"]
     k = params.get("k")
     primeraLinea ="{} {} {} {} {} {}".format(n, random.randint(1, n), random.randint(1, n), random.randint(1, n), random.randint(1,n), k or random.randint(1, 2*n))
-    tablero = [ " ".join([ str(random.randint(1,n)) for j in range(n) ]) for i in range(n) ]
+    tablero = [ " ".join([ str(random.randint(1,n//2+1)) for j in range(n) ]) for i in range(n) ]
     return "{}\n{}".format( primeraLinea, "\n".join(tablero))
 
+
+
+  def nuevoCasoAleatorioChico(self, params):
+    """Genera un caso de test completamente aleatorio
+    Toma un diccionario de parámetros.
+    El "n" es obligatorio pero el "k" es opcional.
+    """
+
+    n = params["n"]
+    k = params.get("k")
+    primeraLinea ="{} {} {} {} {} {}".format(n, random.randint(1, n), random.randint(1, n), random.randint(1, n), random.randint(1,n), k or random.randint(1, 2*n))
+    tablero = [ " ".join([ str(random.randint(1,9)) for j in range(n) ]) for i in range(n) ]
+    return "{}\n{}".format( primeraLinea, "\n".join(tablero))
 
 if __name__ == '__main__':
   coso = GeneradorDeTestsEj3();

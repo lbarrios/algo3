@@ -4,7 +4,7 @@ import os
 import sys
 
 # Parámetros:
-inputDirList = ["input"]
+inputDirList = ["input/graficoCentrales", "input/graficoTiempoLiso"]
 
 try:
     arg = sys.argv[1]

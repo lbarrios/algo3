@@ -52,7 +52,7 @@ class GeneradorDeTestsEj2 (GeneradorDeTests):
     Toma un diccionario de parámetros."""
 
     n = params["n"]
-    k = random.randint(1, n)
+    k = params.get("k") or random.randint(1, n)
     pueblos = [ "{:d} {:d}".format( random.randint(0, self.tamMapa ), random.randint(0, self.tamMapa )) for i in range(n) ]
     return "{} {}\n{}".format(n,k, "\n".join(pueblos))
     
