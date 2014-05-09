@@ -20,7 +20,8 @@ files = sorted(glob("./output/*.txt.time"))
 for f in files:
   print f
   file = open(f)
-  testname = f.split("/")[-1].split("_")[0]
+  #testname = f.split("/")[-1].split("_")[0]
+  testname = 'mejorCaso'
   #testsize = f.split("/")[-1].split("_")[1].split(".")[0]
   coso = f.split("/")[-1].split("_")[1].split(".")[0]
   (n, m, c) = parse("n{:d}m{:d}c{:d}",coso)
@@ -55,7 +56,8 @@ for testname in tests:
 t_names = len(tests_mean_xy)
 t_types = len(tests_mean_xy[testname])
 
-colors = ['blue','green','red','cyan','magenta','yellow','black','grey','white']
+#colors = ['blue','green','red','cyan','magenta','yellow','black','grey','white']
+colors = ['green','red','cyan','magenta','yellow','black','grey','white']
 
 
 import matplotlib.pyplot as plt
