@@ -83,10 +83,10 @@ for test_number in range(0,t_names):
   y = np.array( zip(*tests_mean_p_xy[testname][testtype])[1] )
   plt.plot(x, y, linestyle='-',  color=colors[test_number], linewidth=2, label=testname, alpha=1) #, marker='.', markersize=0.3)
 
-subplot.plot(x, ((x*x*x)*1)/float(1e9),    '--', color='black', linewidth=2, label="$c.x^3$")
+subplot.plot(x, ((x*x*x)*1.3)/float(1e9),    '--', color='black', linewidth=2, label="$c.x^3$")
 plt.legend(loc=2)
 
-plt.show()
-#if not os.path.exists('./graficos/') or not os.path.isdir('./graficos/'):
-#  os.makedirs('./graficos/')
-#plt.savefig("graficos/test_1.pdf")
+#plt.show()
+if not os.path.exists('./graficos/') or not os.path.isdir('./graficos/'):
+  os.makedirs('./graficos/')
+plt.savefig("graficos/test_tiempoLiso.pdf")
