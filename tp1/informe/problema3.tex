@@ -1130,8 +1130,6 @@ menos''\footnote{Notar que su tope es en 100us, y no en 0.}. Si se pudiese
 extender el análisis a tamaños mayores a 9, seguramente se podría ver cómo el
 algoritmo crece luego de esa ``bajada''.
 
-
-
 \begin{figure}[h]
    \begin{center}
    \includegraphics[width=1\textwidth,angle=0]{../ej3/graficos/test_exponencial.pdf}
@@ -1139,7 +1137,34 @@ algoritmo crece luego de esa ``bajada''.
    \label{fig:ej3-2}
    \end{center}
 \end{figure}
-\fixme{Explicar esto}
+
+En \textbf{\texttt{gráfico \ref{fig:ej3-1}}} se hizo una comparación de la
+complejidad según el tipo de entrada proporcionada. Se estandarizaron para ello
+tres tipos de casos: 
+\begin{itemize}
+
+\item aleatorio: Dados n, m y la cantidad de colores, se generan \texttt{n*m}
+fichas en donde para cada una todos sus colores son un número pseudoaleatorio
+entre 1 y cantidad de colores.
+
+\item trivial: Dados n, m y la cantidad de colores, se generan \texttt{n*m}
+fichas, en donde todas tienen el mismo color.
+
+\item piezas incompatibles: Dados n, m y la cantidad de colores, se generan
+\texttt{n*m} fichas en donde dados los colores 1,2,3 y 4, todas tienen 1 arriba,
+2 abajo, 3 a la izquierda y 4 a la derecha. Es fácil ver que todas las fichas
+son incompatibles en este escenario, por lo que el único tablero posible es el
+que las fichas se intercalan para no tocarse unas con otras.
+
+\end{itemize}
+
+En el gráfico se puede apreciar que el comportamiento para el caso de piezas
+incompatibles es muy malo, ya que la poda objetivo no puede ser aplicada, por lo
+que la recursión debe cubrir todos los casos factibles. La complejidad en este
+caso sería de \bigO{M!}, como ya se expuso debidamente. Para el caso trivial, el
+comportamiento es casi constante (por lo que se puede apreciar en el gráfico), y
+lo que se puede afirmar del caso aleatorio es que está acotado por los otros dos
+casos.
 
 \begin{figure}[h]
    \begin{center}
