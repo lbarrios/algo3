@@ -24,7 +24,5 @@ for n in range(limInf, limSup, paso):
 
 testGen = GeneradorDeTestsEj3( inputDir_s )
 
+testGen.generarTest( {"n":100, "k":5}, "casoAleatorio" , 10000);
 
-for i in range(10000):
-  print(i)
-  testGen.generarTest( {"n": 100, "k":5, "id":i}, "casoAleatorio", 1)
