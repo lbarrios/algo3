@@ -1049,7 +1049,11 @@ Separamos en casos y mostramos ejemplos para cada uno:
 		
 \end{itemize}
 
-Ejecutamos el programa con los distintos ejemplos y se llegó a la solución esperada. Por lo tanto, podemos concluir que el comportamiento del programa es correcto. 
+Ejecutamos el programa con los distintos ejemplos y se llegó a la solución
+esperada. Por lo tanto, podemos concluir que el comportamiento del programa es
+correcto.
+
+\clearpage
 
 \subsubsection{Medición empírica de la performance}
 
@@ -1073,10 +1077,22 @@ ejemplo tardaría a lo sumo $17!$ ciclos de clock o, suponiendo un procesador de
 Debido a lo expuesto anteriormente, nos resultó casi imposible medir el
 comportamiento del algoritmo para tamaños de tablero muy grandes. Se realizó una
 primer medición comparando el rendimiento del algoritmo con todas sus podas,
-contra el algoritmo sin la ``poda objetivo'', y el mismo sin ambas podas.
+contra el algoritmo sin la ``poda objetivo'' y el algoritmo sin ambas podas.
+
+Se realizaron distintas mediciones, para las cuales se crearon casos de prueba
+particulares. Se adjunta al informe, dentro de la carpeta del ejercicio,
+archivos 
+\begin{itemize}
+\item \textbf{input\_output\_testSinPodas.tar.bz}
+\item \textbf{input\_output\_testExponencial.tar.bz}
+\item \textbf{input\_output\_testConPodas.tar.bz}
+\item \textbf{input\_output\_testNormal.tar.bz} 
+\end{itemize}
+los cuales contienen los input y
+output utilizados respectivamente para generar los sucesivos gráficos.
 
 
-\begin{figure}[H]
+\begin{figure}[h]
    \begin{center}
    \includegraphics[width=1\textwidth,angle=0]{../ej3/graficos/test_sinPodas.pdf}
    \caption{Comparación de las podas}
@@ -1084,7 +1100,39 @@ contra el algoritmo sin la ``poda objetivo'', y el mismo sin ambas podas.
    \end{center}
 \end{figure}
 
-\begin{figure}[H]
+Como se puede apreciar en el \textbf{\texttt{gráfico \ref{fig:ej3-1}}}, el cual
+muestra el tamaño de entrada (n*m) en relación con el tiempo en segundos (en
+escala logarítmica) el algoritmo presenta comportamientos parecidos ante
+instancias de entrada pequeña, y las mismas se empiezan a diferenciar de forma
+notoria a partir del tamaño de entrada 6. Todas las entradas utilizadas fueron
+generadas de forma pseudoaleatoria. En el caso del caso ``sin podas'', se testeó
+el Backtracking puro, es decir, sin ningún tipo de poda aplicada. Es notable ver
+cómo ante un tamaño de entrada 9 (tablero de 3x3) el algoritmo sin podas tardó
+aproximadamente un minuto. Se intentó testear para tamaños de entrada más
+grandes, pero los tiempos de ejecución fueron muy grandes, por lo que no resultó
+práctico realizar mediciones exploratorias para este tipo de tamaños. En el caso
+de la medición ``sin poda objetivo'', se eliminó sólamente la poda sobre la
+función de selección, la encargada de descartar las ramas que derivaran en
+tableros imposibles. Así se puede apreciar una mejora notable en el rendimiento
+del algoritmo frente a la versión sin podas. Tener en cuenta sobre todo la
+escala logarítmica del \texttt{eje Y}, la cual implica que el algoritmo tardó
+unas 1000 veces menos en relación al tiempo de ejecución sin podas\footnote{Dado
+que el logaritmo es en base 10, una marca de línea punteada sobre el eje
+representa un aumento de 10 veces sobre la marca anterior. Así, es fácil
+calcular cuánto se diferencian los algoritmos}. En el caso del algoritmo ``con
+podas'', se puede apreciar un descenso en el tiempo a partir del tamaño de
+entrada 6. Esto podría parecer extraño, pero su explicación es que dada la forma
+de la entrada, los tableros más pequeños resultaban imprácticos para la
+aplicación de la poda, por lo cual el rendimiento del algoritmo era casi el
+mismo con podas que sin podas. Luego, al crecer el tamaño del tablero, crece la
+utilización de la poda, con lo cual parecería que el algoritmo tarda ``cada vez
+menos''\footnote{Notar que su tope es en 100us, y no en 0.}. Si se pudiese
+extender el análisis a tamaños mayores a 9, seguramente se podría ver cómo el
+algoritmo crece luego de esa ``bajada''.
+
+
+
+\begin{figure}[h]
    \begin{center}
    \includegraphics[width=1\textwidth,angle=0]{../ej3/graficos/test_exponencial.pdf}
    \caption{Comparación de la complejidad según el tipo de entrada}
@@ -1093,7 +1141,7 @@ contra el algoritmo sin la ``poda objetivo'', y el mismo sin ambas podas.
 \end{figure}
 \fixme{Explicar esto}
 
-\begin{figure}[H]
+\begin{figure}[h]
    \begin{center}
    \includegraphics[width=1\textwidth,angle=0]{../ej3/graficos/test_con_podas.pdf}
    \caption{????????????????}
@@ -1102,7 +1150,7 @@ contra el algoritmo sin la ``poda objetivo'', y el mismo sin ambas podas.
 \end{figure}
 \fixme{Este test no iría por diferencias de criterio.}
 
-\begin{figure}[H]
+\begin{figure}[h]
    \begin{center}
    \includegraphics[width=1\textwidth,angle=0]{../ej3/graficos/test_normal.pdf}
    \caption{?????????????????}
