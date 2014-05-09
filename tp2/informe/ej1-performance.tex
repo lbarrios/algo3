@@ -11,9 +11,9 @@ cumpliera la cota teórica $\bigO{n^3}$ calculada.
 El algoritmo tiene una primera etapa de llenar la matriz calculando las mejor jugada para cada rango de cartas. Esta primera etapa es $\Theta(n^3)$.
 
 Luego viene una última etapa de reconstruir la jugada que es $\Theta(cantidadDeTurnosDelJuego)$. Luego nos propusimos estudiar el comportamiento de nuestro algoritmo para distintas entradas, sabiendo que el peso principal de la complejidad no iba a ser afectado por el tipo de entrada, sino sólo por su tamaño. Dividimos los tipos de entrada en tres casos: 
- 
+
 \begin{itemize}
-\item El caso $aleatorio$ se armó tomando valores aleatorios para cada una de las $n$ cartas iniciales. 
+\item El caso $aleatorio$ se armó tomando valores generados de forma pseudoaleatorios para cada una de las $n$ cartas iniciales. 
 \item El caso $mejor$ se produce cuando el juego dura sólo 1 turno. Esta situación se daría cuando las cartas son 
 todas positivas. Esto se debe a que para lograr el mejor juego, sólo basta tomar todas las cartas en el primer y 
 único turno. La suma de los valores de estas cartas siempre será el mejor puntaje que podrá obtener 
