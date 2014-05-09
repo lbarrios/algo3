@@ -66,7 +66,7 @@ subplot.yaxis.set_major_formatter(formatter)
 
 # Aplico formato
 plt.grid(True)
-plt.title("Ejercicio 2 (cuartiles)")
+plt.title("Ejercicio 2")
 plt.ylabel('Tiempo (segundos)')
 plt.xlabel(u'Tamaño de entrada (sapos)')
 
