@@ -4,14 +4,14 @@ import sys
 
 generador = generadorDeTestsEj3()
 desde_n = 1
-hasta_n = 8
+hasta_n = 4
 paso_n = 1
 desde_m = 1
-hasta_m = 8
+hasta_m = 3
 paso_m = 1
 paso_colores = 1
 desde_colores = 1
-hasta_colores = 15
+hasta_colores = 100
 
 print (
 """
@@ -59,8 +59,8 @@ for color in range( desde_colores , hasta_colores, paso_colores):
       print("n:{},m:{}, c:{}".format(n,m,color))
       params = {"n":n,"m":m,"colores":color}
       generador.generarTest(params, "casoAleatorio")
-      generador.generarTest(params, "casoPiezasIncompatibles")
-      generador.generarTest(params, "casoTrivial")
+      #generador.generarTest(params, "casoPiezasIncompatibles")
+      #generador.generarTest(params, "casoTrivial")
 
 
 

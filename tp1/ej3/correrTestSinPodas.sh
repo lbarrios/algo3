@@ -89,7 +89,7 @@ done
 
 
 if [ $TIME = true ]; then
-  EXE=$EXE.time.sinPodaSeleccion
+  EXE=$EXE.time.sinPodas
 fi
 
 
@@ -169,7 +169,7 @@ fi
 clear
 $MAKE $EXE
 if [ $? = 0 ]; then
-  if [ $RANGO = false ]; then
+#  if [ $RANGO = false ]; then
 #    pause "Se correra el programa para TODOS los archivos de input 
 #que se encuentren en la carpeta '$INPUT_FOLDER'.
 #
@@ -188,7 +188,7 @@ if [ $? = 0 ]; then
       OUTPUT=$OUTPUT_FOLDER/${INPUT##*/}
       EXE_PARAM="-i $INPUT -o $OUTPUT"
       if [ $TIME = true ]; then
-        EXE_PARAM="$EXE_PARAM -t $OUTPUT.time.sinPodaSeleccion"
+        EXE_PARAM="$EXE_PARAM -t $OUTPUT.time.sinPodas"
       fi
       echo "EJECUTANDO: ./$EXE $EXE_PARAM"
       nice -n -100 ./$EXE $EXE_PARAM
@@ -197,7 +197,7 @@ if [ $? = 0 ]; then
       else
         if [ $VERBOSE == true ]; then
           if [ $TIME = true ]; then
-            cat $OUTPUT.time.sinPodaSeleccion
+            cat $OUTPUT.time.sinPodas
           else
             cat $OUTPUT
           fi

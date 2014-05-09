@@ -52,9 +52,12 @@ class generadorDeTestsEj3 (generadorDeTests):
   def nuevoCasoAleatorio (self, params):
     """Genera un caso de test completamente aleatorio
     Toma un diccionario de parámetros."""
+    import math
     n = params["n"]
     m = params["m"]
     colores = params["colores"]
+    #colores = min(int(math.sqrt(n*m)),1)
+    #colores = 4
     primeraLinea = "{} {} {}".format(n,m, colores)
     listaPiezas = []
     for i in range(n*m):
@@ -89,6 +92,7 @@ class generadorDeTestsEj3 (generadorDeTests):
 
   def generarTest(self, params, nombre, cantCasos = 1):
     """ Genera un test completo y lo guarda en el directorio que se asignó para los inputs """
+    import math
     n = params["n"]
     m = params["m"]
     colores = params["colores"]

@@ -58,7 +58,6 @@ Tablero& backtrack( Tablero& t, IndiceDePiezas& ip, uint32_t posicion )
 {
   DEBUG_ENTER; _C( "Entrando a recursión en posición: " << posicion + 1 );
   Tablero* mejorTablero = NULL;
-
   /*
   // Poda
   if ( t.yaEncontreElMejorTableroPosible() )
@@ -69,22 +68,23 @@ Tablero& backtrack( Tablero& t, IndiceDePiezas& ip, uint32_t posicion )
     return *mejorTablero;
   }
   */
+#ifndef SINPODAOBJETIVO
 
-	#ifndef SINPODAOBJETIVO
   if ( t.yaEncontreUnTableroMejor( posicion ) )
   {
-    _C( "PODANDO EN POS " << posicion <<" PORQUE EXISTE UN TABLERO mejor QUE CUALQUIERA DE ESTA RAMA" );
+    _C( "PODANDO EN POS " << posicion << " PORQUE EXISTE UN TABLERO mejor QUE CUALQUIERA DE ESTA RAMA" );
     return *mejorTablero;
   }
-  #endif
-  
 
+#endif
   IteradorIndiceDePiezas& it = ip.dameIterador( posicion );
-  _C("Obtenido iterador al indice de piezas");
+  _C( "Obtenido iterador al indice de piezas" );
 
   // Me fijo si estoy antes de la última posición
   if ( posicion < t.cantidadDePosiciones - 1 )
   {
+#ifndef SINPODASELECCION
+
     while ( it.hayPiezasPosibles() )
     {
       _C( "Pieza disponible: " << *it );
@@ -125,6 +125,70 @@ Tablero& backtrack( Tablero& t, IndiceDePiezas& ip, uint32_t posicion )
       ip.marcarPiezaDisponible ( it );
       it++;
     }
+
+#else
+
+    for ( uint32_t it = 1; it < t.cantidadDePiezas(); it++ )
+    {
+      t.ponerPiezaEnPosicion( it, posicion );
+      // Hago recursión en el backtracking
+      Tablero* otroTablero = NULL;
+      otroTablero = &( backtrack( t, ip, posicion + 1 ) );
+
+      if ( !mejorTablero )
+      {
+        mejorTablero = otroTablero;
+      }
+      else
+      {
+        if ( !otroTablero )
+        {
+          // Si la recursión me devolvió un puntero a nulo termino el BT
+        }
+        else
+        {
+          if ( *mejorTablero < *otroTablero )
+          {
+            delete mejorTablero;
+            mejorTablero = otroTablero;
+          }
+          else
+          {
+            delete otroTablero;
+          }
+        }
+      }
+    }
+
+    t.ponerPiezaEnPosicion( TestCaseEj3::PIEZA_VACIA, posicion );
+    Tablero* otroTablero = NULL;
+    otroTablero = &( backtrack( t, ip, posicion + 1 ) );
+
+    if ( !mejorTablero )
+    {
+      mejorTablero = otroTablero;
+    }
+    else
+    {
+      if ( !otroTablero )
+      {
+        // Si la recursión me devolvió un puntero a nulo termino el BT
+      }
+      else
+      {
+        if ( *mejorTablero < *otroTablero )
+        {
+          delete mejorTablero;
+          mejorTablero = otroTablero;
+        }
+        else
+        {
+          delete otroTablero;
+        }
+      }
+    }
+
+#endif
   }
   else
   {
@@ -141,7 +205,7 @@ Tablero& backtrack( Tablero& t, IndiceDePiezas& ip, uint32_t posicion )
     t.ponerPiezaEnPosicion( TestCaseEj3::PIEZA_VACIA, posicion );
   }
 
-  delete (&it);
+  delete ( &it );
   _C( "Saliendo de recursión en posición: " << posicion + 1 ); DEBUG_ENTER;
   return *mejorTablero;
 }

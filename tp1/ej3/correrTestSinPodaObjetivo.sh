@@ -170,14 +170,14 @@ clear
 $MAKE $EXE
 if [ $? = 0 ]; then
   if [ $RANGO = false ]; then
-    pause "Se correra el programa para TODOS los archivos de input 
-que se encuentren en la carpeta '$INPUT_FOLDER'.
-
-Los resultados serán volcados a la carpeta '$OUTPUT_FOLDER'
-             Esto puede demorar mucho.
-
-Puede obtener ayuda sobre el programa ejecutando --help.
-Si desea cancelar la ejecución, ahora es el momento."
+#    pause "Se correra el programa para TODOS los archivos de input 
+#que se encuentren en la carpeta '$INPUT_FOLDER'.
+#
+#Los resultados serán volcados a la carpeta '$OUTPUT_FOLDER'
+#             Esto puede demorar mucho.
+#
+#Puede obtener ayuda sobre el programa ejecutando --help.
+#Si desea cancelar la ejecución, ahora es el momento."
     clear
     INPUTS=$INPUT_FOLDER/*.txt
   else
@@ -191,7 +191,7 @@ Si desea cancelar la ejecución, ahora es el momento."
         EXE_PARAM="$EXE_PARAM -t $OUTPUT.time.sinPodaObjetivo"
       fi
       echo "EJECUTANDO: ./$EXE $EXE_PARAM"
-      ./$EXE $EXE_PARAM
+      nice -n -100 ./$EXE $EXE_PARAM
       if [ $? != 0 ]; then
            echo "HUBO UN ERROR AL CORRER EL INPUT ${INPUT##*/}!!!"
       else

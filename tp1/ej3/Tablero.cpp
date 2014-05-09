@@ -4,7 +4,7 @@ Tablero::Tablero( uint32_t p_filas, uint32_t p_columnas, vector<TestCaseEj3::Pie
   :
   _listaDePiezas( listaDePiezas ),
   _cantidadDePosicionesVacias( p_filas* p_columnas ),
-  _mejorCantidadDePosicionesVacias( _cantidadDePosicionesVacias/2 + 1 ),
+  _mejorCantidadDePosicionesVacias( _cantidadDePosicionesVacias / 2 + 1 ),
   cantidadDeFilas( p_filas ),
   cantidadDeColumnas( p_columnas ),
   cantidadDePosiciones( p_filas* p_columnas )
@@ -43,6 +43,10 @@ const uint32_t Tablero::dameLaPiezaDeIzquierdaDePosicion( uint32_t posicion )
     _C( "La posición " << posicion + 1 << " contiene una pieza vacía a su izquierda" );
     return TestCaseEj3::PIEZA_VACIA;
   }
+}
+uint32_t Tablero::cantidadDePiezas( void )
+{
+  return this->_listaDePiezas.size();
 }
 /*
 uint32_t Tablero::cantidadDePosiciones( void )
@@ -128,13 +132,13 @@ bool Tablero::yaEncontreElMejorTableroPosible( void )
 }
 bool Tablero::yaEncontreUnTableroMejor ( uint32_t posicion )
 {
-  DEBUG_INT(this->_mejorCantidadDePosicionesVacias);
-  DEBUG_INT(this->cantidadDePosiciones);
-  DEBUG_INT(posicion);
-  DEBUG_INT(this->_mejorCantidadDePosicionesVacias + this->cantidadDePosiciones - posicion);
-  DEBUG_INT(_cantidadDePosicionesVacias);
+  DEBUG_INT( this->_mejorCantidadDePosicionesVacias );
+  DEBUG_INT( this->cantidadDePosiciones );
+  DEBUG_INT( posicion );
+  DEBUG_INT( this->_mejorCantidadDePosicionesVacias + this->cantidadDePosiciones - posicion );
+  DEBUG_INT( _cantidadDePosicionesVacias );
   return this->_mejorCantidadDePosicionesVacias + this->cantidadDePosiciones - posicion
-  <= _cantidadDePosicionesVacias;
+         <= _cantidadDePosicionesVacias;
 }
 void Tablero::imprimeTablero()
 {
@@ -153,7 +157,6 @@ void Tablero::_calcularMejorCantidadDePiezasPosible()
 {
   _mejorCantidadDePosicionesVaciasPosible = 0;
   return;
-
   multiset<uint32_t> coloresIzquierda;
   multiset<uint32_t> coloresDerecha;
   multiset<uint32_t> coloresArriba;

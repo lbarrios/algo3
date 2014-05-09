@@ -16,6 +16,7 @@ private:
   uint32_t _ultimaPosicionAgregada;
 public:
   Tablero( uint32_t p_filas, uint32_t p_columnas, vector<TestCaseEj3::Pieza>& );
+  uint32_t cantidadDePiezas( void );
   /**
    * Operador binario, indica si un tablero es menor a otro
    */
