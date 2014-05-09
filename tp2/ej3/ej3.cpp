@@ -22,7 +22,7 @@ struct Nodo {
 
 enum Direccion {arriba, abajo, izquierda, derecha};
 
-void inicializar();
+bool inicializar();
 void BFS();
 void hace_la_cruz(Nodo, queue<Nodo>&);
 void pushea_hijo (Nodo &hijo, int &fila_hijo, int &columna_hijo, int &distancia_hijo, int pot_extra_hijo, int padre_pot_extra_uso, Posicion &pos_actual, queue<Nodo> &cola);
@@ -40,16 +40,19 @@ Timer timer(cout);
 
 
 int main() {
-		timer.setInitialTime("cicloEntero");
-    inicializar();
-    BFS();
-		timer.setFinalTime("cicloEntero");
-    imprimir();
+    while ( inicializar() ){
+      BFS();
+      timer.setFinalTime("cicloEntero");
+      imprimir();
+    }
     return 0;
 }
 
-void inicializar() {
-    cin >> n >> origen.fila >> origen.columna >> destino.fila >> destino.columna >> k;
+bool inicializar() {
+		timer.setInitialTime("cicloEntero");
+    cin >> n;
+    if (!n) return false;
+    cin >> origen.fila >> origen.columna >> destino.fila >> destino.columna >> k;
     for (int i=1; i<=n; i++) {
         for (int j=1; j<=n; j++) {
             cin >> potencias[i][j];
