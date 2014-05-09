@@ -25,7 +25,7 @@ inputDir_s = "input/graficoOrdenadoPorSalida"
 
 
 # test tiempo liso
-testGen = GeneradorDeTestsEj3(inputDir_fijo )
+testGen = GeneradorDeTestsEj3(inputDir)
 
 for n in range(limInf, limSup, paso):
   print(n)
@@ -33,13 +33,13 @@ for n in range(limInf, limSup, paso):
 
 
 
-testGen = GeneradorDeTestsEj3(inputDir_fijo)
 
 # n fijo, varía k
+testGen = GeneradorDeTestsEj3(inputDir_fijo)
 
 for k in range( cantTest ):
     print( k )
-    testGen.generarTest( {"n": n_fijo, "k" : k}, "casoAleatorio")
+    testGen.generarTest( {"n": n_fijo, "k" : k}, "casoAleatorio", 100)
     
 
 testGen = GeneradorDeTestsEj3("input/graficoOrdenadoPorSalida")
