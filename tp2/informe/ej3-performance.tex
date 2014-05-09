@@ -25,7 +25,12 @@
 
 \begin{center}\fixme{}\end{center}
 
+Lo primero que hicimos fue contrastar nuestro cálculo teórico de la complejidad con una medición empírica de los tiempos de ejecución. Utilizamos entradas generadas aleatoriamente, con distintos tamaños de tablero. 
 
+
+Observamos una curva que crece bastante rápido. Para corroborar que la complejidad es \bigO{n^3*k}, graficamos el cociente entre el tiempo de ejecución y la función $f(x)$ = $x^3$. Se puede ver al cociente estabilizándose acerca de una constante, lo que nos permite aventurar a decir que el algoritmo cumple con su cota propuesta.
+
+Realizamos una tercer medición más interesante. Intuitivamente, nos dimos cuenta de que si el casillero de origen y el de destino están cerca, el algoritmo iba a encontrar el camino más rápidamente. Esta noción de cercanía no es solo la proximidad de los casilleros de la matriz. Es mucho más interesante. Depende de como están distribuidos los resortes de distintas potencias, y, claro, de las unidades extras con que cuente. Se nos ocurrió fijar un tamaño de entrada y generar matrices con distintos valores de potencia y distintos valores de potencia extra. Luego hicimos correr el algoritmo, guardando tanto su tiempo de ejecución como su resultado, es decir, la cantidad mínima de saltos para llegar a destino. Ordenamos de acuerdo al resultado y podemos ver una correlación positiva entre el resultado y el tiempo de ejecución. 
 
 
 \end{document}
