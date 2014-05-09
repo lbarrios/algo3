@@ -6,25 +6,27 @@
 % -----------------------------------------------
 
 Veamos las ideas desarrolladas en nuestra resolución. En un juego cualquiera de
-Robanúmeros se cumple que, siendo P el puntaje:
+Robanúmeros se cumple que:
+\\\\MiPuntaje + PuntajeOponente = Suma(MisCartas) + Suma(CartasOponente) = Suma(TodasLasCartas) 
+
+
+Dada esta relación, maximizar la diferencia entre mi puntaje y el del oponente es lo mismo
+que maximizar mi puntaje. 
+
+
+Consideremos mi turno, y sea CARTAS el conjunto de cartas sobre la mesa. Sea $CARTAS'$ el conjunto de cartas que quedan tras efectuar mi jugada.
+
+Ahora, el oponente jamás va a poder levantar ninguna de las cartas que yo levanté en esta jugada, es decir las cartas en CARTAS $\setminus$ CARTAS'. 
+
+Luego, MiPuntaje depende de CARTAS, pero PuntajeOponente depende de CARTAS'. Reformulamos la ecuación:
 \[
-P_{mio} + P_{oponente} = \sum_{c \in CARTAS}{c}
+MiPuntaje(CARTAS) + PuntajeOponente(CARTAS') = Suma(CARTAS)
 \]
-
-Es decir que la suma de mi puntaje y el de mi oponente equivale a la suma total
-de cartas del juego.
-
-Luego, maximizar la diferencia entre mi puntaje y el del oponente es lo mismo
-que maximizar mi puntaje. Si agudizamos el análisis, nos damos cuenta de que el
-puntaje que yo saco con ciertas cartas sobre la mesa es igual a la suma de las
-cartas sobre la mesa menos el puntaje que saca el oponente con las cartas que
-dejo sobre la mesa tras mi jugada. Es decir, 
+es decir:
 \[
-P_{mio}(CARTAS) = suma(CARTAS) - P_{oponente}(\text{cartas que quedan})
+MiPuntaje(CARTAS) = Suma(CARTAS) - PuntajeOponente(CARTAS') 
 \]
-
-Como suma(CARTAS) está fijo, queremos minimizar el puntaje del oponente con las
-cartas que le quedan. Como la cantidad de subconjuntos de CARTAS que le puedo
+Como Suma(CARTAS) está fijo, si quiero maximizar mi puntaje debo minimizar el puntaje del oponente. Como la cantidad de subconjuntos de CARTAS que le puedo
 dejar es finita (es $O(n)$), los podemos recorrer y quedarnos con el que haga
 que el oponente saque la mínima cantidad de puntos.
 
@@ -39,10 +41,13 @@ CARTAS que pueden quedar en la mesa tras una jugada:
 \[
 \texttt{MPP}(CARTAS) = Suma(CARTAS) - \min\limits_{CARTAS' \in \theta} \texttt{MPP}(CARTAS')
 \]
+\[
+\texttt{MPP}(unaCarta) = Suma(unaCarta)
+\]
+
+pues la única jugada posible es tomar la carta.
 \end{proposicion}
 
-Como caso base, $MaxPuntajePosible(\text{solo la carta c sobre la mesa}) = valor(c)$,
-pues la única jugada posible es tomar la carta.
 
 \begin{figure}
 
