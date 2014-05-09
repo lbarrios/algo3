@@ -141,6 +141,7 @@ int main(int argc, const char *argv[]) {
 		}
 
 		timer.setFinalTime("cicloEntero");
+
 		#ifndef TIME
 		cout << t << " " << mejoresJugadas[0][cantCartas-1].mejorPuntaje << " " << sumasParciales[cantCartas] - mejoresJugadas[0][cantCartas-1].mejorPuntaje << endl;
 		for (list<Levante>::iterator i = listaLev->begin() ; i != listaLev->end() ; i++) {

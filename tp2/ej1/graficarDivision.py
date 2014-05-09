@@ -15,7 +15,7 @@ def make_listdictdict():
 
 tests = defaultdict(make_listdictdict)
 
-files = sorted(glob("./output/graficarDivision/*.time"))
+files = sorted(glob("./output/graficoDivision/*.time"))
 for f in files:
   file = open(f)
   testname = f.split("/")[-1].split("_")[0]
@@ -24,7 +24,7 @@ for f in files:
     testtype = line.split()[0]
     value = line.split()[1]
     x = int(testsize)
-    y = int(value)
+    y = float(value) / (x**3)
     tests[testname][testtype][x].append(y)
   file.close()
 
@@ -86,7 +86,7 @@ for test_number in range(0,t_names):
 #subplot.plot(x, ((x*x*x)*1)/float(1e9),    '--', color='black', linewidth=2, label="$c.x^3$")
 plt.legend(loc=2)
 
-plt.show()
-#if not os.path.exists('./graficos/') or not os.path.isdir('./graficos/'):
-#  os.makedirs('./graficos/')
-#plt.savefig("graficos/test_1.pdf")
+#plt.show()
+if not os.path.exists('./graficos/') or not os.path.isdir('./graficos/'):
+  os.makedirs('./graficos/')
+plt.savefig("graficos/test_2.pdf")
