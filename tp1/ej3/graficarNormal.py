@@ -102,4 +102,4 @@ plt.xlim(xmin=1)
 #plt.show()
 if not os.path.exists('./graficos/') or not os.path.isdir('./graficos/'):
   os.makedirs('./graficos/')
-plt.savefig("graficos/test_normal.pdf")
+plt.savefig("graficos/test_normalls.pdf")
