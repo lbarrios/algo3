@@ -1089,7 +1089,14 @@ archivos
 \item \textbf{input\_output\_testNormal.tar.bz} 
 \end{itemize}
 los cuales contienen los input y
-output utilizados respectivamente para generar los sucesivos gráficos.
+output utilizados respectivamente para generar los sucesivos gráficos. 
+
+Para realizar las pruebas, en algunos casos (si el tiempo de ejecución no era
+alto) se midió varias veces sobre un mismo caso de prueba, y para eliminar el
+ruido o las mediciones erróneas se los filtró tomando luego en cada x los
+valores cuartiles superior e inferior correspondientes al tiempo, promediándolos
+posteriormente. En el caso de tomar una sola muestra por cada valor de x, se los
+volcó luego en el gráfico sin realizarles ningún tratamiento.
 
 
 \begin{figure}[h]
@@ -1138,7 +1145,7 @@ algoritmo crece luego de esa ``bajada''.
    \end{center}
 \end{figure}
 
-En \textbf{\texttt{gráfico \ref{fig:ej3-1}}} se hizo una comparación de la
+En \textbf{\texttt{gráfico \ref{fig:ej3-2}}} se hizo una comparación de la
 complejidad según el tipo de entrada proporcionada. Se estandarizaron para ello
 tres tipos de casos: 
 \begin{itemize}
@@ -1164,25 +1171,39 @@ que la recursión debe cubrir todos los casos factibles. La complejidad en este
 caso sería de \bigO{M!}, como ya se expuso debidamente. Para el caso trivial, el
 comportamiento es casi constante (por lo que se puede apreciar en el gráfico), y
 lo que se puede afirmar del caso aleatorio es que está acotado por los otros dos
-casos.
+casos; aunque empíricamente, luego de haber realizado sucesivos testeos,
+parecería válido afirmar que su comportamiento es mucho mejor que ``el peor
+caso''.
+
+Por último, en \textbf{\texttt{gráfico \ref{fig:ej3-3}}} y
+\textbf{\texttt{gráfico \ref{fig:ej3-4}}} se quiso reflejar el comportamiento de
+nuestro algoritmo para el mejor caso (3), y para los casos en que no se puede
+asumir nada (4). A diferencia de los otros gráficos en los que el contraste se
+realizó contra versiones de menor eficiencia, aquí nos permitimos extender el
+rango de entrada, con lo cual se puede apreciar la naturaleza exponecial del
+algoritmo en el caso de los casos aleatorios, y el hecho de que la poda realiza
+un muy buen trabajos para tamaños de entrada gigantes, como 4000, en el caso en
+que la entrada sea favorable. En el \textbf{\texttt{gráfico \ref{fig:ej3-3}}} se
+puede ver concretamente el \texttt{comportamiento de la poda}, y no representa
+un caso real, ya que las entradas fueron elegidas particularmente para la
+muestra. Se aprecia ``cuán buena'' puede llegar a ser la poda. Recordar que el
+eje se encuentra en escala logarítmica.
 
 \begin{figure}[h]
    \begin{center}
-   \includegraphics[width=1\textwidth,angle=0]{../ej3/graficos/test_con_podas.pdf}
-   \caption{????????????????}
+   \includegraphics[width=1.4\textwidth,angle=90]{../ej3/graficos/test_con_podas.pdf}
+   \caption{Comportamiento en el mejor caso}
    \label{fig:ej3-3}
    \end{center}
 \end{figure}
-\fixme{Este test no iría por diferencias de criterio.}
 
 \begin{figure}[h]
    \begin{center}
-   \includegraphics[width=1\textwidth,angle=0]{../ej3/graficos/test_normal.pdf}
-   \caption{?????????????????}
+   \includegraphics[width=1.3\textwidth,angle=90]{../ej3/graficos/test_normal.pdf}
+   \caption{Comportamiento en casos aleatorios}
    \label{fig:ej3-4}
    \end{center}
 \end{figure}
-\fixme{Explicar esto}
 
 % -----------------------------------------------
 \end{document}
