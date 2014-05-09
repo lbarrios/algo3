@@ -25,9 +25,9 @@ testGen = GeneradorDeTestsEj1(inputDir_c)
 
 for n in range(limInf_c, limSup_c, paso_c):
   print(n)
-  testGen.generarTest({"n":n}, "casoAleatorio", casosPorTest_c )
-  testGen.generarTest({"n":n}, "mejorCaso", casosPorTest_c )
-  testGen.generarTest({"n":n}, "peorCaso", casosPorTest_c )
+  #testGen.generarTest({"n":n}, "casoAleatorio", casosPorTest_c )
+  #testGen.generarTest({"n":n}, "mejorCaso", casosPorTest_c )
+  #testGen.generarTest({"n":n}, "peorCaso", casosPorTest_c )
 
 
 # Generar casos de prueba gráfico de división
