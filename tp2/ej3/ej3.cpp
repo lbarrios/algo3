@@ -1,6 +1,7 @@
 #include <iostream>
 #include <queue>
 #include <list>
+#include "../common/Timer.h"
 using namespace std;
 
 struct Posicion {
@@ -34,9 +35,15 @@ int potencias[256][256];
 Nodo distancias[256][256][256];
 int potenciaDeLlegada;
 
+
+Timer timer(cout);
+
+
 int main() {
+		timer.setInitialTime("cicloEntero");
     inicializar();
     BFS();
+		timer.setFinalTime("cicloEntero");
     imprimir();
     return 0;
 }
@@ -138,6 +145,11 @@ void pushea_hijo (Nodo &hijo, int &fila_hijo, int &columna_hijo, int &distancia_
 }
 
 void imprimir() {
+#ifdef GRAF
+    Nodo fin = distancias[destino.fila][destino.columna][potenciaDeLlegada];
+    cout << fin.distancia << endl;
+#endif
+#ifdef RESULTS
     Nodo fin = distancias[destino.fila][destino.columna][potenciaDeLlegada];
     cout << fin.distancia << endl;
     list<Nodo> camino;
@@ -153,6 +165,10 @@ void imprimir() {
     for (list<Nodo>::iterator it=camino.begin(); it != camino.end(); it++) {
         cout << it->posicion.fila << " " << it->posicion.columna << " " << it->padre_pot_extra_uso << endl;
     }
+#endif
+#ifdef TIME
+    timer.saveAllTimes();
+#endif
     /* debug. solo tiene sentido cuando k == 0 */
     /*
     cout << "tablero de distancias: " << endl;
