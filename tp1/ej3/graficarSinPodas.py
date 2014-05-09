@@ -168,7 +168,7 @@ plt.legend(loc=2)
 
 #plt.xlim(xmin=1)
 
-#plt.xlim(xmax=5)
+plt.xlim(xmin=4)
 #plt.ylim(ymax=1E-4)
 #plt.ylim(ymax=1E-2)
 #plt.yscale('symlog', linthreshy=1E-5)
