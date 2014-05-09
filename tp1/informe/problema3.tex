@@ -692,7 +692,7 @@ Tablero backtrack( Tablero t, IndiceDePiezas ip, int posicion )
     // Pongo una pieza transparente en el lugar donde puse (o no) una pieza
     t.ponerPiezaEnPosicion( PIEZA_VACIA, posicion );
   }
-  return *mejorTablero;
+  return mejorTablero;
 }
 \end{verbatim}
 
