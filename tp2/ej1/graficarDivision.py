@@ -37,8 +37,10 @@ for testname in tests:
       y_p_values = [yp for yp in y_values if yp < np.percentile(y_values,75) and yp > np.percentile(y_values,25) ]
       # -
       x = testsize
-      y = float( np.mean( y_values ) / float(1e9) )
-      y_p = float( np.mean( y_p_values ) / float(1e9) )
+      #y = float( np.mean( y_values ) / float(1e9) )
+      #y_p = float( np.mean( y_p_values ) / float(1e9) )
+      y = float( np.mean( y_values ) * float(1e2) )
+      y_p = float( np.mean( y_p_values ) * float(1e2) )
       # -
       tests_mean_xy[testname][testtype].append( (x,y) )
       tests_mean_p_xy[testname][testtype].append( (x,y_p) )
@@ -60,12 +62,12 @@ formatter.ENG_PREFIXES[-6] = 'u' # Arreglo el símbolo "mu"
 # - Creo los subplot
 #fig, subplot = plt.subplots(nrows=t_types, ncols=1, sharex=True, sharey=False)
 fig,subplot = plt.subplots()
-subplot.yaxis.set_major_formatter(formatter)
+#subplot.yaxis.set_major_formatter(formatter)
 
 # Aplico formato
 plt.grid(True)
 plt.title(u"Ejercicio 1 - Tiempo sobre tamaño de entrada")
-plt.ylabel('Tiempo (segundos)')
+plt.ylabel('Tiempo (segundos/sapos)')
 plt.xlabel(u'Tamaño de entrada (sapos)')
 
 """
@@ -85,6 +87,7 @@ for test_number in range(0,t_names):
 
 #subplot.plot(x, ((x*x*x)*1)/float(1e9),    '--', color='black', linewidth=2, label="$c.x^3$")
 plt.legend(loc=2)
+plt.xlim(xmin=5)
 
 #plt.show()
 if not os.path.exists('./graficos/') or not os.path.isdir('./graficos/'):
