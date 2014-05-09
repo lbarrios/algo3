@@ -25,29 +25,29 @@ public:
     return this->_cantidadDePosicionesVacias > t._cantidadDePosicionesVacias;
   }
   /**
-   * Permite acceder a la pieza ubicada en una posición determinada
+   * Permite acceder a la pieza ubicada en una posicion determinada
    */
   const inline uint32_t& operator[] ( uint32_t posicion ) const
   {
     return this->_piezasEnElTablero[posicion];
   }
   /**
-   * Dada una posición en el tablero,
+   * Dada una posicion en el tablero,
    * devuelve la pieza que se encuentra a la izquierda
    */
   const uint32_t dameLaPiezaDeIzquierdaDePosicion( uint32_t );
   /**
-   * Dada una posición en el tablero,
+   * Dada una posicion en el tablero,
    * devuelve la pieza que se encuentra arriba
    */
   const uint32_t dameLaPiezaDeArribaDePosicion( uint32_t );
   /**
-   * Dada una posición en el tablero,
-   * devuelve la pieza que se encuentra en esa posición
+   * Dada una posicion en el tablero,
+   * devuelve la pieza que se encuentra en esa posicion
    */
   //const uint32_t dameLaPiezaEnPosicion( uint32_t );
   /**
-   * Coloca una pieza en la posición indicada
+   * Coloca una pieza en la posicion indicada
    */
   void ponerPiezaEnPosicion( uint32_t, uint32_t );
   const uint32_t cantidadDeFilas;

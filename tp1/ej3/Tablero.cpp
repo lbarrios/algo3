@@ -19,13 +19,13 @@ const uint32_t Tablero::dameLaPiezaDeArribaDePosicion( uint32_t posicion )
 
   if ( noEsPrimeraFila )
   {
-    _C( "La pieza arriba de la posición " << posicion + 1 << " es: " <<
+    _C( "La pieza arriba de la posicion " << posicion + 1 << " es: " <<
         this->_piezasEnElTablero[posicion - this->cantidadDeColumnas] );
     return this->_piezasEnElTablero[posicion - this->cantidadDeColumnas];
   }
   else
   {
-    _C( "La posición " << posicion + 1 << " contiene una pieza vacía a arriba" );
+    _C( "La posicion " << posicion + 1 << " contiene una pieza vacia a arriba" );
     return TestCaseEj3::PIEZA_VACIA;
   }
 }
@@ -35,12 +35,12 @@ const uint32_t Tablero::dameLaPiezaDeIzquierdaDePosicion( uint32_t posicion )
 
   if ( noEsPrimeraColumna )
   {
-    _C( "La pieza izquierda de la posición " << posicion + 1 << " es: " << this->_piezasEnElTablero[posicion - 1] );
+    _C( "La pieza izquierda de la posicion " << posicion + 1 << " es: " << this->_piezasEnElTablero[posicion - 1] );
     return this->_piezasEnElTablero[posicion - 1];
   }
   else
   {
-    _C( "La posición " << posicion + 1 << " contiene una pieza vacía a su izquierda" );
+    _C( "La posicion " << posicion + 1 << " contiene una pieza vacia a su izquierda" );
     return TestCaseEj3::PIEZA_VACIA;
   }
 }
@@ -67,7 +67,7 @@ void Tablero::ponerPiezaEnPosicion( uint32_t pieza, uint32_t posicion )
 
       if ( this->_cantidadDePosicionesVacias < this->_mejorCantidadDePosicionesVacias )
       {
-        _C( "Se encontró un nuevo mejor tablero, con " << this->_cantidadDePosicionesVacias << " posiciones vacías, la mejor era " <<
+        _C( "Se encontro un nuevo mejor tablero, con " << this->_cantidadDePosicionesVacias << " posiciones vacias, la mejor era " <<
             this->_mejorCantidadDePosicionesVacias << "." );
         this->_mejorCantidadDePosicionesVacias = this->_cantidadDePosicionesVacias;
       }
@@ -213,9 +213,9 @@ void Tablero::_calcularMejorCantidadDePiezasPosible()
   }
 
   uint32_t piezasInfumables = max( coloresDerecha.size(), max( coloresIzquierda.size(), max( coloresArriba.size(), coloresAbajo.size() ) ) );
-  _C( "Atención: Hay como mínimo " << piezasInfumables << " piezas incompatibles en este tablero" );
+  _C( "Atencion: Hay como minimo " << piezasInfumables << " piezas incompatibles en este tablero" );
   this->_mejorCantidadDePosicionesVaciasPosible = piezasInfumables / 2;
   this->_mejorCantidadDePosicionesVaciasPosible = 0;
-  _C( "Atención: Se estima un mínimo de " << this->_mejorCantidadDePosicionesVaciasPosible << " posiciones en blanco para este tablero." );
+  _C( "Atencion: Se estima un minimo de " << this->_mejorCantidadDePosicionesVaciasPosible << " posiciones en blanco para este tablero." );
   //this->_mejorCantidadDePosicionesVaciasPosible = 0;
 }

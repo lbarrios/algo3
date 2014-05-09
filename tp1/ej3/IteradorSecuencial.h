@@ -10,8 +10,6 @@ public:
   IteradorSecuencial& operator++( int );
   bool hayPiezasPosibles();
 private:
-  //list<uint32_t>& _v;
-  //list<uint32_t>::iterator _v_it;
 };
 
 #endif

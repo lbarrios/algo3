@@ -6,6 +6,9 @@ OBJSDIR=OBJS
 OBJS := $(addprefix ${OBJSDIR}/,${OBJS})
 OBJSDEBUG := $(addsuffix .debug,${OBJS})
 OBJSTIME := $(addsuffix .time,${OBJS})
+OBJSTIMES1 := $(addsuffix .time.sinPodaObjetivo,${OBJS})
+OBJSTIMES2 := $(addsuffix .time.sinPodaSeleccion,${OBJS})
+OBJSTIMESP := $(addsuffix .time.sinPodas,${OBJS})
 COMMON_DIR=../common
 COMMON_OBJS=$(COMMON_DIR)/ParserDeParametros.o $(COMMON_DIR)/TestCase.o $(COMMON_DIR)/Timer.o
 COMMON_OBJS_DEBUG := $(addsuffix .debug,${COMMON_OBJS})
@@ -29,10 +32,12 @@ $(EXE).debug: $(OBJSDEBUG) $(COMMON_OBJS_DEBUG)
 
 $(EXE).time: $(OBJSTIME) $(COMMON_OBJS_TIME)
 	$(CC) -lrt $(OBJSTIME) $(COMMON_OBJS_TIME) -o $@ -lrt
-$(EXE).time.sinPodaObjetivo: $(OBJSTIME) $(COMMON_OBJS_TIME)
-	$(CC) -DSINPODAOBJETIVO -lrt $(OBJSTIME) $(COMMON_OBJS_TIME) -o $@ -lrt
-$(EXE).time.sinPodaSeleccion: $(OBJSTIME) $(COMMON_OBJS_TIME)
-	$(CC) -DSINPODASELECCION -lrt $(OBJSTIME) $(COMMON_OBJS_TIME) -o $@ -lrt
+$(EXE).time.sinPodaObjetivo: $(OBJSTIMES1) $(COMMON_OBJS_TIME)
+	$(CC) -DSINPODAOBJETIVO -lrt $(OBJSTIMES1) $(COMMON_OBJS_TIME) -o $@ -lrt
+$(EXE).time.sinPodaSeleccion: $(OBJSTIMES2) $(COMMON_OBJS_TIME)
+	$(CC) -DSINPODASELECCION -lrt $(OBJSTIMES2) $(COMMON_OBJS_TIME) -o $@ -lrt
+$(EXE).time.sinPodas: $(OBJSTIMESP) $(COMMON_OBJS_TIME)
+	$(CC) -DSINPODASELECCION -DSINPODAOBJETIVO -lrt $(OBJSTIMESP) $(COMMON_OBJS_TIME) -o $@ -lrt
 
 ## Objetos
 $(OBJSDIR)/%.o: %.cpp %.h | $(OBJSDIR)
@@ -43,6 +48,14 @@ $(OBJSDIR)/%.o.debug: %.cpp %.h | $(OBJSDIR)
 
 $(OBJSDIR)/%.o.time: %.cpp %.h | $(OBJSDIR)
 	@$(CC) $(CFLAGSTIME) $< -o $@
+
+$(OBJSDIR)/%.o.time.sinPodaObjetivo: %.cpp %.h | $(OBJSDIR)
+	@$(CC) -DSINPODAOBJETIVO $(CFLAGSTIME) $< -o $@
+$(OBJSDIR)/%.o.time.sinPodaSeleccion: %.cpp %.h | $(OBJSDIR)
+	@$(CC) -DSINPODASELECCION $(CFLAGSTIME) $< -o $@
+$(OBJSDIR)/%.o.time.sinPodas: %.cpp %.h | $(OBJSDIR)
+	@$(CC) -DSINPODASELECCION -DSINPODAOBJETIVO $(CFLAGSTIME) $< -o $@
+
 
 $(OBJS): | $(OBJSDIR)
 

@@ -92,11 +92,11 @@ for test_number in range(0,t_names):
   plt.plot(x, y, linestyle='-',  color=colors[test_number], linewidth=2, label=testname, alpha=1) #, marker='.', markersize=0.3)
 
 #subplot.plot(x, ((np.math.factorial(x))*10)/float(1e9),    '--', color='black', linewidth=2, label="c.x.log2(x)")
-#plt.legend(loc=2)
 
+plt.legend(loc=2)
 plt.xlim(xmin=1)
 
-plt.show()
-#if not os.path.exists('./graficos/') or not os.path.isdir('./graficos/'):
-#  os.makedirs('./graficos/')
-#plt.savefig("graficos/test_1.pdf")
+#plt.show()
+if not os.path.exists('./graficos/') or not os.path.isdir('./graficos/'):
+  os.makedirs('./graficos/')
+plt.savefig("graficos/test_exponencial.pdf")

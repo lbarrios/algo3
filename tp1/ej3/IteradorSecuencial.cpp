@@ -27,8 +27,8 @@ IteradorSecuencial& IteradorSecuencial::operator++( int )
 
   /*
     Luego avanzo, mientras queden piezas en el vector secuencial
-    siempre que las piezas que me encuentre ya estén utilizadas,
-    o que estén desocupadas pero no me sirvan...
+    siempre que las piezas que me encuentre ya esten utilizadas,
+    o que esten desocupadas pero no me sirvan...
   */
   while ( this->_v_it != this->_v->end() && (
             !this->_indicePiezasDisponibles[*( this->_v_it )] ||
@@ -39,7 +39,7 @@ IteradorSecuencial& IteradorSecuencial::operator++( int )
     ( this->_v_it )++;
   }
 
-  // Si ya no hay piezas en el vector secuencial, llamo a mi papá
+  // Si ya no hay piezas en el vector secuencial, llamo a mi papa
   if ( this->_v_it == this->_v->end() )
   {
     IteradorIndiceDePiezas::operator++( 0 );

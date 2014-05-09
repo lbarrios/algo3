@@ -37,7 +37,6 @@ void IndiceDePiezas::_imprimirIndiceDeDosColores()
   {
     for ( uint32_t j = 1; j < _indiceDeDosColores.size(); j++ )
     {
-      //_C("i="<<i<<", j="<<j<<" .size = "<< _indiceDeDosColores[i][j].top().size());
       for ( vector<uint32_t>::iterator it = _indiceDeDosColores[i][j].top().begin(); it != _indiceDeDosColores[i][j].top().end(); it++ )
       {
         _C( "IC[" << i << "][" << j << "] = " << *it );
@@ -48,12 +47,6 @@ void IndiceDePiezas::_imprimirIndiceDeDosColores()
 
 IndiceDePiezas::~IndiceDePiezas( )
 {
-  /*
-  for ( vector<IteradorIndiceDePiezas*>::iterator it = this->_iteradores.begin(); it != this->_iteradores.end(); ++it )
-  {
-    delete *it;
-  }
-  */
 }
 
 IteradorIndiceDePiezas& IndiceDePiezas::dameIterador( uint32_t posicion )
@@ -62,50 +55,6 @@ IteradorIndiceDePiezas& IndiceDePiezas::dameIterador( uint32_t posicion )
   // Obtengo las piezas de la izquierda y de arriba
   uint32_t piezaIzquierda = _t.dameLaPiezaDeIzquierdaDePosicion( posicion );
   uint32_t piezaArriba = _t.dameLaPiezaDeArribaDePosicion( posicion );
-  /*
-  // Si es primera columna pero no primera fila
-  if ( this->_primeraColumna && !this->_primeraFila )
-  {
-    _C( "IC::IT() El casillero es primera columna pero no es primera fila" );
-    this->_avanza = &Iterador::_avanzaIteradorPrimeraColumna;
-    this->_hayPosibles = &Iterador::_hayPosiblesPrimeraColumna;
-    this->_colorDerechaActual = 0;
-    this->_colorAbajoActual = _ic.colorAbajo( p_a );
-  }
-
-  // Si es primera fila pero no primera columna
-  if ( this->_primeraFila && !this->_primeraColumna )
-  {
-    _C( "IC::IT() El casillero es primera fila pero no es primera columna" );
-    this->_avanza = &Iterador::_avanzaIteradorPrimeraFila;
-    this->_hayPosibles = &Iterador::_hayPosiblesPrimeraFila;
-    this->_colorDerechaActual = _ic.colorDerecha( p_i );
-    this->_colorAbajoActual = 0;
-  }
-
-  // Si no es ni primera columna ni primera fila
-  if ( !this->_primeraFila && !this->_primeraColumna )
-  {
-    _C( "IC::IT() El casillero no es primera columna ni primera fila" );
-    this->_avanza = &Iterador::_avanzaIteradorNormal;
-    this->_hayPosibles = &Iterador::_hayPosiblesNormal;
-    this->_colorDerechaActual = _ic.colorDerecha( p_i );
-    this->_colorAbajoActual = _ic.colorAbajo( p_a );
-  }
-
-  // Si es el primer casillero (1ra columna y 1ra fila a la vez)
-  if ( this->_primeraColumna && this->_primeraFila )
-  {
-    _C( "IC::IT() El casillero es primera columna y primera fila (1er casillero)" );
-    this->_avanza = &Iterador::_avanzaIteradorPrimerCasillero;
-    this->_hayPosibles = &Iterador::_hayPosiblesPrimerCasillero;
-    this->_quitarPieza = &IndiceDeColores::_quitarPieza;
-    this->_colorDerechaActual = 0;
-    this->_colorAbajoActual = 0;
-    //this->_indice = 1;
-  }
-  */
-  //it = new IteradorIndiceDePiezas( posicion );
 #ifndef SINPODASELECCION
   bool arribaVacio = ( piezaArriba == TestCaseEj3::PIEZA_VACIA );
   bool izquierdaVacio = ( piezaIzquierda == TestCaseEj3::PIEZA_VACIA );
@@ -134,7 +83,7 @@ void IndiceDePiezas::marcarPiezaUtilizada( IteradorIndiceDePiezas& it )
 
   if ( *it == TestCaseEj3::PIEZA_VACIA )
   {
-    _C( "La pieza es vacía" );
+    _C( "La pieza es vacia" );
     it.utilizarPiezaTransparente();
   }
   else
@@ -144,7 +93,7 @@ void IndiceDePiezas::marcarPiezaUtilizada( IteradorIndiceDePiezas& it )
     this->_indicePiezasDisponibles[*it] = false;
     // Obtengo la pieza del listado de piezas
     TestCaseEj3::Pieza pieza = this->_listaDePiezas[*it];
-    _C( "Pusheo una copia del índice para esos dos colores" );
+    _C( "Pusheo una copia del indice para esos dos colores" );
     this->_indiceDeDosColores[pieza.colorIzquierda][pieza.colorArriba].push(
       this->_indiceDeDosColores[pieza.colorIzquierda][pieza.colorArriba].top()
     );
@@ -153,11 +102,11 @@ void IndiceDePiezas::marcarPiezaUtilizada( IteradorIndiceDePiezas& it )
       lower_bound( this->_indiceDeDosColores[pieza.colorIzquierda][pieza.colorArriba].top().begin(),
                    this->_indiceDeDosColores[pieza.colorIzquierda][pieza.colorArriba].top().end(), *it )
     );
-    _C( "Pusheo una copia del índice secuencial" );
+    _C( "Pusheo una copia del indice secuencial" );
     this->_indiceSecuencial.push(
       this->_indiceSecuencial.top()
     );
-    _C( "Borro el elemento del índice secuencial" );
+    _C( "Borro el elemento del indice secuencial" );
     this->_indiceSecuencial.top().erase(
       lower_bound( this->_indiceSecuencial.top().begin(),
                    this->_indiceSecuencial.top().end(), *it )

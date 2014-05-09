@@ -15,7 +15,6 @@ protected:
   vector<uint32_t>* _indiceColores;
   IndiceDePiezas::listaDePiezas* _v;
   IndiceDePiezas::listaDePiezas::iterator _v_it;
-  //IteradorIndiceDePiezas ( IteradorIndiceDePiezas::*avanzar )( int );
   IndiceDePiezas& _ip;
   uint32_t _posicion;
 public:

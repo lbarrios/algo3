@@ -28,10 +28,17 @@ uint64_t Timer::getTime( string k )
   if (this->_finalTimes.count(k) == 0){
     return 0;
   }
+  int64_t nseg = ( int64_t ) this->_finalTimes[k].tv_nsec - ( int64_t ) this->_initialTimes[k].tv_nsec;
+  int64_t seg  = ( int64_t ) this->_finalTimes[k].tv_sec  - ( int64_t ) this->_initialTimes[k].tv_sec;
+  int64_t total = nseg + ( seg * ( 1e9 ) );
+  return total;
+
+  /*
   uint64_t nseg = (int64_t)this->_finalTimes[k].tv_nsec - (int64_t)this->_initialTimes[k].tv_nsec;
   uint64_t seg = (int64_t)this->_finalTimes[k].tv_sec - (int64_t)this->_initialTimes[k].tv_sec;
   uint64_t total = nseg + (seg*(1e9));
   return total;
+  */
 #endif
 	return 0;
 }

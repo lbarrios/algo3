@@ -9,22 +9,22 @@ IteradorIndiceDePiezas::IteradorIndiceDePiezas( IndiceDePiezas& ip, uint32_t pos
 {
   uint32_t piezaIzquierda = ip._t.dameLaPiezaDeIzquierdaDePosicion( posicion );
   uint32_t piezaArriba = ip._t.dameLaPiezaDeArribaDePosicion( posicion );
-  if(piezaIzquierda!=TestCaseEj3::PIEZA_VACIA && piezaArriba !=TestCaseEj3::PIEZA_VACIA)
-  {
 
-    this->_indiceColores = &(ip._indiceDeDosColores
-      [ip._listaDePiezas[piezaIzquierda].colorDerecha]
-      [ip._listaDePiezas[piezaArriba].colorAbajo]
-      .top());
+  if ( piezaIzquierda != TestCaseEj3::PIEZA_VACIA && piezaArriba != TestCaseEj3::PIEZA_VACIA )
+  {
+    this->_indiceColores = &( ip._indiceDeDosColores
+                              [ip._listaDePiezas[piezaIzquierda].colorDerecha]
+                              [ip._listaDePiezas[piezaArriba].colorAbajo]
+                              .top() );
   }
+
   this->_piezaTransparenteUtilizada = false;
   this->_utilizarPiezaTransparente = false;
-  _C("Inicializado IteradorIndiceDePiezas");
+  _C( "Inicializado IteradorIndiceDePiezas" );
 }
 
 IteradorIndiceDePiezas::~IteradorIndiceDePiezas()
 {
-  //_C( "IteradorIndiceDePiezas::~IteradorIndiceDePiezas()" );
 }
 
 bool IteradorIndiceDePiezas::hayPiezasPosibles()

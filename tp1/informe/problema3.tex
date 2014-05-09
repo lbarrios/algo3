@@ -983,13 +983,45 @@ Ejecutamos el programa con los distintos ejemplos y se llegó a la solución esp
 
 \subsubsection{Medición empírica de la performance}
 
-Para realizar las pruebas de tiempo se nos presentaron varias complicaciones. Dado que la complejidad del algoritmo implementado es exponencial, el tiempo de ejecución se vuelve inmenso ante tamaños de entrada relativamente pequeños. Por ejemplo, dado un tamaño de entrada de $n=4$, $m=4$, $c=10$, tenemos una cantidad de fichas $M=(n*m)+1=17$, y dado que la complejidad del algoritmo es \bigO{M!}, esto es equivalente a afirmar que existe una constante $k$ para la cual a partir de un $n_0$ nuestro algoritmo está acotado superiormente por $k*(M!)$. Puesto que decimos que este $M!$ en realidad surge de la cantidad de soluciones analizadas, si imaginásemos que el procesador demorase un ciclo de clock en calcular una solución\footnote{Es el mínimo valor que le podemos asignar sin involucrarnos demasiado con la arquitectura/microarquitectura del procesador}, averiguar todo el universo de soluciones bajo las condiciones expuestas en este ejemplo tardaría a lo sumo $17!$ ciclos de clock o, suponiendo un procesador de 3GHz\footnote{Es decir, $3*2^30 ciclos por segundo.$}, unos 110419 segundos (aproximadamente media hora).
+Para realizar las pruebas de tiempo se nos presentaron varias complicaciones.
+Dado que la complejidad del algoritmo implementado es exponencial, el tiempo de
+ejecución se vuelve inmenso ante tamaños de entrada relativamente pequeños. Por
+ejemplo, dado un tamaño de entrada de $n=4$, $m=4$, $c=10$, tenemos una cantidad
+de fichas $M=(n*m)+1=17$, y dado que la complejidad del algoritmo es \bigO{M!},
+esto es equivalente a afirmar que existe una constante $k$ para la cual a partir
+de un $n_0$ nuestro algoritmo está acotado superiormente por $k*(M!)$. Puesto
+que decimos que este $M!$ en realidad surge de la cantidad de soluciones
+analizadas, si imaginásemos que el procesador demorase un ciclo de clock en
+calcular una solución\footnote{Es el mínimo valor que le podemos asignar sin
+involucrarnos demasiado con la arquitectura/microarquitectura del procesador},
+averiguar todo el universo de soluciones bajo las condiciones expuestas en este
+ejemplo tardaría a lo sumo $17!$ ciclos de clock o, suponiendo un procesador de
+3GHz\footnote{Es decir, $3*2^30 ciclos por segundo.$}, unos 110419 segundos
+(aproximadamente media hora).
 
-Debido a lo expuesto anteriormente, nos resultó casi imposible medir el comportamiento del algoritmo para tamaños de tablero muy grandes.
+
+Debido a lo expuesto anteriormente, nos resultó casi imposible medir el
+comportamiento del algoritmo para tamaños de tablero muy grandes. Se realizó una
+primer medición comparando el rendimiento del algoritmo con todas sus podas,
+contra el algoritmo sin la ``poda objetivo'', y el mismo sin ambas podas.
 
 
+\begin{figure}[H]
+   \begin{center}
+   \includegraphics[width=1\textwidth,angle=0]{../ej3/graficos/test_sinPodas.pdf}
+   \caption{Comparación de las podas}
+   \label{fig:ej3-1}
+   \end{center}
+\end{figure}
 
-
+\begin{figure}[H]
+   \begin{center}
+   \includegraphics[width=1\textwidth,angle=0]{../ej3/graficos/test_exponencial.pdf}
+   \caption{Comparación de la complejidad según el tipo de entrada}
+   \label{fig:ej3-1}
+   \end{center}
+\end{figure}
+\fixme{Explicar esto}
 
 
 % -----------------------------------------------
