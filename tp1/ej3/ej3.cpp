@@ -83,7 +83,7 @@ Tablero& backtrack( Tablero& t, IndiceDePiezas& ip, uint32_t posicion )
   // Me fijo si estoy antes de la última posición
   if ( posicion < t.cantidadDePosiciones - 1 )
   {
-#ifndef SINPODASELECCION
+#ifndef SINOPTIMIZACION
 
     while ( it.hayPiezasPosibles() )
     {

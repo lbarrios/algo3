@@ -173,7 +173,7 @@ plt.legend(loc=2)
 #plt.ylim(ymax=1E-2)
 #plt.yscale('symlog', linthreshy=1E-5)
 
-plt.show()
+#plt.show()
 if not os.path.exists('./graficos/') or not os.path.isdir('./graficos/'):
   os.makedirs('./graficos/')
 plt.savefig("graficos/test_sinPodas.pdf")
