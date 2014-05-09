@@ -62,6 +62,7 @@ bool inicializar() {
             }
         }
     }
+    return true;
 }
 
 void BFS() {
