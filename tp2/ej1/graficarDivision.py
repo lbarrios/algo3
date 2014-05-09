@@ -67,7 +67,7 @@ fig,subplot = plt.subplots()
 # Aplico formato
 plt.grid(True)
 plt.title(u"Ejercicio 1 - Tiempo sobre tamaño de entrada")
-plt.ylabel('Tiempo (segundos/sapos)')
+plt.ylabel('Cociente (segundos/sapos)')
 plt.xlabel(u'Tamaño de entrada (sapos)')
 
 """

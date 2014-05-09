@@ -83,7 +83,7 @@ for test_number in range(0,t_names):
   y = np.array( zip(*tests_mean_p_xy[testname][testtype])[1] )
   plt.plot(x, y, linestyle='-',  color=colors[test_number], linewidth=0.6, label=testname, alpha=1) #, marker='.', markersize=0.3)
 
-subplot.plot(x, ((x*x)*30)/float(1e9),    '--', color='black', linewidth=2, label="$c.x^2$")
+subplot.plot(x, ((x*x)*24)/float(1e9),    '--', color='black', linewidth=2, label="$c.x^2$")
 plt.legend(loc=2)
 
 #plt.show()
